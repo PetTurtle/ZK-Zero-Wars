@@ -400,3 +400,16 @@ function gadget:AllowUnitTransfer(unitID, unitDefID, oldTeam, newTeam, capture)
     end
     return false
 end
+
+-- Don't allow factories in center
+function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, facing)
+    local ud = UnitDefs[unitDefID]
+    if dataSet and x and x > 1229 and x < 6997 and z > 873 and z < 2252 then
+        if ud.isFactory or ud.isStaticBuilder then
+            return false
+        end
+    elseif ud.isTransport then
+        return false
+    end
+    return true
+end
