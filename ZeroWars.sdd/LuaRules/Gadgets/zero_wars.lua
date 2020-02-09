@@ -21,13 +21,11 @@ local rightTeam
 local leftSide
 local rightSide
 
-local spawnTime = 100 -- #frames between waves
+local spawnTime = 800 -- #frames between waves
 local updateTime = 60
 local waves = {}
 local artyWave = {}
 local idleUnits = {}
-
-local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
 
 ----- Initalizing Game -----
 
@@ -164,7 +162,7 @@ local function CreateLeftSide()
         for t = 1, #leftSide.plats[i].players do
             local units = Spring.GetTeamUnits(leftSide.plats[i].players[t])
             Spring.SetUnitPosition(units[1], leftSide.plats[i].rect.x1, leftSide.plats[i].rect.y1 + 350)
-            local aa = Spring.CreateUnit("turretaaflak", leftSide.plats[i].rect.x1 + 364, 10000, leftSide.plats[i].rect.y1 + 380, "n", leftTeam.nullAI)
+            local aa = Spring.CreateUnit("turretaaflak", leftSide.plats[i].rect.x1 + 364, 10000, leftSide.plats[i].rect.y1 + 380, "e", leftTeam.nullAI)
             Spring.SetUnitWeaponState(aa, 1, "projectiles", 100)
         end
     end
@@ -180,6 +178,7 @@ local function CreateLeftSide()
         Spring.SetTeamResource(leftTeam.playerList[i], "metal", 0)
     end
 
+    Spring.CreateUnit("staticstorage", 0, 10000, 0, "n", leftTeam.nullAI)
     local nullAICom = Spring.GetUnitsInRectangle(3968, 1152, 4224, 1920, leftTeam.nullAI)
     Spring.DestroyUnit(nullAICom[1], false, true)
 end
@@ -216,7 +215,7 @@ local function CreateRightSide()
         for t = 1, #rightSide.plats[i].players do
             local units = Spring.GetTeamUnits(rightSide.plats[i].players[t])
             Spring.SetUnitPosition(units[1], rightSide.plats[i].rect.x2, rightSide.plats[i].rect.y2 - 350)
-            local aa = Spring.CreateUnit("turretaaflak", rightSide.plats[i].rect.x2 - 364, 10000, rightSide.plats[i].rect.y1 + 370, "n", rightTeam.nullAI)
+            local aa = Spring.CreateUnit("turretaaflak", rightSide.plats[i].rect.x2 - 364, 10000, rightSide.plats[i].rect.y1 + 370, "w", rightTeam.nullAI)
             Spring.SetUnitWeaponState(aa, 1, "projectiles", 100)
         end
     end
