@@ -250,7 +250,6 @@ local function DeployWave(plat, units, nullAI, frame, faceDir)
         local buildProgress = select(5, Spring.GetUnitHealth(units[i]))
         local ud = UnitDefs[unitDefID]
         if ud.customParams.commtype then
-            isValidUnit = false
             Spring.SetUnitPosition(units[i], x + plat.offsetX, z + plat.offsetY)
         elseif not ud.isImmobile and buildProgress == 1  then
             local unit = Spring.CreateUnit(unitDefID, x + plat.offsetX, 150, z + plat.offsetY, faceDir, nullAI)
