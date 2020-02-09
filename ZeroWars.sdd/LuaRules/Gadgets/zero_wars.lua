@@ -394,3 +394,10 @@ function gadget:UnitIdle(unitID, unitDefID, unitTeam)
         table.insert(idleUnits, IdleUnit(unitID, unitTeam))
     end
 end
+
+function gadget:AllowUnitTransfer(unitID, unitDefID, oldTeam, newTeam, capture)
+    if newTeam == leftTeam.nullAI or newTeam == rightTeam.nullAI then
+        return true
+    end
+    return false
+end
