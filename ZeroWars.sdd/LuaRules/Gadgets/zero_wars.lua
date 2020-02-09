@@ -25,10 +25,19 @@ local spawnTime = 100 -- #frames between waves
 local updateTime = 60
 local waves = {}
 local artyWave = {}
+local idleUnits = {}
 
 local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
 
 ----- Initalizing Game -----
+
+function IdleUnit(unit, nullAI)
+    local idleUnit = {
+        unit = unit,
+        nullAI = nullAI
+    }
+    return idleUnit
+end
 
 function Rect(x1, y1, x2, y2)
     local rect = {
@@ -305,8 +314,9 @@ function gadget:GameFrame(f)
         rightSide.iterator = ((rightSide.iterator + 1) % #rightSide.plats)
     end
 
-    -- remove old waves
+    
     if f > 0 and f % updateTime == 0 then
+        -- remove old waves
         local units
         if #waves > 0 and waves[1].spawnFrame + 4500 < f  then
             units = waves[1].units
@@ -326,6 +336,21 @@ function gadget:GameFrame(f)
                 end
             end
             table.remove(artyWave, 1)
+        end
+
+        -- add attack order to idle units
+        for i = #idleUnits, 1, -1 do
+            if not Spring.GetUnitIsDead(idleUnits[i].unit) then
+                local cQueue = Spring.GetCommandQueue(idleUnits[i].unit, 1)
+                if cQueue and #cQueue == 0 then
+                    if idleUnits[i].nullAI == leftTeam.nullAI then
+                        Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, 5888, 0, 1530}, {"alt"});
+                    else
+                        Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, 2303, 0, 1530}, {"alt"});
+                    end
+                end
+            end
+            table.remove(idleUnits, i)
         end
     end
 end
@@ -353,13 +378,8 @@ function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
 end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-    -- local cQueue = Spring.GetCommandQueue(unitID, 1)
-    -- if cQueue and #cQueue == 0 then
-    --     if unitTeam == leftTeam.nullAI then
-    --         Spring.GiveOrderToUnit(unitID, CMD.FIGHT, {5888, 0, 1530}, 0)
-    --         Spring.Echo("Inactive unit")
-    --     elseif unitTeam == rightTeam.nullAI then
-    --         Spring.GiveOrderToUnit(unitID, CMD.FIGHT, {2303, 0, 1530}, 0)
-    --     end
-    -- end
+    local cQueue = Spring.GetCommandQueue(unitID, 1)
+    if unitTeam == leftTeam.nullAI or unitTeam == rightTeam.nullAI then
+        table.insert(idleUnits, IdleUnit(unitID, unitTeam))
+    end
 end
