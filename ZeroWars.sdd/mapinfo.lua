@@ -8,7 +8,7 @@ local mapinfo = {
 	shortname   = "zwars",
 	description = "made for zero-k",
 	author      = "petturtle",
-	version     = "v1.3",
+	version     = "v1.31",
 	--mutator   = "deployment";
 	--mapfile   = "", --// location of smf/sm3 file (optional)
 	modtype     = 3, --// 1=primary, 0=hidden, 3=map
@@ -19,7 +19,7 @@ local mapinfo = {
 	--StartMusic = "", --// deprecated
 
 	maphardness     = 100,
-	notDeformable   = true,
+	notDeformable   = false,
 	gravity         = 130,
 	tidalStrength   = 0,
 	maxMetal        = 3,

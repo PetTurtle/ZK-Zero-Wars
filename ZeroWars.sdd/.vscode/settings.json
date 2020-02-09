@@ -1,0 +1,10 @@
+{
+    "Lua.diagnostics.globals": [
+        "Game",
+        "gadgetHandler",
+        "gadget",
+        "Spring",
+        "UnitDefs",
+        "CMD"
+    ]
+}
