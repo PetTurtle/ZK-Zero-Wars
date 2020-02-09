@@ -322,7 +322,7 @@ function gadget:GameFrame(f)
             units = waves[1].units
             for j = 1, #units do
                 if not Spring.GetUnitIsDead(units[j]) then
-                    Spring.DestroyUnit(units[j])
+                    Spring.DestroyUnit(units[j], false, true)
                 end
             end
             table.remove(waves, 1)
@@ -332,7 +332,7 @@ function gadget:GameFrame(f)
             units = artyWave[1].units
             for j = 1, #units do
                 if not Spring.GetUnitIsDead(units[j]) then
-                    Spring.DestroyUnit(units[j])
+                    Spring.DestroyUnit(units[j], false, true)
                 end
             end
             table.remove(artyWave, 1)
