@@ -225,6 +225,7 @@ local function CreateRightSide()
         Spring.SetTeamResource(rightTeam.playerList[i], "metal", 0)
     end
 
+    Spring.CreateUnit("staticstorage", 8192, 10000, 0, "n", rightTeam.nullAI)
     local nullAICom = Spring.GetUnitsInRectangle(3968, 1152, 4224, 1920, rightTeam.nullAI)
     Spring.DestroyUnit(nullAICom[1], false, true)
 end
