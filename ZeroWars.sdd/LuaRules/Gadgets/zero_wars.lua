@@ -108,15 +108,6 @@ local function InitializeLeftSide()
     -- Remove unused platforms
     for i = #plats, 1, -1 do
         if #plats[i].players == 0 then
-            local function RemovePlatform()
-                local rect = plats[i].rect
-                for x = rect.x1 - pBorder, rect.x2 + pBorder, 1 do
-                    for z = rect.y1 - pBorder, rect.y2 + pBorder, 1 do
-                        Spring.SetHeightMap(x, z, -25)
-                    end
-                end
-            end
-            Spring.SetHeightMapFunc(RemovePlatform)
             table.remove(plats, i)
         end
     end
@@ -140,16 +131,6 @@ local function InitializeRightSide()
     -- Remove unused platforms
     for i = #plats, 1, -1 do
         if #plats[i].players == 0 then
-
-            local function RemovePlatform()
-                local rect = plats[i].rect
-                for x = rect.x1 - pBorder, rect.x2 + pBorder, 1 do
-                    for z = rect.y1 - pBorder, rect.y2 + pBorder, 1 do
-                        Spring.SetHeightMap(x, z, -25)
-                    end
-                end
-            end
-            Spring.SetHeightMapFunc(RemovePlatform)
             table.remove(plats, i)
         end
     end

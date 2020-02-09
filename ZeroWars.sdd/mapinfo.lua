@@ -19,7 +19,7 @@ local mapinfo = {
 	--StartMusic = "", --// deprecated
 
 	maphardness     = 100,
-	notDeformable   = false,
+	notDeformable   = true,
 	gravity         = 130,
 	tidalStrength   = 0,
 	maxMetal        = 3,
