@@ -169,6 +169,12 @@ local function CreateLeftSide()
         end
     end
 
+    Spring.CreateUnit("staticrearm", 1480, 10000, 1226, "e", leftTeam.nullAI)
+    Spring.CreateUnit("staticrearm", 1480, 10000, 1386, "e", leftTeam.nullAI)
+    Spring.CreateUnit("staticrearm", 1480, 10000, 1529, "e", leftTeam.nullAI)
+    Spring.CreateUnit("staticrearm", 1480, 10000, 1703, "e", leftTeam.nullAI)
+    Spring.CreateUnit("staticrearm", 1480, 10000, 1848, "e", leftTeam.nullAI)
+
     Spring.SetTeamResource(leftTeam.nullAI, "metal", 0)
     for i = 1, #leftTeam.playerList do
         Spring.SetTeamResource(leftTeam.playerList[i], "metal", 0)
