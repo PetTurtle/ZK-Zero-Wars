@@ -17,6 +17,7 @@ local Rect = VFS.Include("LuaRules/Gadgets/ZeroW/Rect.lua")
 local Platform = VFS.Include("LuaRules/Gadgets/ZeroW/Platform.lua")
 local IdleUnit = VFS.Include("LuaRules/Gadgets/ZeroW/IdleUnit.lua")
 local Side = VFS.Include("LuaRules/Gadgets/ZeroW/Side.lua")
+local Wave = VFS.Include("LuaRules/Gadgets/ZeroW/Wave.lua")
 
 local dataSet = false
 
@@ -120,7 +121,7 @@ local function CreateLeftSide()
     Spring.SetUnitHealth(baseAA1, 50000)
     Spring.SetUnitMaxHealth(baseAA2, 50000)
     Spring.SetUnitHealth(baseAA2, 50000)
-    
+
     for i = 1, #leftSide.plats do
         for t = 1, #leftSide.plats[i].players do
             local units = Spring.GetTeamUnits(leftSide.plats[i].players[t])
@@ -195,14 +196,6 @@ end
 
 ----- Spawning Waves -----
 
-function NewWave(units, spawnFrame)
-    local wave = {
-        units = units,
-        spawnFrame = spawnFrame
-    }
-    return wave
-end
-
 local function DeployWave(plat, units, nullAI, frame, faceDir, attackXPos)
     local spawnedUnits = {}
     local spawnedArty = {}
@@ -228,10 +221,10 @@ local function DeployWave(plat, units, nullAI, frame, faceDir, attackXPos)
         end
     end
     if #spawnedUnits > 0 then
-        table.insert(waves, NewWave(spawnedUnits, frame))
+        table.insert(waves, Wave.new(spawnedUnits, frame))
     end
     if #spawnedArty > 0 then
-        table.insert(artyWave, NewWave(spawnedArty, frame))
+        table.insert(artyWave, Wave.new(spawnedArty, frame))
     end
 end
 
@@ -270,8 +263,6 @@ function gadget:Initialize()
 
     InitializeLeftSide()
     InitializeRightSide()
-
-    GG.leftTeam = leftTeam
 end
 
 function gadget:GameFrame(f)
@@ -284,7 +275,6 @@ function gadget:GameFrame(f)
     if f % spawnTime == 0 then
         DeployPlatform(leftSide.plats[leftSide.iterator + 1], leftTeam.nullAI, f, "e", leftSide.attackXPos)
         leftSide.iterator = ((leftSide.iterator + 1) % #leftSide.plats)
-
         DeployPlatform(rightSide.plats[rightSide.iterator + 1], rightTeam.nullAI, f, "w", rightSide.attackXPos)
         rightSide.iterator = ((rightSide.iterator + 1) % #rightSide.plats)
     end
@@ -318,11 +308,7 @@ function gadget:GameFrame(f)
             if not Spring.GetUnitIsDead(idleUnits[i].unit) then
                 local cQueue = Spring.GetCommandQueue(idleUnits[i].unit, 1)
                 if cQueue and #cQueue == 0 then
-                    if idleUnits[i].side == leftSide then
-                        Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, 5888, 0, 1530}, {"alt"});
-                    else
-                        Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, 2303, 0, 1530}, {"alt"});
-                    end
+                    Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, idleUnits[i].side.attackXPos, 0, 1530}, {"alt"});
                 end
             end
             table.remove(idleUnits, i)
@@ -355,9 +341,9 @@ end
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
     local cQueue = Spring.GetCommandQueue(unitID, 1)
     if unitTeam == leftTeam.nullAI then
-        table.insert(idleUnits, IdleUnit.new(unitID, leftTeam))
+        table.insert(idleUnits, IdleUnit.new(unitID, leftSide))
     elseif unitTeam == rightTeam.nullAI then
-        table.insert(idleUnits, IdleUnit.new(unitID, rightTeam))
+        table.insert(idleUnits, IdleUnit.new(unitID, rightSide))
     end
 end
 
