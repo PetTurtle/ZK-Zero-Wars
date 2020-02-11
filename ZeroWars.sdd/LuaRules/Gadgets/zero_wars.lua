@@ -13,8 +13,12 @@ function gadget:GetInfo()
     }
 end
 
+local Rect = VFS.Include("LuaRules/Gadgets/ZeroW/Rect.lua")
+local Platform = VFS.Include("LuaRules/Gadgets/ZeroW/Platform.lua")
+local IdleUnit = VFS.Include("LuaRules/Gadgets/ZeroW/IdleUnit.lua")
+local Side = VFS.Include("LuaRules/Gadgets/ZeroW/Side.lua")
+
 local dataSet = false
-local pBorder = 20 -- platform border
 
 local leftTeam
 local rightTeam
@@ -28,24 +32,6 @@ local artyWave = {}
 local idleUnits = {}
 
 ----- Initalizing Game -----
-
-function IdleUnit(unit, nullAI)
-    local idleUnit = {
-        unit = unit,
-        nullAI = nullAI
-    }
-    return idleUnit
-end
-
-function Rect(x1, y1, x2, y2)
-    local rect = {
-        x1 = x1,
-        y1 = y1,
-        x2 = x2,
-        y2 = y2
-    }
-    return rect
-end
 
 -- Create team, holds all team related data for each side
 function CreateTeam(nullAI)
@@ -67,36 +53,13 @@ function CreateTeam(nullAI)
 	return team
 end
 
-function CreatePlatform(rect, deployRect, offsetX, offsetY, attackXPos)
-	local platform = {
-        rect = rect,
-        deployRect = deployRect,
-        offsetX = offsetX,
-        offsetY = offsetY,
-        attackXPos = attackXPos,
-        players = {}
-	}
-	return platform
-end
-
-function CreateSide(team, plats)
-    local side = {
-        team = team,
-        plats = plats,
-        baseId = -1,
-        turretId = -1,
-        iterator = 0
-    }
-    return side
-end
-
 -- Sets left side data on initialize
 local function InitializeLeftSide()
 
     -- Set platform data
-    local platformTop    = CreatePlatform(Rect(0, 0, 760, 760), Rect(384, 0, 760, 760), 1280, 1144, 5888)
-    local platformCenter = CreatePlatform(Rect(0, 1152, 760, 1912), Rect(384, 1152, 760, 1912), 1280, 0, 5888)
-    local platformBottom = CreatePlatform(Rect(0, 2304, 760, 3064), Rect(384, 2304, 760, 3064), 1280, -1144, 5888)
+    local platformTop    = Platform.new(0, 1280, 1144)
+    local platformCenter = Platform.new(1152, 1280, 0)
+    local platformBottom = Platform.new(2304, 1280, -1144)
     local plats = {platformTop, platformCenter, platformBottom}
     
     for i = 1, #leftTeam.playerList do
@@ -110,16 +73,16 @@ local function InitializeLeftSide()
         end
     end
 
-    leftSide = CreateSide(leftTeam, plats)
+    leftSide = Side.new(leftTeam, plats, 5888)
 end
 
 -- Sets right side data on initialize
 local function InitializeRightSide()
 
     -- Set platform data
-    local platformTop    = CreatePlatform(Rect(7432,    0, 8192,  760), Rect(7432,    0, 7808,  760), -1280,  1144, 2303)
-    local platformCenter = CreatePlatform(Rect(7432, 1152, 8192, 1912), Rect(7432, 1152, 7808, 1912), -1280,  0,    2303)
-    local platformBottom = CreatePlatform(Rect(7432, 2304, 8192, 3064), Rect(7432, 2304, 7808, 3064), -1280, -1144, 2303)
+    local platformTop    = Platform.new(0, -1280,  1144)
+    local platformCenter = Platform.new(1152, -1280,  0)
+    local platformBottom = Platform.new(2304, -1280, -1144)
     local plats = {platformTop, platformCenter, platformBottom}
 
     for i = 1, #rightTeam.playerList do
@@ -133,7 +96,7 @@ local function InitializeRightSide()
         end
     end
 
-    rightSide = CreateSide(rightTeam, plats)
+    rightSide = Side.new(rightTeam, plats, 2303)
 end
 
 -- Sets left side data on first frame
@@ -240,7 +203,7 @@ function NewWave(units, spawnFrame)
     return wave
 end
 
-local function DeployWave(plat, units, nullAI, frame, faceDir)
+local function DeployWave(plat, units, nullAI, frame, faceDir, attackXPos)
     local spawnedUnits = {}
     local spawnedArty = {}
     for i = 1, #units do
@@ -261,7 +224,7 @@ local function DeployWave(plat, units, nullAI, frame, faceDir)
             Spring.GiveOrderToUnit(unit, CMD.FIRE_STATE, {states["firestate"]}, 0)
             Spring.GiveOrderToUnit(unit, CMD.MOVE_STATE, {states["movestate"]}, 0)
             --Spring.GiveOrderToUnit(unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, plat.attackXPos, 0, z + plat.offsetY}, {"alt"});
-            Spring.GiveOrderToUnit(unit, CMD.FIGHT, {plat.attackXPos, 0, z + plat.offsetY}, 0)
+            Spring.GiveOrderToUnit(unit, CMD.FIGHT, {attackXPos, 0, z + plat.offsetY}, 0)
         end
     end
     if #spawnedUnits > 0 then
@@ -272,11 +235,11 @@ local function DeployWave(plat, units, nullAI, frame, faceDir)
     end
 end
 
-local function DeployPlatform(plat, nullAI, frame, faceDir)
+local function DeployPlatform(plat, nullAI, frame, faceDir, attackXPos)
     for i = 1, #plat.players do
         local units = Spring.GetUnitsInRectangle(plat.deployRect.x1, plat.deployRect.y1, plat.deployRect.x2, plat.deployRect.y2, plat.players[i])
         if #units > 0 then
-            DeployWave(plat, units, nullAI, frame, faceDir)
+            DeployWave(plat, units, nullAI, frame, faceDir, attackXPos)
         end
     end
 end
@@ -307,6 +270,8 @@ function gadget:Initialize()
 
     InitializeLeftSide()
     InitializeRightSide()
+
+    GG.leftTeam = leftTeam
 end
 
 function gadget:GameFrame(f)
@@ -317,10 +282,10 @@ function gadget:GameFrame(f)
     end
 
     if f % spawnTime == 0 then
-        DeployPlatform(leftSide.plats[leftSide.iterator + 1], leftTeam.nullAI, f, "e")
+        DeployPlatform(leftSide.plats[leftSide.iterator + 1], leftTeam.nullAI, f, "e", leftSide.attackXPos)
         leftSide.iterator = ((leftSide.iterator + 1) % #leftSide.plats)
 
-        DeployPlatform(rightSide.plats[rightSide.iterator + 1], rightTeam.nullAI, f, "w")
+        DeployPlatform(rightSide.plats[rightSide.iterator + 1], rightTeam.nullAI, f, "w", rightSide.attackXPos)
         rightSide.iterator = ((rightSide.iterator + 1) % #rightSide.plats)
     end
 
@@ -353,7 +318,7 @@ function gadget:GameFrame(f)
             if not Spring.GetUnitIsDead(idleUnits[i].unit) then
                 local cQueue = Spring.GetCommandQueue(idleUnits[i].unit, 1)
                 if cQueue and #cQueue == 0 then
-                    if idleUnits[i].nullAI == leftTeam.nullAI then
+                    if idleUnits[i].side == leftSide then
                         Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, 5888, 0, 1530}, {"alt"});
                     else
                         Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, 2303, 0, 1530}, {"alt"});
@@ -389,8 +354,10 @@ end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
     local cQueue = Spring.GetCommandQueue(unitID, 1)
-    if unitTeam == leftTeam.nullAI or unitTeam == rightTeam.nullAI then
-        table.insert(idleUnits, IdleUnit(unitID, unitTeam))
+    if unitTeam == leftTeam.nullAI then
+        table.insert(idleUnits, IdleUnit.new(unitID, leftTeam))
+    elseif unitTeam == rightTeam.nullAI then
+        table.insert(idleUnits, IdleUnit.new(unitID, rightTeam))
     end
 end
 

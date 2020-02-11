@@ -1,2 +1,6 @@
 
 zerowars/.vscode/
+
+*.sd7
+
+ZeroWars.sdd/.vscode/
