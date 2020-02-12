@@ -7,17 +7,15 @@ function gadget:GetInfo()
         author = "petturtle",
         date = "2020",
         license = "GNU GPL, v2 or later",
-        layer = 3,
+        layer = 1,
         enabled = true,
         handler = true
     }
 end
 
-local Rect = VFS.Include("LuaRules/Gadgets/ZeroW/Rect.lua")
-local Platform = VFS.Include("LuaRules/Gadgets/ZeroW/Platform.lua")
-local IdleUnit = VFS.Include("LuaRules/Gadgets/ZeroW/IdleUnit.lua")
-local Side = VFS.Include("LuaRules/Gadgets/ZeroW/Side.lua")
-local Wave = VFS.Include("LuaRules/Gadgets/ZeroW/Wave.lua")
+local Platform = VFS.Include("LuaRules/Gadgets/ZeroWData/Platform.lua")
+local IdleUnit = VFS.Include("LuaRules/Gadgets/ZeroWData/IdleUnit.lua")
+local Side = VFS.Include("LuaRules/Gadgets/ZeroWData/Side.lua")
 
 local dataSet = false
 
@@ -26,10 +24,7 @@ local rightTeam
 local leftSide
 local rightSide
 
-local spawnTime = 800 -- #frames between waves
 local updateTime = 60
-local waves = {}
-local artyWave = {}
 local idleUnits = {}
 
 ----- Initalizing Game -----
@@ -102,25 +97,19 @@ end
 
 -- Sets left side data on first frame
 local function CreateLeftSide()
-    local baseId = Spring.CreateUnit("turretheavylaser", 2303, 10000, 1530, "e", leftTeam.nullAI)
-    local turretId = Spring.CreateUnit("turretriot", 3264, 10000, 1530, "e", leftTeam.nullAI)
-    Spring.SetUnitMaxHealth(baseId, 5000)
-    Spring.SetUnitHealth(baseId, 5000)
-    Spring.SetUnitMaxHealth(turretId, 3500)
-    Spring.SetUnitHealth(turretId, 3500)
-    Spring.SetUnitWeaponState(baseId, 1, "reloadTime", 1.0)
-    Spring.SetUnitWeaponState(turretId, 1, "projectiles", 2)
-    leftSide.baseId = baseId
-    leftSide.turretId = turretId
+    leftSide.baseId = Spring.CreateUnit("baseturret", 2303, 10000, 1530, "e", leftTeam.playerList[1])
+    leftSide.turretId= Spring.CreateUnit("centerturret", 3264, 10000, 1530, "e", leftTeam.nullAI)
+    Spring.SetUnitBlocking(leftSide.baseId, false)
+    Spring.SetUnitBlocking(leftSide.turretId, false)
 
-    local baseAA1 = Spring.CreateUnit("turretaaflak", 2024, 10000, 1128, "e", leftTeam.nullAI)
-    local baseAA2 = Spring.CreateUnit("turretaaflak", 2024, 10000, 1944, "e", leftTeam.nullAI)
-    Spring.SetUnitWeaponState(baseAA1, 1, "projectiles", 5)
-    Spring.SetUnitWeaponState(baseAA2, 1, "projectiles", 5)
-    Spring.SetUnitMaxHealth(baseAA1, 50000)
-    Spring.SetUnitHealth(baseAA1, 50000)
-    Spring.SetUnitMaxHealth(baseAA2, 50000)
-    Spring.SetUnitHealth(baseAA2, 50000)
+    -- local baseAA1 = Spring.CreateUnit("turretaaflak", 2024, 10000, 1128, "e", leftTeam.nullAI)
+    -- local baseAA2 = Spring.CreateUnit("turretaaflak", 2024, 10000, 1944, "e", leftTeam.nullAI)
+    -- Spring.SetUnitWeaponState(baseAA1, 1, "projectiles", 5)
+    -- Spring.SetUnitWeaponState(baseAA2, 1, "projectiles", 5)
+    -- Spring.SetUnitMaxHealth(baseAA1, 50000)
+    -- Spring.SetUnitHealth(baseAA1, 50000)
+    -- Spring.SetUnitMaxHealth(baseAA2, 50000)
+    -- Spring.SetUnitHealth(baseAA2, 50000)
 
     for i = 1, #leftSide.plats do
         for t = 1, #leftSide.plats[i].players do
@@ -149,25 +138,19 @@ end
 
 -- Sets right side data on first frame
 local function CreateRightSide()
-    local baseId = Spring.CreateUnit("turretheavylaser", 5888, 10000, 1530, "w", rightTeam.nullAI)
-    local turretId = Spring.CreateUnit("turretriot", 4930, 10000, 1530, "w", rightTeam.nullAI)
-    Spring.SetUnitMaxHealth(baseId, 5000)
-    Spring.SetUnitHealth(baseId, 5000)
-    Spring.SetUnitMaxHealth(turretId, 3500)
-    Spring.SetUnitHealth(turretId, 3500)
-    Spring.SetUnitWeaponState(baseId, 1, "reloadTime", 1.0)
-    Spring.SetUnitWeaponState(turretId, 1, "projectiles", 2)
-    rightSide.baseId = baseId
-    rightSide.turretId = turretId
+    rightSide.baseId = Spring.CreateUnit("baseturret", 5888, 10000, 1530, "w", rightTeam.nullAI)
+    rightSide.turretId = Spring.CreateUnit("centerturret", 4930, 10000, 1530, "w", rightTeam.nullAI)
+    Spring.SetUnitBlocking(rightSide.baseId, false)
+    Spring.SetUnitBlocking(rightSide.turretId, false)
 
-    local baseAA1 = Spring.CreateUnit("turretaaflak", 6168, 10000, 1128, "w", rightTeam.nullAI)
-    local baseAA2 = Spring.CreateUnit("turretaaflak", 6168, 10000, 1944, "w", rightTeam.nullAI)
-    Spring.SetUnitWeaponState(baseAA1, 1, "projectiles", 5)
-    Spring.SetUnitWeaponState(baseAA2, 1, "projectiles", 5)
-    Spring.SetUnitMaxHealth(baseAA1, 50000)
-    Spring.SetUnitHealth(baseAA1, 50000)
-    Spring.SetUnitMaxHealth(baseAA2, 50000)
-    Spring.SetUnitHealth(baseAA2, 50000)
+    -- local baseAA1 = Spring.CreateUnit("turretaaflak", 6168, 10000, 1128, "w", rightTeam.nullAI)
+    -- local baseAA2 = Spring.CreateUnit("turretaaflak", 6168, 10000, 1944, "w", rightTeam.nullAI)
+    -- Spring.SetUnitWeaponState(baseAA1, 1, "projectiles", 5)
+    -- Spring.SetUnitWeaponState(baseAA2, 1, "projectiles", 5)
+    -- Spring.SetUnitMaxHealth(baseAA1, 50000)
+    -- Spring.SetUnitHealth(baseAA1, 50000)
+    -- Spring.SetUnitMaxHealth(baseAA2, 50000)
+    -- Spring.SetUnitHealth(baseAA2, 50000)
 
     Spring.CreateUnit("staticrearm", 6711, 10000, 1226, "w", rightTeam.nullAI)
     Spring.CreateUnit("staticrearm", 6711, 10000, 1386, "w", rightTeam.nullAI)
@@ -192,49 +175,6 @@ local function CreateRightSide()
     Spring.CreateUnit("staticstorage", 8192, 10000, 0, "n", rightTeam.nullAI)
     local nullAICom = Spring.GetUnitsInRectangle(3968, 1152, 4224, 1920, rightTeam.nullAI)
     Spring.DestroyUnit(nullAICom[1], false, true)
-end
-
------ Spawning Waves -----
-
-local function DeployWave(plat, units, nullAI, frame, faceDir, attackXPos)
-    local spawnedUnits = {}
-    local spawnedArty = {}
-    for i = 1, #units do
-        local unitDefID = Spring.GetUnitDefID(units[i])
-        local x, y, z = Spring.GetUnitPosition(units[i])
-        local states = Spring.GetUnitStates(units[i])
-        local buildProgress = select(5, Spring.GetUnitHealth(units[i]))
-        local ud = UnitDefs[unitDefID]
-        if ud.customParams.commtype then
-            Spring.SetUnitPosition(units[i], x + plat.offsetX, z + plat.offsetY)
-        elseif not ud.isImmobile and buildProgress == 1  then
-            local unit = Spring.CreateUnit(unitDefID, x + plat.offsetX, 150, z + plat.offsetY, faceDir, nullAI)
-            if (ud.maxWeaponRange >= 600) then
-                table.insert(spawnedArty, unit)
-            else
-                table.insert(spawnedUnits, unit)
-            end
-            Spring.GiveOrderToUnit(unit, CMD.FIRE_STATE, {states["firestate"]}, 0)
-            Spring.GiveOrderToUnit(unit, CMD.MOVE_STATE, {states["movestate"]}, 0)
-            --Spring.GiveOrderToUnit(unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, plat.attackXPos, 0, z + plat.offsetY}, {"alt"});
-            Spring.GiveOrderToUnit(unit, CMD.FIGHT, {attackXPos, 0, z + plat.offsetY}, 0)
-        end
-    end
-    if #spawnedUnits > 0 then
-        table.insert(waves, Wave.new(spawnedUnits, frame))
-    end
-    if #spawnedArty > 0 then
-        table.insert(artyWave, Wave.new(spawnedArty, frame))
-    end
-end
-
-local function DeployPlatform(plat, nullAI, frame, faceDir, attackXPos)
-    for i = 1, #plat.players do
-        local units = Spring.GetUnitsInRectangle(plat.deployRect.x1, plat.deployRect.y1, plat.deployRect.x2, plat.deployRect.y2, plat.players[i])
-        if #units > 0 then
-            DeployWave(plat, units, nullAI, frame, faceDir, attackXPos)
-        end
-    end
 end
 
 function gadget:Initialize()
@@ -263,6 +203,10 @@ function gadget:Initialize()
 
     InitializeLeftSide()
     InitializeRightSide()
+    GG.leftSide = leftSide
+    GG.rightSide = rightSide
+
+    Spring.SetGameRulesParam("disabled_unit_athena", 1)
 end
 
 function gadget:GameFrame(f)
@@ -272,37 +216,7 @@ function gadget:GameFrame(f)
         dataSet = true
     end
 
-    if f % spawnTime == 0 then
-        DeployPlatform(leftSide.plats[leftSide.iterator + 1], leftTeam.nullAI, f, "e", leftSide.attackXPos)
-        leftSide.iterator = ((leftSide.iterator + 1) % #leftSide.plats)
-        DeployPlatform(rightSide.plats[rightSide.iterator + 1], rightTeam.nullAI, f, "w", rightSide.attackXPos)
-        rightSide.iterator = ((rightSide.iterator + 1) % #rightSide.plats)
-    end
-
-    
     if f > 0 and f % updateTime == 0 then
-        -- remove old waves
-        local units
-        if #waves > 0 and waves[1].spawnFrame + 4500 < f  then
-            units = waves[1].units
-            for j = 1, #units do
-                if not Spring.GetUnitIsDead(units[j]) then
-                    Spring.DestroyUnit(units[j], false, true)
-                end
-            end
-            table.remove(waves, 1)
-        end
-
-        if #artyWave > 0 and artyWave[1].spawnFrame + 2500 < f then
-            units = artyWave[1].units
-            for j = 1, #units do
-                if not Spring.GetUnitIsDead(units[j]) then
-                    Spring.DestroyUnit(units[j], false, true)
-                end
-            end
-            table.remove(artyWave, 1)
-        end
-
         -- add attack order to idle units
         for i = #idleUnits, 1, -1 do
             if not Spring.GetUnitIsDead(idleUnits[i].unit) then
