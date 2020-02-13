@@ -27,6 +27,16 @@ local ARTYTIMEOUT = 2500
 local waves = {}
 local artyWave = {}
 
+local function CopyUnitState(original, clone, cmd)
+    local CMDDescID = Spring.FindUnitCmdDesc(original, cmd)
+        if CMDDescID then
+            local cmdDesc = Spring.GetUnitCmdDescs(original, CMDDescID, CMDDescID)
+            local nparams = cmdDesc[1].params
+            Spring.EditUnitCmdDesc(clone, cmd, cmdDesc[1])
+            Spring.GiveOrderToUnit(clone, cmd, {nparams[1]}, {})
+        end
+end
+
 local function DeployWave(side, units, frame, faceDir)
     local plat = side.plats[leftSide.iterator + 1]
     local spawnedUnits = {}
@@ -53,13 +63,14 @@ local function DeployWave(side, units, frame, faceDir)
                 { CMD.CLOAK,      { states.cloak     and 1 or ud.initCloaked },  { } },
                 { CMD.ONOFF,      { 1 },                            { } },
                 { CMD.TRAJECTORY, { states.trajectory and 1 or 0 }, { } },
-              })
+            })
             
-            local aiState = Spring.FindUnitCmdDesc(unit, CMD.UNIT_AI)
-            if aiState then
-                Spring.Echo(Spring.GetUnitCmdDescs(unit, CMD.UNIT_AI))
-
-            end
+            CopyUnitState(units[i], unit, CMD_UNIT_AI)
+            CopyUnitState(units[i], unit, CMD_AIR_STRAFE)
+            CopyUnitState(units[i], unit, CMD_PUSH_PULL)
+            CopyUnitState(units[i], unit, CMD_AP_FLY_STATE)
+            CopyUnitState(units[i], unit, CMD_UNIT_BOMBER_DIVE_STATE)
+            CopyUnitState(units[i], unit, CMD_AP_FLY_STATE)
 
             Spring.GiveOrderToUnit(unit, CMD.FIGHT, {side.attackXPos, 0, z + plat.offsetY}, 0)
         end
