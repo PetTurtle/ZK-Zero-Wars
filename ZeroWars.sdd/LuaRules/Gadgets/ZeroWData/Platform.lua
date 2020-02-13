@@ -1,4 +1,4 @@
-local Rect = VFS.Include("LuaRules/Gadgets/ZeroW/Rect.lua")
+local Rect = VFS.Include("LuaRules/Gadgets/ZeroWData/Rect.lua")
 
 local Platform = {}
 
