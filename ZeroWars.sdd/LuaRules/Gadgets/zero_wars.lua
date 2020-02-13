@@ -97,24 +97,16 @@ end
 
 -- Sets left side data on first frame
 local function CreateLeftSide()
-    leftSide.baseId = Spring.CreateUnit("baseturret", 2303, 10000, 1530, "e", leftTeam.playerList[1])
+    leftSide.baseId = Spring.CreateUnit("baseturret", 2303, 10000, 1530, "e", leftTeam.nullAI)
     leftSide.turretId= Spring.CreateUnit("centerturret", 3264, 10000, 1530, "e", leftTeam.nullAI)
     Spring.SetUnitBlocking(leftSide.baseId, false)
     Spring.SetUnitBlocking(leftSide.turretId, false)
 
-    -- local baseAA1 = Spring.CreateUnit("turretaaflak", 2024, 10000, 1128, "e", leftTeam.nullAI)
-    -- local baseAA2 = Spring.CreateUnit("turretaaflak", 2024, 10000, 1944, "e", leftTeam.nullAI)
-    -- Spring.SetUnitWeaponState(baseAA1, 1, "projectiles", 5)
-    -- Spring.SetUnitWeaponState(baseAA2, 1, "projectiles", 5)
-    -- Spring.SetUnitMaxHealth(baseAA1, 50000)
-    -- Spring.SetUnitHealth(baseAA1, 50000)
-    -- Spring.SetUnitMaxHealth(baseAA2, 50000)
-    -- Spring.SetUnitHealth(baseAA2, 50000)
-
     for i = 1, #leftSide.plats do
         for t = 1, #leftSide.plats[i].players do
+            Spring.CreateUnit("basiccon", leftSide.plats[i].rect.x1, 10000, leftSide.plats[i].rect.y1 + 350, "e", leftSide.plats[i].players[t])
             local units = Spring.GetTeamUnits(leftSide.plats[i].players[t])
-            Spring.SetUnitPosition(units[1], leftSide.plats[i].rect.x1, leftSide.plats[i].rect.y1 + 350)
+            Spring.SetUnitPosition(units[1], 1855, 1537)
             local aa = Spring.CreateUnit("superaaturret", leftSide.plats[i].rect.x1 + 364, 10000, leftSide.plats[i].rect.y1 + 380, "e", leftTeam.nullAI)
         end
     end
@@ -142,15 +134,6 @@ local function CreateRightSide()
     Spring.SetUnitBlocking(rightSide.baseId, false)
     Spring.SetUnitBlocking(rightSide.turretId, false)
 
-    -- local baseAA1 = Spring.CreateUnit("turretaaflak", 6168, 10000, 1128, "w", rightTeam.nullAI)
-    -- local baseAA2 = Spring.CreateUnit("turretaaflak", 6168, 10000, 1944, "w", rightTeam.nullAI)
-    -- Spring.SetUnitWeaponState(baseAA1, 1, "projectiles", 5)
-    -- Spring.SetUnitWeaponState(baseAA2, 1, "projectiles", 5)
-    -- Spring.SetUnitMaxHealth(baseAA1, 50000)
-    -- Spring.SetUnitHealth(baseAA1, 50000)
-    -- Spring.SetUnitMaxHealth(baseAA2, 50000)
-    -- Spring.SetUnitHealth(baseAA2, 50000)
-
     Spring.CreateUnit("staticrearm", 6711, 10000, 1226, "w", rightTeam.nullAI)
     Spring.CreateUnit("staticrearm", 6711, 10000, 1386, "w", rightTeam.nullAI)
     Spring.CreateUnit("staticrearm", 6711, 10000, 1529, "w", rightTeam.nullAI)
@@ -159,8 +142,9 @@ local function CreateRightSide()
 
     for i = 1, #rightSide.plats do
         for t = 1, #rightSide.plats[i].players do
+            Spring.CreateUnit("basiccon", rightSide.plats[i].rect.x2, 10000, rightSide.plats[i].rect.y2 - 350, "e", rightSide.plats[i].players[t])
             local units = Spring.GetTeamUnits(rightSide.plats[i].players[t])
-            Spring.SetUnitPosition(units[1], rightSide.plats[i].rect.x2, rightSide.plats[i].rect.y2 - 350)
+            Spring.SetUnitPosition(units[1], 6336, 1537)
             local aa = Spring.CreateUnit("superaaturret", rightSide.plats[i].rect.x2 - 364, 10000, rightSide.plats[i].rect.y1 + 370, "w", rightTeam.nullAI)
         end
     end
