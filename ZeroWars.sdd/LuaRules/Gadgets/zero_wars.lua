@@ -115,8 +115,7 @@ local function CreateLeftSide()
         for t = 1, #leftSide.plats[i].players do
             local units = Spring.GetTeamUnits(leftSide.plats[i].players[t])
             Spring.SetUnitPosition(units[1], leftSide.plats[i].rect.x1, leftSide.plats[i].rect.y1 + 350)
-            local aa = Spring.CreateUnit("turretaaflak", leftSide.plats[i].rect.x1 + 364, 10000, leftSide.plats[i].rect.y1 + 380, "e", leftTeam.nullAI)
-            Spring.SetUnitWeaponState(aa, 1, "projectiles", 100)
+            local aa = Spring.CreateUnit("superaaturret", leftSide.plats[i].rect.x1 + 364, 10000, leftSide.plats[i].rect.y1 + 380, "e", leftTeam.nullAI)
         end
     end
 
@@ -162,8 +161,7 @@ local function CreateRightSide()
         for t = 1, #rightSide.plats[i].players do
             local units = Spring.GetTeamUnits(rightSide.plats[i].players[t])
             Spring.SetUnitPosition(units[1], rightSide.plats[i].rect.x2, rightSide.plats[i].rect.y2 - 350)
-            local aa = Spring.CreateUnit("turretaaflak", rightSide.plats[i].rect.x2 - 364, 10000, rightSide.plats[i].rect.y1 + 370, "w", rightTeam.nullAI)
-            Spring.SetUnitWeaponState(aa, 1, "projectiles", 100)
+            local aa = Spring.CreateUnit("superaaturret", rightSide.plats[i].rect.x2 - 364, 10000, rightSide.plats[i].rect.y1 + 370, "w", rightTeam.nullAI)
         end
     end
 
@@ -211,6 +209,13 @@ end
 
 function gadget:GameFrame(f)
     if f == 1 then
+        Spring.CreateUnit("superaaturret", 2940, 10000, 4, "s", Spring.GetGaiaTeamID())
+        Spring.CreateUnit("superaaturret", 4092, 10000, 4, "s", Spring.GetGaiaTeamID())
+        Spring.CreateUnit("superaaturret", 5244, 10000, 4, "s", Spring.GetGaiaTeamID())
+        Spring.CreateUnit("superaaturret", 2940, 10000, 3056, "n", Spring.GetGaiaTeamID())
+        Spring.CreateUnit("superaaturret", 4092, 10000, 3056, "n", Spring.GetGaiaTeamID())
+        Spring.CreateUnit("superaaturret", 5244, 10000, 3056, "n", Spring.GetGaiaTeamID())
+
         CreateLeftSide()
         CreateRightSide()
         dataSet = true
