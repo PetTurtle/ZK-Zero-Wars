@@ -22,6 +22,7 @@ unitDef = {
       [[grebe]],
       [[striderscorpion]],
       [[cloaksnipe]],
+      [[striderantiheavy]],
     },
   
     buildPic            = [[amphcon.png]],
