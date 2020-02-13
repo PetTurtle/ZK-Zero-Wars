@@ -102,15 +102,11 @@ unitDef = {
             weaponType = [[BeamLaser]],
             weaponVelocity = 2250
         },
-        SHIELD = {
+        SHIELD      = {
             name                    = [[Energy Shield]],
       
             damage                  = {
               default = 10,
-            },
-            customParams            = {
-              unlinked                = true,
-              shield_recharge_delay   = 10,
             },
       
             exteriorShield          = true,
@@ -118,17 +114,17 @@ unitDef = {
             shieldBadColor          = [[1 0.1 0.1 1]],
             shieldGoodColor         = [[0.1 0.1 1 1]],
             shieldInterceptType     = 3,
-            shieldPower             = 4000,
-            shieldPowerRegen        = 300,
+            shieldPower             = 2500,
+            shieldPowerRegen        = 16,
             shieldPowerRegenEnergy  = 0,
             shieldRadius            = 150,
-            shieldStartingPower     = 4000,
             shieldRepulser          = false,
+            shieldStartingPower     = 2500,
             smartShield             = true,
             visibleShield           = true,
             visibleShieldRepulse    = false,
             weaponType              = [[Shield]],
-          },
+        },
     },
 
     featureDefs = {
