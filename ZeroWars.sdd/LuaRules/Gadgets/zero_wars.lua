@@ -187,8 +187,6 @@ function gadget:Initialize()
     InitializeRightSide()
     GG.leftSide = leftSide
     GG.rightSide = rightSide
-
-    Spring.SetGameRulesParam("disabled_unit_athena", 1)
 end
 
 function gadget:GameFrame(f)

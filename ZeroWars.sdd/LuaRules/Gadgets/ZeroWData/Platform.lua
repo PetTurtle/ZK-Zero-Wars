@@ -11,11 +11,10 @@ function Platform.new(platYOffset, offsetX, offsetY)
 	local deployRect
 	if offsetX > 0 then
 		rect = Rect.new(0, platYOffset, platSize, platSize)
-
 		deployRect = Rect.new(rect.x1 + platSize/2, rect.y1, platSize/2, platSize)
 	else
 		rect = Rect.new(mapWidth - platSize, platYOffset, platSize, platSize)
-		deployRect = Rect.new(rect.x1 - platSize/2, rect.y1, platSize/2, platSize)
+		deployRect = Rect.new(rect.x1, rect.y1, platSize/2, platSize)
 	end
 
 	local platform = {

@@ -16,7 +16,7 @@ end
 include("LuaRules/Configs/customcmds.h.lua")
 local Wave = VFS.Include("LuaRules/Gadgets/ZeroWData/Wave.lua")
 
-local spawnTime = 100 -- #frames between waves
+local spawnTime = 800 -- #frames between waves
 local updateTime = 60
 
 local leftSide
@@ -38,7 +38,7 @@ local function CopyUnitState(original, clone, cmd)
 end
 
 local function DeployWave(side, units, frame, faceDir)
-    local plat = side.plats[leftSide.iterator + 1]
+    local plat = side.plats[side.iterator + 1]
     local spawnedUnits = {}
     local spawnedArty = {}
     for i = 1, #units do
@@ -84,7 +84,7 @@ local function DeployWave(side, units, frame, faceDir)
 end
 
 local function DeployPlatform(side, frame, faceDir)
-    local plat = side.plats[leftSide.iterator + 1]
+    local plat = side.plats[side.iterator + 1]
     for i = 1, #plat.players do
         local units = Spring.GetUnitsInRectangle(plat.deployRect.x1, plat.deployRect.y1, plat.deployRect.x2, plat.deployRect.y2, plat.players[i])
         if #units > 0 then
