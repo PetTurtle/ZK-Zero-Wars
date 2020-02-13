@@ -17,8 +17,8 @@ unitDef = {
       [[energypylon]],
       [[staticstorage]],
       
-      [[loakheavyraid]],
-      [[cloakskirm]],
+      [[cloakheavyraid]],
+      [[vehsupport]],
       [[cloakriot]],
       [[spiderassault]],
       [[cloakarty]],
