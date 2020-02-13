@@ -19,7 +19,7 @@ unitDef = {
     
     [[cloakraid]],
     [[shieldassault]],
-    [[vehsupport]],
+    [[cloakskirm]],
     [[spideremp]],
     [[zwgull]],
     [[basiccon]],
