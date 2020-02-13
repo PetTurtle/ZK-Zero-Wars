@@ -21,7 +21,6 @@ unitDef = {
       [[gunshipheavyskirm]],
       [[gunshipkrow]],
       [[bomberheavy]],
-      [[bomberstrike]],
       [[bomberassault]],
       [[nebula]],
     },
