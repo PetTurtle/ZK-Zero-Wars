@@ -49,7 +49,7 @@ local function DeployWave(side, units, frame, faceDir)
         local ud = UnitDefs[unitDefID]
         if ud.customParams.commtype then
             Spring.SetUnitPosition(units[i], x + plat.offsetX, z + plat.offsetY)
-        elseif not ud.isImmobile and buildProgress == 1  then
+        elseif not ud.isImmobile and (not ud.isMobileBuilder or ud.isAirUnit) and buildProgress == 1  then
             local unit = Spring.CreateUnit(unitDefID, x + plat.offsetX, 150, z + plat.offsetY, faceDir, side.team.nullAI)
             if (ud.maxWeaponRange >= 600) then
                 table.insert(spawnedArty, unit)
