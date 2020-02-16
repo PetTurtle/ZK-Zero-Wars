@@ -33,37 +33,37 @@ local ret = {}
 table.insert(ret, {x = 4096, z = 1532, metal = 4.0})
 
 if #leftTeam.playerList <= 1 then
-    table.insert(ret, {x = 73, z = 1349, metal = 2.0})
-    table.insert(ret, {x = 73, z = 1734, metal = 2.0})
+    table.insert(ret, {x = 140, z = 1349, metal = 2.0})
+    table.insert(ret, {x = 140, z = 1734, metal = 2.0})
 elseif #leftTeam.playerList <= 2 then
-    table.insert(ret, {x = 73, z = 1349, metal = 2.0})
-    table.insert(ret, {x = 73, z = 1734, metal = 2.0})
-    table.insert(ret, {x = 73, z = 2501, metal = 2.0})
-    table.insert(ret, {x = 73, z = 2886, metal = 2.0})
+    table.insert(ret, {x = 140, z = 1349, metal = 2.0})
+    table.insert(ret, {x = 140, z = 1734, metal = 2.0})
+    table.insert(ret, {x = 140, z = 2381, metal = 2.0})
+    table.insert(ret, {x = 140, z = 2766, metal = 2.0})
 else
-    table.insert(ret, {x = 73, z = 1349, metal = 2.0})
-    table.insert(ret, {x = 73, z = 1734, metal = 2.0})
-    table.insert(ret, {x = 73, z = 2501, metal = 2.0})
-    table.insert(ret, {x = 73, z = 2886, metal = 2.0})
-    table.insert(ret, {x = 73, z = 197, metal = 2.0})
-    table.insert(ret, {x = 73, z = 582, metal = 2.0})
+    table.insert(ret, {x = 140, z = 1349, metal = 2.0})
+    table.insert(ret, {x = 140, z = 1734, metal = 2.0})
+    table.insert(ret, {x = 140, z = 2381, metal = 2.0})
+    table.insert(ret, {x = 140, z = 2766, metal = 2.0})
+    table.insert(ret, {x = 140, z = 325, metal = 2.0})
+    table.insert(ret, {x = 140, z = 710, metal = 2.0})
 end
 
 if #rightTeam.playerList <= 1 then
-    table.insert(ret, {x = 8119, z = 1349, metal = 2.0})
-    table.insert(ret, {x = 8119, z = 1734, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 1349, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 1734, metal = 2.0})
 elseif #rightTeam.playerList <= 2 then
-    table.insert(ret, {x = 8119, z = 1349, metal = 2.0})
-    table.insert(ret, {x = 8119, z = 1734, metal = 2.0})
-    table.insert(ret, {x = 8119, z = 2501, metal = 2.0})
-    table.insert(ret, {x = 8119, z = 2886, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 1349, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 1734, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 2381, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 2766, metal = 2.0})
 else
-    table.insert(ret, {x = 8119, z = 1349, metal = 2.0})
-    table.insert(ret, {x = 8119, z = 1734, metal = 2.0})
-    table.insert(ret, {x = 8119, z = 2501, metal = 2.0})
-    table.insert(ret, {x = 8119, z = 2886, metal = 2.0})
-    table.insert(ret, {x = 8119, z = 197, metal = 2.0})
-    table.insert(ret, {x = 8119, z = 582, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 1349, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 1734, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 2381, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 2766, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 325, metal = 2.0})
+    table.insert(ret, {x = 8052, z = 710, metal = 2.0})
 end
 
 return { spots = ret }

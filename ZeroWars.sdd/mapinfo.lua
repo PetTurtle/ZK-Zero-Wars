@@ -8,7 +8,7 @@ local mapinfo = {
 	shortname   = "zwars",
 	description = "made for zero-k",
 	author      = "petturtle",
-	version     = "v1.41",
+	version     = "v1.42",
 	--mutator   = "deployment";
 	--mapfile   = "", --// location of smf/sm3 file (optional)
 	modtype     = 3, --// 1=primary, 0=hidden, 3=map
@@ -24,7 +24,7 @@ local mapinfo = {
 	tidalStrength   = 0,
 	maxMetal        = 3,
 	extractorRadius = 50.0,
-	voidWater       = false,
+	voidWater       = true,
 	autoShowMetal   = true,
 
 
@@ -98,7 +98,7 @@ local mapinfo = {
 		--grassBladeTex = "",
 
 		--grassShadingTex = "",
-		--detailTex = "",
+		detailTex = "detailtexblurred.bmp",
 		--specularTex = "",
 		--splatDetailTex = "",
 		--splatDistrTex = "",
@@ -108,25 +108,25 @@ local mapinfo = {
 	},
 
 	splats = {
-		texScales = {0.02, 0.02, 0.02, 0.02},
-		texMults  = {1.0, 1.0, 1.0, 1.0},
+		texScales = {0.002, 0.002, 0.002, 0.0018},
+		texMults  = {0.5, 0.4, 0.8, 0.9},
 	},
 
 	atmosphere = {
-		minWind      = 5.0,
-		maxWind      = 25.0,
+		minWind      = 0.0,
+		maxWind      = 0.0,
 
-		fogStart     = 0.1,
+		fogStart     = 0.9,
 		fogEnd       = 1.0,
-		fogColor     = {0.7, 0.7, 0.8},
+		fogColor     = {0.07, 0.06, 0.05},
 
-		sunColor     = {1.0, 1.0, 1.0},
-		skyColor     = {0.1, 0.15, 0.7},
+		sunColor     = {1.0, 0.91, 0.75},
+		skyColor     = {0.60, 0.55, 0.40},
 		skyDir       = {0.0, 0.0, -1.0},
-		skyBox       = "",
+		skyBox       = "Eta_Carinae_dark4_IceXuick.dds",
 
 		cloudDensity = 0.5,
-		cloudColor   = {1.0, 1.0, 1.0},
+		cloudColor   = {0.90, 0.8, 0.8},
 	},
 
 	grass = {
@@ -157,12 +157,12 @@ local mapinfo = {
 	},
 	
 	water = {
-		damage =  1000.0,
+		damage =  100000.0,
 
 		repeatX = 0.0,
 		repeatY = 0.0,
 
-		absorb    = {0.0, 0.0, 0.0},
+		absorb    = {10.0, 10.0, 10.0},
 		baseColor = {0.0, 0.0, 0.0},
 		minColor  = {0.0, 0.0, 0.0},
 
@@ -171,7 +171,7 @@ local mapinfo = {
 		specularFactor = 1.0,
 		specularPower  = 20.0,
 
-		planeColor = {0.0, 0.4, 0.0},
+		--planeColor = {0.0, 0.4, 0.0},
 
 		surfaceColor  = {0.75, 0.8, 0.85},
 		surfaceAlpha  = 0.55,
@@ -192,7 +192,7 @@ local mapinfo = {
 		perlinAmplitude  =  0.9,
 		windSpeed = 1.0, --// does nothing yet
 
-		shoreWaves = true,
+		shoreWaves = false,
 		forceRendering = false,
 
 		--// undefined == load them from resources.lua!
