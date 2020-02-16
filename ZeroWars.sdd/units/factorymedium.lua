@@ -1,11 +1,11 @@
 unitDef = {
   unitname                      = [[factorymedium]],
-  name                          = [[Medium Assembly]],
+  name                          = [[Medium Factory]],
   description                   = [[Builds at 10 m/s]],
   acceleration                  = 0,
   brakeRate                     = 1.5,
   buildCostMetal                = 400,
-  buildDistance                 = 600,
+  buildDistance                 = 800,
   builder                       = true,
   buildingGroundDecalDecaySpeed = 30,
   buildingGroundDecalSizeX      = 11,
@@ -38,7 +38,7 @@ unitDef = {
 
   customParams                  = {
       morphto = [[factorymediumadv]],
-      morphtime = 90,
+      morphcost = 800,
   },
 
   explodeAs                     = [[LARGE_BUILDINGEX]],

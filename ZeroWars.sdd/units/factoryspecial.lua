@@ -5,7 +5,7 @@ unitDef = {
   acceleration                  = 0,
   brakeRate                     = 1.5,
   buildCostMetal                = 400,
-  buildDistance                 = 600,
+  buildDistance                 = 800,
   builder                       = true,
   buildingGroundDecalDecaySpeed = 30,
   buildingGroundDecalSizeX      = 10,
@@ -38,7 +38,7 @@ unitDef = {
 
   customParams                  = {
     morphto = [[factoryspecialadv]],
-    morphtime = 90,
+    morphcost = 800,
   },
 
   explodeAs                     = [[LARGE_BUILDINGEX]],
