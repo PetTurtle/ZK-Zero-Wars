@@ -265,11 +265,11 @@ end
 function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, facing)
     local ud = UnitDefs[unitDefID]
     if dataSet then
-        if ud.isBuilding and x and x > 374 and x < 7817 then
+        if x and x > 374 and x < 7817 then
             if ud.isFactory or ud.isStaticBuilder then
                 return false
             end
-            if ud.maxWeaponRange and ud.maxWeaponRange >= 1200 then
+            if ud.isBuilding and ud.maxWeaponRange and ud.maxWeaponRange >= 1200 then
                 return false
             end
         end
