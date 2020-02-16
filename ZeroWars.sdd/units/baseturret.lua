@@ -70,7 +70,7 @@ unitDef = {
                 light_radius = 180
             },
 
-            damage = {default = 850, planes = 5000, subs = 45.1},
+            damage = {default = 600, planes = 900, subs = 45.1},
 
             explosionGenerator = [[custom:FLASHLAZER]],
             fireStarter = 90,
