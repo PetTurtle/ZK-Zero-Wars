@@ -22,8 +22,8 @@ local updateTime = 60
 local leftSide
 local rightSide
 
-local WAVETIMEOUT = 4500
-local ARTYTIMEOUT = 2500
+local WAVETIMEOUT = 6000
+local ARTYTIMEOUT = 3000
 local waves = {}
 local artyWave = {}
 
