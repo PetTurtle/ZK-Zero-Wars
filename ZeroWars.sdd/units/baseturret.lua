@@ -104,11 +104,11 @@ unitDef = {
         },
         SHIELD      = {
             name                    = [[Energy Shield]],
-      
+
             damage                  = {
-              default = 10,
+                default = 10,
             },
-      
+
             exteriorShield          = true,
             shieldAlpha             = 0.2,
             shieldBadColor          = [[1 0.1 0.1 1]],
