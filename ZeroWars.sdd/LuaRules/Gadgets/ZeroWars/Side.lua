@@ -1,6 +1,6 @@
-local PlatformLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/platform_layout.lua")
-local SideUnitLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/side_unit_layout.lua")
-local PlatformUnitLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/platform_unit_layout.lua")
+local PlatformLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layouts/platform_layout.lua")
+local SideUnitLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layouts/side_unit_layout.lua")
+local PlatformUnitLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layouts/platform_unit_layout.lua")
 
 local Side = {}
 
@@ -18,7 +18,8 @@ local spSetUnitPosition = Spring.SetUnitPosition
 function Side.new(allyID, side, attackXPos)
 
     local playerList = spGetTeamList(allyID)
-    local platforms = PlatformLayout.new(side)
+    local platformlayout = PlatformLayout.new(side)
+    local platforms = platformlayout.platforms
 
     local nullAI = -1
     local hasAI = false
@@ -40,21 +41,21 @@ function Side.new(allyID, side, attackXPos)
 
     -- assign players to platforms
     for i = 1, #playerList do
-        table.insert(platforms[(i % #platforms) + 1].players, playerList[i])
+        platforms[(i % #platforms) + 1]:AddPlayer(playerList[i])
     end
 
     -- remove platforms with no players
     for i = #platforms, 1, -1 do
-        if #platforms[i].players == 0 then
+        if #platforms[i].playerList == 0 then
             table.remove(platforms, i)
         end
     end
 
     local side = {
-        -- variables
         allyID = allyID,
         nullAI = nullAI,
         playerList = playerList,
+        deployRect = platformlayout.deployPlatform,
         platforms = platforms,
         attackXPos = attackXPos,
         baseId = -1,
@@ -83,20 +84,10 @@ function Side.new(allyID, side, attackXPos)
             spDestroyUnit(units[1], false, true)
         end
 
-        -- set platform units and custom params
+        -- deploy platforms
         local platUnits = PlatformUnitLayout.new(side)
-        local playerUnits = platUnits.playerUnits
-        local comPos = platUnits.customParams["COMMANDER_SPAWN"]
         for i = 1, #self.platforms do
-            for j = 1, #self.platforms[i].players do
-                for k = 1, #playerUnits do
-                    spCreateUnit(playerUnits[k].unitName, self.platforms[i].rect.x1 + playerUnits[k].x, 10000,
-                                    self.platforms[i].rect.y1 + playerUnits[k].z, playerUnits[k].dir, self.platforms[i].players[j])
-                end
-
-                units = spGetTeamUnits(self.platforms[i].players[j])
-                spSetUnitPosition(units[1], comPos.x, comPos.z)
-            end
+            self.platforms[i]:Deploy(platUnits)
         end
 
         -- clear team resourse
@@ -128,21 +119,21 @@ function Side.new(allyID, side, attackXPos)
             spDestroyUnit(self.baseId)
         else
             -- remove player from platform
-            local platID = -1
-            for i = #self.platforms, 1, -1 do
-                local id = self.platforms[i]:HasPlayer(playerID)
-                if id then
-                    table.remove(self.platforms[i],players, id)
-                    platID = i
-                    break
-                end
-            end
+            -- local platID = -1
+            -- for i = #self.platforms, 1, -1 do
+            --     local id = self.platforms[i]:HasPlayer(playerID)
+            --     if id then
+            --         table.remove(self.platforms[i],players, id)
+            --         platID = i
+            --         break
+            --     end
+            -- end
 
-            -- if no players left on platform assign random player
-            -- TODO: Finish
-            if platID ~= -1 and #self.platforms[platID].players == 0 then
+            -- -- if no players left on platform assign random player
+            -- -- TODO: Finish
+            -- if platID ~= -1 and #self.platforms[platID].playerList == 0 then
                 
-            end
+            -- end
         end
     end
 

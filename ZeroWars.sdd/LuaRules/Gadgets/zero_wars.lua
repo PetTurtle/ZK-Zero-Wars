@@ -14,7 +14,6 @@ function gadget:GetInfo()
 end
 
 include("LuaRules/Configs/customcmds.h.lua")
-local Platform = VFS.Include("LuaRules/Gadgets/ZeroWars/platform_layout.lua")
 local IdleUnit = VFS.Include("LuaRules/Gadgets/ZeroWData/IdleUnit.lua")
 local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Side.lua")
 

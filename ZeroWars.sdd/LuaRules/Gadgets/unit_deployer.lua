@@ -91,8 +91,8 @@ end
 
 local function DeployPlatform(side, frame, faceDir)
     local plat = side.platforms[side.iterator + 1]
-    for i = 1, #plat.players do
-        local units = Spring.GetUnitsInRectangle(plat.deployRect.x1, plat.deployRect.y1, plat.deployRect.x2, plat.deployRect.y2, plat.players[i])
+    for i = 1, #plat.playerList do
+        local units = Spring.GetUnitsInRectangle(plat.rect.x1, plat.rect.y1, plat.rect.x2, plat.rect.y2, plat.playerList[i])
         if #units > 0 then
             DeployWave(side, units, frame, faceDir)
         end
