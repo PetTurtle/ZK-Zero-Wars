@@ -40,66 +40,6 @@ local validCommands = {
     CMD_AP_FLY_STATE,
 }
 
--- Sets left side data on first frame
-local function CreateLeftSide()
-    leftSide.baseId = Spring.CreateUnit("baseturret", 2496, 10000, 1530, "e", leftSide.nullAI)
-    leftSide.turretId= Spring.CreateUnit("centerturret", 3264, 10000, 1530, "e", leftSide.nullAI)
-    Spring.SetUnitBlocking(leftSide.baseId, false)
-    Spring.SetUnitBlocking(leftSide.turretId, false)
-
-    for i = 1, #leftSide.platforms do
-        for t = 1, #leftSide.platforms[i].players do
-            Spring.CreateUnit("basiccon", leftSide.platforms[i].rect.x1 + 192.5, 10000, leftSide.platforms[i].rect.y1 + 350, "e", leftSide.platforms[i].players[t])
-            local units = Spring.GetTeamUnits(leftSide.platforms[i].players[t])
-            Spring.SetUnitPosition(units[1], 1855, 1537)
-        end
-    end
-
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1226, "e", leftSide.nullAI)
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1386, "e", leftSide.nullAI)
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1529, "e", leftSide.nullAI)
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1703, "e", leftSide.nullAI)
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1848, "e", leftSide.nullAI)
-
-    Spring.SetTeamResource(leftSide.nullAI, "metal", 0)
-    for i = 1, #leftSide.playerList do
-        Spring.SetTeamResource(leftSide.playerList[i], "metal", 0)
-    end
-
-    local nullAICom = Spring.GetUnitsInRectangle(3968, 1152, 4224, 1920, leftSide.nullAI)
-    Spring.DestroyUnit(nullAICom[1], false, true)
-end
-
--- Sets right side data on first frame
-local function CreateRightSide()
-    rightSide.baseId = Spring.CreateUnit("baseturret", 5696, 10000, 1530, "w", rightSide.nullAI)
-    rightSide.turretId = Spring.CreateUnit("centerturret", 4930, 10000, 1530, "w", rightSide.nullAI)
-    Spring.SetUnitBlocking(rightSide.baseId, false)
-    Spring.SetUnitBlocking(rightSide.turretId, false)
-
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1226, "w", rightSide.nullAI)
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1386, "w", rightSide.nullAI)
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1529, "w", rightSide.nullAI)
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1703, "w", rightSide.nullAI)
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1848, "w", rightSide.nullAI)
-
-    for i = 1, #rightSide.platforms do
-        for t = 1, #rightSide.platforms[i].players do
-            Spring.CreateUnit("basiccon", rightSide.platforms[i].rect.x2 - 192.5, 10000, rightSide.platforms[i].rect.y2 - 350, "e", rightSide.platforms[i].players[t])
-            local units = Spring.GetTeamUnits(rightSide.platforms[i].players[t])
-            Spring.SetUnitPosition(units[1], 6336, 1537)
-        end
-    end
-
-    Spring.SetTeamResource(rightSide.nullAI, "metal", 0)
-    for i = 1, #rightSide.playerList do
-        Spring.SetTeamResource(rightSide.playerList[i], "metal", 0)
-    end
-
-    local nullAICom = Spring.GetUnitsInRectangle(3968, 1152, 4224, 1920, rightSide.nullAI)
-    Spring.DestroyUnit(nullAICom[1], false, true)
-end
-
 function gadget:Initialize()
     if Game.modShortName ~= "ZK" then
         gadgetHandler:RemoveGadget()
@@ -116,8 +56,8 @@ end
 
 function gadget:GameFrame(f)
     if f == 1 then
-        CreateLeftSide()
-        CreateRightSide()
+        leftSide.Deploy("left")
+        rightSide.Deploy("right")
         dataSet = true
     end
 
