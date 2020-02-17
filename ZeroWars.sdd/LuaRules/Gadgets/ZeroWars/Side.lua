@@ -25,8 +25,9 @@ function Side.new(allyID, side, attackXPos)
     local platforms = PlatformLayout.new(side)
 
     -- remove nullAI from team list
-    for i = 1, #playerList do
+    for i = #playerList, 1, -1 do
         local luaAI = spGetTeamLuaAI(playerList[i])
+        Spring.Echo(luaAI)
         if luaAI and string.find(string.lower(luaAI), "ai") then
             nullAI = playerList[i]
             table.remove(playerList, i)
