@@ -6,32 +6,36 @@ local Side = {}
 
 local spGetTeamList = Spring.GetTeamList
 local spGetTeamLuaAI = Spring.GetTeamLuaAI
-local spCreateUnit = Spring.CreateUnit
-local spSetUnitBlocking = Spring.SetUnitBlocking
-local spSetTeamResource = Spring.SetTeamResource
 local spGetTeamUnits = Spring.GetTeamUnits
-local spDestroyUnit = Spring.DestroyUnit
-local spSetUnitPosition = Spring.SetUnitPosition
+local spSetTeamResource = Spring.SetTeamResource
 
-local function SpawnUnit(unitName, x, z, faceDir, playerID)
-    
-end
+local spCreateUnit = Spring.CreateUnit
+local spDestroyUnit = Spring.DestroyUnit
+local spSetUnitBlocking = Spring.SetUnitBlocking
+local spSetUnitPosition = Spring.SetUnitPosition
 
 -- side : side of map "left", "right"
 function Side.new(allyID, side, attackXPos)
 
     local playerList = spGetTeamList(allyID)
-    local nullAI = -1
     local platforms = PlatformLayout.new(side)
+
+    local nullAI = -1
+    local hasAI = false
 
     -- remove nullAI from team list
     for i = #playerList, 1, -1 do
         local luaAI = spGetTeamLuaAI(playerList[i])
-        Spring.Echo(luaAI)
         if luaAI and string.find(string.lower(luaAI), "ai") then
+            hasAI = true
             nullAI = playerList[i]
             table.remove(playerList, i)
         end
+    end
+
+    -- if nullAI is null, set it as player
+    if nullAI == -1 and #playerList > 0 then
+        nullAI = playerList[1]
     end
 
     -- assign players to platforms
@@ -47,20 +51,24 @@ function Side.new(allyID, side, attackXPos)
     end
 
     local function Deploy(side)
-
+        
+        -- deploy units (or buildings) related to the side
         local sideUnits = SideUnitLayout.new(side)
         for i = 1, #sideUnits do
             local unit = spCreateUnit(sideUnits[i].unitName, sideUnits[i].x, 10000, sideUnits[i].z, sideUnits[i].dir, nullAI)
             spSetUnitBlocking(unit, false)
         end
 
-        local units = spGetTeamUnits(nullAI)
-        spDestroyUnit(units[1], false, true)
+        -- remove nullAI com if nullAI exists
+        if hasAI then
+            local units = spGetTeamUnits(nullAI)
+            spDestroyUnit(units[1], false, true)
+        end
 
+        -- set platform units and custom params
         local platUnits = PlatformUnitLayout.new(side)
         local playerUnits = platUnits.playerUnits
         local comPos = platUnits.customParams["COMMANDER_SPAWN"]
-
         for i = 1, #platforms do
             for j = 1, #platforms[i].players do
                 for k = 1, #playerUnits do
@@ -73,6 +81,7 @@ function Side.new(allyID, side, attackXPos)
             end
         end
 
+        -- clear team resourse
         spSetTeamResource(nullAI, "metal", 0)
         for i = 1, #playerList do
             spSetTeamResource(playerList[i], "metal", 0)

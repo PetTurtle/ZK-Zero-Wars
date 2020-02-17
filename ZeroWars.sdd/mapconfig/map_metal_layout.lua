@@ -1,41 +1,28 @@
-function CreateTeam(nullAI)
-    local allyTeam = select(6, Spring.GetTeamInfo(nullAI, false))
-    local playerList = Spring.GetTeamList(allyTeam)
+function GetPlayerList(allyID)
+    local playerList = Spring.GetTeamList(allyID)
 
     -- remove nullAI from player list
-    for i = 1, #playerList do
-        if (playerList[i] == nullAI) then
+    for i = #playerList, 1, -1 do
+        local luaAI = Spring.GetTeamLuaAI(playerList[i])
+        if luaAI and string.find(string.lower(luaAI), "ai") then
             table.remove(playerList, i)
         end
     end
 
-	local team = {
-		nullAI = nullAI,
-		allyTeam = allyTeam,
-		playerList = playerList
-    }
-	return team
+	return playerList
 end
 
-local teams = Spring.GetTeamList()
-local nullAI = {}
-for i = 1, #teams do
-    local luaAI = Spring.GetTeamLuaAI(teams[i])
-    if luaAI and string.find(string.lower(luaAI), "ai") then
-        table.insert(nullAI, teams[i])
-    end
-end
-
-local leftTeam = CreateTeam(nullAI[1])
-local rightTeam = CreateTeam(nullAI[2])
+local allyTeamList = Spring.GetAllyTeamList()
+local leftTeam = GetPlayerList(allyTeamList[1])
+local rightTeam = GetPlayerList(allyTeamList[2])
 
 local ret = {}
 table.insert(ret, {x = 4096, z = 1532, metal = 4.0})
 
-if #leftTeam.playerList <= 1 then
+if #leftTeam <= 1 then
     table.insert(ret, {x = 140, z = 1349, metal = 2.0})
     table.insert(ret, {x = 140, z = 1734, metal = 2.0})
-elseif #leftTeam.playerList <= 2 then
+elseif #leftTeam <= 2 then
     table.insert(ret, {x = 140, z = 1349, metal = 2.0})
     table.insert(ret, {x = 140, z = 1734, metal = 2.0})
     table.insert(ret, {x = 140, z = 2381, metal = 2.0})
@@ -49,10 +36,10 @@ else
     table.insert(ret, {x = 140, z = 710, metal = 2.0})
 end
 
-if #rightTeam.playerList <= 1 then
+if #rightTeam <= 1 then
     table.insert(ret, {x = 8052, z = 1349, metal = 2.0})
     table.insert(ret, {x = 8052, z = 1734, metal = 2.0})
-elseif #rightTeam.playerList <= 2 then
+elseif #rightTeam <= 2 then
     table.insert(ret, {x = 8052, z = 1349, metal = 2.0})
     table.insert(ret, {x = 8052, z = 1734, metal = 2.0})
     table.insert(ret, {x = 8052, z = 2381, metal = 2.0})
