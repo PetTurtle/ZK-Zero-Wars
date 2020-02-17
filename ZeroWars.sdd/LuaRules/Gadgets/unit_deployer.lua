@@ -37,8 +37,14 @@ local function CopyUnitState(original, clone, cmd)
         end
 end
 
+local function DeployUnit(unitDefID, copyID, x, z, playerID, faceDir)
+    local unit = Spring.CreateUnit(unitDefID, x, 150, z, faceDir, playerID)
+    
+    
+end
+
 local function DeployWave(side, units, frame, faceDir)
-    local plat = side.plats[side.iterator + 1]
+    local plat = side.platforms[side.iterator + 1]
     local spawnedUnits = {}
     local spawnedArty = {}
     for i = 1, #units do
@@ -50,7 +56,7 @@ local function DeployWave(side, units, frame, faceDir)
         if ud.customParams.commtype then
             Spring.SetUnitPosition(units[i], x + plat.offsetX, z + plat.offsetY)
         elseif not ud.isImmobile and (not ud.isMobileBuilder or ud.isAirUnit) and buildProgress == 1  then
-            local unit = Spring.CreateUnit(unitDefID, x + plat.offsetX, 150, z + plat.offsetY, faceDir, side.team.nullAI)
+            local unit = Spring.CreateUnit(unitDefID, x + plat.offsetX, 150, z + plat.offsetY, faceDir, side.nullAI)
             if (ud.maxWeaponRange >= 600) then
                 table.insert(spawnedArty, unit)
             else
@@ -84,7 +90,7 @@ local function DeployWave(side, units, frame, faceDir)
 end
 
 local function DeployPlatform(side, frame, faceDir)
-    local plat = side.plats[side.iterator + 1]
+    local plat = side.platforms[side.iterator + 1]
     for i = 1, #plat.players do
         local units = Spring.GetUnitsInRectangle(plat.deployRect.x1, plat.deployRect.y1, plat.deployRect.x2, plat.deployRect.y2, plat.players[i])
         if #units > 0 then
@@ -95,7 +101,7 @@ end
 
 local function IteratePlatform(side, frame, faceDir)
     DeployPlatform(side, frame, faceDir)
-    side.iterator=((side.iterator + 1) % #side.plats)
+    side.iterator=((side.iterator + 1) % #side.platforms)
 end
 
 local function TimeOutWave(waves, timeOutTime, frame)

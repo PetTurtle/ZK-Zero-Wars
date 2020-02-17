@@ -14,14 +14,12 @@ function gadget:GetInfo()
 end
 
 include("LuaRules/Configs/customcmds.h.lua")
-local Platform = VFS.Include("LuaRules/Gadgets/ZeroWData/Platform.lua")
+local Platform = VFS.Include("LuaRules/Gadgets/ZeroWars/platform_layout.lua")
 local IdleUnit = VFS.Include("LuaRules/Gadgets/ZeroWData/IdleUnit.lua")
-local Side = VFS.Include("LuaRules/Gadgets/ZeroWData/Side.lua")
+local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Side.lua")
 
 local dataSet = false
 
-local leftTeam
-local rightTeam
 local leftSide
 local rightSide
 
@@ -42,131 +40,63 @@ local validCommands = {
     CMD_AP_FLY_STATE,
 }
 
------ Initalizing Game -----
-
--- Create team, holds all team related data for each side
-function CreateTeam(nullAI)
-    local allyTeam = select(6, Spring.GetTeamInfo(nullAI, false))
-    local playerList = Spring.GetTeamList(allyTeam)
-
-    -- remove nullAI from player list
-    for i = 1, #playerList do
-        if (playerList[i] == nullAI) then
-            table.remove(playerList, i)
-        end
-    end
-
-	local team = {
-		nullAI = nullAI,
-		allyTeam = allyTeam,
-		playerList = playerList
-    }
-	return team
-end
-
--- Sets left side data on initialize
-local function InitializeLeftSide()
-
-    -- Set platform data
-    local platformTop    = Platform.new(128, 1280, 1016)
-    local platformCenter = Platform.new(1152, 1280, 0)
-    local platformBottom = Platform.new(2184, 1280, -1016)
-    local plats = {platformTop, platformCenter, platformBottom}
-    
-    for i = 1, #leftTeam.playerList do
-        table.insert(plats[(i%3)+1].players, leftTeam.playerList[i])
-    end
-
-    -- Remove unused platforms
-    for i = #plats, 1, -1 do
-        if #plats[i].players == 0 then
-            table.remove(plats, i)
-        end
-    end
-
-    leftSide = Side.new(leftTeam, plats, 5888)
-end
-
--- Sets right side data on initialize
-local function InitializeRightSide()
-
-    -- Set platform data
-    local platformTop    = Platform.new(128, -1280,  1016)
-    local platformCenter = Platform.new(1152, -1280,  0)
-    local platformBottom = Platform.new(2184, -1280, -1016)
-    local plats = {platformTop, platformCenter, platformBottom}
-
-    for i = 1, #rightTeam.playerList do
-        table.insert(plats[(i%3)+1].players, rightTeam.playerList[i])
-    end
-
-    -- Remove unused platforms
-    for i = #plats, 1, -1 do
-        if #plats[i].players == 0 then
-            table.remove(plats, i)
-        end
-    end
-
-    rightSide = Side.new(rightTeam, plats, 2303)
-end
-
 -- Sets left side data on first frame
 local function CreateLeftSide()
-    leftSide.baseId = Spring.CreateUnit("baseturret", 2496, 10000, 1530, "e", leftTeam.nullAI)
-    leftSide.turretId= Spring.CreateUnit("centerturret", 3264, 10000, 1530, "e", leftTeam.nullAI)
+    leftSide.baseId = Spring.CreateUnit("baseturret", 2496, 10000, 1530, "e", leftSide.nullAI)
+    leftSide.turretId= Spring.CreateUnit("centerturret", 3264, 10000, 1530, "e", leftSide.nullAI)
     Spring.SetUnitBlocking(leftSide.baseId, false)
     Spring.SetUnitBlocking(leftSide.turretId, false)
 
-    for i = 1, #leftSide.plats do
-        for t = 1, #leftSide.plats[i].players do
-            Spring.CreateUnit("basiccon", leftSide.plats[i].rect.x1 + 192.5, 10000, leftSide.plats[i].rect.y1 + 350, "e", leftSide.plats[i].players[t])
-            local units = Spring.GetTeamUnits(leftSide.plats[i].players[t])
+    for i = 1, #leftSide.platforms do
+        for t = 1, #leftSide.platforms[i].players do
+            Spring.CreateUnit("basiccon", leftSide.platforms[i].rect.x1 + 192.5, 10000, leftSide.platforms[i].rect.y1 + 350, "e", leftSide.platforms[i].players[t])
+            local units = Spring.GetTeamUnits(leftSide.platforms[i].players[t])
             Spring.SetUnitPosition(units[1], 1855, 1537)
         end
     end
 
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1226, "e", leftTeam.nullAI)
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1386, "e", leftTeam.nullAI)
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1529, "e", leftTeam.nullAI)
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1703, "e", leftTeam.nullAI)
-    Spring.CreateUnit("staticrearm", 1550, 10000, 1848, "e", leftTeam.nullAI)
+    Spring.CreateUnit("staticrearm", 1550, 10000, 1226, "e", leftSide.nullAI)
+    Spring.CreateUnit("staticrearm", 1550, 10000, 1386, "e", leftSide.nullAI)
+    Spring.CreateUnit("staticrearm", 1550, 10000, 1529, "e", leftSide.nullAI)
+    Spring.CreateUnit("staticrearm", 1550, 10000, 1703, "e", leftSide.nullAI)
+    Spring.CreateUnit("staticrearm", 1550, 10000, 1848, "e", leftSide.nullAI)
 
-    Spring.SetTeamResource(leftTeam.nullAI, "metal", 0)
-    for i = 1, #leftTeam.playerList do
-        Spring.SetTeamResource(leftTeam.playerList[i], "metal", 0)
+    Spring.SetTeamResource(leftSide.nullAI, "metal", 0)
+    for i = 1, #leftSide.playerList do
+        Spring.SetTeamResource(leftSide.playerList[i], "metal", 0)
     end
 
-    local nullAICom = Spring.GetUnitsInRectangle(3968, 1152, 4224, 1920, leftTeam.nullAI)
+    local nullAICom = Spring.GetUnitsInRectangle(3968, 1152, 4224, 1920, leftSide.nullAI)
     Spring.DestroyUnit(nullAICom[1], false, true)
 end
 
 -- Sets right side data on first frame
 local function CreateRightSide()
-    rightSide.baseId = Spring.CreateUnit("baseturret", 5696, 10000, 1530, "w", rightTeam.nullAI)
-    rightSide.turretId = Spring.CreateUnit("centerturret", 4930, 10000, 1530, "w", rightTeam.nullAI)
+    rightSide.baseId = Spring.CreateUnit("baseturret", 5696, 10000, 1530, "w", rightSide.nullAI)
+    rightSide.turretId = Spring.CreateUnit("centerturret", 4930, 10000, 1530, "w", rightSide.nullAI)
     Spring.SetUnitBlocking(rightSide.baseId, false)
     Spring.SetUnitBlocking(rightSide.turretId, false)
 
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1226, "w", rightTeam.nullAI)
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1386, "w", rightTeam.nullAI)
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1529, "w", rightTeam.nullAI)
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1703, "w", rightTeam.nullAI)
-    Spring.CreateUnit("staticrearm", 6641, 10000, 1848, "w", rightTeam.nullAI)
+    Spring.CreateUnit("staticrearm", 6641, 10000, 1226, "w", rightSide.nullAI)
+    Spring.CreateUnit("staticrearm", 6641, 10000, 1386, "w", rightSide.nullAI)
+    Spring.CreateUnit("staticrearm", 6641, 10000, 1529, "w", rightSide.nullAI)
+    Spring.CreateUnit("staticrearm", 6641, 10000, 1703, "w", rightSide.nullAI)
+    Spring.CreateUnit("staticrearm", 6641, 10000, 1848, "w", rightSide.nullAI)
 
-    for i = 1, #rightSide.plats do
-        for t = 1, #rightSide.plats[i].players do
-            Spring.CreateUnit("basiccon", rightSide.plats[i].rect.x2 - 192.5, 10000, rightSide.plats[i].rect.y2 - 350, "e", rightSide.plats[i].players[t])
-            local units = Spring.GetTeamUnits(rightSide.plats[i].players[t])
+    for i = 1, #rightSide.platforms do
+        for t = 1, #rightSide.platforms[i].players do
+            Spring.CreateUnit("basiccon", rightSide.platforms[i].rect.x2 - 192.5, 10000, rightSide.platforms[i].rect.y2 - 350, "e", rightSide.platforms[i].players[t])
+            local units = Spring.GetTeamUnits(rightSide.platforms[i].players[t])
             Spring.SetUnitPosition(units[1], 6336, 1537)
         end
     end
 
-    Spring.SetTeamResource(rightTeam.nullAI, "metal", 0)
-    for i = 1, #rightTeam.playerList do
-        Spring.SetTeamResource(rightTeam.playerList[i], "metal", 0)
+    Spring.SetTeamResource(rightSide.nullAI, "metal", 0)
+    for i = 1, #rightSide.playerList do
+        Spring.SetTeamResource(rightSide.playerList[i], "metal", 0)
     end
 
-    local nullAICom = Spring.GetUnitsInRectangle(3968, 1152, 4224, 1920, rightTeam.nullAI)
+    local nullAICom = Spring.GetUnitsInRectangle(3968, 1152, 4224, 1920, rightSide.nullAI)
     Spring.DestroyUnit(nullAICom[1], false, true)
 end
 
@@ -176,26 +106,10 @@ function gadget:Initialize()
         return
     end
 
-    -- Set teams
-    local teams = Spring.GetTeamList()
-    local nullAI = {}
-    for i = 1, #teams do
-        local luaAI = Spring.GetTeamLuaAI(teams[i])
-        if luaAI and string.find(string.lower(luaAI), "ai") then
-            table.insert(nullAI, teams[i])
-        end
-    end
-
-    if (#nullAI == 2) then
-        leftTeam = CreateTeam(nullAI[1])
-        rightTeam = CreateTeam(nullAI[2])
-    else
-        gadgetHandler:RemoveGadget()
-        return
-    end
-
-    InitializeLeftSide()
-    InitializeRightSide()
+    -- set sides
+    local allyTeamList = Spring.GetAllyTeamList()
+    leftSide = Side.new(allyTeamList[1], "left", 5888)
+    rightSide = Side.new(allyTeamList[2], "right", 2303)
     GG.leftSide = leftSide
     GG.rightSide = rightSide
 end
@@ -224,16 +138,16 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
     if dataSet then
         if unitID == leftSide.baseId then
-            Spring.GameOver({rightSide.team.allyTeam})
+            Spring.GameOver({rightSide.allyID})
         elseif unitID == rightSide.baseId then
-            Spring.GameOver({leftSide.team.allyTeam})
+            Spring.GameOver({leftSide.allyID})
         elseif unitID == leftSide.turretId then
-            for i = 1, #rightSide.team.playerList do
-                Spring.AddTeamResource(rightSide.team.playerList[i], "metal", 800)
+            for i = 1, #rightSide.playerList do
+                Spring.AddTeamResource(rightSide.playerList[i], "metal", 800)
             end
         elseif unitID == rightSide.turretId then
-            for i = 1, #leftSide.team.playerList do
-                Spring.AddTeamResource(leftSide.team.playerList[i], "metal", 800)
+            for i = 1, #leftSide.playerList do
+                Spring.AddTeamResource(leftSide.playerList[i], "metal", 800)
             end
         end
     end
@@ -245,9 +159,9 @@ end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
     local cQueue = Spring.GetCommandQueue(unitID, 1)
-    if unitTeam == leftTeam.nullAI then
+    if unitTeam == leftSide.nullAI then
         table.insert(idleUnits, IdleUnit.new(unitID, leftSide))
-    elseif unitTeam == rightTeam.nullAI then
+    elseif unitTeam == rightSide.nullAI then
         table.insert(idleUnits, IdleUnit.new(unitID, rightSide))
     end
 end
@@ -303,10 +217,3 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
     end
     return true
 end
-
--- function gadget:AllowUnitTransfer(unitID, unitDefID, oldTeam, newTeam, capture)
---     if newTeam == leftTeam.nullAI or newTeam == rightTeam.nullAI then
---         return true
---     end
---     return false
--- end
