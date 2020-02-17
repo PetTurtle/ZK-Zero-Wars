@@ -50,44 +50,6 @@ function Side.new(allyID, side, attackXPos)
         end
     end
 
-    local function Deploy(side)
-        
-        -- deploy units (or buildings) related to the side
-        local sideUnits = SideUnitLayout.new(side)
-        for i = 1, #sideUnits do
-            local unit = spCreateUnit(sideUnits[i].unitName, sideUnits[i].x, 10000, sideUnits[i].z, sideUnits[i].dir, nullAI)
-            spSetUnitBlocking(unit, false)
-        end
-
-        -- remove nullAI com if nullAI exists
-        if hasAI then
-            local units = spGetTeamUnits(nullAI)
-            spDestroyUnit(units[1], false, true)
-        end
-
-        -- set platform units and custom params
-        local platUnits = PlatformUnitLayout.new(side)
-        local playerUnits = platUnits.playerUnits
-        local comPos = platUnits.customParams["COMMANDER_SPAWN"]
-        for i = 1, #platforms do
-            for j = 1, #platforms[i].players do
-                for k = 1, #playerUnits do
-                    spCreateUnit(playerUnits[k].unitName, platforms[i].rect.x1 + playerUnits[k].x, 10000,
-                                    platforms[i].rect.y1 + playerUnits[k].z, playerUnits[k].dir, platforms[i].players[j])
-                end
-
-                units = spGetTeamUnits(platforms[i].players[j])
-                spSetUnitPosition(units[1], comPos.x, comPos.z)
-            end
-        end
-
-        -- clear team resourse
-        spSetTeamResource(nullAI, "metal", 0)
-        for i = 1, #playerList do
-            spSetTeamResource(playerList[i], "metal", 0)
-        end
-    end
-
     local side = {
         -- variables
         allyID = allyID,
@@ -98,10 +60,76 @@ function Side.new(allyID, side, attackXPos)
         baseId = -1,
         turretId = -1,
         iterator = 0,
-        
-        -- functions
-        Deploy = Deploy,
     }
+
+    function side:Deploy(side)
+        
+        -- deploy units (or buildings) related to the side
+        local sideUnits = SideUnitLayout.new(side)
+        for i = 1, #sideUnits do
+            local unit = spCreateUnit(sideUnits[i].unitName, sideUnits[i].x, 10000, sideUnits[i].z, sideUnits[i].dir, self.nullAI)
+            spSetUnitBlocking(unit, false)
+
+            if sideUnits[i].unitName == "baseturret" then
+                self.baseId = unit
+            elseif sideUnits[i].unitName == "centerturret" then
+                self.turretId = unit
+            end
+        end
+
+        -- remove nullAI com if nullAI exists
+        if hasAI then
+            local units = spGetTeamUnits(self.nullAI)
+            spDestroyUnit(units[1], false, true)
+        end
+
+        -- set platform units and custom params
+        local platUnits = PlatformUnitLayout.new(side)
+        local playerUnits = platUnits.playerUnits
+        local comPos = platUnits.customParams["COMMANDER_SPAWN"]
+        for i = 1, #self.platforms do
+            for j = 1, #self.platforms[i].players do
+                for k = 1, #playerUnits do
+                    spCreateUnit(playerUnits[k].unitName, self.platforms[i].rect.x1 + playerUnits[k].x, 10000,
+                                    self.platforms[i].rect.y1 + playerUnits[k].z, playerUnits[k].dir, self.platforms[i].players[j])
+                end
+
+                units = spGetTeamUnits(self.platforms[i].players[j])
+                spSetUnitPosition(units[1], comPos.x, comPos.z)
+            end
+        end
+
+        -- clear team resourse
+        spSetTeamResource(self.nullAI, "metal", 0)
+        for i = 1, #self.playerList do
+            spSetTeamResource(self.playerList[i], "metal", 0)
+        end
+    end
+
+    function side:HasPlayer(playerID)
+        for i = 0, #self.playerList do
+            if self.playerList[i] == playerID then
+                return true
+            end
+        end
+        return false
+    end
+
+    function side:RemovePlayer(playerID)
+        for i = 0, #self.playerList do
+            if self.playerList[i] == playerID then
+                table.remove(self.playerList, i)
+                break
+            end
+        end
+
+        if #self.playerList == 0 then
+            -- all players resigned, end game
+            spDestroyUnit(self.baseId)
+        else
+
+        end
+    end
 
     return side
 end

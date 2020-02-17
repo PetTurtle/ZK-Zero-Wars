@@ -56,8 +56,8 @@ end
 
 function gadget:GameFrame(f)
     if f == 1 then
-        leftSide.Deploy("left")
-        rightSide.Deploy("right")
+        leftSide:Deploy("left")
+        rightSide:Deploy("right")
         dataSet = true
     end
 
@@ -156,4 +156,12 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
         return false
     end
     return true
+end
+
+function gadget:TeamDied(teamID)
+    if leftSide:HasPlayer(teamID) then
+        leftSide:RemovePlayer(teamID)
+    elseif rightSide:HasPlayer(teamID) then
+        rightSide:RemovePlayer(teamID)
+    end
 end
