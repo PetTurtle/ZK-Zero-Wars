@@ -24,6 +24,16 @@ function Platform.new(platYOffset, offsetX, offsetY)
         offsetY = offsetY,
         players = {},
 	}
+
+	function platform:HasPlayer(playerID)
+		for i = 0, #self.players do
+            if self.players[i] == playerID then
+                return i
+            end
+        end
+        return false
+	end
+
 	return platform
 end
 
