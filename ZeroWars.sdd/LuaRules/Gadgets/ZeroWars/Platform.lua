@@ -7,13 +7,9 @@ local spSetUnitPosition = Spring.SetUnitPosition
 local Platform = {}
 
 function Platform.new(platform_Layout, offsetX, offsetY)
-    local pl = platform_Layout
-    local rect = Rect.new(pl.x1, pl.y1, pl.x2, pl.y2)
-    local playerList = {}
-
     local platform = {
-        rect = rect,
-        playerList = playerList,
+        rect = platform_Layout,
+        playerList = {},
         offsetX = offsetX,
         offsetY = offsetY,
     }
@@ -41,6 +37,10 @@ function Platform.new(platform_Layout, offsetX, offsetY)
             units = spGetTeamUnits(self.playerList[i])
             spSetUnitPosition(units[1], comPos.x, comPos.z)
         end
+    end
+
+    function platform:GetUnits(playerID)
+        return self.rect:GetUnits(playerID)
     end
 
     return platform

@@ -16,11 +16,15 @@ end
 include("LuaRules/Configs/customcmds.h.lua")
 local IdleUnit = VFS.Include("LuaRules/Gadgets/ZeroWData/IdleUnit.lua")
 local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Side.lua")
+local UnitDeployer = VFS.Include("LuaRules/Gadgets/ZeroWars/Unit_Deployer.lua")
 
 local dataSet = false
 
+local spawnTime = 800
+
 local leftSide
 local rightSide
+local unitDeployer
 
 local updateTime = 60
 local idleUnits = {}
@@ -39,6 +43,11 @@ local validCommands = {
     CMD_AP_FLY_STATE,
 }
 
+local function IteratePlatform(side, frame, faceDir)
+    unitDeployer.DeployPlatform(side.platforms[side.iterator + 1], side.deployRect, faceDir, side.nullAI, side.attackXPos)
+    side.iterator=((side.iterator + 1) % #side.platforms)
+end
+
 function gadget:Initialize()
     if Game.modShortName ~= "ZK" then
         gadgetHandler:RemoveGadget()
@@ -49,6 +58,7 @@ function gadget:Initialize()
     local allyTeamList = Spring.GetAllyTeamList()
     leftSide = Side.new(allyTeamList[1], "left", 5888)
     rightSide = Side.new(allyTeamList[2], "right", 2303)
+    unitDeployer = UnitDeployer.new()
     GG.leftSide = leftSide
     GG.rightSide = rightSide
 end
@@ -58,6 +68,11 @@ function gadget:GameFrame(f)
         leftSide:Deploy("left")
         rightSide:Deploy("right")
         dataSet = true
+    end
+
+    if f %spawnTime == 0 then
+        IteratePlatform(leftSide, f, "e")
+        IteratePlatform(rightSide, f, "w")
     end
 
     if f > 0 and f % updateTime == 0 then

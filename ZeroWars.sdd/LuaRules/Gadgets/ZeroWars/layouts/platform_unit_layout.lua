@@ -10,7 +10,7 @@ function Platform_Unit_Layout.new(side)
     if side == "left" then
 
         playerUnits = {
-            {unitName = "basiccon", x = 192.5, z = 350, dir = "e"},
+            {unitName = "basiccon", x = -140, z = 350, dir = "e"},
         }
 
         globalUnits = {
@@ -24,7 +24,7 @@ function Platform_Unit_Layout.new(side)
     elseif side == "right" then
 
         playerUnits = {
-            {unitName = "basiccon", x = 567.5, z = 410, dir = "w"},
+            {unitName = "basiccon", x = 520, z = 410, dir = "w"},
         }
 
         globalUnits = {
