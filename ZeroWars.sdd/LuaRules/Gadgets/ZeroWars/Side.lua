@@ -31,6 +31,7 @@ function Side.new(allyID, side, attackXPos)
             hasAI = true
             nullAI = playerList[i]
             table.remove(playerList, i)
+            break
         end
     end
 
@@ -118,7 +119,7 @@ function Side.new(allyID, side, attackXPos)
             -- all players resigned, end game
             spDestroyUnit(self.baseId)
         else
-
+            -- remove resigned player from platforms
             local platID = -1
             for i = #self.platforms, 1, -1 do
                 local id = self.platforms[i]:HasPlayer(playerID)
@@ -127,6 +128,10 @@ function Side.new(allyID, side, attackXPos)
                     platID = i
                     break
                 end
+            end
+
+            if platID ~= -1 and #self.platforms[platID].playerList == 0 then
+                table.remove(self.platforms, platID)
             end
         end
     end
