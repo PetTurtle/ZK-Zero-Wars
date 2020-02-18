@@ -1,23 +1,34 @@
+include("LuaRules/Configs/customcmds.h.lua")
+
+local spCreateUnit = Spring.CreateUnit
+local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitDefID = Spring.GetUnitDefID
+local spGetUnitHealth = Spring.GetUnitHealth
+local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
+local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
+local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
+local spGetUnitStates = Spring.GetUnitStates
+local spGiveOrderArrayToUnitArray = Spring.GiveOrderArrayToUnitArray
 
 local Unit_Deployer = {}
 
 function Unit_Deployer.new()
 
     local function ValidUnit(unitID, ud)
-        local buildProgress = select(5, Spring.GetUnitHealth(unitID))
+        local buildProgress = select(5, spGetUnitHealth(unitID))
         if not ud.isImmobile and (not ud.isMobileBuilder or ud.isAirUnit) and buildProgress == 1 then
             return true end
         return false 
     end
 
     local function CopyUnitState(original, clone, cmd)
-        local CMDDescID = Spring.FindUnitCmdDesc(original, cmd)
+        local CMDDescID = spFindUnitCmdDesc(original, cmd)
             if CMDDescID then
-                local cmdDesc = Spring.GetUnitCmdDescs(original, CMDDescID, CMDDescID)
+                local cmdDesc = spGetUnitCmdDescs(original, CMDDescID, CMDDescID)
                 local nparams = cmdDesc[1].params
-                Spring.EditUnitCmdDesc(clone, cmd, cmdDesc[1])
-                Spring.GiveOrderToUnit(clone, cmd, {nparams[1]}, {})
+                spEditUnitCmdDesc(clone, cmd, cmdDesc[1])
+                spGiveOrderToUnit(clone, cmd, {nparams[1]}, {})
             end
     end
 
@@ -30,12 +41,12 @@ function Unit_Deployer.new()
                     local unitDefID = spGetUnitDefID(units[i])
                     local ud = UnitDefs[unitDefID]
                     if ValidUnit(units[i], ud) then
-                        local x, y, z = Spring.GetUnitPosition(units[i])
+                        local x, y, z = spGetUnitPosition(units[i])
                         
-                        local unit = Spring.CreateUnit(unitDefID, posDif.x + x, 150, posDif.y + z, faceDir, nullAI)
+                        local unit = spCreateUnit(unitDefID, posDif.x + x, 150, posDif.y + z, faceDir, nullAI)
 
-                        local states = Spring.GetUnitStates(units[i])
-                        Spring.GiveOrderArrayToUnitArray({ unit }, {
+                        local states = spGetUnitStates(units[i])
+                        spGiveOrderArrayToUnitArray({ unit }, {
                             { CMD.FIRE_STATE, { states.firestate },             { } },
                             { CMD.MOVE_STATE, { states.movestate },             { } },
                             { CMD.REPEAT,     { states["repeat"] and 1 or 0 },  { } },
@@ -51,7 +62,7 @@ function Unit_Deployer.new()
                         CopyUnitState(units[i], unit, CMD_UNIT_BOMBER_DIVE_STATE)
                         CopyUnitState(units[i], unit, CMD_AP_FLY_STATE)
 
-                        Spring.GiveOrderToUnit(unit, CMD.FIGHT, {attackXPos, 0, z}, 0)
+                        spGiveOrderToUnit(unit, CMD.FIGHT, {attackXPos, 0, z}, 0)
                     end
                 end
             end
