@@ -118,22 +118,16 @@ function Side.new(allyID, side, attackXPos)
             -- all players resigned, end game
             spDestroyUnit(self.baseId)
         else
-            -- remove player from platform
-            -- local platID = -1
-            -- for i = #self.platforms, 1, -1 do
-            --     local id = self.platforms[i]:HasPlayer(playerID)
-            --     if id then
-            --         table.remove(self.platforms[i],players, id)
-            --         platID = i
-            --         break
-            --     end
-            -- end
 
-            -- -- if no players left on platform assign random player
-            -- -- TODO: Finish
-            -- if platID ~= -1 and #self.platforms[platID].playerList == 0 then
-                
-            -- end
+            local platID = -1
+            for i = #self.platforms, 1, -1 do
+                local id = self.platforms[i]:HasPlayer(playerID)
+                if id then
+                    table.remove(self.platforms[i].playerList, id)
+                    platID = i
+                    break
+                end
+            end
         end
     end
 

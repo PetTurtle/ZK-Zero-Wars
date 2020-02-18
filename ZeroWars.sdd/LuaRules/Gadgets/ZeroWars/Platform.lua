@@ -20,7 +20,7 @@ function Platform.new(platform_Layout, offsetX, offsetY)
 
     function platform:HasPlayer(playerID)
         for i = 1, #self.playerList do
-            if self.playerList[i] == playerID then return true end
+            if self.playerList[i] == playerID then return i end
         end return false
     end
 
@@ -34,8 +34,8 @@ function Platform.new(platform_Layout, offsetX, offsetY)
             end
 
             -- move commander
-            units = spGetTeamUnits(self.playerList[i])
-            spSetUnitPosition(units[1], comPos.x, comPos.z)
+            local playerUnits = spGetTeamUnits(self.playerList[i])
+            spSetUnitPosition(playerUnits[1], comPos.x, comPos.z)
         end
     end
 
