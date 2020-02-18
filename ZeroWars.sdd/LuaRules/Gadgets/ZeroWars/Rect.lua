@@ -26,7 +26,7 @@ function Rect.new(x, y, width, height)
         return spGetUnitsInRectangle(self.x1, self.y1, self.x2, self.y2, playerID)
     end
 
-    function rect:GetPosDifference(target)
+    function rect:GetPosOffset(target)
         local newX = target.x1 - self.x1
         local newY = target.y1 - self.y1
         local pos = {x = newX, y = newY,}
