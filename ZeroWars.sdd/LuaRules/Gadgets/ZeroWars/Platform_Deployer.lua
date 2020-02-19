@@ -1,6 +1,8 @@
 include("LuaRules/Configs/customcmds.h.lua")
 
 local spCreateUnit = Spring.CreateUnit
+local spDestroyUnit = Spring.DestroyUnit
+local spGetUnitIsDead = Spring.GetUnitIsDead
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitHealth = Spring.GetUnitHealth
@@ -9,18 +11,32 @@ local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spGetUnitStates = Spring.GetUnitStates
+local spGetUnitMass = Spring.GetUnitMass
 local spGiveOrderArrayToUnitArray = Spring.GiveOrderArrayToUnitArray
+
+local heavyTimeout = 7000
+local normalTimeout = 5000
+local skirmTimeout = 3000
+local artyTimeout = 2000
 
 PlatformDeployer = {
     deployQueue,
+    heavyUnits,
+    normalUnits,
+    skirmUnits,
+    artyUnits,
 }
 
 function PlatformDeployer:new ()
-   o = {}
-   setmetatable(o, self)
-   self.__index = self
-   self.deployQueue = {}
-   return o
+    o = {}
+    setmetatable(o, self)
+    self.__index = self
+    self.deployQueue = {}
+    self.heavyUnits = {}
+    self.normalUnits = {}
+    self.skirmUnits = {}
+    self.artyUnits = {}
+    return o
 end
 
 -- adds platform's units to deploy queue
@@ -41,17 +57,16 @@ function PlatformDeployer:Deploy (platform, deployRect, faceDir, teamID, attackX
     end
 end
 
-function PlatformDeployer:IterateQueue(spawnAmount)
+function PlatformDeployer:IterateQueue(spawnAmount, frame)
     if #self.deployQueue > 0 then
-        Spring.Echo("Deploying..." .. #self.deployQueue)
-        self:DeployUnits(self.deployQueue[1], spawnAmount)
+        self:DeployUnits(self.deployQueue[1], spawnAmount, frame)
         if #self.deployQueue[1].units == 0 then
             table.remove(self.deployQueue, 1)
         end
     end
 end
 
-function PlatformDeployer:DeployUnits(deployData, spawnAmount)
+function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
     local spawnCount = 0
     local units = deployData.units
     for i = #units, 1, -1 do
@@ -79,6 +94,22 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount)
             self:CopyUnitState(units[i], unit, CMD_AP_FLY_STATE)
 
             spGiveOrderToUnit(unit, CMD.FIGHT, {deployData.attackXPos, 0, z}, 0)
+
+            local range = ud.maxWeaponRange
+            local mass = spGetUnitMass(unit)
+
+            if mass > 1000 then -- Strider
+                table.insert(self.heavyUnits, {unit, frame})
+            elseif range >= 600 then -- Arty
+                table.insert(self.artyUnits, {unit, frame})
+            elseif mass > 252 then -- Heavy
+                table.insert(self.heavyUnits, {unit, frame})
+            elseif range >= 455 then -- skirm
+                table.insert(self.skirmUnits, {unit, frame})
+            else -- normal 
+                table.insert(self.normalUnits, {unit, frame})
+            end
+
             table.remove(units, i)
 
             spawnCount = spawnCount + 1
@@ -89,6 +120,22 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount)
             table.remove(units, i)
         end
     end
+end
+
+function PlatformDeployer:ClearUnitType(unitType, timeout, frame)
+    while #unitType > 0 and unitType[1][2] + timeout < frame do
+        if not spGetUnitIsDead(unitType[1][1]) then
+            spDestroyUnit(unitType[1][1], false, true)
+        end
+        table.remove(unitType, 1)
+    end
+end
+
+function PlatformDeployer:ClearTimedOut(frame)
+    self:ClearUnitType(self.heavyUnits, heavyTimeout, frame)
+    self:ClearUnitType(self.normalUnits, normalTimeout, frame)
+    self:ClearUnitType(self.skirmUnits, skirmTimeout, frame)
+    self:ClearUnitType(self.artyUnits, artyTimeout, frame)
 end
 
 function PlatformDeployer:IsValidUnit(unitID, ud)

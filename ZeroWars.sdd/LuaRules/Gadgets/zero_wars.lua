@@ -70,7 +70,7 @@ function gadget:GameFrame(f)
         dataSet = true
     end
 
-    platformDeployer:IterateQueue(maxSpawnsPerFrame)
+    platformDeployer:IterateQueue(maxSpawnsPerFrame, f)
 
     if f %spawnTime == 0 then
         IteratePlatform(leftSide, f, "e")
@@ -78,6 +78,7 @@ function gadget:GameFrame(f)
     end
 
     if f > 0 and f % updateTime == 0 then
+        platformDeployer:ClearTimedOut(f)
         -- add attack order to idle units
         for i = #idleUnits, 1, -1 do
             if not Spring.GetUnitIsDead(idleUnits[i].unit) then
