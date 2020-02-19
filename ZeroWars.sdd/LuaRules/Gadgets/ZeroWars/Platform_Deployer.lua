@@ -14,10 +14,10 @@ local spGetUnitStates = Spring.GetUnitStates
 local spGetUnitMass = Spring.GetUnitMass
 local spGiveOrderArrayToUnitArray = Spring.GiveOrderArrayToUnitArray
 
-local heavyTimeout = 7000
-local normalTimeout = 5000
-local skirmTimeout = 3000
-local artyTimeout = 2000
+local heavyTimeout = 7000  -- 3.88m
+local normalTimeout = 5000 -- 2.77m
+local skirmTimeout = 4000  -- 2.22m
+local artyTimeout = 3000   -- 1.66m
 
 PlatformDeployer = {
     deployQueue,
@@ -69,6 +69,10 @@ end
 function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
     local spawnCount = 0
     local units = deployData.units
+    local heavyWave = {units = {}, frame = frame}
+    local normalWave = {units = {}, frame = frame}
+    local skirmWave = {units = {}, frame = frame}
+    local artyWave = {units = {}, frame = frame}
     for i = #units, 1, -1 do
         local unitDefID = spGetUnitDefID(units[i])
         local ud = UnitDefs[unitDefID]
@@ -93,21 +97,21 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
             self:CopyUnitState(units[i], unit, CMD_UNIT_BOMBER_DIVE_STATE)
             self:CopyUnitState(units[i], unit, CMD_AP_FLY_STATE)
 
-            spGiveOrderToUnit(unit, CMD.FIGHT, {deployData.attackXPos, 0, z}, 0)
+            spGiveOrderToUnit(unit, CMD.FIGHT, {deployData.attackXPos, 0, deployData.posOffset.y + z}, 0)
 
             local range = ud.maxWeaponRange
             local mass = spGetUnitMass(unit)
 
             if mass > 1000 then -- Strider
-                table.insert(self.heavyUnits, {unit, frame})
+                table.insert(heavyWave.units, unit)
             elseif range >= 600 then -- Arty
-                table.insert(self.artyUnits, {unit, frame})
+                table.insert(artyWave.units, unit)
             elseif mass > 252 then -- Heavy
-                table.insert(self.heavyUnits, {unit, frame})
+                table.insert(heavyWave.units, unit)
             elseif range >= 455 then -- skirm
-                table.insert(self.skirmUnits, {unit, frame})
+                table.insert(skirmWave.units, unit)
             else -- normal 
-                table.insert(self.normalUnits, {unit, frame})
+                table.insert(normalWave.units, unit)
             end
 
             table.remove(units, i)
@@ -120,12 +124,28 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
             table.remove(units, i)
         end
     end
+
+    if #heavyWave.units > 0 then
+        table.insert(self.heavyUnits, heavyWave)
+    end
+    if #normalWave.units > 0 then
+        table.insert(self.normalUnits, normalWave)
+    end
+    if #skirmWave.units > 0 then
+        table.insert(self.skirmUnits, skirmWave)
+    end
+    if #artyWave.units > 0 then
+        table.insert(self.artyUnits, artyWave)
+    end
 end
 
 function PlatformDeployer:ClearUnitType(unitType, timeout, frame)
-    while #unitType > 0 and unitType[1][2] + timeout < frame do
-        if not spGetUnitIsDead(unitType[1][1]) then
-            spDestroyUnit(unitType[1][1], false, true)
+    while #unitType > 0 and unitType[1].frame + timeout < frame do
+        local units = unitType[1].units
+        for i = 1, #units do
+            if not spGetUnitIsDead(units[i]) then
+                spDestroyUnit(units[i], false, true)
+            end
         end
         table.remove(unitType, 1)
     end
