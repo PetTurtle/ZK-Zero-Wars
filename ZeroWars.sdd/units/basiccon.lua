@@ -1,7 +1,7 @@
 unitDef = {
   unitname            = [[basiccon]],
   name                = [[Basic Con]],
-  description         = [[Amphibious Construction Bot, Builds at 7.5 m/s]],
+  description         = [[Basic Bot, Builds at 10 m/s]],
   acceleration        = 1.2,
   activateWhenBuilt   = true,
   brakeRate           = 1.5,
@@ -66,7 +66,7 @@ unitDef = {
   trackWidth          = 22,
   turnRate            = 1000,
   upright             = false,
-  workerTime          = 7.5,
+  workerTime          = 10,
 
   featureDefs         = {
 
