@@ -19,6 +19,7 @@ unitDef = {
 
     customParams = {aimposoffset = [[0 15 0]]},
 
+    energyStorage       = 1000,
     explodeAs = [[ATOMIC_BLAST]],
     floater = true,
     footprintX = 10,
