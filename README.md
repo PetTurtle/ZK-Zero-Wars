@@ -1,2 +1,4 @@
 # Zero-Wars
-zero-k custom mode
+![](icon-full.png)
+
+custom zero-k map mod
