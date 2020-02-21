@@ -159,7 +159,7 @@ function PlatformDeployer:ClearTimedOut(frame)
 end
 
 function PlatformDeployer:IsValidUnit(unitID, ud)
-    if spDestroyUnit(unitID) == false then
+    if spGetUnitIsDead(unitID) == false then
         local buildProgress = select(5, spGetUnitHealth(unitID))
         if not ud.isImmobile and (not ud.isMobileBuilder or ud.isAirUnit) and buildProgress == 1 then
             return true end
