@@ -33,7 +33,7 @@ unitDef = {
     noAutoFire          = false,
     noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE SUB]],
     objectName          = [[carrydrone.s3o]],
-    reclaimable         = false,
+    reclaimable         = true,
     script              = [[dronecarry.lua]],
     selfDestructAs      = [[TINY_BUILDINGEX]],
     
