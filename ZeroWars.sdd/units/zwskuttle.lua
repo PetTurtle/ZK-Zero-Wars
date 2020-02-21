@@ -88,7 +88,7 @@ unitDef = {
     },
     weaponDefs = {
       jumpbomb_DEATH = {
-        areaOfEffect       = 150,
+        areaOfEffect       = 200,
         craterBoost        = 4,
         craterMult         = 5,
         edgeEffectiveness  = 0.3,
