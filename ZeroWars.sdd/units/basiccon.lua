@@ -27,9 +27,8 @@ unitDef = {
     [[amphriot]],
     [[amphimpulse]],
     [[basiccon]],
-    [[factorychicken]],
+    
     [[factoryair]],
-
     [[factorylight]],
     [[factorymedium]],
     [[factoryheavy]],
