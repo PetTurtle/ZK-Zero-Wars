@@ -14,6 +14,7 @@ unitDef = {
 
   buildoptions                  = {
     [[jumpscout]],
+    [[amphraid]],
     [[jumpraid]],
     [[jumpblackhole]],
     [[jumpskirm]],
@@ -25,6 +26,7 @@ unitDef = {
     [[spidercrabe]],
     [[jumpsumo]],
     [[zwskuttle]],
+    [[striderbantha]],
   },
 
   buildPic                      = [[factoryjump.png]],

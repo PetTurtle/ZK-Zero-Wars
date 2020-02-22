@@ -14,6 +14,7 @@ unitDef = {
 
   buildoptions                  = {
     [[jumpscout]],
+    [[amphraid]],
     [[jumpraid]],
     [[jumpblackhole]],
     [[jumpskirm]],

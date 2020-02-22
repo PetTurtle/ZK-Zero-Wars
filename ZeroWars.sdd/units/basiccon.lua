@@ -20,13 +20,20 @@ unitDef = {
     [[shieldassault]],
     [[cloakskirm]],
     [[spideremp]],
+    [[veharty]],
     [[zwgull]],
+
+    [[tankraid]],
+    [[amphriot]],
+    [[amphimpulse]],
     [[basiccon]],
+    [[factorychicken]],
+    [[factoryair]],
+
     [[factorylight]],
     [[factorymedium]],
     [[factoryheavy]],
     [[factoryspecial]],
-    [[factoryair]],
   },
 
   buildPic            = [[amphcon.png]],

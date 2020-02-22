@@ -23,6 +23,9 @@ unitDef = {
     [[shieldfelon]],
     [[shieldarty]],
     [[amphassault]],
+    [[hoverminer]],
+    [[hoverarty]],
+    [[striderdante]],
     [[striderarty]],
   },
 
