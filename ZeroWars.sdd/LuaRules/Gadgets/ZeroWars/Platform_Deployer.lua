@@ -171,9 +171,11 @@ function PlatformDeployer:CopyUnitState(original, clone, cmd)
     local CMDDescID = spFindUnitCmdDesc(original, cmd)
     if CMDDescID then
         local cmdDesc = spGetUnitCmdDescs(original, CMDDescID, CMDDescID)
-        local nparams = cmdDesc[1].params
-        spEditUnitCmdDesc(clone, cmd, cmdDesc[1])
-        spGiveOrderToUnit(clone, cmd, {nparams[1]}, {})
+        if cmdDesc and #cmdDesc > 0 then
+            local nparams = cmdDesc[1].params
+            spEditUnitCmdDesc(clone, cmd, cmdDesc[1])
+            spGiveOrderToUnit(clone, cmd, {nparams[1]}, {})
+        end
     end
 end
 
