@@ -27,6 +27,7 @@ unitDef = {
     [[amphriot]],
     [[amphimpulse]],
     [[basiccon]],
+    [[comduck]],
     
     [[factoryair]],
     [[factorylight]],
