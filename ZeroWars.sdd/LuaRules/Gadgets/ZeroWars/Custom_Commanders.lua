@@ -15,7 +15,16 @@ end
 function CustomCommanders:TransferExperience(unitID, unitTeam, xp)
     local original = self.commanders[unitTeam].original
     if original ~= unitID then
-        Spring.SetUnitExperience(original, Spring.GetUnitExperience(original) + xp)
+        local level = Spring.GetUnitRulesParam(original, "level");
+        local newXP = Spring.GetUnitExperience(original) + xp
+        if (newXP >= level) then
+            newXP = newXP - level
+            Spring.SetUnitRulesParam(original, "level", level + 1)
+            
+            local points = Spring.GetUnitRulesParam(original, "points");
+            Spring.SetUnitRulesParam(original, "points", points + 1)
+        end
+        Spring.SetUnitExperience(original, newXP)
     end
 end
 

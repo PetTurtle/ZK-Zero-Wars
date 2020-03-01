@@ -1,4 +1,5 @@
 
+
 function widget:GetInfo() return {
 	name      = "Zero Wars Data Display",
 	desc      = "displays zero wars data.",
@@ -22,6 +23,11 @@ local pointsLabel = nil
 local xpProgressbar = nil
 local windowShown = false
 local comID;
+
+local path1Button = nil
+local path2Button = nil
+local path3Button = nil
+local path4Button = nil
 
 local function CreateWindow()
 	window = Chili.Window:New {
@@ -119,15 +125,6 @@ local function AddUpgradeButton(name, tooltip)
 		parent = upgradeList,
 	}
 
-	-- Image:New{
-	-- 	x = 0,
-	-- 	y = 0,
-	-- 	bottom = 0,
-	-- 	keepAspect = true,
-	-- 	file = moduleData.image,
-	-- 	parent = newButton,
-	-- }
-
 	local textBox = Chili.TextBox:New{
 		x      = 64,
 		y      = 10,
@@ -138,6 +135,7 @@ local function AddUpgradeButton(name, tooltip)
 		font   = {size = 16, outline = true, color = moduleTextColor, outlineWidth = 2, outlineWeight = 2},
 		parent = newButton,
 	}
+	return newButton
 end
 
 local function HideWindow()
@@ -152,19 +150,51 @@ local function ShowWindow()
 		if window then
 			screen0:AddChild(window)
 			windowShown = true
-		else
-			CreateWindow()
-			AddUpgradeButton("Upgrade 1", "upgrade1")
-			AddUpgradeButton("Upgrade 2", "upgrade2")
-			AddUpgradeButton("Upgrade 3", "upgrade3")
-			AddUpgradeButton("Upgrade 4", "upgrade4")
 		end
+	end
+end
+
+local function ClearUpgrades()
+	upgradeList:RemoveChild(path1Button)
+	upgradeList:RemoveChild(path2Button)
+	upgradeList:RemoveChild(path3Button)
+	upgradeList:RemoveChild(path4Button)
+end
+
+local function ShowUpgrades(unitID, level)
+	local path1 = Spring.GetUnitRulesParam(unitID, "path1")
+	local path2 = Spring.GetUnitRulesParam(unitID, "path2")
+	local path3 = Spring.GetUnitRulesParam(unitID, "path3")
+	local path4 = Spring.GetUnitRulesParam(unitID, "path4")
+	upgradeList:AddChild(path1Button)
+	upgradeList:AddChild(path2Button)
+	upgradeList:AddChild(path3Button)
+
+	if (level >= 10) then
+		upgradeList:AddChild(path4Button)
 	end
 end
 
 local function UpdateUI(unitID)
 	comID = unitID
-	xpProgressbar:SetValue(Spring.GetUnitExperience(unitID))
+	local xp = Spring.GetUnitExperience(unitID)
+	local level = Spring.GetUnitRulesParam(unitID, "level")
+	local points = Spring.GetUnitRulesParam(unitID, "points")
+
+	levelLabel:SetCaption("Level " .. level)
+	pointsLabel:SetCaption("Points " .. points)
+
+	local xpVal = math.floor(xp * 1000)
+	local maxXPVal = level * 1000
+
+	xpProgressbar:SetValue(xpVal)
+	xpProgressbar:SetMinMax(0, maxXPVal)
+	xpProgressbar:SetCaption(xpVal .. "/" .. maxXPVal)
+
+	ClearUpgrades()
+	if points > 0 then
+		ShowUpgrades(unitID, level)
+	end
 end
 
 function widget:Initialize()
@@ -172,10 +202,10 @@ function widget:Initialize()
 	if (not Chili) then widgetHandler:RemoveWidget() return end
 	screen0 = Chili.Screen0
 	CreateWindow()
-	AddUpgradeButton("Upgrade 1", "upgrade1")
-	AddUpgradeButton("Upgrade 2", "upgrade2")
-	AddUpgradeButton("Upgrade 3", "upgrade3")
-	AddUpgradeButton("Upgrade 4", "upgrade4")
+	path1Button = AddUpgradeButton("Upgrade 1", "upgrade1")
+	path2Button = AddUpgradeButton("Upgrade 2", "upgrade2")
+	path3Button = AddUpgradeButton("Upgrade 3", "upgrade3")
+	path4Button = AddUpgradeButton("Upgrade 4", "upgrade4")
 	HideWindow()
 end
 
