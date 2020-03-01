@@ -32,7 +32,15 @@ function Rect.new(x, y, width, height)
         local pos = {x = newX, y = newY,}
         return pos
     end
-    
+
+    function rect:GetCenterPos()
+        local xDiff = (self.x2 - self.x1) / 2
+        local yDiff = (self.y2 - self.y1) / 2
+        local x = self.x1 + xDiff
+        local y = self.y1 + yDiff
+        return x, y
+    end
+
 	return rect
 end
 

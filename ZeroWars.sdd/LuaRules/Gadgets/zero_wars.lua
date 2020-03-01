@@ -48,7 +48,20 @@ local validCommands = {
 }
 
 local function IteratePlatform(side, frame, faceDir)
-    platformDeployer:Deploy(side.platforms[(side.iterator % #side.platforms) + 1], side.deployRect, faceDir, side.nullAI, side.attackXPos);
+    local platform = side.platforms[(side.iterator % #side.platforms) + 1]
+
+    -- deploy units on platform
+    platformDeployer:Deploy(platform, side.deployRect, faceDir, side.nullAI, side.attackXPos);
+
+    -- deploy player commanders
+    for i = 1, #platform.playerList do
+        local player = platform.playerList[i]
+        if customCommanders:HasCommander(player) and not customCommanders:HasClone(player) then
+            local x, y = side.deployRect:GetCenterPos()
+            customCommanders:SpawnClone(player, x, y, faceDir, side.attackXPos)
+        end
+    end
+    -- iterate platform
     side.iterator=((side.iterator + 1) % #side.platforms)
 end
 
@@ -64,6 +77,8 @@ function gadget:Initialize()
     rightSide = Side.new(allyTeamList[2], "right", 2303)
     platformDeployer = PlatformDeployer:new()
     customCommanders = CustomCommanders:new()
+    GG.leftSide = leftSide
+    GG.rightSide = rightSide
 end
 
 function gadget:GameFrame(f)
@@ -96,8 +111,8 @@ function gadget:GameFrame(f)
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
-    if customCommanders:IsCommander(unitDefID) then
-        customCommanders:InitializeCustomCommander(unitID, unitTeam)
+    if customCommanders:IsCommander(unitDefID) and not customCommanders:HasCommander(unitTeam) then
+        customCommanders:SetOriginal(unitID, unitTeam)
     end
 end
 
@@ -185,7 +200,6 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 end
 
 function gadget:UnitExperience(unitID, unitDefID, unitTeam, experience, oldExperience)
-    Spring.Echo(unitTeam)
     if customCommanders:IsCommander(unitDefID) then
         customCommanders:TransferExperience(unitID, unitTeam, experience - oldExperience)
     end
