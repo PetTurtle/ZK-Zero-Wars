@@ -20,6 +20,7 @@ local upgradeList = nil
 local levelLabel = nil
 local xpProgressbar = nil
 local windowShown = false
+local comID;
 
 local function CreateWindow()
 	window = Chili.Window:New {
@@ -154,6 +155,12 @@ function widget:Initialize()
 	Chili = WG.Chili
 	if (not Chili) then widgetHandler:RemoveWidget() return end
 	screen0 = Chili.Screen0
+	CreateWindow()
+	AddUpgradeButton("Upgrade 1", "upgrade1")
+	AddUpgradeButton("Upgrade 2", "upgrade2")
+	AddUpgradeButton("Upgrade 3", "upgrade3")
+	AddUpgradeButton("Upgrade 4", "upgrade4")
+	HideWindow()
 end
 
 function widget:Shutdown()
@@ -161,12 +168,13 @@ function widget:Shutdown()
 end
 
 function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
-	local units = Spring.GetSelectedUnits()
-	if units and #units > 0 then
-		ShowWindow()
-	else
-		HideWindow()
-	end
+	-- update ui if com selected
+	-- local units = Spring.GetSelectedUnits()
+	-- if units and #units > 0 then
+	-- 	ShowWindow()
+	-- else
+	-- 	HideWindow()
+	-- end
 end
 
 local cachedSelectedUnits
@@ -177,7 +185,19 @@ end
 function widget:CommandsChanged()
 	local units = cachedSelectedUnits or Spring.GetSelectedUnits()
 	if units and #units > 0 then
-		ShowWindow()
+		local foundCom = false
+		for i = 1, #units do
+			local ud = UnitDefs[Spring.GetUnitDefID(units[i])]
+			if (ud.customParams.customcom) then
+				foundCom = true;
+				comID = units[i]
+				xpProgressbar:SetValue(Spring.GetUnitExperience(comID))
+				break;
+			end
+		end
+		if (foundCom) then
+			ShowWindow()
+		end
 	else
 		HideWindow()
 	end
