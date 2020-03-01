@@ -19,7 +19,7 @@ unitDef = {
     customParams = {
         amph_regen = 5,
         amph_submerged_at = 40,
-        clevel = [[1]],
+        customcom = true,
     },
 
     explodeAs = [[BIG_UNITEX]],
@@ -87,7 +87,7 @@ unitDef = {
             noSelfDamage = true,
             projectiles = 2,
             range = 240,
-            reloadtime = 4,
+            reloadtime = 0.5,
             smokeTrail = true,
             soundHit = [[weapon/cannon/cannon_hit2]],
             soundStart = [[weapon/missile/missile_fire9]],

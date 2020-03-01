@@ -160,8 +160,8 @@ end
 
 function script.FireWeapon(num)
     Spring.PlaySoundFile("sounds/weapon/torp_land.wav", 5, px, py, pz)
-    scaleCount = scaleCount + 1
-    GG.SetScale(unitID, base, scaleCount)
+    --scaleCount = scaleCount + 1
+    --GG.SetScale(unitID, base, scaleCount)
 end
 
 function script.BlockShot(num, targetID)
