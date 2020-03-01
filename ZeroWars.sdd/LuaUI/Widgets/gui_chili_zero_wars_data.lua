@@ -18,6 +18,7 @@ local screen0
 local window = nil
 local upgradeList = nil
 local levelLabel = nil
+local pointsLabel = nil
 local xpProgressbar = nil
 local windowShown = false
 local comID;
@@ -73,11 +74,20 @@ local function CreateWindow()
 	}
 
 	levelLabel = Chili.Label:New{
-		x      = 0,
+		x      = 40,
 		right  = 0,
 		bottom  = 35,
-		align  = "center",
 		caption = "Level 1",
+		autosize = false,
+		font     = {size = 16, outline = true, color = cyan, outlineWidth = 2, outlineWeight = 2},
+		parent = window,
+	}
+
+	pointsLabel = Chili.Label:New{
+		x      = 110,
+		right  = 0,
+		bottom  = 35,
+		caption = "Points 1",
 		autosize = false,
 		font     = {size = 16, outline = true, color = cyan, outlineWidth = 2, outlineWeight = 2},
 		parent = window,
@@ -88,7 +98,8 @@ local function CreateWindow()
 		right = 0,
 		bottom  = 10,
 		value = 45,
-		caption = "950/2000 XP",
+		max = 1,
+		caption = "",
 		parent = window,
 	}
 end
