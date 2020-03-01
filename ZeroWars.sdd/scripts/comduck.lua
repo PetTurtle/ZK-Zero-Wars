@@ -1,6 +1,8 @@
 include "constants.lua"
 include "scalecontroller.lua"
 
+local upgrades = include("updatedcoms.lua")
+
 local base, torso, head = piece('base', 'torso', 'head')
 local rthigh, rshin, rfoot, lthigh, lshin, lfoot = piece('rthigh', 'rshin', 'rfoot', 'lthigh', 'lshin', 'lfoot')
 local lturret, rturret, lflare, rflare = piece('lturret', 'rturret', 'lflare', 'rflare')

@@ -162,6 +162,11 @@ local function ShowWindow()
 	end
 end
 
+local function UpdateUI(unitID)
+	comID = unitID
+	xpProgressbar:SetValue(Spring.GetUnitExperience(unitID))
+end
+
 function widget:Initialize()
 	Chili = WG.Chili
 	if (not Chili) then widgetHandler:RemoveWidget() return end
@@ -199,10 +204,9 @@ function widget:CommandsChanged()
 		local foundCom = false
 		for i = 1, #units do
 			local ud = UnitDefs[Spring.GetUnitDefID(units[i])]
-			if (ud.customParams.customcom) then
+			if (ud.customParams.customcom and Spring.GetUnitRulesParam(units[i], "original") == 1) then
 				foundCom = true;
-				comID = units[i]
-				xpProgressbar:SetValue(Spring.GetUnitExperience(comID))
+				UpdateUI(units[i])
 				break;
 			end
 		end
