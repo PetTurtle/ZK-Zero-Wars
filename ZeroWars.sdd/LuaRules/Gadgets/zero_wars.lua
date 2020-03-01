@@ -17,6 +17,7 @@ include("LuaRules/Configs/customcmds.h.lua")
 local IdleUnit = VFS.Include("LuaRules/Gadgets/ZeroWData/IdleUnit.lua")
 local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Side.lua")
 local PlatformDeployer = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform_Deployer.lua")
+local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commanders.lua");
 
 local dataSet = false
 
@@ -27,6 +28,7 @@ local leftSide
 local rightSide
 
 local platformDeployer
+local customCommanders
 
 local updateTime = 60
 local idleUnits = {}
@@ -61,6 +63,7 @@ function gadget:Initialize()
     leftSide = Side.new(allyTeamList[1], "left", 5888)
     rightSide = Side.new(allyTeamList[2], "right", 2303)
     platformDeployer = PlatformDeployer:new()
+    customCommanders = CustomCommanders:new()
 end
 
 function gadget:GameFrame(f)
@@ -89,6 +92,12 @@ function gadget:GameFrame(f)
             end
             table.remove(idleUnits, i)
         end
+    end
+end
+
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+    if customCommanders:IsCommander(unitDefID) then
+        customCommanders:InitializeCustomCommander(unitID, unitTeam)
     end
 end
 
@@ -173,6 +182,13 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
         return false
     end
     return true
+end
+
+function gadget:UnitExperience(unitID, unitDefID, unitTeam, experience, oldExperience)
+    Spring.Echo(unitTeam)
+    if customCommanders:IsCommander(unitDefID) then
+        customCommanders:TransferExperience(unitID, unitTeam, experience - oldExperience)
+    end
 end
 
 function gadget:TeamDied(teamID)
