@@ -20,6 +20,7 @@ unitDef = {
         amph_regen = 5,
         amph_submerged_at = 40,
         customcom = true,
+        custom_com_type = [[duck]]
     },
 
     explodeAs = [[BIG_UNITEX]],

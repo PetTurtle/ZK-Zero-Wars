@@ -1,7 +1,10 @@
 include("LuaRules/Configs/customcmds.h.lua")
 
+local custom_com_defs = include("LuaRules/Configs/custom_com_defs.lua")
+
 CustomCommanders = {
     commanders,
+    custom_com_defs,
 }
 
 function CustomCommanders:new ()
@@ -9,6 +12,8 @@ function CustomCommanders:new ()
     setmetatable(o, self)
     self.__index = self
     self.commanders = {}
+    self.custom_com_defs = custom_com_defs
+    GG.custom_com_defs = custom_com_defs
     return o
 end
 
@@ -20,7 +25,7 @@ function CustomCommanders:TransferExperience(unitID, unitTeam, xp)
         if (newXP >= level) then
             newXP = newXP - level
             Spring.SetUnitRulesParam(original, "level", level + 1)
-            
+
             local points = Spring.GetUnitRulesParam(original, "points");
             Spring.SetUnitRulesParam(original, "points", points + 1)
         end
@@ -46,7 +51,7 @@ end
 function CustomCommanders:SetOriginal(unitID, unitTeam)
     self.commanders[unitTeam] = {original = unitID, clone = nil}
     Spring.SetUnitRulesParam(unitID, "level", 1)
-    Spring.SetUnitRulesParam(unitID, "points", 0)
+    Spring.SetUnitRulesParam(unitID, "points", 1)
     Spring.SetUnitRulesParam(unitID, "path1", 0)
     Spring.SetUnitRulesParam(unitID, "path2", 0)
     Spring.SetUnitRulesParam(unitID, "path3", 0)
