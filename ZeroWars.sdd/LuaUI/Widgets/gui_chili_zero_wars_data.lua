@@ -13,6 +13,7 @@ function widget:GetInfo() return {
 
 include("colors.h.lua")
 VFS.Include("LuaRules/Configs/constants.lua")
+local custom_com_defs = include("LuaRules/Configs/custom_com_defs.lua")
 
 local Chili
 local screen0
@@ -112,7 +113,8 @@ end
 
 local function AddUpgradeButton(name, tooltip)
 	local newButton = Chili.Button:New{
-		caption = "",
+		caption = name,
+		font = {size = 20, outline = true, color = cyan, outlineWidth = 2, outlineWeight = 2},
 		x = 0,
 		y = 0,
 		right = 0,
@@ -123,17 +125,6 @@ local function AddUpgradeButton(name, tooltip)
 		OnClick = {},
 		tooltip = tooltip,
 		parent = upgradeList,
-	}
-
-	local textBox = Chili.TextBox:New{
-		x      = 64,
-		y      = 10,
-		right  = 8,
-		bottom = 8,
-		valign = "left",
-		text   = name,
-		font   = {size = 16, outline = true, color = moduleTextColor, outlineWidth = 2, outlineWeight = 2},
-		parent = newButton,
 	}
 	return newButton
 end
@@ -161,21 +152,29 @@ local function ClearUpgrades()
 	upgradeList:RemoveChild(path4Button)
 end
 
-local function ShowUpgrades(unitID, level)
+local function UpdatePathButton(button, params)
+	button:SetCaption(params.name)
+	button.tooltip = params.desc
+	upgradeList:AddChild(button)
+end
+
+local function ShowUpgrades(unitID, ud, level)
 	local path1 = Spring.GetUnitRulesParam(unitID, "path1")
 	local path2 = Spring.GetUnitRulesParam(unitID, "path2")
 	local path3 = Spring.GetUnitRulesParam(unitID, "path3")
 	local path4 = Spring.GetUnitRulesParam(unitID, "path4")
-	upgradeList:AddChild(path1Button)
-	upgradeList:AddChild(path2Button)
-	upgradeList:AddChild(path3Button)
+
+	local upgadeDefs = custom_com_defs[ud.name]
+	UpdatePathButton(path1Button, upgadeDefs.path1[path1 + 1])
+	UpdatePathButton(path2Button, upgadeDefs.path2[path2 + 1])
+	UpdatePathButton(path3Button, upgadeDefs.path3[path3 + 1])
 
 	if (level >= 10) then
-		upgradeList:AddChild(path4Button)
+		UpdatePathButton(path4Button, upgadeDefs.path4[path4 + 1])
 	end
 end
 
-local function UpdateUI(unitID)
+local function UpdateUI(unitID, ud)
 	comID = unitID
 	local xp = Spring.GetUnitExperience(unitID)
 	local level = Spring.GetUnitRulesParam(unitID, "level")
@@ -193,7 +192,7 @@ local function UpdateUI(unitID)
 
 	ClearUpgrades()
 	if points > 0 then
-		ShowUpgrades(unitID, level)
+		ShowUpgrades(unitID, ud, level)
 	end
 end
 
@@ -236,7 +235,7 @@ function widget:CommandsChanged()
 			local ud = UnitDefs[Spring.GetUnitDefID(units[i])]
 			if (ud.customParams.customcom and Spring.GetUnitRulesParam(units[i], "original") == 1) then
 				foundCom = true;
-				UpdateUI(units[i])
+				UpdateUI(units[i], ud)
 				break;
 			end
 		end
