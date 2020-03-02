@@ -178,12 +178,13 @@ local function ShowUpgrades(unitID, ud, level)
 	local path4 = Spring.GetUnitRulesParam(unitID, "path4")
 
 	local upgadeDefs = custom_com_defs[ud.name]
-	UpdatePathButton(path1Button, upgadeDefs.path1[path1 + 1])
-	UpdatePathButton(path2Button, upgadeDefs.path2[path2 + 1])
-	UpdatePathButton(path3Button, upgadeDefs.path3[path3 + 1])
+	if path1 < 4 then UpdatePathButton(path1Button, upgadeDefs.path1[path1 + 1]) end
+	if path2 < 4 then UpdatePathButton(path2Button, upgadeDefs.path2[path2 + 1]) end
+	if path3 < 4 then UpdatePathButton(path3Button, upgadeDefs.path3[path3 + 1]) end
 
 	if (level >= 10) then
-		UpdatePathButton(path4Button, upgadeDefs.path4[path4 + 1])
+		if path4 < 4 then UpdatePathButton(path4Button, upgadeDefs.path4[path4 + 1]) end
+		
 	end
 end
 
