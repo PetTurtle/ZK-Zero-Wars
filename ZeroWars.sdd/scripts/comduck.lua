@@ -42,7 +42,7 @@ local torpRange = WeaponDefNames["amphraid_torpedo"].range
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 local gun_1 = 0
-local scaleCount = 1
+local scale_multi = 0.05
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 
@@ -162,8 +162,10 @@ end
 
 function script.FireWeapon(num)
     Spring.PlaySoundFile("sounds/weapon/torp_land.wav", 5, px, py, pz)
-    --scaleCount = scaleCount + 1
-    --GG.SetScale(unitID, base, scaleCount)
+end
+
+function LevelUp(level)
+	GG.SetScale(unitID, base, 1 + (level * scale_multi))
 end
 
 function script.BlockShot(num, targetID)

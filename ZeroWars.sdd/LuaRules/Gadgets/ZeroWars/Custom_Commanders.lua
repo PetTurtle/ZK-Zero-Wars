@@ -17,6 +17,13 @@ function CustomCommanders:new ()
     return o
 end
 
+local function callScript(unitID, funcName, args)
+	local func = Spring.UnitScript.GetScriptEnv(unitID)[funcName]
+	if func then
+		Spring.UnitScript.CallAsUnit(unitID, func, args)
+	end
+end
+
 function CustomCommanders:TransferExperience(unitID, unitTeam, xp)
     local original = self.commanders[unitTeam].original
     if original ~= unitID then
@@ -28,6 +35,7 @@ function CustomCommanders:TransferExperience(unitID, unitTeam, xp)
 
             local points = Spring.GetUnitRulesParam(original, "points");
             Spring.SetUnitRulesParam(original, "points", points + 1)
+            callScript(original, "LevelUp", level + 1)
         end
         Spring.SetUnitExperience(original, newXP)
     end
@@ -73,6 +81,8 @@ function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)
     Spring.SetUnitRulesParam(clone, "path3", Spring.GetUnitRulesParam(original, "path3"))
     Spring.SetUnitRulesParam(clone, "path4", Spring.GetUnitRulesParam(original, "path4"))
     Spring.SetUnitRulesParam(clone, "original", 0)
+
+    callScript(clone, "LevelUp", Spring.GetUnitRulesParam(original, "level"))
 end
 
 function CustomCommanders:ProcessCommand(unitID, cmdID, cmdParams)
