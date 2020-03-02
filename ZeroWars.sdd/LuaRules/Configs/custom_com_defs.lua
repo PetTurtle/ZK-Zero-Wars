@@ -1,6 +1,8 @@
 Spring.GetModOptions = Spring.GetModOptions or function() return {} end
 
 local customUpgradeDefs = {
+    CMD_CUSTOM_UPGRADE = 49731,
+
     comduck = {
         path1 = {
             [1] = { name = "Basic Missiles", desc = "upgrade", },

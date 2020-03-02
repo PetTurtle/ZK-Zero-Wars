@@ -75,4 +75,14 @@ function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)
     Spring.SetUnitRulesParam(clone, "original", 0)
 end
 
+function CustomCommanders:ProcessCommand(unitID, cmdID, cmdParams)
+    if cmdID ~= custom_com_defs.CMD_CUSTOM_UPGRADE then return false end
+
+    local points = Spring.GetUnitRulesParam(unitID, "points");
+    Spring.SetUnitRulesParam(unitID, "points", points - 1)
+    Spring.GiveOrderToUnit(unitID, CMD.FIRE_STATE, {2}, 0)
+    
+    return true
+end
+
 return CustomCommanders

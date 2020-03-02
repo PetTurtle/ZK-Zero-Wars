@@ -185,6 +185,8 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
     local x, y, z = Spring.GetUnitPosition(unitID)
     local ud = UnitDefs[unitDefID]
 
+    if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
+
     if not x or x < 760 or x > 8192 - 760 then
         if ud.isBuilder then
             return true

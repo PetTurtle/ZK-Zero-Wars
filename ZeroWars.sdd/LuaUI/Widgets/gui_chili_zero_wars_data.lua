@@ -111,7 +111,15 @@ local function CreateWindow()
 	}
 end
 
-local function AddUpgradeButton(name, tooltip)
+local function CurrentModuleClick(self, path)
+	local ud = UnitDefs[Spring.GetUnitDefID(comID)]
+	local points = Spring.GetUnitRulesParam(comID, "points");
+	if points and points > 0 then
+		Spring.GiveOrderToUnit(comID, custom_com_defs.CMD_CUSTOM_UPGRADE, {path}, 0)
+	end
+end
+
+local function AddUpgradeButton(name, tooltip, path)
 	local newButton = Chili.Button:New{
 		caption = name,
 		font = {size = 20, outline = true, color = cyan, outlineWidth = 2, outlineWeight = 2},
@@ -125,6 +133,11 @@ local function AddUpgradeButton(name, tooltip)
 		OnClick = {},
 		tooltip = tooltip,
 		parent = upgradeList,
+		OnClick = {
+			function(self)
+				CurrentModuleClick(self, path)
+			end
+		},
 	}
 	return newButton
 end
@@ -201,10 +214,10 @@ function widget:Initialize()
 	if (not Chili) then widgetHandler:RemoveWidget() return end
 	screen0 = Chili.Screen0
 	CreateWindow()
-	path1Button = AddUpgradeButton("Upgrade 1", "upgrade1")
-	path2Button = AddUpgradeButton("Upgrade 2", "upgrade2")
-	path3Button = AddUpgradeButton("Upgrade 3", "upgrade3")
-	path4Button = AddUpgradeButton("Upgrade 4", "upgrade4")
+	path1Button = AddUpgradeButton("Upgrade 1", "upgrade1", 1)
+	path2Button = AddUpgradeButton("Upgrade 2", "upgrade2", 2)
+	path3Button = AddUpgradeButton("Upgrade 3", "upgrade3", 3)
+	path4Button = AddUpgradeButton("Upgrade 4", "upgrade4", 4)
 	HideWindow()
 end
 
@@ -212,19 +225,20 @@ function widget:Shutdown()
 	window:Dispose()
 end
 
-function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
-	-- update ui if com selected
-	-- local units = Spring.GetSelectedUnits()
-	-- if units and #units > 0 then
-	-- 	ShowWindow()
-	-- else
-	-- 	HideWindow()
-	-- end
-end
-
 local cachedSelectedUnits
 function widget:SelectionChanged(selectedUnits)
 	cachedSelectedUnits = selectedUnits
+end
+
+function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
+	local units = Spring.GetSelectedUnits()
+	for i = 1, #units do
+		local ud = UnitDefs[Spring.GetUnitDefID(units[i])]
+		if (ud.customParams.customcom) then
+			UpdateUI(units[i], ud)
+		end
+	end
+	return false
 end
 
 function widget:CommandsChanged()
