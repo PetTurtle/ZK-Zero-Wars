@@ -82,6 +82,15 @@ function Rect:SetOutlineBuildMask(mask)
     for z = startZ, startZ + height do
         spSetSquareBuildingMask(startX + width + 1, z, mask)
     end
+
+    -- top left corner
+    spSetSquareBuildingMask(startX - 1, startZ - 1, mask)
+    -- top right corner
+    spSetSquareBuildingMask(startX + width + 1, startZ - 1, mask)
+    -- bottom left corner
+    spSetSquareBuildingMask(startX - 1, startZ + height + 1, mask)
+    -- bottom right corner
+    spSetSquareBuildingMask(startX + width + 1, startZ + height + 1, mask)
 end
 
 return Rect
