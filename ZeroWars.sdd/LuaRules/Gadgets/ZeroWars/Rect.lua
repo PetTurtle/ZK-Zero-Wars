@@ -1,5 +1,6 @@
 local spCreateUnit = Spring.CreateUnit
 local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
+local spSetSquareBuildingMask = Spring.SetSquareBuildingMask
 
 Rect = {}
 Rect.__index = Rect
@@ -41,6 +42,46 @@ function Rect:GetCenterPos()
     local x = self.x1 + xDiff
     local y = self.y1 + yDiff
     return x, y
+end
+
+function Rect:SetBuildMask(mask)
+    local startX = math.floor(self.x1 / 16)
+    local startZ = math.floor(self.y1 / 16)
+    local width = math.floor(self.width / 16)
+    local height = math.floor(self.height / 16)
+
+    for x = startX, startX + width do
+        for z = startZ, startZ + height do
+            spSetSquareBuildingMask(x, z, mask)
+        end
+    end
+end
+
+function Rect:SetOutlineBuildMask(mask)
+    local startX = math.floor(self.x1 / 16)
+    local startZ = math.floor(self.y1 / 16)
+    local width = math.floor(self.width / 16)
+    local height = math.floor(self.height / 16)
+
+    -- top
+    for x = startX, startX + width do
+        spSetSquareBuildingMask(x, startZ - 1, mask)
+    end
+
+    -- bottom
+    for x = startX, startX + width do
+        spSetSquareBuildingMask(x, startZ + height + 1, mask)
+    end
+
+    -- left
+    for z = startZ, startZ + height do
+        spSetSquareBuildingMask(startX - 1, z, mask)
+    end
+
+    -- right
+    for z = startZ, startZ + height do
+        spSetSquareBuildingMask(startX + width + 1, z, mask)
+    end
 end
 
 return Rect
