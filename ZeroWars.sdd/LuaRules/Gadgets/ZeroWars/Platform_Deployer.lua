@@ -19,23 +19,17 @@ local normalTimeout = 5000 -- 2.77m
 local skirmTimeout = 4000  -- 2.22m
 local artyTimeout = 4000   -- 2.22m
 
-PlatformDeployer = {
-    deployQueue,
-    heavyUnits,
-    normalUnits,
-    skirmUnits,
-    artyUnits,
-}
+PlatformDeployer = {}
+PlatformDeployer.__index = PlatformDeployer
 
 function PlatformDeployer:new ()
-    o = {}
-    setmetatable(o, self)
-    self.__index = self
-    self.deployQueue = {}
-    self.heavyUnits = {}
-    self.normalUnits = {}
-    self.skirmUnits = {}
-    self.artyUnits = {}
+    local o = {}
+    setmetatable(o, PlatformDeployer)
+    o.deployQueue = {}
+    o.heavyUnits = {}
+    o.normalUnits = {}
+    o.skirmUnits = {}
+    o.artyUnits = {}
     return o
 end
 
