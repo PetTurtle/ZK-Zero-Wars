@@ -73,8 +73,8 @@ function gadget:Initialize()
 
     -- set sides
     local allyTeamList = Spring.GetAllyTeamList()
-    leftSide = Side.new(allyTeamList[1], "left", 5888)
-    rightSide = Side.new(allyTeamList[2], "right", 2303)
+    leftSide = Side:new(allyTeamList[1], "left", 5888)
+    rightSide = Side:new(allyTeamList[2], "right", 2303)
     platformDeployer = PlatformDeployer:new()
     customCommanders = CustomCommanders:new()
     GG.leftSide = leftSide
