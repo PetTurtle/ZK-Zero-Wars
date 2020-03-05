@@ -14,7 +14,6 @@ function gadget:GetInfo()
 end
 
 include("LuaRules/Configs/customcmds.h.lua")
-local IdleUnit = VFS.Include("LuaRules/Gadgets/ZeroWData/IdleUnit.lua")
 local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Side.lua")
 local PlatformDeployer = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform_Deployer.lua")
 local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commanders.lua");
@@ -141,9 +140,9 @@ end
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
     local cQueue = Spring.GetCommandQueue(unitID, 1)
     if unitTeam == leftSide.nullAI then
-        table.insert(idleUnits, IdleUnit.new(unitID, leftSide))
+        table.insert(idleUnits, {unit = unitID, side = leftSide})
     elseif unitTeam == rightSide.nullAI then
-        table.insert(idleUnits, IdleUnit.new(unitID, rightSide))
+        table.insert(idleUnits, {unit = unitID, side = rightSide})
     end
 end
 
