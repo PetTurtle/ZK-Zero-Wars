@@ -2,18 +2,22 @@ include("LuaRules/Configs/customcmds.h.lua")
 
 local custom_com_defs = include("LuaRules/Configs/custom_com_defs.lua")
 
-CustomCommanders = {
-    commanders,
-    custom_com_defs,
-}
+CustomCommanders = {}
+CustomCommanders.__index = CustomCommanders
 
 function CustomCommanders:new ()
-    o = {}
-    setmetatable(o, self)
-    self.__index = self
-    self.commanders = {}
-    self.custom_com_defs = custom_com_defs
-    GG.custom_com_defs = custom_com_defs
+    local o = {}
+    setmetatable(o, CustomCommanders)
+    o.__index = self
+    o.commanders = {}
+
+    if GG.custom_com_defs then
+        o.custom_com_defs = GG.custom_com_defs
+    else
+        o.custom_com_defs = custom_com_defs
+        GG.custom_com_defs = custom_com_defs
+    end
+    
     return o
 end
 
