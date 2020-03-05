@@ -4,46 +4,46 @@ local spCreateUnit = Spring.CreateUnit
 local spGetTeamUnits = Spring.GetTeamUnits
 local spSetUnitPosition = Spring.SetUnitPosition
 
-local Platform = {}
+Platform = {}
+Platform.__index = Platform
 
-function Platform.new(platform_Layout, offsetX, offsetY)
-    local platform = {
-        rect = platform_Layout,
-        playerList = {},
-        offsetX = offsetX,
-        offsetY = offsetY,
-    }
+function Platform:new(rect, offsetX, offsetY)
+    local o = {}
+    setmetatable(o, Platform)
+    o.rect = rect
+    o.playerList = {}
+    o.offsetX = offsetX
+    o.offsetY = offsetY
+    return o
+end
 
-    function platform:AddPlayer(playerID)
-        table.insert(self.playerList, playerID)
-    end
+function Platform:AddPlayer(playerID)
+    table.insert(self.playerList, playerID)
+end
 
-    function platform:HasPlayer(playerID)
-        for i = 1, #self.playerList do
-            if self.playerList[i] == playerID then return i end
-        end return false
-    end
+function Platform:HasPlayer(playerID)
+    for i = 1, #self.playerList do
+        if self.playerList[i] == playerID then return i end
+    end return false
+end
 
-    function platform:Deploy(platUnits)
-        local playerUnits = platUnits.playerUnits
-        local comPos = platUnits.customParams["COMMANDER_SPAWN"]
+function Platform:Deploy(platUnits)
+    local playerUnits = platUnits.playerUnits
+    local comPos = platUnits.customParams["COMMANDER_SPAWN"]
 
-        for i = 1, #self.playerList do
-            for j = 1, #playerUnits do
-                self.rect:CreateUnit(playerUnits[j].unitName, playerUnits[j].x, playerUnits[j].z, playerUnits[j].dir, self.playerList[i])
-            end
-
-            -- move commander
-            local playerUnits = spGetTeamUnits(self.playerList[i])
-            spSetUnitPosition(playerUnits[1], comPos.x, comPos.z)
+    for i = 1, #self.playerList do
+        for j = 1, #playerUnits do
+            self.rect:CreateUnit(playerUnits[j].unitName, playerUnits[j].x, playerUnits[j].z, playerUnits[j].dir, self.playerList[i])
         end
-    end
 
-    function platform:GetUnits(playerID)
-        return self.rect:GetUnits(playerID)
+        -- move commander
+        local playerUnits = spGetTeamUnits(self.playerList[i])
+        spSetUnitPosition(playerUnits[1], comPos.x, comPos.z)
     end
+end
 
-    return platform
+function Platform:GetUnits(playerID)
+    return self.rect:GetUnits(playerID)
 end
 
 return Platform
