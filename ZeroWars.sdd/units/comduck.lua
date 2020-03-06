@@ -17,8 +17,6 @@ unitDef = {
     corpse = [[DEAD]],
 
     customParams = {
-        amph_regen = 5,
-        amph_submerged_at = 40,
         customcom = true,
         custom_com_type = [[duck]]
     },
@@ -71,7 +69,6 @@ unitDef = {
 
             customparams = {
                 burst = Shared.BURST_RELIABLE,
-
                 light_color = [[1 0.6 0.2]],
                 light_radius = 180
             },
@@ -106,7 +103,6 @@ unitDef = {
     },
 
     featureDefs = {
-
         DEAD = {
             blocking = true,
             featureDead = [[HEAP]],
@@ -121,7 +117,6 @@ unitDef = {
             footprintZ = 2,
             object = [[debris2x2c.s3o]]
         }
-
     }
 
 }
