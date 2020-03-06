@@ -89,7 +89,7 @@ function gadget:GameFrame(f)
 
     platformDeployer:IterateQueue(maxSpawnsPerFrame, f)
 
-    if f %spawnTime == 0 then
+    if f > 0 and f %spawnTime == 0 then
         IteratePlatform(leftSide, f, "e")
         IteratePlatform(rightSide, f, "w")
     end
