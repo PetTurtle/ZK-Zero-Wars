@@ -1,6 +1,7 @@
 local Rect = VFS.Include("LuaRules/Gadgets/ZeroWars/Rect.lua")
 
 local spCreateUnit = Spring.CreateUnit
+local spDestroyUnit = Spring.DestroyUnit
 local spGetTeamUnits = Spring.GetTeamUnits
 local spSetUnitPosition = Spring.SetUnitPosition
 
@@ -38,7 +39,7 @@ function Platform:Deploy(platUnits)
 
         -- move commander
         local playerUnits = spGetTeamUnits(self.playerList[i])
-        spSetUnitPosition(playerUnits[1], comPos.x, comPos.z)
+        spDestroyUnit(playerUnits[1], false, true)
     end
 end
 

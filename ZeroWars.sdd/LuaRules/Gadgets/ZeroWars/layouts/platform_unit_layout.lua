@@ -11,6 +11,7 @@ function Platform_Unit_Layout.new(side)
 
         playerUnits = {
             {unitName = "basiccon", x = -140, z = 350, dir = "e"},
+            {unitName = "comduck", x = -140, z = 350, dir = "e"},
         }
 
         globalUnits = {
@@ -25,6 +26,7 @@ function Platform_Unit_Layout.new(side)
 
         playerUnits = {
             {unitName = "basiccon", x = 520, z = 410, dir = "w"},
+            {unitName = "comduck", x = 520, z = 410, dir = "w"},
         }
 
         globalUnits = {
