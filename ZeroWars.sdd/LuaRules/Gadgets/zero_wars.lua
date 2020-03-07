@@ -14,7 +14,7 @@ function gadget:GetInfo()
 end
 
 include("LuaRules/Configs/customcmds.h.lua")
-local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Side.lua")
+local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Side.lua")
 local PlatformDeployer = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform_Deployer.lua")
 local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commanders.lua");
 
@@ -186,7 +186,7 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 
     if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
 
-    if not x or x < 760 or x > 8192 - 760 then
+    if not x or x < 800 or x > 8192 - 800 then
         if ud.isBuilder then
             return true
         end
