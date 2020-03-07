@@ -242,13 +242,13 @@ function Upgrade()
 
 	if path3 ~= rPath3 then
 		if rPath3 == 1 then
-			armour = 500
-		elseif rPath3 == 2 then
 			armour = 1000
-		elseif rPath3 == 3 then
-			armour = 1500
-		elseif rPath3 == 4 then
+		elseif rPath3 == 2 then
 			armour = 2000
+		elseif rPath3 == 3 then
+			armour = 3000
+		elseif rPath3 == 4 then
+			armour = 5000
 		end
 
 		local level = Spring.GetUnitRulesParam(unitID, "level")
