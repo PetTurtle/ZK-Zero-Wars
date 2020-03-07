@@ -186,7 +186,7 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 
     if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
 
-    if not x or x < 800 or x > 8192 - 800 then
+    if not x or x < 900 or x > 8192 - 900 then
         if ud.isBuilder then
             return true
         end
