@@ -31,25 +31,24 @@ end
 function CustomCommanders:TransferExperience(unitID, unitTeam)
     local xp = Spring.GetUnitExperience(unitID)
     local original = self.commanders[unitTeam].original
-    if original ~= unitID then
+    local clone = self.commanders[unitTeam].clone
 
+    if clone == unitID then
         local level = Spring.GetUnitRulesParam(original, "level");
 
         if (xp >= level and level <= 16) then
-            Spring.SetUnitRulesParam(original, "level", level + 1)
-
             local points = Spring.GetUnitRulesParam(original, "points");
+            Spring.SetUnitRulesParam(original, "level", level + 1)
             Spring.SetUnitRulesParam(original, "points", points + 1)
-
+            Spring.SetUnitExperience(original, 0)
             callScript(original, "LevelUp")
 
             if self:HasClone(unitTeam) then
-                local clone = self.commanders[unitTeam].clone
                 Spring.SetUnitExperience(clone, 0)
                 Spring.SetUnitRulesParam(clone, "level", level + 1)
                 callScript(clone, "LevelUp")
             end
-            Spring.SetUnitExperience(original, 0)
+            
         else
             Spring.SetUnitExperience(original, xp)
         end
@@ -82,6 +81,7 @@ function CustomCommanders:SetOriginal(unitID, unitTeam)
     Spring.SetUnitRulesParam(unitID, "original", 1)
     callScript(unitID, "LevelUp")
     Spring.SetUnitResourcing(unitID, "umm", 6)
+    Spring.SetUnitResourcing(unitID, "ume", 6)
 end
 
 function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)
@@ -99,10 +99,10 @@ function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)
     Spring.SetUnitRulesParam(clone, "path4", Spring.GetUnitRulesParam(original, "path4"))
     Spring.SetUnitRulesParam(clone, "original", 0)
 
-    Spring.SetUnitExperience(clone, Spring.GetUnitExperience(original))
-
     callScript(clone, "LevelUp")
     callScript(clone, "Upgrade")
+
+    Spring.SetUnitExperience(clone, Spring.GetUnitExperience(original))
 end
 
  -- process upgrade command
