@@ -39,9 +39,9 @@ local unitDefID = Spring.GetUnitDefID(unitID)
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 local gun_1 = 0
-local baseHP = 340
-local health_multi = 1.8
-local scale_multi = 0.05
+local baseHP = 825
+local health_multi = 0.8
+local scale_multi = 0.07
 local weapon_1 = 1
 local weapon_2 = 0
 local weapon_3 = 0
@@ -139,6 +139,8 @@ function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	GG.SetScale(unitID, base, scaleCount)
 	Spring.SetUnitNanoPieces(unitID, firepoints)
+	Spring.SetUnitWeaponState(unitID, 2, "range", 0)
+	Spring.SetUnitWeaponState(unitID, 3, "range", 0)
 end
 
 local function RestoreAfterDelay()
@@ -201,42 +203,39 @@ function Upgrade()
 
 	if path1 ~= rPath1 then
 		if rPath1 == 1 then
-			SetWeaponDamage(unitID, 1, 200)
 			Spring.SetUnitWeaponDamages(unitID, 1, "damageAreaOfEffect", 80)
 			Spring.SetUnitWeaponState(unitID, 1, "burst", 2)
-			Spring.SetUnitWeaponState(unitID, 1, "burstRate", 0.5)
+			Spring.SetUnitWeaponState(unitID, 1, "burstRate", 0.25)
 		elseif rPath1 == 2 then
-			local dmg = {damages = {[1] = 300}}
 			SetWeaponDamage(unitID, 1, 300)
 			Spring.SetUnitWeaponDamages(unitID, 1, "damageAreaOfEffect", 120)
-			Spring.SetUnitWeaponState(unitID, 1, "burst", 2)
-			Spring.SetUnitWeaponState(unitID, 1, "burstRate", 0.5)
+			Spring.SetUnitWeaponState(unitID, 1, "burst", 3)
+			Spring.SetUnitWeaponState(unitID, 1, "burstRate", 0.25)
 		elseif rPath1 == 3 then
-			local dmg = {damages = {[1] = 400}}
-			SetWeaponDamage(unitID, 1, 400)
+			SetWeaponDamage(unitID, 1, 300)
 			Spring.SetUnitWeaponDamages(unitID, 1, "damageAreaOfEffect", 140)
-			Spring.SetUnitWeaponState(unitID, 1, "burst", 2)
-			Spring.SetUnitWeaponState(unitID, 1, "burstRate", 0.5)
+			Spring.SetUnitWeaponState(unitID, 1, "burst", 4)
+			Spring.SetUnitWeaponState(unitID, 1, "burstRate", 0.1)
 		elseif rPath1 == 4 then
-			local dmg = {damages = {[1] = 500}}
-			SetWeaponDamage(unitID, 1, 500)
+			SetWeaponDamage(unitID, 1, 300)
 			Spring.SetUnitWeaponDamages(unitID, 1, "damageAreaOfEffect", 160)
-			Spring.SetUnitWeaponState(unitID, 1, "burst", 2)
-			Spring.SetUnitWeaponState(unitID, 1, "burstRate", 0.5)
+			Spring.SetUnitWeaponState(unitID, 1, "burst", 4)
+			Spring.SetUnitWeaponState(unitID, 1, "burstRate", 0.1)
 		end
 		path1 = rPath1
 	end
 
 	if path2 ~= rPath2 then
 		weapon_2 = 2
+		Spring.SetUnitWeaponState(unitID, 2, "range", 450)
 		if rPath2 == 1 then
-			SetWeaponDamage(unitID, 2, 500)
+			SetWeaponDamage(unitID, 2, 1000)
 		elseif rPath2 == 2 then
-			SetWeaponDamage(unitID, 2, 800)
+			SetWeaponDamage(unitID, 2, 2000)
 		elseif rPath2 == 3 then
-			SetWeaponDamage(unitID, 2, 1400)
+			SetWeaponDamage(unitID, 2, 3000)
 		elseif rPath2 == 4 then
-			SetWeaponDamage(unitID, 2, 2100)
+			SetWeaponDamage(unitID, 2, 5000)
 		end
 		path2 = rPath2
 	end
@@ -249,7 +248,7 @@ function Upgrade()
 		elseif rPath3 == 3 then
 			armour = 1500
 		elseif rPath3 == 4 then
-			Spring.SetUnitCloak(unitID, 2, 150)
+			armour = 2000
 		end
 
 		local level = Spring.GetUnitRulesParam(unitID, "level")
@@ -261,6 +260,7 @@ function Upgrade()
 
 	if path4 ~= rPath4 then
 		weapon_3 = 3
+		Spring.SetUnitWeaponState(unitID, 3, "range", 700)
 		if rPath4 == 1 then
 			weapon_3 = 3
 		elseif rPath4 == 2 then
@@ -269,7 +269,7 @@ function Upgrade()
 			Spring.SetUnitWeaponState(unitID, 3, "burst", 8)
 			Spring.SetUnitWeaponState(unitID, 3, "burstRate", 0.15)
 		elseif rPath4 == 4 then
-			Spring.SetUnitWeaponState(unitID, 3, "burst", 8)
+			Spring.SetUnitWeaponState(unitID, 3, "burst", 12)
 			Spring.SetUnitWeaponState(unitID, 3, "burstRate", 0.15)
 		end
 		path4 = rPath4

@@ -202,7 +202,7 @@ end
 
 function gadget:UnitExperience(unitID, unitDefID, unitTeam, experience, oldExperience)
     if customCommanders:IsCommander(unitDefID) then
-        customCommanders:TransferExperience(unitID, unitTeam, experience - oldExperience)
+        customCommanders:TransferExperience(unitID, unitTeam)
     end
 end
 

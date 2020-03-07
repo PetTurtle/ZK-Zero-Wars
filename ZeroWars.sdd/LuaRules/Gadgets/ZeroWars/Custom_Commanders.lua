@@ -28,20 +28,31 @@ local function callScript(unitID, funcName, args)
 	end
 end
 
-function CustomCommanders:TransferExperience(unitID, unitTeam, xp)
+function CustomCommanders:TransferExperience(unitID, unitTeam)
+    local xp = Spring.GetUnitExperience(unitID)
     local original = self.commanders[unitTeam].original
     if original ~= unitID then
+
         local level = Spring.GetUnitRulesParam(original, "level");
-        local newXP = Spring.GetUnitExperience(original) + xp
-        if (newXP >= level) then
-            newXP = newXP - level
+
+        if (xp >= level and level <= 16) then
             Spring.SetUnitRulesParam(original, "level", level + 1)
 
             local points = Spring.GetUnitRulesParam(original, "points");
             Spring.SetUnitRulesParam(original, "points", points + 1)
-            callScript(original, "LevelUp", level + 1)
+
+            callScript(original, "LevelUp")
+
+            if self:HasClone(unitTeam) then
+                local clone = self.commanders[unitTeam].clone
+                Spring.SetUnitExperience(clone, 0)
+                Spring.SetUnitRulesParam(clone, "level", level + 1)
+                callScript(clone, "LevelUp")
+            end
+            Spring.SetUnitExperience(original, 0)
+        else
+            Spring.SetUnitExperience(original, xp)
         end
-        Spring.SetUnitExperience(original, newXP)
     end
 end
 
@@ -87,6 +98,8 @@ function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)
     Spring.SetUnitRulesParam(clone, "path3", Spring.GetUnitRulesParam(original, "path3"))
     Spring.SetUnitRulesParam(clone, "path4", Spring.GetUnitRulesParam(original, "path4"))
     Spring.SetUnitRulesParam(clone, "original", 0)
+
+    Spring.SetUnitExperience(clone, Spring.GetUnitExperience(original))
 
     callScript(clone, "LevelUp")
     callScript(clone, "Upgrade")
