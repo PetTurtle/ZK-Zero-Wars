@@ -23,7 +23,7 @@ local levelLabel = nil
 local pointsLabel = nil
 local xpProgressbar = nil
 local windowShown = false
-local comID;
+local comID = nil
 
 local path1Button = nil
 local path2Button = nil
@@ -146,6 +146,7 @@ local function HideWindow()
 	if windowShown then
 		screen0:RemoveChild(window)
 		windowShown = false
+		comID = nil
 	end
 end
 
@@ -232,13 +233,34 @@ function widget:SelectionChanged(selectedUnits)
 end
 
 function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
-	local units = Spring.GetSelectedUnits()
-	for i = 1, #units do
-		local ud = UnitDefs[Spring.GetUnitDefID(units[i])]
-		if (ud.customParams.customcom and Spring.GetUnitRulesParam(units[i], "original") == 1) then
-			UpdateUI(units[i], ud)
+
+	if comID then
+		local ud = UnitDefs[Spring.GetUnitDefID(comID)]
+		if ud.customParams.customcom then
+			foundCom = true;
+			UpdateUI(comID, ud)
 		end
 	end
+
+	-- local units = Spring.GetSelectedUnits()
+	-- for i = 1, #units do
+	-- 	local ud = UnitDefs[Spring.GetUnitDefID(units[i])]
+	-- 	if ud.customParams.customcom then
+
+	-- 		if Spring.GetUnitRulesParam(units[i], "original") == 1 then
+	-- 			foundCom = true;
+	-- 			UpdateUI(units[i], ud)
+			
+	-- 		elseif Spring.GetUnitRulesParam(units[i], "original") == 0 then
+	-- 			local unitID = Spring.GetUnitRulesParam(units[i], "originalID")
+	-- 			foundCom = true;
+	-- 			UpdateUI(unitID, ud)
+	-- 		end
+
+	-- 		break
+	-- 	end
+	-- end
+
 	return false
 end
 
@@ -248,9 +270,17 @@ function widget:CommandsChanged()
 		local foundCom = false
 		for i = 1, #units do
 			local ud = UnitDefs[Spring.GetUnitDefID(units[i])]
-			if (ud.customParams.customcom and Spring.GetUnitRulesParam(units[i], "original") == 1) then
-				foundCom = true;
-				UpdateUI(units[i], ud)
+			if ud.customParams.customcom then
+
+				if Spring.GetUnitRulesParam(units[i], "original") == 1 then
+					foundCom = true;
+					UpdateUI(units[i], ud)
+				
+				elseif Spring.GetUnitRulesParam(units[i], "original") == 0 then
+					local unitID = Spring.GetUnitRulesParam(units[i], "originalID")
+					foundCom = true;
+					UpdateUI(unitID, ud)
+				end
 				break;
 			end
 		end

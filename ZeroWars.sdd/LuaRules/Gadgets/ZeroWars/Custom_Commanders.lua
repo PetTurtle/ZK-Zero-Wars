@@ -35,6 +35,7 @@ function CustomCommanders:TransferExperience(unitID, unitTeam)
 
     if clone == unitID then
         local level = Spring.GetUnitRulesParam(original, "level");
+        
 
         if (xp >= level and level <= 16) then
             local points = Spring.GetUnitRulesParam(original, "points");
@@ -52,6 +53,7 @@ function CustomCommanders:TransferExperience(unitID, unitTeam)
         else
             Spring.SetUnitExperience(original, xp)
         end
+        Spring.GiveOrderToUnit(original, CMD.FIRE_STATE, {2}, 0)
     end
 end
 
@@ -98,6 +100,7 @@ function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)
     Spring.SetUnitRulesParam(clone, "path3", Spring.GetUnitRulesParam(original, "path3"))
     Spring.SetUnitRulesParam(clone, "path4", Spring.GetUnitRulesParam(original, "path4"))
     Spring.SetUnitRulesParam(clone, "original", 0)
+    Spring.SetUnitRulesParam(clone, "originalID", original)
 
     callScript(clone, "LevelUp")
     callScript(clone, "Upgrade")
@@ -111,7 +114,6 @@ function CustomCommanders:ProcessCommand(unitID, cmdID, cmdParams)
    
     local points = Spring.GetUnitRulesParam(unitID, "points");
     Spring.SetUnitRulesParam(unitID, "points", points - 1)
-    Spring.GiveOrderToUnit(unitID, CMD.FIRE_STATE, {2}, 0)
 
     local path = "path"..cmdParams[1]
     Spring.SetUnitRulesParam(unitID, path, Spring.GetUnitRulesParam(unitID, path) + 1)
@@ -124,8 +126,10 @@ function CustomCommanders:ProcessCommand(unitID, cmdID, cmdParams)
         Spring.SetUnitRulesParam(clone, path, Spring.GetUnitRulesParam(unitID, path))
         callScript(clone, "LevelUp")
         callScript(clone, "Upgrade")
+        Spring.GiveOrderToUnit(clone, CMD.FIRE_STATE, {2}, 0)
     end
 
+    Spring.GiveOrderToUnit(unitID, CMD.FIRE_STATE, {2}, 0)
     return true
 end
 
