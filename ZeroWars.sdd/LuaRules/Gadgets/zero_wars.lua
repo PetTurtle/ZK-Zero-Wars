@@ -200,9 +200,9 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
     return true
 end
 
-function gadget:UnitExperience(unitID, unitDefID, unitTeam, experience, oldExperience)
-    if customCommanders:IsCommander(unitDefID) then
-        customCommanders:TransferExperience(unitID, unitTeam)
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
+    if attackerDefID and customCommanders:IsCommander(attackerDefID) then
+        customCommanders:TransferExperience(attackerID, attackerTeam)
     end
 end
 
