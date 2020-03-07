@@ -235,7 +235,7 @@ function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
 	local units = Spring.GetSelectedUnits()
 	for i = 1, #units do
 		local ud = UnitDefs[Spring.GetUnitDefID(units[i])]
-		if (ud.customParams.customcom) then
+		if (ud.customParams.customcom and Spring.GetUnitRulesParam(units[i], "original") == 1) then
 			UpdateUI(units[i], ud)
 		end
 	end
