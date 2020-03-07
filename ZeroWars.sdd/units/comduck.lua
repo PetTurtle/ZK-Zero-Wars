@@ -37,7 +37,6 @@ unitDef = {
     workerTime = 10,
     buildoptions = {
         [[staticmex]],
-        [[turretlaser]]
     },
     customParams = {
         customcom = true
@@ -46,8 +45,8 @@ unitDef = {
     footprintX = 3,
     footprintZ = 3,
     iconType = [[commander1]],
-    idleAutoHeal = 10,
-    idleTime = 400,
+    idleAutoHeal = 25,
+    idleTime = 200,
     leaveTracks = true,
     maxDamage = 825,
     maxSlope = 36,
