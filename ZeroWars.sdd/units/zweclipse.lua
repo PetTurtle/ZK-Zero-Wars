@@ -19,7 +19,7 @@ unitDef = {
     collisionVolumeType    = [[box]],
     corpse              = [[DEAD]],
     crashDrag           = 0.02,
-    cruiseAlt           = 250,
+    cruiseAlt           = 160,
   
     customParams        = {
       requireammo      = [[1]],
@@ -35,7 +35,7 @@ unitDef = {
     idleTime            = 1800,
     maneuverleashlength = [[1280]],
     maxAcc              = 0.5,
-    maxDamage           = 4000,
+    maxDamage           = 2000,
     maxElevator         = 0.01,
     maxRudder           = 0.003,
     maxFuel             = 1000000,
