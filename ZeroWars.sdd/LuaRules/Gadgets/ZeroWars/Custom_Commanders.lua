@@ -51,24 +51,26 @@ function CustomCommanders:IsCommander(unitDefID)
 end
 
 function CustomCommanders:HasCommander(team)
-    if self.commanders[team] then return true end
+    if team and self.commanders[team] then return true end
     return false
 end
 
 function CustomCommanders:HasClone(team)
-    if self.commanders[team].clone and Spring.GetUnitIsDead(self.commanders[team].clone) == false then return true end
+    if self:HasCommander(team) and self.commanders[team].clone and Spring.GetUnitIsDead(self.commanders[team].clone) == false then return true end
     return false
 end
 
 function CustomCommanders:SetOriginal(unitID, unitTeam)
     self.commanders[unitTeam] = {original = unitID, clone = nil}
     Spring.SetUnitRulesParam(unitID, "level", 1)
-    Spring.SetUnitRulesParam(unitID, "points", 1)
+    Spring.SetUnitRulesParam(unitID, "points", 0)
     Spring.SetUnitRulesParam(unitID, "path1", 0)
     Spring.SetUnitRulesParam(unitID, "path2", 0)
     Spring.SetUnitRulesParam(unitID, "path3", 0)
     Spring.SetUnitRulesParam(unitID, "path4", 0)
     Spring.SetUnitRulesParam(unitID, "original", 1)
+    callScript(unitID, "LevelUp")
+    Spring.SetUnitResourcing(unitID, "umm", 6)
 end
 
 function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)
@@ -86,16 +88,31 @@ function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)
     Spring.SetUnitRulesParam(clone, "path4", Spring.GetUnitRulesParam(original, "path4"))
     Spring.SetUnitRulesParam(clone, "original", 0)
 
-    callScript(clone, "LevelUp", Spring.GetUnitRulesParam(original, "level"))
+    callScript(clone, "LevelUp")
+    callScript(clone, "Upgrade")
 end
 
+ -- process upgrade command
 function CustomCommanders:ProcessCommand(unitID, cmdID, cmdParams)
     if cmdID ~= custom_com_defs.CMD_CUSTOM_UPGRADE then return false end
-
+   
     local points = Spring.GetUnitRulesParam(unitID, "points");
     Spring.SetUnitRulesParam(unitID, "points", points - 1)
     Spring.GiveOrderToUnit(unitID, CMD.FIRE_STATE, {2}, 0)
-    
+
+    local path = "path"..cmdParams[1]
+    Spring.SetUnitRulesParam(unitID, path, Spring.GetUnitRulesParam(unitID, path) + 1)
+    callScript(unitID, "Upgrade")
+
+    -- give upgrade to clone
+    local team = Spring.GetUnitTeam(unitID)
+    if self:HasClone(team) then
+        local clone = self.commanders[team].clone
+        Spring.SetUnitRulesParam(clone, path, Spring.GetUnitRulesParam(unitID, path))
+        callScript(clone, "LevelUp")
+        callScript(clone, "Upgrade")
+    end
+
     return true
 end
 
