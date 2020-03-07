@@ -131,6 +131,9 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
             end
         end
     end
+    if attackerDefID and customCommanders:IsCommander(attackerDefID) then
+        customCommanders:TransferExperience(attackerID, attackerTeam)
+    end
 end
 
 function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
@@ -198,12 +201,6 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
         return false
     end
     return true
-end
-
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
-    if attackerDefID and customCommanders:IsCommander(attackerDefID) then
-        customCommanders:TransferExperience(attackerID, attackerTeam)
-    end
 end
 
 function gadget:TeamDied(teamID)
