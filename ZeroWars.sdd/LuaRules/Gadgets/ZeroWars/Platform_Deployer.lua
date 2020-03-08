@@ -18,6 +18,9 @@ local heavyTimeout = 7000  -- 3.88m
 local normalTimeout = 5000 -- 2.77m
 local skirmTimeout = 4000  -- 2.22m
 local artyTimeout = 4000   -- 2.22m
+local antiairTimeout = 3600 -- 2.00m
+
+local antiairUnits = { "amphaa", "gunshipaa", "hoveraa", "jumpaa", "planefighter", "planeheavyfighter", "shieldaa", "shipaa", "spideraa", "tankaa", "vehaa"} --turretaafar, turretaaflak, turretaalaser, turretaaheavy
 
 PlatformDeployer = {}
 PlatformDeployer.__index = PlatformDeployer
@@ -30,6 +33,7 @@ function PlatformDeployer:new ()
     o.normalUnits = {}
     o.skirmUnits = {}
     o.artyUnits = {}
+	o.antiairUnits = {}
     return o
 end
 
@@ -67,6 +71,7 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
     local normalWave = {units = {}, frame = frame}
     local skirmWave = {units = {}, frame = frame}
     local artyWave = {units = {}, frame = frame}
+    local antiairWave = {units = {}, frame = frame}
     for i = #units, 1, -1 do
         local unitDefID = spGetUnitDefID(units[i])
         local ud = UnitDefs[unitDefID]
@@ -95,8 +100,10 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
 
             local range = ud.maxWeaponRange
             local mass = spGetUnitMass(unit)
-
-            if mass > 1000 then -- Strider
+			
+			if ud.unitname in antiairUnits then
+				table.insert(antiairWave.units, unit)
+            elseif mass > 1000 then -- Strider
                 table.insert(heavyWave.units, unit)
             elseif range >= 600 then -- Arty
                 table.insert(artyWave.units, unit)
@@ -118,7 +125,7 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
             table.remove(units, i)
         end
     end
-
+	
     if #heavyWave.units > 0 then
         table.insert(self.heavyUnits, heavyWave)
     end
@@ -130,6 +137,9 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
     end
     if #artyWave.units > 0 then
         table.insert(self.artyUnits, artyWave)
+    end
+    if #antiairWave.units > 0 then
+        table.insert(self.antiairUnits, antiairWave)
     end
 end
 
@@ -150,6 +160,7 @@ function PlatformDeployer:ClearTimedOut(frame)
     self:ClearUnitType(self.normalUnits, normalTimeout, frame)
     self:ClearUnitType(self.skirmUnits, skirmTimeout, frame)
     self:ClearUnitType(self.artyUnits, artyTimeout, frame)
+    self:ClearUnitType(self.antiairUnits, antiairTimeout, frame)
 end
 
 function PlatformDeployer:IsValidUnit(unitID, ud)
