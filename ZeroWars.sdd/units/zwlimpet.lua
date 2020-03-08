@@ -85,7 +85,7 @@ unitDef = {
     },
     weaponDefs = {
       AMPHBOMB_DEATH = {
-        areaOfEffect       = 150,
+        areaOfEffect       = 220,
         craterBoost        = 1,
         craterMult         = 3.5,
         customparams = {
@@ -104,7 +104,7 @@ unitDef = {
        
         edgeEffectiveness  = 0.4,
         explosionGenerator = "custom:riotballplus2_purple_limpet",
-        explosionSpeed     = 10,
+        explosionSpeed     = 15,
         impulseBoost       = 0,
         impulseFactor      = 0.3,
         name               = "Slowing Explosion",
