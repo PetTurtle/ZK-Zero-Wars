@@ -101,7 +101,7 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
             local range = ud.maxWeaponRange
             local mass = spGetUnitMass(unit)
 			
-			if ud.unitname in antiairUnits then
+			if antiairUnits[ud.unitname] then
 				table.insert(antiairWave.units, unit)
             elseif mass > 1000 then -- Strider
                 table.insert(heavyWave.units, unit)
