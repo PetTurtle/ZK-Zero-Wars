@@ -85,7 +85,7 @@ unitDef = {
     },
     weaponDefs = {
       AMPHBOMB_DEATH = {
-        areaOfEffect       = 220,
+        areaOfEffect       = 235,
         craterBoost        = 1,
         craterMult         = 3.5,
         customparams = {
