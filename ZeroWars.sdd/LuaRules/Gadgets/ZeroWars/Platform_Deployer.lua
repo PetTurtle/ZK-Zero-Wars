@@ -20,7 +20,18 @@ local skirmTimeout = 4000  -- 2.22m
 local artyTimeout = 4000   -- 2.22m
 local antiairTimeout = 3600 -- 2.00m
 
-local antiairUnits = { "amphaa", "gunshipaa", "hoveraa", "jumpaa", "planefighter", "planeheavyfighter", "shieldaa", "shipaa", "spideraa", "tankaa", "vehaa"} --turretaafar, turretaaflak, turretaalaser, turretaaheavy
+local antiairUnits = { 
+	amphaa=true,
+	gunshipaa=true,
+	hoveraa=true,
+	jumpaa=true,
+	planeheavyfighter=true,
+	shieldaa=true,
+	shipaa=true,
+	spideraa=true,
+	tankaa=true,
+	vehaa=true
+} --turretaafar, turretaaflak, turretaalaser, turretaaheavy
 
 PlatformDeployer = {}
 PlatformDeployer.__index = PlatformDeployer
@@ -101,7 +112,7 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
             local range = ud.maxWeaponRange
             local mass = spGetUnitMass(unit)
 			
-			if ud.unitname in antiairUnits then
+			if antiairUnits[ud.unitname] then
 				table.insert(antiairWave.units, unit)
             elseif mass > 1000 then -- Strider
                 table.insert(heavyWave.units, unit)
