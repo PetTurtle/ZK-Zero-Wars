@@ -88,7 +88,7 @@ unitDef = {
     },
     weaponDefs = {
       shieldbomb_DEATH = {
-        areaOfEffect       = 180,
+        areaOfEffect       = 170,
         craterBoost        = 1,
         craterMult         = 3.5,
         edgeEffectiveness  = 0.4,
