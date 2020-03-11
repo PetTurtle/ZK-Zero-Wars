@@ -13,7 +13,7 @@ unitDef = {
   buildingGroundDecalType       = [[factoryhover_aoplane.dds]],
 
   buildoptions     = {
-    [[vehriot]],
+    [[amphriot]],
     [[vehassault]],
     [[hoverskirm]],
     [[tankheavyraid]],

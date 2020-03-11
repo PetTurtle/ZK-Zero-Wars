@@ -5,7 +5,7 @@ unitDef = {
     acceleration        = 0.3,
     airHoverFactor      = 4,
     brakeRate           = 0.24,
-    buildCostMetal      = 65,
+    buildCostMetal      = 70,
     builder             = false,
     buildPic            = [[dronecarry.png]],
     canBeAssisted       = false,
@@ -105,7 +105,7 @@ unitDef = {
         sprayAngle              = 512,
         turret                  = true,
         weaponType              = [[Cannon]],
-        weaponVelocity          = 1000,
+        weaponVelocity          = 300,
       },
   
     },

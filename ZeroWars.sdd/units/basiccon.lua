@@ -17,14 +17,14 @@ unitDef = {
     [[energypylon]],
     
     [[cloakraid]],
-    [[shieldassault]],
+    [[spiderassault]],
     [[cloakskirm]],
     [[spideremp]],
     [[veharty]],
     [[zwgull]],
 
     [[tankraid]],
-    [[amphriot]],
+    [[spiderriot]],
     [[amphimpulse]],
     [[basiccon]],
     
