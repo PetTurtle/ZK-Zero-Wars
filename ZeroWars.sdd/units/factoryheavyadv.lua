@@ -13,7 +13,7 @@ unitDef = {
   buildingGroundDecalType       = [[factorytank_aoplane.dds]],
 
   buildoptions                  = {
-    [[vehriot]],
+    [[amphriot]],
     [[vehassault]],
     [[hoverskirm]],
     [[tankheavyraid]],
@@ -24,6 +24,7 @@ unitDef = {
     [[amphfloater]],
     [[tankassault]],
     [[tankheavyassault]],
+    [[striderarty]],
     [[zwdetriment]],
   },
 

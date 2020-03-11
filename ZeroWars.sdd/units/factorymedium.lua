@@ -14,12 +14,12 @@ unitDef = {
 
   buildoptions                  = {
     [[shieldscout]],
-    [[shieldraid]],
-    [[shieldskirm]],
-    [[amphimpulse]],
-    [[spiderriot]],
+    [[hoverheavyraid]],
+    [[spiderskirm]],
+    [[vehriot]],
+	[[shieldarty]],
     [[zwsnitch]],
-    [[shieldaa]],
+    [[amphaa]],
   },
 
   buildPic                      = [[factoryveh.png]],
