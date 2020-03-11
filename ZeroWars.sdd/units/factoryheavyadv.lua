@@ -24,7 +24,7 @@ unitDef = {
     [[amphfloater]],
     [[tankassault]],
     [[tankheavyassault]],
-    [[striderdetriment]],
+    [[zwdetriment]],
   },
 
   buildPic                      = [[factorytank.png]],
