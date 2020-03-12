@@ -64,6 +64,12 @@ local function IteratePlatform(side, frame, faceDir)
     side.iterator=((side.iterator + 1) % #side.platforms)
 end
 
+local function OnStart()
+    leftSide:Deploy("left")
+    rightSide:Deploy("right")
+    dataSet = true
+end
+
 function gadget:Initialize()
     if Game.modShortName ~= "ZK" then
         gadgetHandler:RemoveGadget()
@@ -81,15 +87,10 @@ function gadget:Initialize()
 end
 
 function gadget:GameFrame(f)
-    if f == 1 then
-        leftSide:Deploy("left")
-        rightSide:Deploy("right")
-        dataSet = true
-    end
-
-    platformDeployer:IterateQueue(maxSpawnsPerFrame, f)
+    if f == 1 then OnStart() end
 
     if f > 0 and f %spawnTime == 0 then
+        platformDeployer:IterateQueue(maxSpawnsPerFrame, f)
         IteratePlatform(leftSide, f, "e")
         IteratePlatform(rightSide, f, "w")
     end
