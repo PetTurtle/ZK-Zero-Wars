@@ -54,10 +54,10 @@ local function IteratePlatform(side, frame, faceDir)
 
     -- deploy player commanders
     for i = 1, #platform.teamList do
-        local player = platform.teamList[i]
-        if customCommanders:HasCommander(player) and not customCommanders:HasClone(player) then
+        local team = platform.teamList[i]
+        if customCommanders:HasCommander(team) and not customCommanders:HasClone(team) then
             local x, y = side.deployRect:GetCenterPos()
-            customCommanders:SpawnClone(player, x, y, faceDir, side.attackXPos)
+            customCommanders:SpawnClone(team, x, y, faceDir, side.attackXPos)
         end
     end
     -- iterate platform
@@ -125,12 +125,12 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
         elseif unitID == rightSide.baseId then
             Spring.GameOver({leftSide.allyID})
         elseif unitID == leftSide.turretId then
-            for i = 1, #rightSide.playerList do
-                Spring.AddTeamResource(rightSide.playerList[i], "metal", 800)
+            for i = 1, #rightSide.teamList do
+                Spring.AddTeamResource(rightSide.teamList[i], "metal", 800)
             end
         elseif unitID == rightSide.turretId then
-            for i = 1, #leftSide.playerList do
-                Spring.AddTeamResource(leftSide.playerList[i], "metal", 800)
+            for i = 1, #leftSide.teamList do
+                Spring.AddTeamResource(leftSide.teamList[i], "metal", 800)
             end
         end
     end
@@ -197,9 +197,9 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 end
 
 function gadget:TeamDied(teamID)
-    if leftSide:HasPlayer(teamID) then
-        leftSide:RemovePlayer(teamID)
-    elseif rightSide:HasPlayer(teamID) then
-        rightSide:RemovePlayer(teamID)
+    if leftSide:HasTeam(teamID) then
+        leftSide:RemoveTeam(teamID)
+    elseif rightSide:HasTeam(teamID) then
+        rightSide:RemoveTeam(teamID)
     end
 end

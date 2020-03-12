@@ -20,35 +20,35 @@ function Side:new(allyID, side, attackXPos)
     local o = {}
     setmetatable(o, Side)
 
-    local playerList = spGetTeamList(allyID)
+    local teamList = spGetTeamList(allyID)
     local platformlayout = PlatformLayout.new(side)
     local platforms = platformlayout.platforms
 
     local nullAI = -1
     local hasAI = false
 
-    -- remove nullAI from team list
-    for i = #playerList, 1, -1 do
-        local luaAI = spGetTeamLuaAI(playerList[i])
+    -- remove nullAI team from team list
+    for i = #teamList, 1, -1 do
+        local luaAI = spGetTeamLuaAI(teamList[i])
         if luaAI and string.find(string.lower(luaAI), "ai") then
             hasAI = true
-            nullAI = playerList[i]
-            table.remove(playerList, i)
+            nullAI = teamList[i]
+            table.remove(teamList, i)
             break
         end
     end
 
-    -- if nullAI is null, set it as player
-    if nullAI == -1 and #playerList > 0 then
-        nullAI = playerList[1]
+    -- if nullAI team is null, set it to player team
+    if nullAI == -1 and #teamList > 0 then
+        nullAI = teamList[1]
     end
 
-    -- assign players to platforms
-    for i = 1, #playerList do
-        platforms[(i % #platforms) + 1]:AddTeam(playerList[i])
+    -- assign teams to platforms
+    for i = 1, #teamList do
+        platforms[(i % #platforms) + 1]:AddTeam(teamList[i])
     end
 
-    -- remove platforms with no players
+    -- remove platforms with no teams
     for i = #platforms, 1, -1 do
         if not platforms[i]:IsActive() then
             table.remove(platforms, i)
@@ -64,7 +64,7 @@ function Side:new(allyID, side, attackXPos)
     o.hasAI = hasAI
     o.allyID = allyID
     o.nullAI = nullAI
-    o.playerList = playerList
+    o.teamList = teamList
     o.deployRect = platformlayout.deployPlatform
     o.platforms = platforms
     o.attackXPos = attackXPos
@@ -102,36 +102,36 @@ function Side:Deploy(side)
 
     -- clear team resourse
     spSetTeamResource(self.nullAI, "metal", 0)
-    for i = 1, #self.playerList do
-        spSetTeamResource(self.playerList[i], "metal", 0)
+    for i = 1, #self.teamList do
+        spSetTeamResource(self.teamList[i], "metal", 0)
     end
 end
 
-function Side:HasPlayer(playerID)
-    for i = 0, #self.playerList do
-        if self.playerList[i] == playerID then
+function Side:HasTeam(teamID)
+    for i = 0, #self.teamList do
+        if self.teamList[i] == teamID then
             return true
         end
     end
     return false
 end
 
-function Side:RemovePlayer(playerID)
-    for i = 0, #self.playerList do
-        if self.playerList[i] == playerID then
-            table.remove(self.playerList, i)
+function Side:RemoveTeam(teamID)
+    for i = 0, #self.teamList do
+        if self.teamList[i] == teamID then
+            table.remove(self.teamList, i)
             break
         end
     end
 
-    if #self.playerList == 0 then
+    if #self.teamList == 0 then
         -- all players resigned, end game
         spDestroyUnit(self.baseId)
     else
         -- remove resigned player from platforms
         local platID = -1
         for i = #self.platforms, 1, -1 do
-            local id = self.platforms[i]:HasTeam(playerID)
+            local id = self.platforms[i]:HasTeam(teamID)
             if id then
                 self.platforms[i]:RemoveTeam(id)
                 platID = i
