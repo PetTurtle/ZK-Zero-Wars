@@ -70,6 +70,7 @@ local function OnStart()
     dataSet = true
 
     -- Clear resources and default commander
+    local allyTeamList = Spring.GetAllyTeamList()
     for i = 1, #allyTeamList do
         local teamList = Spring.GetTeamList(allyTeamList[i])
         for j = 1, #teamList do
