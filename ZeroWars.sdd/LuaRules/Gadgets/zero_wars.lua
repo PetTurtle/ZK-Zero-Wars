@@ -131,7 +131,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
             end
         end
     end
-    if attackerDefID and customCommanders:IsCommander(attackerDefID) then
+    if attackerDefID and customCommanders:IsCommander(attackerDefID) and customCommanders:HasCommander(attackerTeam) then
         customCommanders:TransferExperience(attackerID, attackerTeam)
     end
 end
