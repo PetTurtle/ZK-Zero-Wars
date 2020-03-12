@@ -12,39 +12,48 @@ function Platform:new(rect, offsetX, offsetY)
     local o = {}
     setmetatable(o, Platform)
     o.rect = rect
-    o.playerList = {}
+    o.teamList = {}
     o.offsetX = offsetX
     o.offsetY = offsetY
     return o
 end
 
-function Platform:AddPlayer(playerID)
-    table.insert(self.playerList, playerID)
+function Platform:AddTeam(teamID)
+    table.insert(self.teamList, teamID)
 end
 
-function Platform:HasPlayer(playerID)
-    for i = 1, #self.playerList do
-        if self.playerList[i] == playerID then return i end
+function Platform:RemoveTeam(teamID)
+    table.remove(self.teamList, teamID)
+end
+
+function Platform:HasTeam(teamID)
+    for i = 1, #self.teamList do
+        if self.teamList[i] == teamID then return i end
     end return false
+end
+
+function Platform:IsActive()
+    if #self.teamList == 0 then return false end
+    return true
 end
 
 function Platform:Deploy(platUnits)
     local playerUnits = platUnits.playerUnits
     local comPos = platUnits.customParams["COMMANDER_SPAWN"]
 
-    for i = 1, #self.playerList do
+    for i = 1, #self.teamList do
         for j = 1, #playerUnits do
-            self.rect:CreateUnit(playerUnits[j].unitName, playerUnits[j].x, playerUnits[j].z, playerUnits[j].dir, self.playerList[i])
+            self.rect:CreateUnit(playerUnits[j].unitName, playerUnits[j].x, playerUnits[j].z, playerUnits[j].dir, self.teamList[i])
         end
 
         -- move commander
-        local playerUnits = spGetTeamUnits(self.playerList[i])
+        local playerUnits = spGetTeamUnits(self.teamList[i])
         spDestroyUnit(playerUnits[1], false, true)
     end
 end
 
-function Platform:GetUnits(playerID)
-    return self.rect:GetUnits(playerID)
+function Platform:GetUnits(teamList)
+    return self.rect:GetUnits(teamList)
 end
 
 return Platform

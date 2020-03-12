@@ -50,8 +50,8 @@ end
 
 -- adds platform's units to deploy queue
 function PlatformDeployer:Deploy (platform, deployRect, faceDir, teamID, attackXPos)
-    for i = 1, #platform.playerList do
-        local units = platform:GetUnits(platform.playerList[i])
+    for i = 1, #platform.teamList do
+        local units = platform:GetUnits(platform.teamList[i])
         if units then
             local posOffset = platform.rect:GetPosOffset(deployRect)
             local deployData = {

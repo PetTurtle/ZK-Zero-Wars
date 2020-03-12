@@ -45,12 +45,12 @@ function Side:new(allyID, side, attackXPos)
 
     -- assign players to platforms
     for i = 1, #playerList do
-        platforms[(i % #platforms) + 1]:AddPlayer(playerList[i])
+        platforms[(i % #platforms) + 1]:AddTeam(playerList[i])
     end
 
     -- remove platforms with no players
     for i = #platforms, 1, -1 do
-        if #platforms[i].playerList == 0 then
+        if not platforms[i]:IsActive() then
             table.remove(platforms, i)
         end
     end
@@ -131,15 +131,15 @@ function Side:RemovePlayer(playerID)
         -- remove resigned player from platforms
         local platID = -1
         for i = #self.platforms, 1, -1 do
-            local id = self.platforms[i]:HasPlayer(playerID)
+            local id = self.platforms[i]:HasTeam(playerID)
             if id then
-                table.remove(self.platforms[i].playerList, id)
+                self.platforms[i]:RemoveTeam(id)
                 platID = i
                 break
             end
         end
 
-        if platID ~= -1 and #self.platforms[platID].playerList == 0 then
+        if platID ~= -1 and not platforms[i]:IsActive() then
             table.remove(self.platforms, platID)
         end
     end

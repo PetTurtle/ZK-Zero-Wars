@@ -53,8 +53,8 @@ local function IteratePlatform(side, frame, faceDir)
     platformDeployer:Deploy(platform, side.deployRect, faceDir, side.nullAI, side.attackXPos);
 
     -- deploy player commanders
-    for i = 1, #platform.playerList do
-        local player = platform.playerList[i]
+    for i = 1, #platform.teamList do
+        local player = platform.teamList[i]
         if customCommanders:HasCommander(player) and not customCommanders:HasClone(player) then
             local x, y = side.deployRect:GetCenterPos()
             customCommanders:SpawnClone(player, x, y, faceDir, side.attackXPos)
@@ -70,8 +70,8 @@ local function OnStart()
     dataSet = true
 end
 
-local function OnUpdateFrame()
-    platformDeployer:ClearTimedOut(f)
+local function OnUpdateFrame(frame)
+    platformDeployer:ClearTimedOut(frame)
     -- add attack order to idle units
     for i = #idleUnits, 1, -1 do
         if not Spring.GetUnitIsDead(idleUnits[i].unit) then
@@ -102,7 +102,7 @@ end
 
 function gadget:GameFrame(f)
     if f == 1 then OnStart() end
-    if f > 0 and f % updateTime == 0 then OnUpdateFrame() end
+    if f > 0 and f % updateTime == 0 then OnUpdateFrame(f) end
 
     platformDeployer:IterateQueue(maxSpawnsPerFrame, f)
 
