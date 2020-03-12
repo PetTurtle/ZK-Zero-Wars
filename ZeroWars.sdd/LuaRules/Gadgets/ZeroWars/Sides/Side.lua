@@ -55,11 +55,7 @@ function Side:new(allyID, side, attackXPos)
         end
     end
 
-    -- set buildMasks
     platformlayout.deployPlatform:SetBuildMask(0)
-    for i = 1, #platforms do
-        platforms[i].rect:SetOutlineBuildMask(0)
-    end
 
     o.hasAI = hasAI
     o.allyID = allyID

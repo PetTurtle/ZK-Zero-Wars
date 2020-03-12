@@ -15,6 +15,9 @@ function Platform:new(rect, offsetX, offsetY)
     o.teamList = {}
     o.offsetX = offsetX
     o.offsetY = offsetY
+
+    rect:SetOutlineBuildMask(0)
+
     return o
 end
 
