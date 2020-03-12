@@ -97,7 +97,7 @@ function gadget:GameFrame(f)
 
     if f > 0 and f % updateTime == 0 then
         platformDeployer:ClearTimedOut(f)
-        
+
         -- add attack order to idle units
         for i = #idleUnits, 1, -1 do
             if not Spring.GetUnitIsDead(idleUnits[i].unit) then
@@ -147,15 +147,6 @@ function gadget:UnitIdle(unitID, unitDefID, unitTeam)
         idleUnits[#idleUnits + 1] = {unit = unitID, side = leftSide}
     elseif unitTeam == rightSide.nullAI then
         idleUnits[#idleUnits + 1] = {unit = unitID, side = rightSide}
-    end
-end
-
-function SetGroundUnbuildable(x, y, sizex, sizey)
-    --SetGroundUnbuildable(x/16, z/16, xsize, zsize)
-    for iX = x-sizex, x+sizex - 1 do
-        for iY = y-sizey, y+sizey - 1 do
-            Spring.SetSquareBuildingMask(iX, iY, 2)
-        end
     end
 end
 
