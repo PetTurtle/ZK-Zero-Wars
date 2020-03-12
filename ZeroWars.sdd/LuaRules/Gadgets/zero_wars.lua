@@ -70,6 +70,20 @@ local function OnStart()
     dataSet = true
 end
 
+local function OnUpdateFrame()
+    platformDeployer:ClearTimedOut(f)
+    -- add attack order to idle units
+    for i = #idleUnits, 1, -1 do
+        if not Spring.GetUnitIsDead(idleUnits[i].unit) then
+            local cQueue = Spring.GetCommandQueue(idleUnits[i].unit, 1)
+            if cQueue and #cQueue == 0 then
+                Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, idleUnits[i].side.attackXPos, 0, 1530}, {"alt"});
+            end
+        end
+        table.remove(idleUnits, i)
+    end
+end
+
 function gadget:Initialize()
     if Game.modShortName ~= "ZK" then
         gadgetHandler:RemoveGadget()
@@ -88,26 +102,13 @@ end
 
 function gadget:GameFrame(f)
     if f == 1 then OnStart() end
+    if f > 0 and f % updateTime == 0 then OnUpdateFrame() end
+
+    platformDeployer:IterateQueue(maxSpawnsPerFrame, f)
 
     if f > 0 and f %spawnTime == 0 then
-        platformDeployer:IterateQueue(maxSpawnsPerFrame, f)
         IteratePlatform(leftSide, f, "e")
         IteratePlatform(rightSide, f, "w")
-    end
-
-    if f > 0 and f % updateTime == 0 then
-        platformDeployer:ClearTimedOut(f)
-
-        -- add attack order to idle units
-        for i = #idleUnits, 1, -1 do
-            if not Spring.GetUnitIsDead(idleUnits[i].unit) then
-                local cQueue = Spring.GetCommandQueue(idleUnits[i].unit, 1)
-                if cQueue and #cQueue == 0 then
-                    Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, idleUnits[i].side.attackXPos, 0, 1530}, {"alt"});
-                end
-            end
-            table.remove(idleUnits, i)
-        end
     end
 end
 
