@@ -45,10 +45,6 @@ function Platform:Deploy(platUnits)
         for j = 1, #playerUnits do
             self.rect:CreateUnit(playerUnits[j].unitName, playerUnits[j].x, playerUnits[j].z, playerUnits[j].dir, self.teamList[i])
         end
-
-        -- move commander
-        local playerUnits = spGetTeamUnits(self.teamList[i])
-        spDestroyUnit(playerUnits[1], false, true)
     end
 end
 

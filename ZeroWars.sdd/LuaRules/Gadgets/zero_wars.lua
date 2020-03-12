@@ -68,6 +68,16 @@ local function OnStart()
     leftSide:Deploy("left")
     rightSide:Deploy("right")
     dataSet = true
+
+    -- Clear resources and default commander
+    for i = 1, #allyTeamList do
+        local teamList = Spring.GetTeamList(allyTeamList[i])
+        for j = 1, #teamList do
+            Spring.SetTeamResource(teamList[j], "metal", 0)
+            local units = Spring.GetTeamUnits(teamList[j])
+            if units and #units > 0 then Spring.DestroyUnit(units[1], false, true) end
+        end
+    end
 end
 
 local function OnUpdateFrame(frame)

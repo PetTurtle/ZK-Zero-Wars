@@ -88,22 +88,10 @@ function Side:Deploy(side)
         end
     end
 
-    -- remove nullAI com if nullAI exists
-    if self.hasAI then
-        local units = spGetTeamUnits(self.nullAI)
-        spDestroyUnit(units[1], false, true)
-    end
-
     -- deploy platforms
     local platUnits = PlatformUnitLayout.new(side)
     for i = 1, #self.platforms do
         self.platforms[i]:Deploy(platUnits)
-    end
-
-    -- clear team resourse
-    spSetTeamResource(self.nullAI, "metal", 0)
-    for i = 1, #self.teamList do
-        spSetTeamResource(self.teamList[i], "metal", 0)
     end
 end
 
