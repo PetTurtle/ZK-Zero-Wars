@@ -25,8 +25,8 @@ function Rect:CreateUnit(unit, x, z, dir, team)
     return spCreateUnit(unit, self.x1 + x, 150, self.y1 + z, dir , team)
 end
 
-function Rect:GetUnits(playerID)
-    return spGetUnitsInRectangle(self.x1, self.y1, self.x2, self.y2, playerID)
+function Rect:GetUnits(TeamID)
+    return spGetUnitsInRectangle(self.x1, self.y1, self.x2, self.y2, TeamID)
 end
 
 function Rect:GetPosOffset(target)
