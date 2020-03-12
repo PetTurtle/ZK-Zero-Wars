@@ -97,6 +97,7 @@ function gadget:GameFrame(f)
 
     if f > 0 and f % updateTime == 0 then
         platformDeployer:ClearTimedOut(f)
+        
         -- add attack order to idle units
         for i = #idleUnits, 1, -1 do
             if not Spring.GetUnitIsDead(idleUnits[i].unit) then
@@ -142,11 +143,10 @@ function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
 end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-    local cQueue = Spring.GetCommandQueue(unitID, 1)
     if unitTeam == leftSide.nullAI then
-        table.insert(idleUnits, {unit = unitID, side = leftSide})
+        idleUnits[#idleUnits + 1] = {unit = unitID, side = leftSide}
     elseif unitTeam == rightSide.nullAI then
-        table.insert(idleUnits, {unit = unitID, side = rightSide})
+        idleUnits[#idleUnits + 1] = {unit = unitID, side = rightSide}
     end
 end
 
