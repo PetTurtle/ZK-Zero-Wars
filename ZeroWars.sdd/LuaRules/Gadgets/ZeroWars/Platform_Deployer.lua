@@ -44,12 +44,13 @@ function PlatformDeployer:new ()
     o.normalUnits = {}
     o.skirmUnits = {}
     o.artyUnits = {}
-	o.antiairUnits = {}
+    o.antiairUnits = {}
+    o.cloneUnits = {}
     return o
 end
 
 -- adds platform's units to deploy queue
-function PlatformDeployer:Deploy (platform, deployRect, faceDir, teamID, attackXPos)
+function PlatformDeployer:Deploy (platform, deployRect, faceDir, attackXPos)
     for i = 1, #platform.teamList do
         local units = platform:GetUnits(platform.teamList[i])
         if units then
@@ -57,7 +58,7 @@ function PlatformDeployer:Deploy (platform, deployRect, faceDir, teamID, attackX
             local deployData = {
                 posOffset = posOffset,
                 faceDir = faceDir,
-                teamID = teamID,
+                teamID = platform.teamList[i],
                 attackXPos = attackXPos,
                 units = units,
             }
@@ -127,6 +128,9 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
             end
 
             table.remove(units, i)
+            Spring.SetUnitNoSelect(unit, true)
+            -- TODO: Finish
+            --self.cloneUnits[unit] = {original = true}
 
             spawnCount = spawnCount + 1
             if spawnCount > spawnAmount then
@@ -181,6 +185,11 @@ function PlatformDeployer:IsValidUnit(unitID, ud)
             return true end
     end
     return false 
+end
+
+function PlatformDeployer:IsActiveClone(unitID)
+    if self.cloneUnits[unitID] then return true end
+    return false
 end
 
 function PlatformDeployer:CopyUnitState(original, clone, cmd)
