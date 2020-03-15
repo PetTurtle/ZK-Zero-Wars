@@ -13,12 +13,12 @@ unitDef = {
     buildingGroundDecalType       = [[factorycloak_aoplane.dds]],
   
     buildoptions                  = {
-      [[zwgrebe]],
+      [[grebe]],
       [[vehsupport]],
       [[cloakriot]],
       [[shieldassault]],
       [[shieldskirm]],
-      [[zwimp]],
+      [[cloakbomb]],
       [[cloakaa]],
     },
   

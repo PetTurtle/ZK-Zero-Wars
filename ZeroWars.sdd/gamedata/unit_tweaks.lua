@@ -46,8 +46,54 @@ local unit_tweaks = {
         buildcostmetal = 12000,
         buildcostenergy = 12000,
         buildtime = 12000
+    },
+    cloakbomb = {
+        weaponDefs = {cloakbomb_DEATH = {areaOfEffect = 200}}
+    },
+    amphbomb = {
+        weaponDefs = {AMPHBOMB_DEATH = {areaOfEffect = 240}}
+    },
+    jumpbomb = {
+        weaponDefs = {jumpbomb_DEATH = {areaOfEffect = 200}}
+    },
+    shieldbomb = {
+        weaponDefs = {shieldbomb_DEATH = {areaOfEffect = 200}}
+    },
+    dronecarry = {
+        buildCostMetal = 70,
+        maxDamage = 80,
+        reclaimable = true
+    },
+    dronelight = {
+        buildCostMetal = 50,
+        maxDamage = 150,
+        reclaimable = true
+    },
+    droneheavyslow = {
+        buildCostMetal = 110,
+        maxDamage = 300,
+        reclaimable = true
+    },
+    bomberstrike = {
+        weaponDefs = {MISSILE = {damage = {default = 700, planes = 700}}}
+    },
+    grebe = {
+        noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
+    },
+    hoverassault = {
+        maxDamage = 1000,
+        maxVelocity = 2.8
+    },
+    nebula = {
+        footprintX = 5,
+        footprintZ = 15,
+        weaponDefs = {CANNON = {areaOfEffect = 150, damage = {default = 50}}}
+    },
+    striderdetriment = {
+        collisionVolumeOffsets = [[0 10 0]],
+        collisionVolumeScales = [[92 120 92]],
+        customParams = {modelradius = [[40]]}
     }
-
 }
 
 return unit_tweaks

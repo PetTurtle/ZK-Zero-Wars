@@ -1,21 +1,19 @@
 local unitTweaks = VFS.Include("gamedata/unit_tweaks.lua")
 
 for name, ud in pairs(UnitDefs) do
-	-- Add Chicken Factory
+	-- set chicken cost
     if (ud.unitname:sub(1,7) == "chicken") then
         ud.buildcostmetal = ud.buildtime
         ud.buildcostenergy = ud.buildtime
-    end
-	if (ud.unitname == "basiccon") then
-		ud.buildoptions[#ud.buildoptions + 1] = [[factorychicken]]
 	end
 	
-	-- Removed Friendly Fire Collisions
+	-- removed friendly fire collisions
 	ud.avoidFriendly = false
 	ud.collideFriendly = false
 	ud.collideFirebase = false
 end
 
+-- remove friendly fire damage
 for name, ud in pairs(UnitDefs) do
 	if ud.weapondefs then
 		for _, wd in pairs(ud.weapondefs) do

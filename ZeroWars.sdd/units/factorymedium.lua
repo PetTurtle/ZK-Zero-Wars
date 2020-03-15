@@ -17,8 +17,8 @@ unitDef = {
     [[hoverheavyraid]],
     [[spiderskirm]],
     [[vehriot]],
-	[[shieldarty]],
-    [[zwsnitch]],
+	  [[shieldarty]],
+    [[shieldbomb]],
     [[amphaa]],
   },
 
