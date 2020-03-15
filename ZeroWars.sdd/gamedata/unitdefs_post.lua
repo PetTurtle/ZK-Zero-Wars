@@ -6,7 +6,11 @@ for name, ud in pairs(UnitDefs) do
     end
 	if (ud.unitname == "basiccon") then
 		ud.buildoptions[#ud.buildoptions + 1] = [[factorychicken]]
-    end
+	end
+	
+	ud.avoidFriendly = false
+	ud.collideFriendly = false
+	ud.collideFirebase = false
 end
 
 for name, ud in pairs(UnitDefs) do
