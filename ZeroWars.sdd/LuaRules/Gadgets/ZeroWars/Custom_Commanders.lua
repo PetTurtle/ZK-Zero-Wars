@@ -5,6 +5,11 @@ local custom_com_defs = include("LuaRules/Configs/custom_com_defs.lua")
 CustomCommanders = {}
 CustomCommanders.__index = CustomCommanders
 
+CustomCommanders.comm_costs = {200}
+for lvl=1,18 do
+    CustomCommanders.comm_costs[lvl] = CustomCommanders.comm_costs[lvl-1] + 250 * (lvl - 1)
+end
+
 function CustomCommanders:new ()
     local o = {}
     setmetatable(o, CustomCommanders)
@@ -55,6 +60,12 @@ function CustomCommanders:TransferExperience(unitID, unitTeam)
         end
         Spring.GiveOrderToUnit(original, CMD.FIRE_STATE, {2}, 0)
     end
+end
+
+function CustomCommanders.CalculateReward(attackerLvl, victimLvl)
+    local attackerCost = CustomCommanders.comm_costs[attackerLvl]
+    local victimCost = CustomCommanders.comm_costs[victimLvl]
+    return math.max(0, victimCost / attackerCost - 1.0)
 end
 
 function CustomCommanders:IsCommander(unitDefID)
