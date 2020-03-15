@@ -5,16 +5,17 @@ local custom_com_defs = include("LuaRules/Configs/custom_com_defs.lua")
 CustomCommanders = {}
 CustomCommanders.__index = CustomCommanders
 
-CustomCommanders.comm_costs = {200}
-for lvl=1,18 do
-    CustomCommanders.comm_costs[lvl] = CustomCommanders.comm_costs[lvl-1] + 250 * (lvl - 1)
-end
-
 function CustomCommanders:new ()
     local o = {}
     setmetatable(o, CustomCommanders)
     o.__index = self
     o.commanders = {}
+    o.comm_costs = {}
+
+    o.comm_costs[1] = 200
+    for lvl=2,18 do
+        o.comm_costs[lvl] = o.comm_costs[lvl-1] + 250 * (lvl - 1)
+    end
 
     if GG.custom_com_defs then
         o.custom_com_defs = GG.custom_com_defs
@@ -62,9 +63,9 @@ function CustomCommanders:TransferExperience(unitID, unitTeam)
     end
 end
 
-function CustomCommanders.CalculateReward(attackerLvl, victimLvl)
-    local attackerCost = CustomCommanders.comm_costs[attackerLvl]
-    local victimCost = CustomCommanders.comm_costs[victimLvl]
+function CustomCommanders:CalculateReward(attackerLvl, victimLvl)
+    local attackerCost = self.comm_costs[attackerLvl]
+    local victimCost = self.comm_costs[victimLvl]
     return math.max(0, victimCost / attackerCost - 1.0)
 end
 
