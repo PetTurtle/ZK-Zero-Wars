@@ -108,7 +108,7 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
             self:CopyUnitState(units[i], unit, CMD_UNIT_BOMBER_DIVE_STATE)
             self:CopyUnitState(units[i], unit, CMD_AP_FLY_STATE)
 
-            spGiveOrderToUnit(unit, CMD.FIGHT, {deployData.attackXPos, 0, deployData.posOffset.y + z}, 0)
+            spGiveOrderToUnit(unit, CMD.FIGHT, {deployData.attackXPos, 128, deployData.posOffset.y + z}, {"alt"})
 
             local range = ud.maxWeaponRange
             local mass = spGetUnitMass(unit)
@@ -128,7 +128,7 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
             end
 
             table.remove(units, i)
-            --Spring.SetUnitNoSelect(unit, true)
+            Spring.SetUnitNoSelect(unit, true)
             self.cloneUnits[unit] = {original = units[i]}
 
             spawnCount = spawnCount + 1

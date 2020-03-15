@@ -204,11 +204,6 @@ function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, fa
 end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, playerID, fromSynced, fromLua)
-    -- block clone commands
-    if platformDeployer:IsActiveClone(unitID) then
-        return false
-    end
-
     local x, y, z = Spring.GetUnitPosition(unitID)
     local ud = UnitDefs[unitDefID]
 
