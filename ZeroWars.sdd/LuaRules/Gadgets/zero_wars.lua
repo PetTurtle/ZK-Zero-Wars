@@ -147,6 +147,13 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
     end
 
     if attackerDefID and customCommanders:IsCommander(attackerDefID) and customCommanders:HasCommander(attackerTeam) then
+        if customCommanders:IsCommander(unitDefID) then
+            local attackerLevel = Spring.GetUnitRulesParam(attackerID, "level")
+            local victimLevel = Spring.GetUnitRulesParam(unitID, "level")
+            local reward = CustomCommanders.CalculateReward(attackerLevel, victimLevel)
+            local xp = Spring.GetUnitExperience(attackerID) + reward
+            Spring.SetUnitExperience(attackerID, xp)
+        end
         customCommanders:TransferExperience(attackerID, attackerTeam)
     end
 
