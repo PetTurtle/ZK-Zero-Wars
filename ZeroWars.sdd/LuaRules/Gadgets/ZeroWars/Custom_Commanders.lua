@@ -37,22 +37,22 @@ function CustomCommanders:TransferExperience(unitID, unitTeam)
         local level = Spring.GetUnitRulesParam(original, "level");
         
 
-        if (xp >= level and level <= 16) then
+        while (xp >= level and level <= 16) do
+            xp = math.max(0, xp - level)
+            level = level + 1
+            Spring.SetUnitRulesParam(original, "level", level)
             local points = Spring.GetUnitRulesParam(original, "points");
-            Spring.SetUnitRulesParam(original, "level", level + 1)
             Spring.SetUnitRulesParam(original, "points", points + 1)
-            Spring.SetUnitExperience(original, 0)
             callScript(original, "LevelUp")
 
             if self:HasClone(unitTeam) then
-                Spring.SetUnitExperience(clone, 0)
-                Spring.SetUnitRulesParam(clone, "level", level + 1)
+                Spring.SetUnitExperience(clone, xp)
+                Spring.SetUnitRulesParam(clone, "level", level)
                 callScript(clone, "LevelUp")
             end
             
-        else
-            Spring.SetUnitExperience(original, xp)
         end
+        Spring.SetUnitExperience(original, xp)
         Spring.GiveOrderToUnit(original, CMD.FIRE_STATE, {2}, 0)
     end
 end
