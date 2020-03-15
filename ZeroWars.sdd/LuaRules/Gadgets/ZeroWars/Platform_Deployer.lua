@@ -128,9 +128,8 @@ function PlatformDeployer:DeployUnits(deployData, spawnAmount, frame)
             end
 
             table.remove(units, i)
-            Spring.SetUnitNoSelect(unit, true)
-            -- TODO: Finish
-            --self.cloneUnits[unit] = {original = true}
+            --Spring.SetUnitNoSelect(unit, true)
+            self.cloneUnits[unit] = {original = units[i]}
 
             spawnCount = spawnCount + 1
             if spawnCount > spawnAmount then
@@ -190,6 +189,14 @@ end
 function PlatformDeployer:IsActiveClone(unitID)
     if self.cloneUnits[unitID] then return true end
     return false
+end
+
+function PlatformDeployer:RemoveActiveClone(unitID)
+    table.remove(self.cloneUnits, unitID)
+end
+
+function PlatformDeployer:GetActiveClone(unitID)
+    return self.cloneUnits[unitID]
 end
 
 function PlatformDeployer:CopyUnitState(original, clone, cmd)

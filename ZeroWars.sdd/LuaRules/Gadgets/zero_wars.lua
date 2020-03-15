@@ -145,8 +145,15 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
             end
         end
     end
+
     if attackerDefID and customCommanders:IsCommander(attackerDefID) and customCommanders:HasCommander(attackerTeam) then
         customCommanders:TransferExperience(attackerID, attackerTeam)
+    end
+
+    if platformDeployer:IsActiveClone(unitID) then
+        local clone = platformDeployer:GetActiveClone(unitID)
+        -- TODO: Transfer XP to original it it exists
+        platformDeployer:RemoveActiveClone(unitID)
     end
 end
 
@@ -155,10 +162,12 @@ function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
 end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-    if unitTeam == leftSide.nullAI then
-        idleUnits[#idleUnits + 1] = {unit = unitID, side = leftSide}
-    elseif unitTeam == rightSide.nullAI then
-        idleUnits[#idleUnits + 1] = {unit = unitID, side = rightSide}
+    if platformDeployer:IsActiveClone(unitID) then
+        if leftSide:HasTeam(unitTeam) then
+            idleUnits[#idleUnits + 1] = {unit = unitID, side = leftSide}
+        elseif rightSide:HasTeam(unitTeam) then
+            idleUnits[#idleUnits + 1] = {unit = unitID, side = rightSide}
+        end
     end
 end
 

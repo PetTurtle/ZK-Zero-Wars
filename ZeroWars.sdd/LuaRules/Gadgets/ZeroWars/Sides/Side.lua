@@ -24,25 +24,6 @@ function Side:new(allyID, side, attackXPos)
     local platformlayout = PlatformLayout.new(side)
     local platforms = platformlayout.platforms
 
-    local nullAI = -1
-    local hasAI = false
-
-    -- remove nullAI team from team list
-    for i = #teamList, 1, -1 do
-        local luaAI = spGetTeamLuaAI(teamList[i])
-        if luaAI and string.find(string.lower(luaAI), "ai") then
-            hasAI = true
-            nullAI = teamList[i]
-            table.remove(teamList, i)
-            break
-        end
-    end
-
-    -- if nullAI team is null, set it to player team
-    if nullAI == -1 and #teamList > 0 then
-        nullAI = teamList[1]
-    end
-
     -- assign teams to platforms
     for i = 1, #teamList do
         platforms[(i % #platforms) + 1]:AddTeam(teamList[i])
@@ -57,9 +38,7 @@ function Side:new(allyID, side, attackXPos)
 
     platformlayout.deployPlatform:SetBuildMask(0)
 
-    o.hasAI = hasAI
     o.allyID = allyID
-    o.nullAI = nullAI
     o.teamList = teamList
     o.deployRect = platformlayout.deployPlatform
     o.platforms = platforms
@@ -74,8 +53,9 @@ function Side:Deploy(side)
     -- deploy units (or buildings) related to the side
     local sideUnits = SideUnitLayout.new(side)
     for i = 1, #sideUnits do
-        local unit = spCreateUnit(sideUnits[i].unitName, sideUnits[i].x, 10000, sideUnits[i].z, sideUnits[i].dir, self.nullAI)
+        local unit = spCreateUnit(sideUnits[i].unitName, sideUnits[i].x, 10000, sideUnits[i].z, sideUnits[i].dir, self.teamList[1])
         spSetUnitBlocking(unit, false)
+        Spring.SetUnitNoSelect(unit, sideUnits[i].noSelectable)
 
         if sideUnits[i].unitName == "baseturret" then
             self.baseId = unit
