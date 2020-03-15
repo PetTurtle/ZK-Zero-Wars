@@ -159,7 +159,16 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 
     if platformDeployer:IsActiveClone(unitID) then
         local clone = platformDeployer:GetActiveClone(unitID)
-        -- TODO: Transfer XP to original it it exists
+
+        -- transfer XP to original it it exists
+        if platformDeployer.cloneUnits[unitID] and platformDeployer.cloneUnits[unitID].original then
+            local original = platformDeployer.cloneUnits[unitID].original
+            if not GetUnitIsDead(original) then
+                Spring.SetUnitExperience(original, Spring.GetUnitExperience(original) + Spring.GetUnitExperience(unitID))
+            end
+        end
+
+        -- removed dead clone
         platformDeployer:RemoveActiveClone(unitID)
     end
 end
