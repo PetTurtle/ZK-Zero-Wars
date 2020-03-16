@@ -51,6 +51,8 @@ end
 
 -- adds platform's units to deploy queue
 function PlatformDeployer:Deploy (platform, deployRect, faceDir, attackXPos)
+
+    
     for i = 1, #platform.teamList do
         local units = platform:GetUnits(platform.teamList[i])
         if units then

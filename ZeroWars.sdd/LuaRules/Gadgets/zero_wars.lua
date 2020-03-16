@@ -15,7 +15,7 @@ end
 
 include("LuaRules/Configs/customcmds.h.lua")
 local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Side.lua")
-local PlatformDeployer = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform_Deployer.lua")
+local leftLayout, rightLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layout.lua")
 local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commanders.lua");
 
 local dataSet = false
@@ -26,7 +26,6 @@ local maxSpawnsPerFrame = 12
 local leftSide
 local rightSide
 
-local platformDeployer
 local customCommanders
 
 local updateTime = 60
@@ -47,10 +46,8 @@ local validCommands = {
 }
 
 local function IteratePlatform(side, frame, faceDir)
+    side:CloneNextPlatform()
     local platform = side.platforms[(side.iterator % #side.platforms) + 1]
-
-    -- deploy units on platform
-    platformDeployer:Deploy(platform, side.deployRect, faceDir, side.attackXPos);
 
     -- deploy player commanders
     for i = 1, #platform.teamList do
@@ -60,13 +57,11 @@ local function IteratePlatform(side, frame, faceDir)
             customCommanders:SpawnClone(team, x, y, faceDir, side.attackXPos)
         end
     end
-    -- iterate platform
-    side.iterator=((side.iterator + 1) % #side.platforms)
 end
 
 local function OnStart()
-    leftSide:Deploy("left")
-    rightSide:Deploy("right")
+    leftSide:Deploy()
+    rightSide:Deploy()
     dataSet = true
 
     -- Clear resources and default commander
@@ -82,7 +77,7 @@ local function OnStart()
 end
 
 local function OnUpdateFrame(frame)
-    platformDeployer:ClearTimedOut(frame)
+    -- platformDeployer:ClearTimedOut(frame)
     -- add attack order to idle units
     for i = #idleUnits, 1, -1 do
         if not Spring.GetUnitIsDead(idleUnits[i].unit) then
@@ -103,19 +98,17 @@ function gadget:Initialize()
 
     -- set sides
     local allyTeamList = Spring.GetAllyTeamList()
-    leftSide = Side:new(allyTeamList[1], "left", 5888)
-    rightSide = Side:new(allyTeamList[2], "right", 2303)
-    platformDeployer = PlatformDeployer:new()
+    leftSide = Side:new(allyTeamList[1], leftLayout)
+    rightSide = Side:new(allyTeamList[2], rightLayout)
     customCommanders = CustomCommanders:new()
-    GG.leftSide = leftSide
-    GG.rightSide = rightSide
 end
 
 function gadget:GameFrame(f)
     if f == 1 then OnStart() end
     if f > 0 and f % updateTime == 0 then OnUpdateFrame(f) end
 
-    platformDeployer:IterateQueue(maxSpawnsPerFrame, f)
+    leftSide:Update(f)
+    rightSide:Update(f)
 
     if f > 0 and f %spawnTime == 0 then
         IteratePlatform(leftSide, f, "e")
@@ -159,20 +152,20 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
         customCommanders:TransferExperience(attackerID, attackerTeam)
     end
 
-    if platformDeployer:IsActiveClone(unitID) then
-        local clone = platformDeployer:GetActiveClone(unitID)
+    -- if platformDeployer:IsActiveClone(unitID) then
+    --     local clone = platformDeployer:GetActiveClone(unitID)
 
-        -- transfer XP to original it it exists
-        if platformDeployer.cloneUnits[unitID] and platformDeployer.cloneUnits[unitID].original then
-            local original = platformDeployer.cloneUnits[unitID].original
-            if not GetUnitIsDead(original) then
-                Spring.SetUnitExperience(original, Spring.GetUnitExperience(original) + Spring.GetUnitExperience(unitID))
-            end
-        end
+    --     -- transfer XP to original it it exists
+    --     if platformDeployer.cloneUnits[unitID] and platformDeployer.cloneUnits[unitID].original then
+    --         local original = platformDeployer.cloneUnits[unitID].original
+    --         if not GetUnitIsDead(original) then
+    --             Spring.SetUnitExperience(original, Spring.GetUnitExperience(original) + Spring.GetUnitExperience(unitID))
+    --         end
+    --     end
 
-        -- removed dead clone
-        platformDeployer:RemoveActiveClone(unitID)
-    end
+    --     -- removed dead clone
+    --     -- platformDeployer:RemoveActiveClone(unitID)
+    -- end
 end
 
 function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
@@ -180,13 +173,13 @@ function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
 end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-    if platformDeployer:IsActiveClone(unitID) then
-        if leftSide:HasTeam(unitTeam) then
-            idleUnits[#idleUnits + 1] = {unit = unitID, side = leftSide}
-        elseif rightSide:HasTeam(unitTeam) then
-            idleUnits[#idleUnits + 1] = {unit = unitID, side = rightSide}
-        end
-    end
+    -- if platformDeployer:IsActiveClone(unitID) then
+    --     if leftSide:HasTeam(unitTeam) then
+    --         idleUnits[#idleUnits + 1] = {unit = unitID, side = leftSide}
+    --     elseif rightSide:HasTeam(unitTeam) then
+    --         idleUnits[#idleUnits + 1] = {unit = unitID, side = rightSide}
+    --     end
+    -- end
 end
 
 -- Don't allow factories in center
