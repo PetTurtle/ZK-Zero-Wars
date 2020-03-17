@@ -1,15 +1,19 @@
-PlatformClones = {}
-PlatformClones.__index = PlatformClones
+include("LuaRules/Configs/customcmds.h.lua")
 
-function PlatformClones:Create()
+Clones = {}
+Clones.__index = Clones
+
+function Clones:Create()
     local o = {}
-    setmetatable(o, PlatformClones)
-
-
+    setmetatable(o, Clones)
+    o.clones = {}
+    o.inactive = {}
     return o
 end
 
-function PlatformClones:NewClones(clones, originals)
+function Clones:NewClones(clones, originals)
+    assert(#clones == #originals)
 
 end
 
+return Clones

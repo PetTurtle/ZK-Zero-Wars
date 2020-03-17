@@ -1,4 +1,5 @@
 local Cloner = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Cloner.lua")
+local Clones = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Clones.lua")
 
 local spGetTeamList = Spring.GetTeamList
 local spGetTeamLuaAI = Spring.GetTeamLuaAI
@@ -27,7 +28,8 @@ function Side:new(allyID, layout)
     o.baseId = -1
     o.turretId = -1
     o.iterator = 0
-    o.cloner = Cloner:Create(o.deployRect, o.faceDir)
+    o.cloner = Cloner:Create(o.deployRect, o.faceDir, o.attackXPos)
+    o.clones = Clones:Create()
 
     -- assign teams to platforms
     for i = 1, #o.teamList do
@@ -68,7 +70,8 @@ end
 
 function Side:Update(frame) 
     if self.cloner:Size() > 0 then
-        local clones, original = self.cloner:Deploy()
+        local clones, originals = self.cloner:Deploy()
+        self.clones:NewClones(clones, originals)
     end
 end
 
