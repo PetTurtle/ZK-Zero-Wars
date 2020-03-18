@@ -8,7 +8,7 @@ local leftMetal = 3.5
 local rightMetal = 3.5
 
 local ret = {}
-table.insert(ret, {x = 4096, z = 1532, metal = 2.0 * totalPlayers})
+table.insert(ret, {x = 4096, z = 1532, metal = 1.2 * totalPlayers})
 
 if #leftTeam <= 1 then
     table.insert(ret, {x = 140, z = 1349, metal = leftMetal})
