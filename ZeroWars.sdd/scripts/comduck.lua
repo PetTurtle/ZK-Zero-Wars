@@ -39,8 +39,8 @@ local unitDefID = Spring.GetUnitDefID(unitID)
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 local gun_1 = 0
-local baseHP = 825
-local health_multi = 0.8
+local baseHP = 2000
+local health_multi = 0.3
 local scale_multi = 0.12
 local weapon_1 = 1
 local weapon_2 = 0
