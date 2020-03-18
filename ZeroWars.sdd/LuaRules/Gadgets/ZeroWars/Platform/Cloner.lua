@@ -3,6 +3,7 @@ include("LuaRules/Configs/customcmds.h.lua")
 local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitStates = Spring.GetUnitStates
+local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
@@ -29,11 +30,19 @@ end
 
 function Cloner:Add(platform)
     local units = platform:GetUnits()
-    if not units then return end
     
+    if not units then return end
+    for i = #units, 1, -1 do
+        local buildProgress = select(5, spGetUnitHealth(units[i]))
+        if buildProgress ~= 1 then
+            table.remove(units, i)
+        end
+    end
+    if not units then return end
+
     while(#units > 0) do
         local deployGroup = {
-            units = self:MoveList(units, 1, math.min(self.spawnAmount, #units)),
+            units = self:SubsetClones(units, 1, math.min(self.spawnAmount, #units)),
             platform = platform
         }
         self.queue[#self.queue + 1] = deployGroup
@@ -66,13 +75,13 @@ function Cloner:Size()
     return #self.queue
 end
 
-function Cloner:MoveList(list, from, to)
+function Cloner:SubsetClones(clones, from, to)
     local subset = {}
     local iterator = 1
     for i = to, from, -1 do
-        subset[iterator] = list[i]
+        subset[iterator] = clones[i]
         iterator = iterator + 1
-        table.remove(list, i)
+        table.remove(clones, i)
     end
     return subset
 end
