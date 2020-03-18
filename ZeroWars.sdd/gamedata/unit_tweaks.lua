@@ -9,25 +9,40 @@ local unit_tweaks = {
         }
     },
     chicken = {
-        buildcostmetal = 100,
-        buildcostenergy = 100,
-        buildtime = 100
+        buildcostmetal = 80,
+        buildcostenergy = 80,
+        buildtime = 80,
+        footprintX = 1,
+        footprintZ = 2
     },
     chicken_leaper = {
-        buildcostmetal = 130,
-        buildcostenergy = 130,
-        buildtime = 130,
-        weaponDefs = {WEAPON = {impulseBoost = 1000}}
+        buildcostmetal = 260,
+        buildcostenergy = 260,
+        buildtime = 260,
+        maxVelocity = 3.2,
+        weaponDefs = {
+            WEAPON = {
+                range = 65,
+                impulseBoost = 1250
+            }
+        }
     },
     chickens = {
-        buildcostmetal = 150,
-        buildcostenergy = 150,
-        buildtime = 150
+        buildcostmetal = 125,
+        buildcostenergy = 125,
+        buildtime = 125
+    },
+    chickenwurm = {
+        buildcostmetal = 400,
+        buildcostenergy = 400,
+        buildtime = 400
     },
     chicken_dodo = {
         buildcostmetal = 120,
         buildcostenergy = 120,
-        buildtime = 120
+        buildtime = 120,
+        footprintX = 3,
+        footprintZ = 3
     },
     chicken_pigeon = {
         buildcostmetal = 75,
@@ -37,19 +52,68 @@ local unit_tweaks = {
         footprintZ = 2
     },
     chickena = {
-        buildcostmetal = 400,
-        buildcostenergy = 400,
-        buildtime = 400
+        buildcostmetal = 380,
+        buildcostenergy = 380,
+        buildtime = 380
     },
     chickenc = {
         buildcostmetal = 520,
         buildcostenergy = 520,
         buildtime = 520
     },
+    chicken_roc = {
+        buildcostmetal = 800,
+        buildcostenergy = 800,
+        buildtime = 800
+    },
+    chickenf = {
+        buildcostmetal = 340,
+        buildcostenergy = 340,
+        buildtime = 340,
+        footprintX = 3,
+        footprintZ = 3
+    },
     chicken_blimpy = {
-        buildcostmetal = 520,
-        buildcostenergy = 520,
-        buildtime = 520
+        buildcostmetal = 400,
+        buildcostenergy = 400,
+        buildtime = 400,
+        turnRate = 3000,
+        turnRadius = 450,
+        weaponDefs = {DODOBOMB = {reloadtime = 8}},
+        footprintX = 3,
+        footprintZ = 3
+    },
+    chicken_spidermonkey = {
+        buildcostmetal = 320,
+        buildcostenergy = 320,
+        buildtime = 320
+    },
+    chicken_sporeshooter = {
+        buildcostmetal = 410,
+        buildcostenergy = 410,
+        buildtime = 410
+    },
+    chickenr = {
+        buildcostmetal = 180,
+        buildcostenergy = 180,
+        buildtime = 180,
+        noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
+    },
+    chicken_shield = {
+        buildcostmetal = 1200,
+        buildcostenergy = 1200,
+        buildtime = 1200
+    },
+    chicken_tiamat = {
+        buildcostmetal = 2800,
+        buildcostenergy = 2800,
+        buildtime = 2800
+    },
+    chickenblobber = {
+        buildcostmetal = 1300,
+        buildcostenergy = 1300,
+        buildtime = 1300,
+        noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_dragon = {
         buildcostmetal = 12000,

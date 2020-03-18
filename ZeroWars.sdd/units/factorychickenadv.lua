@@ -13,15 +13,20 @@ unitDef = {
     buildingGroundDecalType       = [[factorycloak_aoplane.dds]],
   
     buildoptions                  = {
-        [[chicken]],
-        [[chicken_leaper]],
-        [[chickens]],
-        [[chicken_dodo]],
-        [[chicken_pigeon]],
-        [[chickena]],
-        [[chickenc]],
-        [[chicken_blimpy]],
-        [[chicken_dragon]],
+      [[chicken]], -- chicken
+      [[chickens]], -- Spiker
+      [[chicken_dodo]], -- dodo
+      [[chicken_spidermonkey]], -- spidermonkey
+      [[chickenf]], -- Talon
+      [[chickenr]], -- Lobber
+      
+      [[chicken_blimpy]], -- Blimpy
+      [[chickenc]],
+      [[chickena]],
+      [[chickenblobber]],
+      [[chicken_shield]],
+      [[chicken_tiamat]],
+      [[chicken_dragon]], -- White Dragon
     },
   
     buildPic                      = [[chickenflyerqueen.png]],
