@@ -70,12 +70,12 @@ rightSide.buildings = {
 
 leftSide.playerUnits = {
     {unitName = "basiccon", x = -140, z = 350, dir = "e"},
-    {unitName = "comduck", x = -140, z = 350, dir = "e"}
+    {unitName = "chicken_drone_starter", x = -140, z = 350, dir = "e"}
 }
 
 rightSide.playerUnits = {
     {unitName = "basiccon", x = 520, z = 410, dir = "w"},
-    {unitName = "comduck", x = 520, z = 410, dir = "w"}
+    {unitName = "chicken_drone_starter", x = 520, z = 410, dir = "w"}
 }
 
 ----------------------------------

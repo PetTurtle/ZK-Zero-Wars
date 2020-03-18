@@ -1,4 +1,11 @@
 local unit_tweaks = {
+    chicken_drone_starter = {
+        customparams = {
+            statsname = nil,
+            morphto_1 = [[comduck]],
+            morphcost_1 = 5,
+        }
+    },
     chicken = {
         buildcostmetal = 100,
         buildcostenergy = 100,
