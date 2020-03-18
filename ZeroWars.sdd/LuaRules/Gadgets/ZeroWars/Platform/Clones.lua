@@ -95,7 +95,7 @@ end
 
 function Clones:RemoveActiveClone(unitID)
     local original = self.clones[unitID].original;
-    if not Spring.GetUnitIsDead(original) then
+    if not Spring.GetUnitIsDead(original) and not Spring.GetUnitIsDead(unitID) then
         Spring.SetUnitExperience(original, Spring.GetUnitExperience(original) + Spring.GetUnitExperience(unitID))
     end
     table.remove(self.clones, unitID)
