@@ -99,9 +99,10 @@ local unit_tweaks = {
         weaponDefs = {CANNON = {areaOfEffect = 150, damage = {default = 50}}}
     },
     striderdetriment = {
+        selfDestructAs = [[ATOMIC_BLAST]],
         collisionVolumeOffsets = [[0 10 0]],
         collisionVolumeScales = [[92 120 92]],
-        customParams = {modelradius = [[40]]}
+        customparams = {modelradius = [[40]]}
     }
 }
 
