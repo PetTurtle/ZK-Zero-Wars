@@ -154,6 +154,8 @@ end
 -- Don't allow factories in center
 function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, facing)
     local ud = UnitDefs[unitDefID]
+    if ud.customParams.ismex then return true end
+
     if dataSet then
         if x and x >= 384 and x <= 7817 and (ud.isBuilding or ud.isBuilder) then
             return false
