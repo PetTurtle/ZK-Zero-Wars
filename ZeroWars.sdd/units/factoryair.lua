@@ -13,7 +13,7 @@ unitDef = {
   buildingGroundDecalType       = [[factorygunship_aoplane.dds]],
 
   buildoptions                  = {
-    [[zwfirefly]],
+    [[dronelight]],
     [[gunshipemp]],
     [[gunshipraid]],
     [[gunshipskirm]],

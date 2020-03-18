@@ -13,11 +13,12 @@ unitDef = {
     buildingGroundDecalType       = [[factorycloak_aoplane.dds]],
   
     buildoptions                  = {
-        [[chicken]],
-        [[chicken_leaper]],
-        [[chickens]],
-        [[chicken_dodo]],
-        [[chicken_pigeon]],
+      [[chicken]],
+      [[chickens]],
+      [[chicken_dodo]],
+      [[chicken_spidermonkey]],
+      [[chickenf]],
+      [[chickenr]],
     },
   
     buildPic                      = [[chickenbroodqueen.png]],

@@ -21,7 +21,7 @@ unitDef = {
     [[cloakskirm]],
     [[spideremp]],
     [[veharty]],
-    [[zwgull]],
+    [[dronecarry]],
 
     [[tankraid]],
     [[spiderriot]],
@@ -33,6 +33,7 @@ unitDef = {
     [[factorymedium]],
     [[factoryheavy]],
     [[factoryspecial]],
+    [[factorychicken]],
   },
 
   buildPic            = [[amphcon.png]],

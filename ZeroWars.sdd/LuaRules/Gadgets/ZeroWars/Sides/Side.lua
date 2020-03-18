@@ -1,6 +1,5 @@
-local PlatformLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layouts/platform_layout.lua")
-local SideUnitLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layouts/side_unit_layout.lua")
-local PlatformUnitLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layouts/platform_unit_layout.lua")
+local Cloner = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Cloner.lua")
+local Clones = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Clones.lua")
 
 local spGetTeamList = Spring.GetTeamList
 local spGetTeamLuaAI = Spring.GetTeamLuaAI
@@ -16,66 +15,45 @@ Side = {}
 Side.__index = Side
 
 -- side : side of map "left", "right"
-function Side:new(allyID, side, attackXPos)
+function Side:new(allyID, layout)
     local o = {}
     setmetatable(o, Side)
-
-    local teamList = spGetTeamList(allyID)
-    local platformlayout = PlatformLayout.new(side)
-    local platforms = platformlayout.platforms
-
-    local nullAI = -1
-    local hasAI = false
-
-    -- remove nullAI team from team list
-    for i = #teamList, 1, -1 do
-        local luaAI = spGetTeamLuaAI(teamList[i])
-        if luaAI and string.find(string.lower(luaAI), "ai") then
-            hasAI = true
-            nullAI = teamList[i]
-            table.remove(teamList, i)
-            break
-        end
-    end
-
-    -- if nullAI team is null, set it to player team
-    if nullAI == -1 and #teamList > 0 then
-        nullAI = teamList[1]
-    end
-
-    -- assign teams to platforms
-    for i = 1, #teamList do
-        platforms[(i % #platforms) + 1]:AddTeam(teamList[i])
-    end
-
-    -- remove platforms with no teams
-    for i = #platforms, 1, -1 do
-        if not platforms[i]:IsActive() then
-            table.remove(platforms, i)
-        end
-    end
-
-    platformlayout.deployPlatform:SetBuildMask(0)
-
-    o.hasAI = hasAI
     o.allyID = allyID
-    o.nullAI = nullAI
-    o.teamList = teamList
-    o.deployRect = platformlayout.deployPlatform
-    o.platforms = platforms
-    o.attackXPos = attackXPos
+    o.teamList = spGetTeamList(allyID)
+    o.layout = layout
+    o.deployRect = layout.deployRect
+    o.platforms = layout.platforms
+    o.attackXPos = layout.attackXPos
+    o.faceDir = layout.faceDir
     o.baseId = -1
     o.turretId = -1
     o.iterator = 0
+    o.cloner = Cloner:Create(o.deployRect, o.faceDir, o.attackXPos)
+    o.clones = Clones:Create()
+
+    -- assign teams to platforms
+    for i = 1, #o.teamList do
+        o.platforms[(i % #o.platforms) + 1]:AddTeam(o.teamList[i])
+    end
+    
+    -- remove platforms with no teams
+    for i = #o.platforms, 1, -1 do
+        if not o.platforms[i]:IsActive() then
+            table.remove(o.platforms, i)
+        end
+    end
+
+    o.deployRect:SetBuildMask(0)
     return o
 end
 
-function Side:Deploy(side)
+function Side:Deploy()
     -- deploy units (or buildings) related to the side
-    local sideUnits = SideUnitLayout.new(side)
+    local sideUnits = self.layout.buildings
     for i = 1, #sideUnits do
-        local unit = spCreateUnit(sideUnits[i].unitName, sideUnits[i].x, 10000, sideUnits[i].z, sideUnits[i].dir, self.nullAI)
+        local unit = spCreateUnit(sideUnits[i].unitName, sideUnits[i].x, 10000, sideUnits[i].z, sideUnits[i].dir, self.teamList[1])
         spSetUnitBlocking(unit, false)
+        Spring.SetUnitNoSelect(unit, sideUnits[i].noSelectable)
 
         if sideUnits[i].unitName == "baseturret" then
             self.baseId = unit
@@ -85,10 +63,23 @@ function Side:Deploy(side)
     end
 
     -- deploy platforms
-    local platUnits = PlatformUnitLayout.new(side)
     for i = 1, #self.platforms do
-        self.platforms[i]:Deploy(platUnits)
+        self.platforms[i]:Deploy(self.layout.playerUnits, self.layout.customParams)
     end
+end
+
+function Side:Update(frame) 
+    if self.cloner:Size() > 0 then
+        local clones, originals = self.cloner:Deploy()
+        self.clones:NewClones(clones, originals, frame)
+    end
+    self.clones:ClearTimedOut(frame)
+    self.clones:CommandIdles(self.attackXPos)
+end
+
+function Side:CloneNextPlatform()
+    self.iterator=((self.iterator + 1) % #self.platforms)
+    self.cloner:Add(self.platforms[self.iterator + 1])
 end
 
 function Side:HasTeam(teamID)
@@ -127,6 +118,18 @@ function Side:RemoveTeam(teamID)
             table.remove(self.platforms, platID)
         end
     end
+end
+
+function Side:IsActiveClone(unitID)
+    return self.clones:IsActiveClone(unitID)
+end
+
+function Side:RemoveActiveClone(unitID)
+    self.clones:RemoveActiveClone(unitID)
+end
+
+function Side:AddIdleClone(unitID)
+    return self.clones:AddIdle(unitID)
 end
 
 return Side

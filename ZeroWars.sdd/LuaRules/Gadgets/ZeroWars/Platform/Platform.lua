@@ -40,9 +40,8 @@ function Platform:IsActive()
     return true
 end
 
-function Platform:Deploy(platUnits)
-    local playerUnits = platUnits.playerUnits
-    local comPos = platUnits.customParams["COMMANDER_SPAWN"]
+function Platform:Deploy(playerUnits, customParams)
+    local comPos = customParams["COMMANDER_SPAWN"]
 
     for i = 1, #self.teamList do
         for j = 1, #playerUnits do
@@ -51,8 +50,16 @@ function Platform:Deploy(platUnits)
     end
 end
 
-function Platform:GetUnits(teamList)
-    return self.rect:GetUnits(teamList)
+function Platform:GetUnits(TeamID)
+    return self.rect:GetUnits(TeamID)
+end
+
+function Platform:GetTeamUnits()
+    local units = {}
+    for i = 1, #self.teamList do
+        units[i] = self.rect:GetUnits(self.teamList[i])
+    end
+    return units
 end
 
 return Platform

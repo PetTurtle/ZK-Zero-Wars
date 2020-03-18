@@ -15,22 +15,16 @@ end
 
 include("LuaRules/Configs/customcmds.h.lua")
 local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Side.lua")
-local PlatformDeployer = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform_Deployer.lua")
+local leftLayout, rightLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layout.lua")
 local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commanders.lua");
 
 local dataSet = false
 
 local spawnTime = 800
-local maxSpawnsPerFrame = 12
-
 local leftSide
 local rightSide
-
-local platformDeployer
 local customCommanders
 
-local updateTime = 60
-local idleUnits = {}
 local validCommands = {
     CMD.FIRE_STATE,
     CMD.MOVE_STATE,
@@ -47,10 +41,8 @@ local validCommands = {
 }
 
 local function IteratePlatform(side, frame, faceDir)
+    side:CloneNextPlatform()
     local platform = side.platforms[(side.iterator % #side.platforms) + 1]
-
-    -- deploy units on platform
-    platformDeployer:Deploy(platform, side.deployRect, faceDir, side.nullAI, side.attackXPos);
 
     -- deploy player commanders
     for i = 1, #platform.teamList do
@@ -60,13 +52,11 @@ local function IteratePlatform(side, frame, faceDir)
             customCommanders:SpawnClone(team, x, y, faceDir, side.attackXPos)
         end
     end
-    -- iterate platform
-    side.iterator=((side.iterator + 1) % #side.platforms)
 end
 
 local function OnStart()
-    leftSide:Deploy("left")
-    rightSide:Deploy("right")
+    leftSide:Deploy()
+    rightSide:Deploy()
     dataSet = true
 
     -- Clear resources and default commander
@@ -81,20 +71,6 @@ local function OnStart()
     end
 end
 
-local function OnUpdateFrame(frame)
-    platformDeployer:ClearTimedOut(frame)
-    -- add attack order to idle units
-    for i = #idleUnits, 1, -1 do
-        if not Spring.GetUnitIsDead(idleUnits[i].unit) then
-            local cQueue = Spring.GetCommandQueue(idleUnits[i].unit, 1)
-            if cQueue and #cQueue == 0 then
-                Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, idleUnits[i].side.attackXPos, 0, 1530}, {"alt"});
-            end
-        end
-        table.remove(idleUnits, i)
-    end
-end
-
 function gadget:Initialize()
     if Game.modShortName ~= "ZK" then
         gadgetHandler:RemoveGadget()
@@ -103,19 +79,16 @@ function gadget:Initialize()
 
     -- set sides
     local allyTeamList = Spring.GetAllyTeamList()
-    leftSide = Side:new(allyTeamList[1], "left", 5888)
-    rightSide = Side:new(allyTeamList[2], "right", 2303)
-    platformDeployer = PlatformDeployer:new()
+    leftSide = Side:new(allyTeamList[1], leftLayout)
+    rightSide = Side:new(allyTeamList[2], rightLayout)
     customCommanders = CustomCommanders:new()
-    GG.leftSide = leftSide
-    GG.rightSide = rightSide
 end
 
 function gadget:GameFrame(f)
     if f == 1 then OnStart() end
-    if f > 0 and f % updateTime == 0 then OnUpdateFrame(f) end
 
-    platformDeployer:IterateQueue(maxSpawnsPerFrame, f)
+    leftSide:Update(f)
+    rightSide:Update(f)
 
     if f > 0 and f %spawnTime == 0 then
         IteratePlatform(leftSide, f, "e")
@@ -145,8 +118,24 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
             end
         end
     end
+
     if attackerDefID and customCommanders:IsCommander(attackerDefID) and customCommanders:HasCommander(attackerTeam) then
+        -- calculate commander victom cost, if victim is commander
+        if customCommanders:IsCommander(unitDefID) then
+            local attackerLevel = Spring.GetUnitRulesParam(attackerID, "level")
+            local victimLevel = Spring.GetUnitRulesParam(unitID, "level")
+            local reward = customCommanders:CalculateReward(attackerLevel, victimLevel)
+            local xp = Spring.GetUnitExperience(attackerID) + reward
+            Spring.SetUnitExperience(attackerID, xp)
+        end
+
         customCommanders:TransferExperience(attackerID, attackerTeam)
+    end
+
+    if leftSide:IsActiveClone(unitID) then
+        leftSide:RemoveActiveClone(unitID)
+    elseif rightSide:IsActiveClone(unitID) then
+        rightSide:RemoveActiveClone(unitID)
     end
 end
 
@@ -155,24 +144,21 @@ function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
 end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-    if unitTeam == leftSide.nullAI then
-        idleUnits[#idleUnits + 1] = {unit = unitID, side = leftSide}
-    elseif unitTeam == rightSide.nullAI then
-        idleUnits[#idleUnits + 1] = {unit = unitID, side = rightSide}
+    if leftSide:IsActiveClone(unitID) then
+        leftSide:AddIdleClone(unitID)
+    elseif rightSide:IsActiveClone(unitID) then
+        rightSide:AddIdleClone(unitID)
     end
 end
 
 -- Don't allow factories in center
 function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, facing)
     local ud = UnitDefs[unitDefID]
+    if ud.customParams.ismex then return true end
+
     if dataSet then
-        if x and x > 374 and x < 7817 then
-            if ud.isFactory or ud.isStaticBuilder then
-                return false
-            end
-            if ud.isBuilding and ud.maxWeaponRange and ud.maxWeaponRange >= 1200 then
-                return false
-            end
+        if x and x >= 384 and x <= 7817 and (ud.isBuilding or ud.isBuilder) then
+            return false
         end
         
         xsize = ud.xsize and tonumber(ud.xsize) / 4 or 1
@@ -181,8 +167,6 @@ function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, fa
         if Spring.GetGroundBlocked(x - xsize * gridSize, z - zsize * gridSize, x + (xsize-1) * gridSize, z + (zsize-1) * gridSize) ~= false then
             return false
         end
-    elseif ud.isTransport then
-        return false
     end
     return true
 end
@@ -194,7 +178,7 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
     if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
 
     if not x or x < 900 or x > 8192 - 900 then
-        if ud.isBuilder then
+        if ud.isBuilder or ud.customParams.canmove then
             return true
         end
         for i = 1, #validCommands do

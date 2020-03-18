@@ -19,7 +19,7 @@ unitDef = {
     [[jumpblackhole]],
     [[jumpskirm]],
     [[jumpassault]],
-    [[zwlimpet]],
+    [[amphbomb]],
     [[jumpaa]],
   },
 

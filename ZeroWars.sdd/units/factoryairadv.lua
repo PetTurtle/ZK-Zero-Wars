@@ -12,7 +12,7 @@ unitDef = {
   buildingGroundDecalType       = [[factoryplane_aoplane.dds]],
 
   buildoptions                  = {
-    [[zwfirefly]],
+    [[dronelight]],
     [[gunshipemp]],
     [[gunshipraid]],
     [[gunshipskirm]],
@@ -20,13 +20,12 @@ unitDef = {
     [[bomberriot]],
     [[gunshipaa]],
     [[planescout]],
-    [[zwviper]],
+    [[droneheavyslow]],
     [[gunshipheavyskirm]],
     [[gunshipkrow]],
     [[bomberheavy]],
-    [[zwkestrel]],
-    [[zweclipse]],
-    [[zwnebula]],
+    [[bomberstrike]],
+    [[nebula]],
   },
 
   buildPic                      = [[factoryplane.png]],

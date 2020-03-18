@@ -2,10 +2,15 @@ include("LuaRules/Configs/customcmds.h.lua")
 
 local custom_com_defs = include("LuaRules/Configs/custom_com_defs.lua")
 
-CustomCommanders = {}
+CustomCommanders = {comm_costs = {}}
 CustomCommanders.__index = CustomCommanders
 
-function CustomCommanders:new ()
+CustomCommanders.comm_costs[1] = 200
+for lvl = 2, 18 do
+    CustomCommanders.comm_costs[lvl] = CustomCommanders.comm_costs[lvl - 1] + 250 * (lvl - 1)
+end
+
+function CustomCommanders:new()
     local o = {}
     setmetatable(o, CustomCommanders)
     o.__index = self
@@ -17,15 +22,15 @@ function CustomCommanders:new ()
         o.custom_com_defs = custom_com_defs
         GG.custom_com_defs = custom_com_defs
     end
-    
+
     return o
 end
 
 local function callScript(unitID, funcName, args)
-	local func = Spring.UnitScript.GetScriptEnv(unitID)[funcName]
-	if func then
-		Spring.UnitScript.CallAsUnit(unitID, func, args)
-	end
+    local func = Spring.UnitScript.GetScriptEnv(unitID)[funcName]
+    if func then
+        Spring.UnitScript.CallAsUnit(unitID, func, args)
+    end
 end
 
 function CustomCommanders:TransferExperience(unitID, unitTeam)
@@ -34,41 +39,54 @@ function CustomCommanders:TransferExperience(unitID, unitTeam)
     local clone = self.commanders[unitTeam].clone
 
     if clone == unitID then
-        local level = Spring.GetUnitRulesParam(original, "level");
-        
+        local level = Spring.GetUnitRulesParam(original, "level")
 
-        if (xp >= level and level <= 16) then
-            local points = Spring.GetUnitRulesParam(original, "points");
-            Spring.SetUnitRulesParam(original, "level", level + 1)
+        while (xp >= level and level <= 16) do
+            xp = math.max(0, xp - level)
+            level = level + 1
+            Spring.SetUnitRulesParam(original, "level", level)
+            local points = Spring.GetUnitRulesParam(original, "points")
             Spring.SetUnitRulesParam(original, "points", points + 1)
-            Spring.SetUnitExperience(original, 0)
             callScript(original, "LevelUp")
 
             if self:HasClone(unitTeam) then
-                Spring.SetUnitExperience(clone, 0)
-                Spring.SetUnitRulesParam(clone, "level", level + 1)
+                Spring.SetUnitExperience(clone, xp)
+                Spring.SetUnitRulesParam(clone, "level", level)
                 callScript(clone, "LevelUp")
             end
-            
-        else
-            Spring.SetUnitExperience(original, xp)
         end
+        Spring.SetUnitExperience(original, xp)
         Spring.GiveOrderToUnit(original, CMD.FIRE_STATE, {2}, 0)
     end
 end
 
+function CustomCommanders:CalculateReward(attackerLvl, victimLvl)
+    local attackerCost = self.comm_costs[attackerLvl]
+    local victimCost = self.comm_costs[victimLvl]
+    return math.max(0, victimCost / attackerCost - 1.0)
+end
+
 function CustomCommanders:IsCommander(unitDefID)
-    if (UnitDefs[unitDefID].customParams.customcom) then return true end
+    if (UnitDefs[unitDefID].customParams.customcom) then
+        return true
+    end
     return false
 end
 
 function CustomCommanders:HasCommander(team)
-    if team and self.commanders[team] then return true end
+    if team and self.commanders[team] then
+        return true
+    end
     return false
 end
 
 function CustomCommanders:HasClone(team)
-    if self:HasCommander(team) and self.commanders[team].clone and Spring.GetUnitIsDead(self.commanders[team].clone) == false then return true end
+    if
+        self:HasCommander(team) and self.commanders[team].clone and
+            Spring.GetUnitIsDead(self.commanders[team].clone) == false
+     then
+        return true
+    end
     return false
 end
 
@@ -108,14 +126,16 @@ function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)
     Spring.SetUnitExperience(clone, Spring.GetUnitExperience(original))
 end
 
- -- process upgrade command
+-- process upgrade command
 function CustomCommanders:ProcessCommand(unitID, cmdID, cmdParams)
-    if cmdID ~= custom_com_defs.CMD_CUSTOM_UPGRADE then return false end
-   
-    local points = Spring.GetUnitRulesParam(unitID, "points");
+    if cmdID ~= custom_com_defs.CMD_CUSTOM_UPGRADE then
+        return false
+    end
+
+    local points = Spring.GetUnitRulesParam(unitID, "points")
     Spring.SetUnitRulesParam(unitID, "points", points - 1)
 
-    local path = "path"..cmdParams[1]
+    local path = "path" .. cmdParams[1]
     Spring.SetUnitRulesParam(unitID, path, Spring.GetUnitRulesParam(unitID, path) + 1)
     callScript(unitID, "Upgrade")
 
