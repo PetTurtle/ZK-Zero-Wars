@@ -56,6 +56,8 @@ function Clones:NewClones(clones, originals, frame)
 
         if antiairUnits[ud.unitname] then
             antiAir.units[#antiAir.units + 1] = clones[i]
+        elseif ud.canFly then
+            normal.units[#normal.units + 1] = clones[i]
         elseif mass > 1000 then
             heavy.units[#heavy.units + 1] = clones[i]
         elseif range >= 600 then
