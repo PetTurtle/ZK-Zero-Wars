@@ -25,7 +25,6 @@ unitDef = {
     [[gunshipkrow]],
     [[bomberheavy]],
     [[bomberstrike]],
-    [[hoverassault]],
     [[nebula]],
   },
 
