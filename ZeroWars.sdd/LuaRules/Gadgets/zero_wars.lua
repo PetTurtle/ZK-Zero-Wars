@@ -176,7 +176,7 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
     if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
 
     if not x or x < 900 or x > 8192 - 900 then
-        if ud.isBuilder then
+        if ud.isBuilder or ud.customParams.canmove then
             return true
         end
         for i = 1, #validCommands do
