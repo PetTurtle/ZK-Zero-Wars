@@ -155,13 +155,8 @@ end
 function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, facing)
     local ud = UnitDefs[unitDefID]
     if dataSet then
-        if x and x > 374 and x < 7817 then
-            if ud.isFactory or ud.isStaticBuilder then
-                return false
-            end
-            if ud.isBuilding and ud.maxWeaponRange and ud.maxWeaponRange >= 1200 then
-                return false
-            end
+        if x and x >= 384 and x <= 7817 and (ud.isBuilding or ud.isBuilder) then
+            return false
         end
         
         xsize = ud.xsize and tonumber(ud.xsize) / 4 or 1
@@ -170,8 +165,6 @@ function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, fa
         if Spring.GetGroundBlocked(x - xsize * gridSize, z - zsize * gridSize, x + (xsize-1) * gridSize, z + (zsize-1) * gridSize) ~= false then
             return false
         end
-    elseif ud.isTransport then
-        return false
     end
     return true
 end
