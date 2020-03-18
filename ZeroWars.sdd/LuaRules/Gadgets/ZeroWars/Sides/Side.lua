@@ -71,8 +71,9 @@ end
 function Side:Update(frame) 
     if self.cloner:Size() > 0 then
         local clones, originals = self.cloner:Deploy()
-        self.clones:NewClones(clones, originals)
+        self.clones:NewClones(clones, originals, frame)
     end
+    self.clones:ClearTimedOut(frame)
 end
 
 function Side:CloneNextPlatform()

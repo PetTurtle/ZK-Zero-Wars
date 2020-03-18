@@ -8,6 +8,7 @@ local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 
 local spCreateUnit = Spring.CreateUnit
+local spSetUnitNoSelect = Spring.SetUnitNoSelect
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGiveOrderArrayToUnitArray = Spring.GiveOrderArrayToUnitArray
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
@@ -54,6 +55,7 @@ function Cloner:Deploy()
         local clone = spCreateUnit(unitDefID, x + offset.x, 150, z + offset.y, self.faceDir, teamID)
         self:CopyUnitStates(units[i], clone)
         spGiveOrderToUnit(clone, CMD.FIGHT, {self.attackXPos, 128, z + offset.y}, {"alt"})
+        spSetUnitNoSelect(clone, true)
         clones[i] = clone
     end
 
