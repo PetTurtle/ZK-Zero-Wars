@@ -21,15 +21,10 @@ local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commander
 local dataSet = false
 
 local spawnTime = 800
-local maxSpawnsPerFrame = 12
-
 local leftSide
 local rightSide
-
 local customCommanders
 
-local updateTime = 60
-local idleUnits = {}
 local validCommands = {
     CMD.FIRE_STATE,
     CMD.MOVE_STATE,
@@ -76,20 +71,6 @@ local function OnStart()
     end
 end
 
-local function OnUpdateFrame(frame)
-    -- platformDeployer:ClearTimedOut(frame)
-    -- add attack order to idle units
-    for i = #idleUnits, 1, -1 do
-        if not Spring.GetUnitIsDead(idleUnits[i].unit) then
-            local cQueue = Spring.GetCommandQueue(idleUnits[i].unit, 1)
-            if cQueue and #cQueue == 0 then
-                Spring.GiveOrderToUnit(idleUnits[i].unit, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, idleUnits[i].side.attackXPos, 0, 1530}, {"alt"});
-            end
-        end
-        table.remove(idleUnits, i)
-    end
-end
-
 function gadget:Initialize()
     if Game.modShortName ~= "ZK" then
         gadgetHandler:RemoveGadget()
@@ -105,7 +86,6 @@ end
 
 function gadget:GameFrame(f)
     if f == 1 then OnStart() end
-    if f > 0 and f % updateTime == 0 then OnUpdateFrame(f) end
 
     leftSide:Update(f)
     rightSide:Update(f)
@@ -152,20 +132,11 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
         customCommanders:TransferExperience(attackerID, attackerTeam)
     end
 
-    -- if platformDeployer:IsActiveClone(unitID) then
-    --     local clone = platformDeployer:GetActiveClone(unitID)
-
-    --     -- transfer XP to original it it exists
-    --     if platformDeployer.cloneUnits[unitID] and platformDeployer.cloneUnits[unitID].original then
-    --         local original = platformDeployer.cloneUnits[unitID].original
-    --         if not GetUnitIsDead(original) then
-    --             Spring.SetUnitExperience(original, Spring.GetUnitExperience(original) + Spring.GetUnitExperience(unitID))
-    --         end
-    --     end
-
-    --     -- removed dead clone
-    --     -- platformDeployer:RemoveActiveClone(unitID)
-    -- end
+    if leftSide:IsActiveClone(unitID) then
+        leftSide:RemoveActiveClone(unitID)
+    elseif rightSide:IsActiveClone(unitID) then
+        rightSide:RemoveActiveClone(unitID)
+    end
 end
 
 function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
@@ -173,13 +144,11 @@ function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
 end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-    -- if platformDeployer:IsActiveClone(unitID) then
-    --     if leftSide:HasTeam(unitTeam) then
-    --         idleUnits[#idleUnits + 1] = {unit = unitID, side = leftSide}
-    --     elseif rightSide:HasTeam(unitTeam) then
-    --         idleUnits[#idleUnits + 1] = {unit = unitID, side = rightSide}
-    --     end
-    -- end
+    if leftSide:IsActiveClone(unitID) then
+        leftSide:AddIdleClone(unitID)
+    elseif rightSide:IsActiveClone(unitID) then
+        rightSide:AddIdleClone(unitID)
+    end
 end
 
 -- Don't allow factories in center

@@ -47,7 +47,7 @@ function Clones:NewClones(clones, originals, frame)
     local antiAir = {units = {}, frame = frame}
 
     for i = 1, #clones do
-        self.clones[clones[i]] = {clones = clones[i], originals = originals[i]}
+        self.clones[clones[i]] = {clone = clones[i], original = originals[i]}
 
         local unitDefID = Spring.GetUnitDefID(clones[i])
         local ud = UnitDefs[unitDefID]
@@ -86,16 +86,33 @@ function Clones:NewClones(clones, originals, frame)
     end
 end
 
-function Clones:ClearUnitType(unitType, timeout, frame)
-    while #unitType > 0 and unitType[1].frame + timeout < frame do
-        Spring.Echo("Clearing Started".. frame)
-        local units = unitType[1].units
-        for i = 1, #units do
-            if not Spring.GetUnitIsDead(units[i]) then
-                Spring.DestroyUnit(units[i], false, true)
+function Clones:IsActiveClone(unitID)
+    if self.clones[unitID] then return true end
+    return false
+end
+
+function Clones:RemoveActiveClone(unitID)
+    local original = self.clones[unitID].original;
+    if not Spring.GetUnitIsDead(original) then
+        Spring.SetUnitExperience(original, Spring.GetUnitExperience(original) + Spring.GetUnitExperience(unitID))
+    end
+    table.remove(self.clones, unitID)
+end
+
+function Clones:AddIdle(unitID)
+    self.idle[#self.idle + 1] = unitID
+end
+
+function Clones:CommandIdles(attackXPos)
+    while #self.idle > 0 do
+        if not Spring.GetUnitIsDead(self.idle[1]) then
+            local cQueue = Spring.GetCommandQueue(self.idle[1], 1)
+            if cQueue and #cQueue == 0 then
+                local x, y, z = Spring.GetUnitPosition(self.idle[1]) 
+                Spring.GiveOrderToUnit(self.idle[1], CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, attackXPos, 0, z}, {"alt"});
             end
         end
-        table.remove(unitType, 1)
+        table.remove(self.idle, 1)
     end
 end
 
@@ -105,6 +122,22 @@ function Clones:ClearTimedOut(frame)
     self:ClearUnitType(self.timeout.skirm, skirmTimeout, frame)
     self:ClearUnitType(self.timeout.arty, artyTimeout, frame)
     self:ClearUnitType(self.timeout.antiAir, antiairTimeout, frame)
+end
+
+------------------------------
+-- Private Functions
+------------------------------
+
+function Clones:ClearUnitType(unitType, timeout, frame)
+    while #unitType > 0 and unitType[1].frame + timeout < frame do
+        local units = unitType[1].units
+        for i = 1, #units do
+            if not Spring.GetUnitIsDead(units[i]) then
+                Spring.DestroyUnit(units[i], false, true)
+            end
+        end
+        table.remove(unitType, 1)
+    end
 end
 
 return Clones

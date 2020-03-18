@@ -74,6 +74,7 @@ function Side:Update(frame)
         self.clones:NewClones(clones, originals, frame)
     end
     self.clones:ClearTimedOut(frame)
+    self.clones:CommandIdles(self.attackXPos)
 end
 
 function Side:CloneNextPlatform()
@@ -117,6 +118,18 @@ function Side:RemoveTeam(teamID)
             table.remove(self.platforms, platID)
         end
     end
+end
+
+function Side:IsActiveClone(unitID)
+    return self.clones:IsActiveClone(unitID)
+end
+
+function Side:RemoveActiveClone(unitID)
+    self.clones:RemoveActiveClone(unitID)
+end
+
+function Side:AddIdleClone(unitID)
+    return self.clones:AddIdle(unitID)
 end
 
 return Side
