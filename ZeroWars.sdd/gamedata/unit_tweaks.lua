@@ -167,6 +167,9 @@ local unit_tweaks = {
         collisionVolumeOffsets = [[0 10 0]],
         collisionVolumeScales = [[92 120 92]],
         customparams = {modelradius = [[40]]}
+    },
+    staticrearm = {
+        workerTime = 30
     }
 }
 
