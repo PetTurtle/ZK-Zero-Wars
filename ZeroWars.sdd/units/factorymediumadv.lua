@@ -23,7 +23,6 @@ unitDef = {
     [[shieldfelon]],
     [[shieldshield]],
     [[amphassault]],
-    [[jumparty]],
     [[hoverarty]],
     [[striderdante]],
   },
