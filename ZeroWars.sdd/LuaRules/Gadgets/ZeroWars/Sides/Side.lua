@@ -1,5 +1,5 @@
-local Cloner = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Cloner.lua")
-local Clones = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Clones.lua")
+local Cloner = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Platform/Cloner.lua")
+local Clones = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Platform/Clones.lua")
 
 local spGetTeamList = Spring.GetTeamList
 local spGetTeamLuaAI = Spring.GetTeamLuaAI

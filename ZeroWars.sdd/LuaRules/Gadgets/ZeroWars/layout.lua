@@ -1,5 +1,5 @@
 local Rect = VFS.Include("LuaRules/Gadgets/ZeroWars/Rect.lua")
-local Platform = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Platform.lua")
+local Platform = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Platform/Platform.lua")
 
 local mapWidth = Game.mapSizeX
 local mapHeight = Game.mapSizeZ

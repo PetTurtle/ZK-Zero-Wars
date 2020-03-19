@@ -51,7 +51,6 @@ end
 
 function Cloner:Deploy()
     local deployGroup = table.remove(self.queue, 1)
-
     local clones = {}
     local units = deployGroup.units
     local platform = deployGroup.platform
@@ -64,7 +63,6 @@ function Cloner:Deploy()
         local clone = spCreateUnit(unitDefID, x + offset.x, 150, z + offset.y, self.faceDir, teamID)
         self:CopyUnitStates(units[i], clone)
         spGiveOrderToUnit(clone, CMD.FIGHT, {self.attackXPos, 128, z + offset.y}, {"alt"})
-        spSetUnitNoSelect(clone, true)
         clones[i] = clone
     end
 
@@ -74,6 +72,10 @@ end
 function Cloner:Size()
     return #self.queue
 end
+
+------------------------------
+-- Private Functions
+------------------------------
 
 function Cloner:SubsetClones(clones, from, to)
     local subset = {}
