@@ -190,7 +190,7 @@ end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, playerID, fromSynced, fromLua)
     if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
-    if Spring.GetUnitRulesParam(unitID, "clone") then return false end
+    if cmdID ~= 50 and cmdID ~= 1 and cmdID ~= 2 and Spring.GetUnitRulesParam(unitID, "clone") then return false end
     return true
 end
 

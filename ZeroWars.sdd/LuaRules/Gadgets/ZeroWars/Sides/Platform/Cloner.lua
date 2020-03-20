@@ -62,7 +62,7 @@ function Cloner:Deploy()
         local x, y, z = spGetUnitPosition(units[i])  
         local clone = spCreateUnit(unitDefID, x + offset.x, 150, z + offset.y, self.faceDir, teamID)
         self:CopyUnitStates(units[i], clone)
-        spGiveOrderToUnit(clone, CMD.FIGHT, {self.attackXPos, 128, z + offset.y}, {"alt"})
+        spGiveOrderToUnit(clone, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, self.attackXPos, 128, z + offset.y}, {"alt"});
         clones[i] = clone
     end
 

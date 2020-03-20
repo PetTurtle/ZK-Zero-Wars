@@ -30,29 +30,3 @@ function widget:Initialize()
 	Chili = WG.Chili
 	if (not Chili) then widgetHandler:RemoveWidget() return end
 end
-
--- function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
-
--- 	local invalidCommand = true
--- 	for i = 1, #validCommands do
--- 		if (validCommands[i] == cmdID) then
--- 			invalidCommand = false
--- 		end
--- 	end
--- 	-- remove my team local units from selection
--- 	if invalidCommand then
--- 		Spring.Echo("InvalidCommand")
--- 		local myTeamID = Spring.GetMyTeamID()
--- 		local selectedUnits = Spring.GetSelectedUnits()
--- 		for i = 1, #selectedUnits do
--- 			if Spring.GetUnitTeam(selectedUnits[i]) == myTeamID and Spring.GetUnitRulesParam(selectedUnits[i], "clone") then
--- 				Spring.Echo("Cmd canceled")
--- 				return true
--- 			end
--- 		end
--- 	else
--- 		Spring.Echo("ValidCommand ".. cmdID)
--- 	end
-	
--- 	return false
--- end
