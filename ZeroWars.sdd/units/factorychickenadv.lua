@@ -18,6 +18,7 @@ unitDef = {
       [[chicken_spidermonkey]],
       [[chickenr]],
       [[chicken_dodo]],
+      [[chickenf]],
       [[chickenc]],
 
       [[chickena]],

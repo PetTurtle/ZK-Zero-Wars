@@ -60,9 +60,9 @@ local unit_tweaks = {
         buildtime = 800
     },
     chickenf = {
-        buildcostmetal = 600,
-        buildcostenergy = 600,
-        buildtime = 600,
+        buildcostmetal = 500,
+        buildcostenergy = 500,
+        buildtime = 500,
         footprintX = 3,
         footprintZ = 3
     },
