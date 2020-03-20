@@ -12,7 +12,7 @@ local unit_tweaks = {
         buildcostmetal = 80,
         buildcostenergy = 80,
         buildtime = 80,
-        footprintX = 1,
+        footprintX = 2,
         footprintZ = 2
     },
     chicken_leaper = {
@@ -38,28 +38,21 @@ local unit_tweaks = {
         buildtime = 400
     },
     chicken_dodo = {
-        buildcostmetal = 120,
-        buildcostenergy = 120,
-        buildtime = 120,
+        buildcostmetal = 200,
+        buildcostenergy = 200,
+        buildtime = 200,
         footprintX = 3,
-        footprintZ = 3
-    },
-    chicken_pigeon = {
-        buildcostmetal = 75,
-        buildcostenergy = 75,
-        buildtime = 75,
-        footprintX = 3,
-        footprintZ = 2
+        footprintZ = 3,
     },
     chickena = {
-        buildcostmetal = 380,
-        buildcostenergy = 380,
-        buildtime = 380
+        buildcostmetal = 800,
+        buildcostenergy = 800,
+        buildtime = 800
     },
     chickenc = {
-        buildcostmetal = 520,
-        buildcostenergy = 520,
-        buildtime = 520
+        buildcostmetal = 750,
+        buildcostenergy = 750,
+        buildtime = 750
     },
     chicken_roc = {
         buildcostmetal = 800,
@@ -67,19 +60,19 @@ local unit_tweaks = {
         buildtime = 800
     },
     chickenf = {
-        buildcostmetal = 340,
-        buildcostenergy = 340,
-        buildtime = 340,
+        buildcostmetal = 600,
+        buildcostenergy = 600,
+        buildtime = 600,
         footprintX = 3,
         footprintZ = 3
     },
     chicken_blimpy = {
-        buildcostmetal = 400,
-        buildcostenergy = 400,
-        buildtime = 400,
+        buildcostmetal = 500,
+        buildcostenergy = 500,
+        buildtime = 500,
         turnRate = 3000,
         turnRadius = 450,
-        weaponDefs = {DODOBOMB = {reloadtime = 8}},
+        weaponDefs = {DODOBOMB = {reloadtime = 4}},
         footprintX = 3,
         footprintZ = 3
     },
@@ -94,20 +87,20 @@ local unit_tweaks = {
         buildtime = 410
     },
     chickenr = {
-        buildcostmetal = 180,
-        buildcostenergy = 180,
-        buildtime = 180,
+        buildcostmetal = 350,
+        buildcostenergy = 350,
+        buildtime = 350,
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_shield = {
-        buildcostmetal = 1200,
-        buildcostenergy = 1200,
-        buildtime = 1200
+        buildcostmetal = 2500,
+        buildcostenergy = 2500,
+        buildtime = 2500
     },
     chicken_tiamat = {
-        buildcostmetal = 2800,
-        buildcostenergy = 2800,
-        buildtime = 2800
+        buildcostmetal = 4500,
+        buildcostenergy = 4500,
+        buildtime = 4500
     },
     chickenblobber = {
         buildcostmetal = 1300,
