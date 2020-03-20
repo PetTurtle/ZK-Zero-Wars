@@ -15,10 +15,10 @@ unitDef = {
     buildoptions                  = {
       [[chicken]],
       [[chickens]],
-      [[chicken_dodo]],
       [[chicken_spidermonkey]],
-      [[chickenf]],
       [[chickenr]],
+      [[chicken_dodo]],
+      [[chickenc]],
     },
   
     buildPic                      = [[chickenbroodqueen.png]],
