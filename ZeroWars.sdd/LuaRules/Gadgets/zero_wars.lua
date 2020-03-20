@@ -26,21 +26,6 @@ local leftSide
 local rightSide
 local customCommanders
 
-local validCommands = {
-    CMD_UNIT_AI = true,
-    CMD_AIR_STRAFE = true,
-    CMD_PUSH_PULL = true,
-    CMD_AP_FLY_STATE = true,
-    CMD_UNIT_BOMBER_DIVE_STATE = true,
-    CMD_AP_FLY_STATE = true,
-}
-validCommands[CMD.FIRE_STATE] = true
-validCommands[CMD.MOVE_STATE] = true
-validCommands[CMD.REPEAT] = true
-validCommands[CMD.CLOAK] = true
-validCommands[CMD.ONOFF] = true
-validCommands[CMD.TRAJECTORY] = true
-
 local function IteratePlatform(side, frame, faceDir)
     side:CloneNextPlatform()
     local platform = side.platforms[(side.iterator % #side.platforms) + 1]
@@ -175,13 +160,6 @@ function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, fa
 
     if dataSet then
         if x and x >= 384 and x <= 7817 and (ud.isBuilding or ud.isBuilder) then
-            return false
-        end
-        
-        xsize = ud.xsize and tonumber(ud.xsize) / 4 or 1
-        zsize = ud.zsize and tonumber(ud.zsize) / 4 or 1
-        local gridSize = 16
-        if Spring.GetGroundBlocked(x - xsize * gridSize, z - zsize * gridSize, x + (xsize-1) * gridSize, z + (zsize-1) * gridSize) ~= false then
             return false
         end
     end
