@@ -4,20 +4,7 @@ local heavyTimeout = 7000 -- 3.88m
 local normalTimeout = 5000 -- 2.77m 
 local skirmTimeout = 4000 -- 2.22m
 local artyTimeout = 4000 -- 2.22m
-local antiairTimeout = 200 -- 2.00m
-
-local antiairUnits = {
-    amphaa = true,
-    gunshipaa = true,
-    hoveraa = true,
-    jumpaa = true,
-    planeheavyfighter = true,
-    shieldaa = true,
-    shipaa = true,
-    spideraa = true,
-    tankaa = true,
-    vehaa = true
-}
+local antiairTimeout = 1800 -- 1.00m
 
 Clones = {}
 Clones.__index = Clones
@@ -56,7 +43,7 @@ function Clones:NewClones(clones, originals, frame)
         local range = ud.maxWeaponRange
         local mass = Spring.GetUnitMass(clones[i])
 
-        if antiairUnits[ud.unitname] then
+        if not ud.weapons[1].onlyTargets.land then
             antiAir.units[#antiAir.units + 1] = clones[i]
         elseif ud.canFly then
             normal.units[#normal.units + 1] = clones[i]
