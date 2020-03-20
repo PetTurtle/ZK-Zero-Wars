@@ -53,8 +53,9 @@ function Side:Deploy()
     local sideUnits = self.layout.buildings
     for i = 1, #sideUnits do
         local unit = spCreateUnit(sideUnits[i].unitName, sideUnits[i].x, 10000, sideUnits[i].z, sideUnits[i].dir, self.teamList[1])
-        spSetUnitBlocking(unit, false)
-        Spring.SetUnitNoSelect(unit, sideUnits[i].noSelectable)
+        spSetUnitBlocking(unit, false, false)
+        Spring.SetUnitNoSelect(unit, sideUnits[i].noSelectable or false)
+        Spring.SetUnitNeutral(unit, sideUnits[i].neutral or false)
 
         if sideUnits[i].unitName == "baseturret" then
             self.baseId = unit

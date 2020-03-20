@@ -45,23 +45,23 @@ rightSide.deployRect = Rect:new(6144, 1152, platWidth, platHeight)
 ----------------------------------
 
 leftSide.buildings = {
-    {unitName = "baseturret", x = 2496, z = 1530, dir = "e", noSelectable = false},
-    {unitName = "centerturret", x = 3264, z = 1530, dir = "e", noSelectable = false},
-    {unitName = "staticrearm", x = 1550, z = 1226, dir = "e", noSelectable = true},
-    {unitName = "staticrearm", x = 1550, z = 1386, dir = "e", noSelectable = true},
-    {unitName = "staticrearm", x = 1550, z = 1529, dir = "e", noSelectable = true},
-    {unitName = "staticrearm", x = 1550, z = 1703, dir = "e", noSelectable = true},
-    {unitName = "staticrearm", x = 1550, z = 1848, dir = "e", noSelectable = true}
+    {unitName = "baseturret", x = 2496, z = 1530, dir = "e"},
+    {unitName = "centerturret", x = 3264, z = 1530, dir = "e"},
+    {unitName = "staticrearm", x = 1550, z = 1226, dir = "e", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 1550, z = 1386, dir = "e", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 1550, z = 1529, dir = "e", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 1550, z = 1703, dir = "e", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 1550, z = 1848, dir = "e", noSelectable = true, neutral = true}
 }
 
 rightSide.buildings = {
-    {unitName = "baseturret", x = 5696, z = 1530, dir = "w", noSelectable = false},
-    {unitName = "centerturret", x = 4930, z = 1530, dir = "w", noSelectable = false},
-    {unitName = "staticrearm", x = 6641, z = 1226, dir = "w", noSelectable = true},
-    {unitName = "staticrearm", x = 6641, z = 1386, dir = "w", noSelectable = true},
-    {unitName = "staticrearm", x = 6641, z = 1529, dir = "w", noSelectable = true},
-    {unitName = "staticrearm", x = 6641, z = 1703, dir = "w", noSelectable = true},
-    {unitName = "staticrearm", x = 6641, z = 1848, dir = "w", noSelectable = true}
+    {unitName = "baseturret", x = 5696, z = 1530, dir = "w"},
+    {unitName = "centerturret", x = 4930, z = 1530, dir = "w"},
+    {unitName = "staticrearm", x = 6641, z = 1226, dir = "w", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 6641, z = 1386, dir = "w", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 6641, z = 1529, dir = "w", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 6641, z = 1703, dir = "w", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 6641, z = 1848, dir = "w", noSelectable = true, neutral = true}
 }
 
 ----------------------------------
