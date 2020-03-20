@@ -1,4 +1,5 @@
 include("LuaRules/Configs/customcmds.h.lua")
+local Queue = VFS.Include("LuaRules/Gadgets/ZeroWars/Data/Queue.lua")
 
 local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitDefID = Spring.GetUnitDefID
@@ -22,47 +23,56 @@ function Cloner:Create(deployRect, faceDir, attackXPos)
     setmetatable(o, Cloner)
     o.deployRect = deployRect
     o.faceDir = faceDir
-    o.queue = {}
     o.attackXPos = attackXPos
     o.spawnAmount = 12
+    o.queue = Queue:New()
     return o
 end
 
 function Cloner:Add(platform)
     local units = platform:GetUnits()
-    
-    if not units then return end
+
+    if not units then
+        return
+    end
     for i = #units, 1, -1 do
         local buildProgress = select(5, spGetUnitHealth(units[i]))
         if buildProgress ~= 1 then
             table.remove(units, i)
         end
     end
-    if not units then return end
+    if not units then
+        return
+    end
 
-    while(#units > 0) do
+    while (#units > 0) do
         local deployGroup = {
             units = self:SubsetClones(units, 1, math.min(self.spawnAmount, #units)),
             platform = platform
         }
-        self.queue[#self.queue + 1] = deployGroup
+        self.queue:PushLeft(deployGroup)
     end
 end
 
 function Cloner:Deploy()
-    local deployGroup = table.remove(self.queue, 1)
+    local deployGroup = self.queue:PopRight()
     local clones = {}
     local units = deployGroup.units
     local platform = deployGroup.platform
     local offset = platform.rect:GetPosOffset(self.deployRect)
     local teamID = spGetUnitTeam(units[1])
-        
+
     for i = 1, #units do
         local unitDefID = spGetUnitDefID(units[i])
-        local x, y, z = spGetUnitPosition(units[i])  
+        local x, y, z = spGetUnitPosition(units[i])
         local clone = spCreateUnit(unitDefID, x + offset.x, 150, z + offset.y, self.faceDir, teamID)
         self:CopyUnitStates(units[i], clone)
-        spGiveOrderToUnit(clone, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, self.attackXPos, 128, z + offset.y}, {"alt"});
+        spGiveOrderToUnit(
+            clone,
+            CMD.INSERT,
+            {-1, CMD.FIGHT, CMD.OPT_SHIFT, self.attackXPos, 128, z + offset.y},
+            {"alt"}
+        )
         clones[i] = clone
     end
 
@@ -70,7 +80,7 @@ function Cloner:Deploy()
 end
 
 function Cloner:Size()
-    return #self.queue
+    return self.queue:Size()
 end
 
 ------------------------------
@@ -90,14 +100,17 @@ end
 
 function Cloner:CopyUnitStates(original, clone)
     local states = spGetUnitStates(original)
-    spGiveOrderArrayToUnitArray({ clone }, {
-        { CMD.FIRE_STATE, { states.firestate },             { } },
-        { CMD.MOVE_STATE, { states.movestate },             { } },
-        { CMD.REPEAT,     { states["repeat"] and 1 or 0 },  { } },
-        { CMD.CLOAK,      { states.cloak     and 1 or 0 },  { } },
-        { CMD.ONOFF,      { 1 },                            { } },
-        { CMD.TRAJECTORY, { states.trajectory and 1 or 0 }, { } },
-    })
+    spGiveOrderArrayToUnitArray(
+        {clone},
+        {
+            {CMD.FIRE_STATE, {states.firestate}, {}},
+            {CMD.MOVE_STATE, {states.movestate}, {}},
+            {CMD.REPEAT, {states["repeat"] and 1 or 0}, {}},
+            {CMD.CLOAK, {states.cloak and 1 or 0}, {}},
+            {CMD.ONOFF, {1}, {}},
+            {CMD.TRAJECTORY, {states.trajectory and 1 or 0}, {}}
+        }
+    )
 
     self:CopyUnitState(original, clone, CMD_UNIT_AI)
     self:CopyUnitState(original, clone, CMD_AIR_STRAFE)
