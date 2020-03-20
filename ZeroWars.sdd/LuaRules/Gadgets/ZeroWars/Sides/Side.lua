@@ -15,9 +15,10 @@ Side = {}
 Side.__index = Side
 
 -- side : side of map "left", "right"
-function Side:new(allyID, layout)
+function Side:new(allyID, layout, side)
     local o = {}
     setmetatable(o, Side)
+    o.side = side
     o.allyID = allyID
     o.teamList = spGetTeamList(allyID)
     o.layout = layout
@@ -29,7 +30,7 @@ function Side:new(allyID, layout)
     o.turretId = -1
     o.iterator = 0
     o.cloner = Cloner:Create(o.deployRect, o.faceDir, o.attackXPos)
-    o.clones = Clones:Create()
+    o.clones = Clones:Create(side)
 
     -- assign teams to platforms
     for i = 1, #o.teamList do
@@ -122,10 +123,6 @@ end
 
 function Side:IsActiveClone(unitID)
     return self.clones:IsActiveClone(unitID)
-end
-
-function Side:RemoveActiveClone(unitID)
-    self.clones:RemoveActiveClone(unitID)
 end
 
 function Side:AddIdleClone(unitID)

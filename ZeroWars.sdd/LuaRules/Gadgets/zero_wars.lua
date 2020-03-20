@@ -21,24 +21,27 @@ local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commander
 local dataSet = false
 
 local spawnTime = 800
+local sides = {}
 local leftSide
 local rightSide
 local customCommanders
 
+
+
 local validCommands = {
-    CMD.FIRE_STATE,
-    CMD.MOVE_STATE,
-    CMD.REPEAT,
-    CMD.CLOAK,
-    CMD.ONOFF,
-    CMD.TRAJECTORY,
-    CMD_UNIT_AI,
-    CMD_AIR_STRAFE,
-    CMD_PUSH_PULL,
-    CMD_AP_FLY_STATE,
-    CMD_UNIT_BOMBER_DIVE_STATE,
-    CMD_AP_FLY_STATE,
+    CMD_UNIT_AI = true,
+    CMD_AIR_STRAFE = true,
+    CMD_PUSH_PULL = true,
+    CMD_AP_FLY_STATE = true,
+    CMD_UNIT_BOMBER_DIVE_STATE = true,
+    CMD_AP_FLY_STATE = true,
 }
+validCommands[CMD.FIRE_STATE] = true
+validCommands[CMD.MOVE_STATE] = true
+validCommands[CMD.REPEAT] = true
+validCommands[CMD.CLOAK] = true
+validCommands[CMD.ONOFF] = true
+validCommands[CMD.TRAJECTORY] = true
 
 local function IteratePlatform(side, frame, faceDir)
     side:CloneNextPlatform()
@@ -79,8 +82,11 @@ function gadget:Initialize()
 
     -- set sides
     local allyTeamList = Spring.GetAllyTeamList()
-    leftSide = Side:new(allyTeamList[1], leftLayout)
-    rightSide = Side:new(allyTeamList[2], rightLayout)
+    leftSide = Side:new(allyTeamList[1], leftLayout, "left")
+    rightSide = Side:new(allyTeamList[2], rightLayout, "right")
+    sides["left"] = leftSide
+    sides["right"] = rightSide
+
     customCommanders = CustomCommanders:new()
 end
 
@@ -132,10 +138,11 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
         customCommanders:TransferExperience(attackerID, attackerTeam)
     end
 
-    if leftSide:IsActiveClone(unitID) then
-        leftSide:RemoveActiveClone(unitID)
-    elseif rightSide:IsActiveClone(unitID) then
-        rightSide:RemoveActiveClone(unitID)
+    -- transfer clone experience
+    local isClone = Spring.GetUnitRulesParam(unitID, "clone")
+    local original = Spring.GetUnitRulesParam(unitID, "original")
+    if isClone and original and not Spring.GetUnitIsDead(original) then
+        Spring.SetUnitExperience(original, Spring.GetUnitExperience(unitID))
     end
 end
 
@@ -144,10 +151,9 @@ function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
 end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-    if leftSide:IsActiveClone(unitID) then
-        leftSide:AddIdleClone(unitID)
-    elseif rightSide:IsActiveClone(unitID) then
-        rightSide:AddIdleClone(unitID)
+    local side = Spring.GetUnitRulesParam(unitID, "side")
+    if side then
+        sides[side]:AddIdleClone(unitID)
     end
 end
 
@@ -172,22 +178,17 @@ function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, fa
 end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, playerID, fromSynced, fromLua)
-    local x, y, z = Spring.GetUnitPosition(unitID)
-    local ud = UnitDefs[unitDefID]
-
     if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
 
+    if Spring.GetUnitRulesParam(unitID, "clone") then return false end
+
+    local x, y, z = Spring.GetUnitPosition(unitID)
     if not x or x < 900 or x > 8192 - 900 then
-        if ud.isBuilder or ud.customParams.canmove then
-            return true
-        end
-        for i = 1, #validCommands do
-            if (validCommands[i] == cmdID) then
-                return true
-            end
-        end
+        local ud = UnitDefs[unitDefID]
+        if ud.isBuilder or ud.customParams.canmove or validCommands[cmdID] then return true end
         return false
     end
+
     return true
 end
 
