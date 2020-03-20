@@ -26,8 +26,6 @@ local leftSide
 local rightSide
 local customCommanders
 
-
-
 local validCommands = {
     CMD_UNIT_AI = true,
     CMD_AIR_STRAFE = true,
