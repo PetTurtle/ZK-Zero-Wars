@@ -37,7 +37,7 @@ function Cloner:Add(platform)
     end
     for i = #units, 1, -1 do
         local buildProgress = select(5, spGetUnitHealth(units[i]))
-        if buildProgress ~= 1 then
+        if buildProgress < 1.0 then
             table.remove(units, i)
         end
     end
