@@ -8,7 +8,7 @@ local mapinfo = {
 	shortname   = "zwars",
 	description = "made for zero-k",
 	author      = "petturtle",
-	version     = "v1.54",
+	version     = "v1.55",
 	--mutator   = "deployment";
 	--mapfile   = "", --// location of smf/sm3 file (optional)
 	modtype     = 3, --// 1=primary, 0=hidden, 3=map

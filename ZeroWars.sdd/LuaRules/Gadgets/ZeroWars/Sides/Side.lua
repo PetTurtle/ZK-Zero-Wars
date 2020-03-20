@@ -1,5 +1,5 @@
-local Cloner = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Cloner.lua")
-local Clones = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Clones.lua")
+local Cloner = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Platform/Cloner.lua")
+local Clones = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Platform/Clones.lua")
 
 local spGetTeamList = Spring.GetTeamList
 local spGetTeamLuaAI = Spring.GetTeamLuaAI
@@ -15,9 +15,10 @@ Side = {}
 Side.__index = Side
 
 -- side : side of map "left", "right"
-function Side:new(allyID, layout)
+function Side:new(allyID, layout, side)
     local o = {}
     setmetatable(o, Side)
+    o.side = side
     o.allyID = allyID
     o.teamList = spGetTeamList(allyID)
     o.layout = layout
@@ -29,7 +30,7 @@ function Side:new(allyID, layout)
     o.turretId = -1
     o.iterator = 0
     o.cloner = Cloner:Create(o.deployRect, o.faceDir, o.attackXPos)
-    o.clones = Clones:Create()
+    o.clones = Clones:Create(side)
 
     -- assign teams to platforms
     for i = 1, #o.teamList do
@@ -52,8 +53,9 @@ function Side:Deploy()
     local sideUnits = self.layout.buildings
     for i = 1, #sideUnits do
         local unit = spCreateUnit(sideUnits[i].unitName, sideUnits[i].x, 10000, sideUnits[i].z, sideUnits[i].dir, self.teamList[1])
-        spSetUnitBlocking(unit, false)
-        Spring.SetUnitNoSelect(unit, sideUnits[i].noSelectable)
+        spSetUnitBlocking(unit, false, false)
+        Spring.SetUnitNoSelect(unit, sideUnits[i].noSelectable or false)
+        Spring.SetUnitNeutral(unit, sideUnits[i].neutral or false)
 
         if sideUnits[i].unitName == "baseturret" then
             self.baseId = unit
@@ -122,10 +124,6 @@ end
 
 function Side:IsActiveClone(unitID)
     return self.clones:IsActiveClone(unitID)
-end
-
-function Side:RemoveActiveClone(unitID)
-    self.clones:RemoveActiveClone(unitID)
 end
 
 function Side:AddIdleClone(unitID)

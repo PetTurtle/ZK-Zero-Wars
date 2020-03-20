@@ -4,28 +4,15 @@ local heavyTimeout = 7000 -- 3.88m
 local normalTimeout = 5000 -- 2.77m 
 local skirmTimeout = 4000 -- 2.22m
 local artyTimeout = 4000 -- 2.22m
-local antiairTimeout = 3600 -- 2.00m
-
-local antiairUnits = {
-    amphaa = true,
-    gunshipaa = true,
-    hoveraa = true,
-    jumpaa = true,
-    planeheavyfighter = true,
-    shieldaa = true,
-    shipaa = true,
-    spideraa = true,
-    tankaa = true,
-    vehaa = true
-}
+local antiairTimeout = 1800 -- 1.00m
 
 Clones = {}
 Clones.__index = Clones
 
-function Clones:Create()
+function Clones:Create(side)
     local o = {}
     setmetatable(o, Clones)
-    o.clones = {}
+    o.side = side
     o.idle = {}
     o.timeout = {
         normal = {},
@@ -47,14 +34,16 @@ function Clones:NewClones(clones, originals, frame)
     local antiAir = {units = {}, frame = frame}
 
     for i = 1, #clones do
-        self.clones[clones[i]] = {clone = clones[i], original = originals[i]}
+        Spring.SetUnitRulesParam(clones[i], "clone", 1)
+        Spring.SetUnitRulesParam(clones[i], "original", originals[i])
+        Spring.SetUnitRulesParam(clones[i], "side", self.side)
 
         local unitDefID = Spring.GetUnitDefID(clones[i])
         local ud = UnitDefs[unitDefID]
         local range = ud.maxWeaponRange
         local mass = Spring.GetUnitMass(clones[i])
 
-        if antiairUnits[ud.unitname] then
+        if ud.weapons[1] and not ud.weapons[1].onlyTargets.land then
             antiAir.units[#antiAir.units + 1] = clones[i]
         elseif ud.canFly then
             normal.units[#normal.units + 1] = clones[i]
@@ -89,16 +78,8 @@ function Clones:NewClones(clones, originals, frame)
 end
 
 function Clones:IsActiveClone(unitID)
-    if self.clones[unitID] then return true end
+    if not Spring.GetUnitIsDead(original) and Spring.GetUnitRulesParam(unitID, "clone") then return true end
     return false
-end
-
-function Clones:RemoveActiveClone(unitID)
-    local original = self.clones[unitID].original;
-    if not Spring.GetUnitIsDead(original) and not Spring.GetUnitIsDead(unitID) then
-        Spring.SetUnitExperience(original, Spring.GetUnitExperience(original) + Spring.GetUnitExperience(unitID))
-    end
-    table.remove(self.clones, unitID)
 end
 
 function Clones:AddIdle(unitID)

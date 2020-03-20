@@ -24,6 +24,7 @@ unitDef = {
       [[cloakjammer]],
       [[striderscorpion]],
       [[cloaksnipe]],
+      [[shieldarty]],
       [[striderantiheavy]],
     },
   

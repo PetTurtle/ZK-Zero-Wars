@@ -38,6 +38,8 @@ function CustomCommanders:TransferExperience(unitID, unitTeam)
     local original = self.commanders[unitTeam].original
     local clone = self.commanders[unitTeam].clone
 
+    if Spring.GetUnitIsDead(unitID) or not original or Spring.GetUnitIsDead(original) then return end
+
     if clone == unitID then
         local level = Spring.GetUnitRulesParam(original, "level")
 
@@ -100,8 +102,6 @@ function CustomCommanders:SetOriginal(unitID, unitTeam)
     Spring.SetUnitRulesParam(unitID, "path4", 0)
     Spring.SetUnitRulesParam(unitID, "original", 1)
     callScript(unitID, "LevelUp")
-    Spring.SetUnitResourcing(unitID, "umm", 6)
-    Spring.SetUnitResourcing(unitID, "ume", 6)
 end
 
 function CustomCommanders:SpawnClone(unitTeam, x, y, faceDir, attackXPos)

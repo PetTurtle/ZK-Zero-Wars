@@ -1,8 +1,6 @@
-
-
 function widget:GetInfo() return {
-	name      = "Zero Wars Data Display",
-	desc      = "displays zero wars data.",
+	name      = "Custom Commander",
+	desc      = "displays custom commander upgrades.",
 	author    = "petturtle",
 	date      = "2020",
 	license   = "GNU GPL, v2 or later",
@@ -241,25 +239,6 @@ function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
 			UpdateUI(comID, ud)
 		end
 	end
-
-	-- local units = Spring.GetSelectedUnits()
-	-- for i = 1, #units do
-	-- 	local ud = UnitDefs[Spring.GetUnitDefID(units[i])]
-	-- 	if ud.customParams.customcom then
-
-	-- 		if Spring.GetUnitRulesParam(units[i], "original") == 1 then
-	-- 			foundCom = true;
-	-- 			UpdateUI(units[i], ud)
-			
-	-- 		elseif Spring.GetUnitRulesParam(units[i], "original") == 0 then
-	-- 			local unitID = Spring.GetUnitRulesParam(units[i], "originalID")
-	-- 			foundCom = true;
-	-- 			UpdateUI(unitID, ud)
-	-- 		end
-
-	-- 		break
-	-- 	end
-	-- end
 
 	return false
 end

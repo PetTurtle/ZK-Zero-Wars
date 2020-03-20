@@ -16,11 +16,13 @@ end
 -- remove friendly fire damage
 for name, ud in pairs(UnitDefs) do
 	if ud.weapondefs then
-		for _, wd in pairs(ud.weapondefs) do
-			if not wd.customparams then
-				wd.customparams = { nofriendlyfire=1 }
-			else
-				wd.customparams.nofriendlyfire = 1
+		if (ud.unitname ~= "chicken_dodo") then
+			for _, wd in pairs(ud.weapondefs) do
+				if not wd.customparams then
+					wd.customparams = { nofriendlyfire=1 }
+				else
+					wd.customparams.nofriendlyfire = 1
+				end
 			end
 		end
 	end

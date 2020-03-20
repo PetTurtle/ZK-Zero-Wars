@@ -45,7 +45,9 @@ function Platform:Deploy(playerUnits, customParams)
 
     for i = 1, #self.teamList do
         for j = 1, #playerUnits do
-            self.rect:CreateUnit(playerUnits[j].unitName, playerUnits[j].x, playerUnits[j].z, playerUnits[j].dir, self.teamList[i])
+            local unitID = self.rect:CreateUnit(playerUnits[j].unitName, playerUnits[j].x, playerUnits[j].z, playerUnits[j].dir, self.teamList[i])
+            Spring.SetUnitResourcing(unitID, "umm", playerUnits[j].metalIncome or 0)
+            Spring.SetUnitResourcing(unitID, "ume", playerUnits[j].energyIncome or 0)
         end
     end
 end

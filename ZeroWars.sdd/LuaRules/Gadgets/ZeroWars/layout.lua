@@ -1,5 +1,5 @@
 local Rect = VFS.Include("LuaRules/Gadgets/ZeroWars/Rect.lua")
-local Platform = VFS.Include("LuaRules/Gadgets/ZeroWars/Platform/Platform.lua")
+local Platform = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Platform/Platform.lua")
 
 local mapWidth = Game.mapSizeX
 local mapHeight = Game.mapSizeZ
@@ -45,23 +45,23 @@ rightSide.deployRect = Rect:new(6144, 1152, platWidth, platHeight)
 ----------------------------------
 
 leftSide.buildings = {
-    {unitName = "baseturret", x = 2496, z = 1530, dir = "e", noSelectable = false},
-    {unitName = "centerturret", x = 3264, z = 1530, dir = "e", noSelectable = false},
-    {unitName = "staticrearm", x = 1550, z = 1226, dir = "e", noSelectable = true},
-    {unitName = "staticrearm", x = 1550, z = 1386, dir = "e", noSelectable = true},
-    {unitName = "staticrearm", x = 1550, z = 1529, dir = "e", noSelectable = true},
-    {unitName = "staticrearm", x = 1550, z = 1703, dir = "e", noSelectable = true},
-    {unitName = "staticrearm", x = 1550, z = 1848, dir = "e", noSelectable = true}
+    {unitName = "baseturret", x = 2496, z = 1530, dir = "e"},
+    {unitName = "centerturret", x = 3264, z = 1530, dir = "e"},
+    {unitName = "staticrearm", x = 1550, z = 1226, dir = "e", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 1550, z = 1386, dir = "e", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 1550, z = 1529, dir = "e", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 1550, z = 1703, dir = "e", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 1550, z = 1848, dir = "e", noSelectable = true, neutral = true}
 }
 
 rightSide.buildings = {
-    {unitName = "baseturret", x = 5696, z = 1530, dir = "w", noSelectable = false},
-    {unitName = "centerturret", x = 4930, z = 1530, dir = "w", noSelectable = false},
-    {unitName = "staticrearm", x = 6641, z = 1226, dir = "w", noSelectable = true},
-    {unitName = "staticrearm", x = 6641, z = 1386, dir = "w", noSelectable = true},
-    {unitName = "staticrearm", x = 6641, z = 1529, dir = "w", noSelectable = true},
-    {unitName = "staticrearm", x = 6641, z = 1703, dir = "w", noSelectable = true},
-    {unitName = "staticrearm", x = 6641, z = 1848, dir = "w", noSelectable = true}
+    {unitName = "baseturret", x = 5696, z = 1530, dir = "w"},
+    {unitName = "centerturret", x = 4930, z = 1530, dir = "w"},
+    {unitName = "staticrearm", x = 6641, z = 1226, dir = "w", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 6641, z = 1386, dir = "w", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 6641, z = 1529, dir = "w", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 6641, z = 1703, dir = "w", noSelectable = true, neutral = true},
+    {unitName = "staticrearm", x = 6641, z = 1848, dir = "w", noSelectable = true, neutral = true}
 }
 
 ----------------------------------
@@ -69,12 +69,12 @@ rightSide.buildings = {
 ----------------------------------
 
 leftSide.playerUnits = {
-    {unitName = "basiccon", x = -140, z = 350, dir = "e"},
+    {unitName = "basiccon", x = -140, z = 350, dir = "e", metalIncome = 6, energyIncome = 6},
     {unitName = "chicken_drone_starter", x = -140, z = 350, dir = "e"}
 }
 
 rightSide.playerUnits = {
-    {unitName = "basiccon", x = 520, z = 410, dir = "w"},
+    {unitName = "basiccon", x = 520, z = 410, dir = "w", metalIncome = 6, energyIncome = 6},
     {unitName = "chicken_drone_starter", x = 520, z = 410, dir = "w"}
 }
 

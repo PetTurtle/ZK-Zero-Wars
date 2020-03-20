@@ -13,16 +13,16 @@ unitDef = {
     buildingGroundDecalType       = [[factorycloak_aoplane.dds]],
   
     buildoptions                  = {
-      [[chicken]], -- chicken
-      [[chickens]], -- Spiker
-      [[chicken_dodo]], -- dodo
-      [[chicken_spidermonkey]], -- spidermonkey
-      [[chickenf]], -- Talon
-      [[chickenr]], -- Lobber
-      
-      [[chicken_blimpy]], -- Blimpy
+      [[chicken]],
+      [[chickens]],
+      [[chicken_spidermonkey]],
+      [[chickenr]],
+      [[chicken_dodo]],
+      [[chickenf]],
       [[chickenc]],
+
       [[chickena]],
+      [[chicken_blimpy]],
       [[chickenblobber]],
       [[chicken_shield]],
       [[chicken_tiamat]],

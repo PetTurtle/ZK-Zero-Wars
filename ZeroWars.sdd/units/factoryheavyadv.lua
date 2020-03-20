@@ -24,7 +24,6 @@ unitDef = {
     [[amphfloater]],
     [[tankassault]],
     [[tankheavyassault]],
-    [[striderarty]],
     [[striderdetriment]],
   },
 
