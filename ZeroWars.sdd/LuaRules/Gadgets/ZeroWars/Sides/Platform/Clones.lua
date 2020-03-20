@@ -43,7 +43,7 @@ function Clones:NewClones(clones, originals, frame)
         local range = ud.maxWeaponRange
         local mass = Spring.GetUnitMass(clones[i])
 
-        if not ud.weapons[1].onlyTargets.land then
+        if ud.weapons[1] and not ud.weapons[1].onlyTargets.land then
             antiAir.units[#antiAir.units + 1] = clones[i]
         elseif ud.canFly then
             normal.units[#normal.units + 1] = clones[i]
