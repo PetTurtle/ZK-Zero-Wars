@@ -103,6 +103,19 @@ end
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
     if customCommanders:IsCommander(unitDefID) and not customCommanders:HasCommander(unitTeam) then
         customCommanders:SetOriginal(unitID, unitTeam)
+    else
+        local x = Spring.GetUnitPosition(unitID)
+        if x then
+            if x < 900 then
+                Spring.SetUnitNeutral(unitID,true)
+                if x >= 384 then Spring.MoveCtrl.Enable(unitID, false) end
+
+            elseif x > 8192 - 900 then
+                Spring.SetUnitNeutral(unitID,true)
+                if x <= 7817 then Spring.MoveCtrl.Enable(unitID, false) end
+                
+            end
+        end
     end
 end
 
@@ -177,16 +190,7 @@ end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, playerID, fromSynced, fromLua)
     if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
-
     if Spring.GetUnitRulesParam(unitID, "clone") then return false end
-
-    local x, y, z = Spring.GetUnitPosition(unitID)
-    if not x or x < 900 or x > 8192 - 900 then
-        local ud = UnitDefs[unitDefID]
-        if ud.isBuilder or ud.customParams.canmove or validCommands[cmdID] then return true end
-        return false
-    end
-
     return true
 end
 
