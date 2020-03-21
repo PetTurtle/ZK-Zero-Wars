@@ -40,7 +40,7 @@ local unitDefID = Spring.GetUnitDefID(unitID)
 --------------------------------------------------------------------------------------
 local gun_1 = 0
 local baseHP = 2000
-local health_multi = 0.3
+local health_multi = 0.2
 local scale_multi = 0.12
 local weapon_1 = 1
 local weapon_2 = 0
@@ -183,7 +183,7 @@ function LevelUp()
 	local level = Spring.GetUnitRulesParam(unitID, "level")
 	GG.SetScale(unitID, base, 1 + (level * scale_multi))
 	if level ~= 1 then
-		local newHP = (level - 1) * health_multi * baseHP + armour
+		local newHP =  baseHP + (level - 1) * health_multi * baseHP + armour
 		Spring.SetUnitMaxHealth(unitID, newHP)
 		Spring.SetUnitHealth(unitID, newHP)
 	end

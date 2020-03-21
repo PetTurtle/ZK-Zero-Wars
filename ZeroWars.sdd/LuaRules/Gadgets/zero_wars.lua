@@ -1,4 +1,6 @@
-if not gadgetHandler:IsSyncedCode() then return false end
+if not gadgetHandler:IsSyncedCode() then
+    return false
+end
 
 function gadget:GetInfo()
     return {
@@ -16,7 +18,7 @@ end
 include("LuaRules/Configs/customcmds.h.lua")
 local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Side.lua")
 local leftLayout, rightLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layout.lua")
-local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commanders.lua");
+local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commanders.lua")
 
 local dataSet = false
 
@@ -25,21 +27,6 @@ local sides = {}
 local leftSide
 local rightSide
 local customCommanders
-
-local validCommands = {
-    CMD_UNIT_AI = true,
-    CMD_AIR_STRAFE = true,
-    CMD_PUSH_PULL = true,
-    CMD_AP_FLY_STATE = true,
-    CMD_UNIT_BOMBER_DIVE_STATE = true,
-    CMD_AP_FLY_STATE = true,
-}
-validCommands[CMD.FIRE_STATE] = true
-validCommands[CMD.MOVE_STATE] = true
-validCommands[CMD.REPEAT] = true
-validCommands[CMD.CLOAK] = true
-validCommands[CMD.ONOFF] = true
-validCommands[CMD.TRAJECTORY] = true
 
 local function IteratePlatform(side, frame, faceDir)
     side:CloneNextPlatform()
@@ -67,7 +54,9 @@ local function OnStart()
         for j = 1, #teamList do
             Spring.SetTeamResource(teamList[j], "metal", 0)
             local units = Spring.GetTeamUnits(teamList[j])
-            if units and #units > 0 then Spring.DestroyUnit(units[1], false, true) end
+            if units and #units > 0 then
+                Spring.DestroyUnit(units[1], false, true)
+            end
         end
     end
 end
@@ -89,12 +78,14 @@ function gadget:Initialize()
 end
 
 function gadget:GameFrame(f)
-    if f == 1 then OnStart() end
+    if f == 1 then
+        OnStart()
+    end
 
     leftSide:Update(f)
     rightSide:Update(f)
 
-    if f > 0 and f %spawnTime == 0 then
+    if f > 0 and f % spawnTime == 0 then
         IteratePlatform(leftSide, f, "e")
         IteratePlatform(rightSide, f, "w")
     end
@@ -107,13 +98,15 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         local x = Spring.GetUnitPosition(unitID)
         if x then
             if x < 900 then
-                Spring.SetUnitNeutral(unitID,true)
-                if x >= 384 then Spring.MoveCtrl.Enable(unitID, false) end
-
+                Spring.SetUnitNeutral(unitID, true)
+                if x >= 384 then
+                    Spring.MoveCtrl.Enable(unitID, false)
+                end
             elseif x > 8192 - 900 then
-                Spring.SetUnitNeutral(unitID,true)
-                if x <= 7817 then Spring.MoveCtrl.Enable(unitID, false) end
-                
+                Spring.SetUnitNeutral(unitID, true)
+                if x <= 7817 then
+                    Spring.MoveCtrl.Enable(unitID, false)
+                end
             end
         end
     end
@@ -171,26 +164,21 @@ end
 -- Don't allow factories in center
 function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, facing)
     local ud = UnitDefs[unitDefID]
-    if ud.customParams.ismex then return true end
+    if ud.customParams.ismex then
+        return true
+    end
 
     if dataSet then
         if x and x >= 384 and x <= 7817 and (ud.isBuilding or ud.isBuilder) then
-            return false
-        end
-        
-        xsize = ud.xsize and tonumber(ud.xsize) / 4 or 1
-        zsize = ud.zsize and tonumber(ud.zsize) / 4 or 1
-        local gridSize = 16
-        if Spring.GetGroundBlocked(x - xsize * gridSize, z - zsize * gridSize, x + (xsize-1) * gridSize, z + (zsize-1) * gridSize) ~= false then
             return false
         end
     end
     return true
 end
 
-function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, playerID, fromSynced, fromLua)
-    if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
-    if cmdID ~= 50 and cmdID ~= 1 and cmdID ~= 2 and Spring.GetUnitRulesParam(unitID, "clone") then return false end
+-- function gadget:AllowCommand(unitID,unitDefID,unitTeam,cmdID,cmdParams,cmdOptions,cmdTag,playerID,fromSynced,fromLua)
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
+    customCommanders:ProcessCommand(unitID, cmdID, cmdParams)
     return true
 end
 

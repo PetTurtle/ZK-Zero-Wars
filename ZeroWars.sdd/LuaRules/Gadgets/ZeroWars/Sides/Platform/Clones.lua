@@ -1,7 +1,8 @@
 include("LuaRules/Configs/customcmds.h.lua")
+local Queue = VFS.Include("LuaRules/Gadgets/ZeroWars/Data/Queue.lua")
 
 local heavyTimeout = 7000 -- 3.88m
-local normalTimeout = 5000 -- 2.77m 
+local normalTimeout = 5000 -- 2.77m
 local skirmTimeout = 4000 -- 2.22m
 local artyTimeout = 4000 -- 2.22m
 local antiairTimeout = 1800 -- 1.00m
@@ -13,13 +14,13 @@ function Clones:Create(side)
     local o = {}
     setmetatable(o, Clones)
     o.side = side
-    o.idle = {}
+    o.idle = Queue:New()
     o.timeout = {
-        normal = {},
-        skirm = {},
-        heavy = {},
-        arty = {},
-        antiAir = {}
+        normal = Queue:New(),
+        skirm = Queue:New(),
+        heavy = Queue:New(),
+        arty = Queue:New(),
+        antiAir = Queue:New()
     }
     return o
 end
@@ -61,41 +62,43 @@ function Clones:NewClones(clones, originals, frame)
     end
 
     if #normal.units > 0 then
-        self.timeout.normal[#self.timeout.normal + 1] = normal
+        self.timeout.normal:PushLeft(normal)
     end
     if #skirm.units > 0 then
-        self.timeout.skirm[#self.timeout.skirm + 1] = skirm
+        self.timeout.skirm:PushLeft(skirm)
     end
     if #heavy.units > 0 then
-        self.timeout.heavy[#self.timeout.heavy + 1] = heavy
+        self.timeout.heavy:PushLeft(heavy)
     end
     if #arty.units > 0 then
-        self.timeout.arty[#self.timeout.arty + 1] = arty
+        self.timeout.arty:PushLeft(arty)
     end
     if #antiAir.units > 0 then
-        self.timeout.antiAir[#self.timeout.antiAir + 1] = antiAir
+        self.timeout.antiAir:PushLeft(antiAir)
     end
 end
 
 function Clones:IsActiveClone(unitID)
-    if not Spring.GetUnitIsDead(original) and Spring.GetUnitRulesParam(unitID, "clone") then return true end
+    if not Spring.GetUnitIsDead(original) and Spring.GetUnitRulesParam(unitID, "clone") then
+        return true
+    end
     return false
 end
 
 function Clones:AddIdle(unitID)
-    self.idle[#self.idle + 1] = unitID
+    self.idle:PushLeft(unitID)
 end
 
 function Clones:CommandIdles(attackXPos)
-    while #self.idle > 0 do
-        if not Spring.GetUnitIsDead(self.idle[1]) then
-            local cQueue = Spring.GetCommandQueue(self.idle[1], 1)
+    while self.idle:Size() > 0 do
+        local unitID = self.idle:PopRight()
+        if not Spring.GetUnitIsDead(unitID) then
+            local cQueue = Spring.GetCommandQueue(unitID, 1)
             if cQueue and #cQueue == 0 then
-                local x, y, z = Spring.GetUnitPosition(self.idle[1]) 
-                Spring.GiveOrderToUnit(self.idle[1], CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, attackXPos, 0, z}, {"alt"});
+                local x, y, z = Spring.GetUnitPosition(unitID)
+                Spring.GiveOrderToUnit(unitID, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, attackXPos, 0, z}, {"alt"})
             end
         end
-        table.remove(self.idle, 1)
     end
 end
 
@@ -111,15 +114,14 @@ end
 -- Private Functions
 ------------------------------
 
-function Clones:ClearUnitType(unitType, timeout, frame)
-    while #unitType > 0 and unitType[1].frame + timeout < frame do
-        local units = unitType[1].units
+function Clones:ClearUnitType(typeQueue, timeout, frame)
+    while typeQueue:Size() > 0 and typeQueue:PeekRight().frame + timeout < frame do
+        local units = typeQueue:PopRight().units
         for i = 1, #units do
             if not Spring.GetUnitIsDead(units[i]) then
                 Spring.DestroyUnit(units[i], false, true)
             end
         end
-        table.remove(unitType, 1)
     end
 end
 

@@ -95,13 +95,13 @@ local unit_tweaks = {
     chicken_shield = {
         buildcostmetal = 1200,
         buildcostenergy = 1200,
-        buildtime = 2500,
+        buildtime = 1200,
         weaponDefs = {SHIELD = {shieldPower = 2000, shieldPowerRegen = 20, shieldRadius = 100, shieldStartingPower = 2000}}
     },
     chicken_tiamat = {
         buildcostmetal = 4000,
         buildcostenergy = 4000,
-        buildtime = 4500,
+        buildtime = 4000,
         weaponDefs = {
             SHIELD = {shieldPower = 2000, shieldPowerRegen = 20, shieldRadius = 100, shieldStartingPower = 2000}
         }
