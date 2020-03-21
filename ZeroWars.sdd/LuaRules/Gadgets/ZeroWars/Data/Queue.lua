@@ -55,7 +55,7 @@ function Queue:PeekRight()
 end
 
 function Queue:Size()
-    return self.last - self.first
+    return self.last - self.first + 1
 end
 
 return Queue
