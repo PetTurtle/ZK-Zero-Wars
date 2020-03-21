@@ -1,4 +1,6 @@
-if not gadgetHandler:IsSyncedCode() then return false end
+if not gadgetHandler:IsSyncedCode() then
+    return false
+end
 
 function gadget:GetInfo()
     return {
@@ -16,7 +18,7 @@ end
 include("LuaRules/Configs/customcmds.h.lua")
 local Side = VFS.Include("LuaRules/Gadgets/ZeroWars/Sides/Side.lua")
 local leftLayout, rightLayout = VFS.Include("LuaRules/Gadgets/ZeroWars/layout.lua")
-local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commanders.lua");
+local CustomCommanders = VFS.Include("LuaRules/Gadgets/ZeroWars/Custom_Commanders.lua")
 
 local dataSet = false
 
@@ -52,7 +54,9 @@ local function OnStart()
         for j = 1, #teamList do
             Spring.SetTeamResource(teamList[j], "metal", 0)
             local units = Spring.GetTeamUnits(teamList[j])
-            if units and #units > 0 then Spring.DestroyUnit(units[1], false, true) end
+            if units and #units > 0 then
+                Spring.DestroyUnit(units[1], false, true)
+            end
         end
     end
 end
@@ -74,12 +78,14 @@ function gadget:Initialize()
 end
 
 function gadget:GameFrame(f)
-    if f == 1 then OnStart() end
+    if f == 1 then
+        OnStart()
+    end
 
     leftSide:Update(f)
     rightSide:Update(f)
 
-    if f > 0 and f %spawnTime == 0 then
+    if f > 0 and f % spawnTime == 0 then
         IteratePlatform(leftSide, f, "e")
         IteratePlatform(rightSide, f, "w")
     end
@@ -92,13 +98,15 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         local x = Spring.GetUnitPosition(unitID)
         if x then
             if x < 900 then
-                Spring.SetUnitNeutral(unitID,true)
-                if x >= 384 then Spring.MoveCtrl.Enable(unitID, false) end
-
+                Spring.SetUnitNeutral(unitID, true)
+                if x >= 384 then
+                    Spring.MoveCtrl.Enable(unitID, false)
+                end
             elseif x > 8192 - 900 then
-                Spring.SetUnitNeutral(unitID,true)
-                if x <= 7817 then Spring.MoveCtrl.Enable(unitID, false) end
-                
+                Spring.SetUnitNeutral(unitID, true)
+                if x <= 7817 then
+                    Spring.MoveCtrl.Enable(unitID, false)
+                end
             end
         end
     end
@@ -156,7 +164,9 @@ end
 -- Don't allow factories in center
 function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, facing)
     local ud = UnitDefs[unitDefID]
-    if ud.customParams.ismex then return true end
+    if ud.customParams.ismex then
+        return true
+    end
 
     if dataSet then
         if x and x >= 384 and x <= 7817 and (ud.isBuilding or ud.isBuilder) then
@@ -166,9 +176,9 @@ function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, fa
     return true
 end
 
-function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, playerID, fromSynced, fromLua)
-    if customCommanders:ProcessCommand(unitID, cmdID, cmdParams) then return true end
-    if cmdID ~= 50 and cmdID ~= 1 and cmdID ~= 2 and Spring.GetUnitRulesParam(unitID, "clone") then return false end
+-- function gadget:AllowCommand(unitID,unitDefID,unitTeam,cmdID,cmdParams,cmdOptions,cmdTag,playerID,fromSynced,fromLua)
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
+    customCommanders:ProcessCommand(unitID, cmdID, cmdParams)
     return true
 end
 
