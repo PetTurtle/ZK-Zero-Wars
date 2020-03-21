@@ -4,29 +4,27 @@ function widget:GetInfo() return {
 	author    = "petturtle",
 	date      = "2020",
 	license   = "GNU GPL, v2 or later",
-	layer     = 10,
-	handler   = true,
+	layer     = 0,
 	enabled   = true,
 } end
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local myTeamID = -1
 
-local validCommands = {
-    CMD.FIRE_STATE,
-    CMD.MOVE_STATE,
-    CMD.REPEAT,
-    CMD.CLOAK,
-    CMD.ONOFF,
-    CMD.TRAJECTORY,
-    CMD_UNIT_AI = true,
-    CMD_AIR_STRAFE,
-    CMD_PUSH_PULL,
-    CMD_AP_FLY_STATE,
-    CMD_UNIT_BOMBER_DIVE_STATE,
-    CMD_AP_FLY_STATE,
-}
+local function DeSelectMyClones(selectedUnits)
+	local validUnits = {}
+	for i = 1, #selectedUnits do
+		if not Spring.GetUnitRulesParam(selectedUnits[i], "clone") then
+			validUnits[#validUnits + 1] = selectedUnits[i]
+		end
+	end
+	Spring.SelectUnitArray(validUnits)
+end
+
+function widget:CommandsChanged()
+	local selectedUnits = Spring.GetSelectedUnits()
+	if selectedUnits then DeSelectMyClones(selectedUnits) end
+end
 
 function widget:Initialize()
-	Chili = WG.Chili
-	if (not Chili) then widgetHandler:RemoveWidget() return end
+	myTeamID = Spring.GetLocalTeamID()
 end
