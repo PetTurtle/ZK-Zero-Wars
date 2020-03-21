@@ -5,7 +5,9 @@ local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitStates = Spring.GetUnitStates
 local spGetUnitHealth = Spring.GetUnitHealth
+local spGetUnitIsDead = Spring.GetUnitIsDead
 local spGetUnitPosition = Spring.GetUnitPosition
+
 local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 
@@ -63,19 +65,22 @@ function Cloner:Deploy()
     local teamID = spGetUnitTeam(units[1])
 
     for i = 1, #units do
-        local unitDefID = spGetUnitDefID(units[i])
-        local x, y, z = spGetUnitPosition(units[i])
-        local clone = spCreateUnit(unitDefID, x + offset.x, 150, z + offset.y, self.faceDir, teamID)
-        self:CopyUnitStates(units[i], clone)
-        spGiveOrderToUnit(
-            clone,
-            CMD.INSERT,
-            {-1, CMD.FIGHT, CMD.OPT_SHIFT, self.attackXPos, 128, z + offset.y},
-            {"alt"}
-        )
-        clones[i] = clone
+        if not spGetUnitIsDead(units[i]) then
+            local unitDefID = spGetUnitDefID(units[i])
+            local x, y, z = spGetUnitPosition(units[i])
+            if x then
+                local clone = spCreateUnit(unitDefID, x + offset.x, 150, z + offset.y, self.faceDir, teamID)
+                self:CopyUnitStates(units[i], clone)
+                spGiveOrderToUnit(
+                    clone,
+                    CMD.INSERT,
+                    {-1, CMD.FIGHT, CMD.OPT_SHIFT, self.attackXPos, 128, z + offset.y},
+                    {"alt"}
+                )
+                clones[i] = clone
+            end
+        end
     end
-
     return clones, units
 end
 

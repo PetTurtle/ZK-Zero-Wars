@@ -73,7 +73,9 @@ end
 function Side:Update(frame) 
     if self.cloner:Size() > 0 then
         local clones, originals = self.cloner:Deploy()
-        self.clones:NewClones(clones, originals, frame)
+        if #clones > 0 then
+            self.clones:NewClones(clones, originals, frame)
+        end
     end
     self.clones:ClearTimedOut(frame)
     self.clones:CommandIdles(self.attackXPos)
