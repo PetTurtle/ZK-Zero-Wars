@@ -52,16 +52,12 @@ function Platform:Deploy(playerUnits, customParams)
     end
 end
 
-function Platform:GetUnits(TeamID)
-    return self.rect:GetUnits(TeamID)
-end
-
 function Platform:GetTeamUnits()
-    local units = {}
-    for i = 1, #self.teamList do
-        units[i] = self.rect:GetUnits(self.teamList[i])
+    local teamUnits = {}
+    for i,team in pairs(self.teamList) do
+        teamUnits[i] = self.rect:GetUnits(team)
     end
-    return units
+    return teamUnits, self.teamList
 end
 
 return Platform

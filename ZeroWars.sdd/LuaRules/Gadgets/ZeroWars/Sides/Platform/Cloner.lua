@@ -32,27 +32,22 @@ function Cloner:Create(deployRect, faceDir, attackXPos)
 end
 
 function Cloner:Add(platform)
-    local units = platform:GetUnits()
+    local teamUnits, teamList = platform:GetTeamUnits()
+    Spring.Echo("TOTAL TEAMS " .. #teamUnits)
+    
+    for i = 1, #teamUnits do
+        local units = teamUnits[i]
 
-    if not units then
-        return
-    end
-    for i = #units, 1, -1 do
-        local buildProgress = select(5, spGetUnitHealth(units[i]))
-        if buildProgress < 1.0 then
-            table.remove(units, i)
+        for j = #units, 1, -1 do
+            local buildProgress = select(5, spGetUnitHealth(units[j]))
+            if buildProgress < 1.0 then
+                table.remove(units, j)
+            end
         end
-    end
-    if not units then
-        return
-    end
-
-    while (#units > 0) do
-        local deployGroup = {
-            units = self:SubsetClones(units, 1, math.min(self.spawnAmount, #units)),
-            platform = platform
-        }
-        self.queue:PushLeft(deployGroup)
+        
+        if #units > 0 then
+            self:AddTeamUnitsToQueue(units, platform, teamList[i])
+        end
     end
 end
 
@@ -62,7 +57,7 @@ function Cloner:Deploy()
     local units = deployGroup.units
     local platform = deployGroup.platform
     local offset = platform.rect:GetPosOffset(self.deployRect)
-    local teamID = spGetUnitTeam(units[1])
+    local teamID = deployGroup.teamID
 
     for i = 1, #units do
         if not spGetUnitIsDead(units[i]) then
@@ -91,6 +86,17 @@ end
 ------------------------------
 -- Private Functions
 ------------------------------
+
+function Cloner:AddTeamUnitsToQueue(units, platform, teamID)
+    while (#units > 0) do
+        local deployGroup = {
+            units = self:SubsetClones(units, 1, math.min(self.spawnAmount, #units)),
+            platform = platform,
+            teamID = teamID
+        }
+        self.queue:PushLeft(deployGroup)
+    end
+end
 
 function Cloner:SubsetClones(clones, from, to)
     local subset = {}
