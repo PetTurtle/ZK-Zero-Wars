@@ -8,8 +8,6 @@ function widget:GetInfo() return {
 	enabled   = true,
 } end
 
-local myTeamID = -1
-
 local function DeSelectMyClones(selectedUnits)
 	local validUnits = {}
 	for i = 1, #selectedUnits do
@@ -26,5 +24,5 @@ function widget:CommandsChanged()
 end
 
 function widget:Initialize()
-	myTeamID = Spring.GetLocalTeamID()
+	
 end
