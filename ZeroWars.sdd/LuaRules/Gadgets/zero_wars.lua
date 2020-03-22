@@ -142,12 +142,22 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
         customCommanders:TransferExperience(attackerID, attackerTeam)
     end
 
-    -- transfer clone experience
+    
     local isClone = Spring.GetUnitRulesParam(unitID, "clone")
-    local original = Spring.GetUnitRulesParam(unitID, "original")
-    if isClone and original and not Spring.GetUnitIsDead(original) then
-        Spring.SetUnitExperience(original, Spring.GetUnitExperience(unitID))
+    if isClone then
+        -- transfer clone experience
+        local original = Spring.GetUnitRulesParam(unitID, "original")
+        if isClone and original and not Spring.GetUnitIsDead(original) then
+            Spring.SetUnitExperience(original, Spring.GetUnitExperience(unitID))
+        end
+
+        -- Clear Clone UnitParams
+        Spring.SetUnitRulesParam(unitID, "clone", nil)
+        Spring.SetUnitRulesParam(unitID, "original", nil)
+        Spring.SetUnitRulesParam(unitID, "side", nil)
     end
+
+
 end
 
 function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
