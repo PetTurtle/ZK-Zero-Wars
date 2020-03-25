@@ -252,7 +252,7 @@ function Upgrade()
 		end
 
 		local level = Spring.GetUnitRulesParam(unitID, "level")
-		local newHP = (level - 1) * health_multi * baseHP + armour
+		local newHP =  baseHP + (level - 1) * health_multi * baseHP + armour
 		Spring.SetUnitMaxHealth(unitID, newHP)
 		Spring.SetUnitHealth(unitID, newHP)
 		path3 = rPath3
