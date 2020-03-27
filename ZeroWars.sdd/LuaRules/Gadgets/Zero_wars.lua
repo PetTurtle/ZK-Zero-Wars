@@ -73,7 +73,9 @@ local function onStart()
 end
 
 local function getOtherSide(side)
-    if sides[1] == side then return sides[2] end
+    if sides[1] == side then
+        return sides[2]
+    end
     return sides[1]
 end
 
@@ -91,7 +93,7 @@ function gadget:Initialize()
 
     sides[1] = Side.new(allyTeamList[1], Layout[1].platforms)
     sides[2] = Side.new(allyTeamList[2], Layout[2].platforms)
-
+    
     deployer = Deployer.new()
     cloneTimeout = CloneTimeout.new()
     idleClones = IdleClones.new({[allyTeamList[1]] = Layout[1].attackXPos, [allyTeamList[2]] = Layout[2].attackXPos})
@@ -130,6 +132,9 @@ function gadget:GameFrame(frame)
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+    local ud = UnitDefs[unitDefID]
+    if ud.customParams.hero then return end
+
     local x = spGetUnitPosition(unitID)
     if x < 1000 then
         spSetUnitNeutral(unitID, true)
