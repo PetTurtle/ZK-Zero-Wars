@@ -3,7 +3,7 @@ local unit_tweaks = {
         customparams = {
             statsname = nil,
             comDrone = true,
-            morphto_1 = [[comduck]],
+            morphto_1 = [[heroreaver]],
             morphcost_1 = 1,
             morphtime_1 = 1
         }
