@@ -26,6 +26,7 @@ local Hero = VFS.Include("LuaRules/Gadgets/HeroUnits/Hero.lua")
 
 -- SyncedCtrl
 local spCreateUnit = Spring.CreateUnit
+local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 
 -- SyncedRead
 local spGetTeamList = Spring.GetTeamList
@@ -33,6 +34,8 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetAllyTeamList = Spring.GetAllyTeamList
+local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
+local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 
 -- Variables
 local heroes = {}
@@ -130,6 +133,15 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         local hero = Hero.new(unitID, unitDefID)
         heroes[unitID] = hero
         sides[allyTeamID]:addHero(hero)
+
+        -- disables manual fire
+        local manualFireIndex = spFindUnitCmdDesc(unitID, CMD.MANUALFIRE)
+        if manualFireIndex then
+            local cmdTable = spGetUnitCmdDescs(unitID, manualFireIndex)
+            --cmdTable.hidden = true
+            cmdTable.disabled = true
+            spEditUnitCmdDesc(unitID, manualFireIndex, cmdTable)
+        end
     end
 end
 

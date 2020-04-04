@@ -6,10 +6,27 @@ Spring.GetModOptions = Spring.GetModOptions or function()
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
+local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
+
+-- SyncedRead
+local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
+local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
+
+include("LuaRules/Configs/customcmds.h.lua")
 
 local function setWeaponDamage(unitID, weaponID, damage)
     for i = 1, 6 do
         spSetUnitWeaponDamages(unitID, weaponID, i, damage)
+    end
+end
+
+local function enableManualFire(unitID)
+    local manualFireIndex = spFindUnitCmdDesc(unitID, CMD.MANUALFIRE)
+    if manualFireIndex then
+        local cmdTable = spGetUnitCmdDescs(unitID, manualFireIndex)
+        --cmdTable.hidden = false
+        cmdTable.disabled = false
+        spEditUnitCmdDesc(unitID, manualFireIndex, cmdTable)
     end
 end
 
@@ -108,6 +125,7 @@ local HeroUpgradeDefs = {
                 name = "E.M.P Blast",
                 desc = "Stuns All Units in radius",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    enableManualFire(unitID)
                 end
             },
             [2] = {
@@ -237,6 +255,7 @@ local HeroUpgradeDefs = {
                 name = "E.M.P Blast",
                 desc = "Stuns All Units in radius",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    enableManualFire(unitID)
                 end
             },
             [2] = {
@@ -353,6 +372,7 @@ local HeroUpgradeDefs = {
                 name = "E.M.P Blast",
                 desc = "Stuns All Units in radius",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    enableManualFire(unitID)
                 end
             },
             [2] = {
@@ -469,6 +489,7 @@ local HeroUpgradeDefs = {
                 name = "E.M.P Blast",
                 desc = "Stuns All Units in radius",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    enableManualFire(unitID)
                 end
             },
             [2] = {
