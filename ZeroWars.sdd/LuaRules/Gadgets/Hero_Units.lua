@@ -38,7 +38,9 @@ local spGetAllyTeamList = Spring.GetAllyTeamList
 local heroes = {}
 local sides = {}
 local xpMulti = 1000
-local CMD_Hero_UPGRADE = 49731
+local CMD_HERO_UPGRADE = 49731
+local CMD_HERO_CHEAT_XP = 49732
+local CMD_HERO_CHEAT_Level = 49733
 
 local function isHero(unitDefID)
     return UnitDefs[unitDefID].customParams.hero
@@ -101,9 +103,21 @@ end
 -- Hero upgrade command listener
 -------------------------------------
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
-    if cmdID == CMD_Hero_UPGRADE and heroes[unitID] then
+    if cmdID == CMD_HERO_UPGRADE and heroes[unitID] then
         heroes[unitID]:upgrade(unitID, unitDefID, unitTeam, "path" .. cmdParams[1])
+        return true
     end
+
+    if Spring.IsCheatingEnabled() then
+        if cmdID == CMD_HERO_CHEAT_XP and heroes[unitID] then
+            heroes[unitID]:giveXP(100)
+        elseif cmdID == CMD_HERO_CHEAT_Level and heroes[unitID] then
+            local level = heroes[unitID]:getLevel()
+            local xpNeeded = 1000 + (level * 500)
+            heroes[unitID]:giveXP(xpNeeded)
+        end
+    end
+
     return true
 end
 

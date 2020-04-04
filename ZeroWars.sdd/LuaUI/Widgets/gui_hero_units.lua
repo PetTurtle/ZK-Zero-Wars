@@ -21,6 +21,8 @@ local spGetUnitDefID = Spring.GetUnitDefID
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 
 local CMD_CUSTOM_UPGRADE = 49731
+local CMD_HERO_CHEAT_XP = 49732
+local CMD_HERO_CHEAT_Level = 49733
 local activeColor = {0.5, 0.5, 0.5, 0.7}
 local inactiveColor = {0.0, 0.0, 0.0, 0.0}
 
@@ -32,12 +34,19 @@ local upgradeButtons = {}
 local levelLabel
 local pointsLabel
 local xpProgressbar
+local cheatXPButton
+local cheatLevelButton
 
 local visible = true
+local cheats = true
 local heroID
 
 local function CurrentModuleClick(self, path)
 	spGiveOrderToUnit(heroID, CMD_CUSTOM_UPGRADE, {path}, 0)
+end
+
+local function GiveCommand(self, command)
+	spGiveOrderToUnit(heroID, command, {}, 0)
 end
 
 local function CreateWindow()
@@ -146,10 +155,66 @@ local function CreateWindow()
 		caption = "",
 		parent = window
 	}
+
+	cheatXPButton =
+		Chili.Button:New {
+		caption = "+XP",
+		font = {size = 20, outline = true, color = cyan, outlineWidth = 2, outlineWeight = 2},
+		--x = 0,
+		y = 0,
+		right = 25,
+		width = 25,
+		height = 25,
+		padding = {0, 0, 0, 0},
+		font = {size = 8},
+		backgroundColor = activeColor,
+		OnClick = {},
+		tooltip = "gives 100 xp",
+		parent = window,
+		OnClick = {
+			function(self)
+				GiveCommand(self, CMD_HERO_CHEAT_XP)
+			end
+		}
+	}
+
+	cheatLevelButton =
+		Chili.Button:New {
+		caption = "+Lvl",
+		font = {size = 20, outline = true, color = cyan, outlineWidth = 2, outlineWeight = 2},
+		--x = 0,
+		y = 0,
+		right = 0,
+		width = 25,
+		height = 25,
+		padding = {0, 0, 0, 0},
+		font = {size = 8},
+		backgroundColor = activeColor,
+		OnClick = {},
+		tooltip = "adds level",
+		parent = window,
+		OnClick = {
+			function(self)
+				GiveCommand(self, CMD_HERO_CHEAT_Level)
+			end
+		}
+	}
+end
+
+local function toggleCheats(state)
+	if state and not cheats then
+		window:AddChild(cheatXPButton)
+		window:AddChild(cheatLevelButton)
+		cheats = true
+	elseif not state and cheats then
+		window:RemoveChild(cheatXPButton)
+		window:RemoveChild(cheatLevelButton)
+		cheats = false
+	end
 end
 
 local function setUpdateParams(id, params, level)
-	upgradeButtons[id]:SetCaption(level..". "..params.name)
+	upgradeButtons[id]:SetCaption(level .. ". " .. params.name)
 	upgradeButtons[id].tooltip = params.desc
 end
 
@@ -244,6 +309,7 @@ function widget:Initialize()
 	CreateWindow()
 
 	setVisible(false)
+	toggleCheats(Spring.IsCheatingEnabled())
 end
 
 function widget:Shutdown()
@@ -270,4 +336,6 @@ function widget:CommandsChanged()
 		end
 	end
 	setVisible(false)
+
+	toggleCheats(Spring.IsCheatingEnabled())
 end

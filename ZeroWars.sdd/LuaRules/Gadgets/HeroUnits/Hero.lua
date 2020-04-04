@@ -1,10 +1,9 @@
 -- SyncedCtrl
-
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spSetTeamRulesParam = Spring.SetTeamRulesParam
+local spSetUnitMaxHealth = Spring.SetUnitMaxHealth
 local spSetUnitPosition = Spring.SetUnitPosition
 local spSetUnitHealth = Spring.SetUnitHealth
-local spSetUnitMaxHealth = Spring.SetUnitMaxHealth
 
 -- SyncedRead
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
@@ -37,8 +36,8 @@ function Hero.new(unitID, unitDefID)
     setmetatable(instance, Hero)
 
     spSetUnitRulesParam(unitID, "xp", 0)
-    spSetUnitRulesParam(unitID, "level", 5)
-    spSetUnitRulesParam(unitID, "points", 5)
+    spSetUnitRulesParam(unitID, "level", 0)
+    spSetUnitRulesParam(unitID, "points", 0)
     spSetUnitRulesParam(unitID, "path1", 0)
     spSetUnitRulesParam(unitID, "path2", 0)
     spSetUnitRulesParam(unitID, "path3", 0)
@@ -86,10 +85,10 @@ function Hero:levelUp()
 end
 
 function Hero:giveXP(xp)
-    if not _maxLevel then
+    if not self._maxLevel then
         local newXP = self:getXP() + xp
         local level = spGetUnitRulesParam(self._ID, "level")
-        local xpNeeded = 1000 + (level * 500) -- TODO: add xp multi
+        local xpNeeded = 1000 + (level * 500)
 
         while newXP >= xpNeeded do
             self:levelUp()
