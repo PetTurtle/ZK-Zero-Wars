@@ -10,12 +10,6 @@ unitDef = {
   builder             = true,
 
   buildoptions        = {
-    [[staticmex]],
-    [[energysolar]],
-    [[energyfusion]],
-    [[energysingu]],
-    [[energypylon]],
-    
     [[cloakraid]],
     [[spiderassault]],
     [[cloakskirm]],
@@ -26,7 +20,6 @@ unitDef = {
     [[tankraid]],
     [[spiderriot]],
     [[amphimpulse]],
-    [[basiccon]],
     
     [[factoryair]],
     [[factorylight]],
