@@ -4,6 +4,7 @@ Spring.GetModOptions = Spring.GetModOptions or function()
 
 -- SyncedCtrl
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
 
 local function setWeaponDamage(unitID, weaponID, damage)
@@ -173,29 +174,29 @@ local HeroUpgradeDefs = {
                 name = "Extended Mag",
                 desc = "1.0s between shots",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponDamages(unitID, 1, "reloadTime", 1)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1)
                 end
             },
             [2] = {
                 name = "Autoloader",
                 desc = "0.8s between shots",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponDamages(unitID, 1, "reloadTime", 0.8)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.8)
                 end
             },
             [3] = {
                 name = "Double Salvo",
                 desc = "Two Salvos",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponDamages(unitID, 1, "reloadTime", 1.3)
-                    spSetUnitWeaponDamages(unitID, 1, "burst", 2)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.3)
+                    spSetUnitWeaponState(unitID, 1, "burst", 2)
                 end
             },
             [4] = {
-                name = "Lazer Accuracy",
-                desc = " Grenades never miss",
+                name = "Liquid Cooling",
+                desc = "Less time between salvos",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponDamages(unitID, 1, "accuracy", 100)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.0)
                 end
             }
         },
