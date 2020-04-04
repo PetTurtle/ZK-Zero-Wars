@@ -163,7 +163,7 @@ local HeroUpgradeDefs = {
                 name = "Cluster Grenade",
                 desc = "+30 aoe",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    SetUnitWeaponDamages(unitID, 1, "damageAreaOfEffect", 310)
+                    spSetUnitWeaponDamages(unitID, 1, "damageAreaOfEffect", 310)
                 end
             }
         },

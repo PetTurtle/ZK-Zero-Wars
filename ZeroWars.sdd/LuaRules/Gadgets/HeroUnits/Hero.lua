@@ -139,7 +139,7 @@ function Hero:_updateStats()
 
     local armour = spGetUnitRulesParam(unitID, "armour") or 0
     local currHealth, currMaxHealth = spGetUnitHealth(unitID)
-    local newMaxHealth = (level / (16 - level)) * (stats.maxHP - stats.minHP) + stats.minHP + armour
+    local newMaxHealth = (level / 16) * (stats.maxHP - stats.minHP) + stats.minHP + armour
     local newHealth = currHealth * newMaxHealth / currMaxHealth
     spSetUnitMaxHealth(unitID, newMaxHealth)
     spSetUnitHealth(unitID, newHealth)
