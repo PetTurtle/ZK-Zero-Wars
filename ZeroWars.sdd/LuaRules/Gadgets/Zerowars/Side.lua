@@ -48,7 +48,7 @@ function Side:onStart(buildings, playerUnits, customParams)
 
     -- deploy platforms
     for i = 1, #self._platforms do
-        self._platforms[i]:onStart(playerUnits, customParams)
+        self._platforms[i]:onStart(playerUnits)
     end
 end
 

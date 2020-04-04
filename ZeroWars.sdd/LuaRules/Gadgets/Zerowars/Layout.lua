@@ -74,24 +74,11 @@ layout[2].buildings = {
 
 layout[1].playerUnits = {
     {unitName = "basiccon", x = -140, z = 350, dir = "e", metalIncome = 6, isBlocking = false, energyIncome = 6},
-    {unitName = "chicken_drone_starter", x = -140, z = 350, dir = "e", isBlocking = false}
 }
 
 layout[2].playerUnits = {
     {unitName = "basiccon", x = 520, z = 410, dir = "w", metalIncome = 6, isBlocking = false, energyIncome = 6},
-    {unitName = "chicken_drone_starter", x = 520, z = 410, dir = "w", isBlocking = false}
 }
 
-----------------------------------
--- Player Platform customparams
-----------------------------------
-
-layout[1].customParams = {
-    COMMANDER_SPAWN = {x = 1855, z = 1537}
-}
-
-layout[2].customParams = {
-    COMMANDER_SPAWN = {x = 6336, z = 1537}
-}
 
 return layout

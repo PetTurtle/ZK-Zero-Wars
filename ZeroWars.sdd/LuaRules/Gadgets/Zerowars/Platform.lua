@@ -18,8 +18,7 @@ function Platform.new(rect)
     return instance
 end
 
-function Platform:onStart(units, customParams)
-    local comPos = customParams["COMMANDER_SPAWN"]
+function Platform:onStart(units)
     local xOffset = self._rect:getX()
     local zOffset = self._rect:getZ()
 

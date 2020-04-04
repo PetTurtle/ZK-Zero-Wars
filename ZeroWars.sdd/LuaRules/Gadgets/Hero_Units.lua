@@ -15,27 +15,33 @@ if not gadgetHandler:IsSyncedCode() then
     return false
 end
 
+----------------------------------------
+-- Synced
+----------------------------------------
+
 include("LuaRules/Configs/customcmds.h.lua")
-local HeroUnitDefs, AllyTeamLayouts = include("LuaRules/Configs/Hero_Units_Defs.lua")
+local Layout = VFS.Include("LuaRules/Gadgets/HeroUnits/Layout.lua")
+local Side = VFS.Include("LuaRules/Gadgets/HeroUnits/Side.lua")
 local Hero = VFS.Include("LuaRules/Gadgets/HeroUnits/Hero.lua")
 
+-- SyncedCtrl
+local spCreateUnit = Spring.CreateUnit
+
+-- SyncedRead
+local spGetTeamList = Spring.GetTeamList
+local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetAllyTeamList = Spring.GetAllyTeamList
-local spGetUnitHealth = Spring.GetUnitHealth
 
+-- Variables
 local heroes = {}
-local allyHeroes = {}
-local allyToLayout = {}
+local sides = {}
+local xpMulti = 1000
+local CMD_Hero_UPGRADE = 49731
 
 local function isHero(unitDefID)
-    local ud = UnitDefs[unitDefID]
-    if ud.customParams.hero then return true end
-    return false
-end
-
-local function getAllyTeamHeros(allyTeamID)
-    return allyHeroes[allyTeamID]
+    return UnitDefs[unitDefID].customParams.hero
 end
 
 local function getHeroesInRange(heroes, cPos, radius)
@@ -47,6 +53,19 @@ local function getHeroesInRange(heroes, cPos, radius)
         end
     end
     return inRange
+end
+
+local function onStart()
+    -- Create Hero Morph Drone
+    for i, side in pairs(sides) do
+        local allyTeamID = side:getAllyTeamID()
+        local layout = side:getLayout()
+        local droneParams = layout.droneParams
+        local teamList = spGetTeamList(allyTeamID)
+        for j, teamID in pairs(teamList) do
+            spCreateUnit(droneParams.name, droneParams.x, droneParams.y, droneParams.z, droneParams.faceDir, teamID)
+        end
+    end
 end
 
 function gadget:Initialize()
@@ -62,41 +81,49 @@ function gadget:Initialize()
         return
     end
 
-    allyToLayout[allyTeamList[1]] = 1
-    allyToLayout[allyTeamList[2]] = 2
-    allyHeroes[allyTeamList[1]] = {}
-    allyHeroes[allyTeamList[2]] = {}
+    sides[allyTeamList[1]] = Side.new(allyTeamList[1], Layout[1])
+    sides[allyTeamList[2]] = Side.new(allyTeamList[2], Layout[2])
 end
 
 function gadget:GameFrame(frame)
-    if frame % 30 == 0 then
-        for i,hero in pairs(heroes) do
-            hero:update(frame)
+    if frame == 2 then
+        onStart()
+    end
 
-            if hero:canRespawn(frame) then
-                hero:spawn()
-            end
+    if frame % 30 == 0 then
+        for i, side in pairs(sides) do
+            side:update(frame)
         end
     end
 end
 
--- com created
-function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+-------------------------------------
+-- Hero upgrade command listener
+-------------------------------------
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
+    if cmdID == CMD_Hero_UPGRADE and heroes[unitID] then
+        heroes[unitID]:upgrade(unitID, unitDefID, unitTeam, "path" .. cmdParams[1])
+    end
+    return true
+end
 
+-------------------------------------
+-- Add hero when it's created
+-------------------------------------
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
     if isHero(unitDefID) then
         local allyTeamID = spGetUnitAllyTeam(unitID)
-        local allyLayout = AllyTeamLayouts[allyToLayout[allyTeamID]]
-
-        local x, y, z = spGetUnitPosition(unitID)
-        local hero = Hero.new(unitID, unitDefID, allyLayout.spawnPoint, {x = x, z = z})
+        local hero = Hero.new(unitID, unitDefID)
         heroes[unitID] = hero
-        allyHeroes[allyTeamID][#allyHeroes[allyTeamID] + 1] = hero
+        sides[allyTeamID]:addHero(hero)
     end
 end
 
--- give regular kill unit xp
+-------------------------------------
+-- Remove hero on self-destruct
+-- Give attackers xp
+-------------------------------------
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
-    
     if heroes[unitID] then
         table.remove(heroes, unitID)
         return
@@ -104,33 +131,30 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 
     if heroes[attackerID] then
         local allyTeamID = spGetUnitAllyTeam(attackerID)
+        local killXP = UnitDefs[unitDefID].metalCost
         local x, y, z = spGetUnitPosition(unitID)
-        local inRangeHeroes = getHeroesInRange(getAllyTeamHeros(allyTeamID), {x = x, z = z}, 1000)
-        for i = 1, #inRangeHeroes do
-            inRangeHeroes[i]:giveXP(5/#inRangeHeroes)
-        end
-        return
+        sides[allyTeamID]:shareXP({x = x, z = z}, killXP)
     end
 end
 
--- manage hero kill xp
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam)
-
+-------------------------------------
+-- Teleport hero when it's about to die
+-- Give attackers xp on hero kill
+-------------------------------------
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, attackerID)
     if heroes[unitID] then
-        local hp = spGetUnitHealth(unitID)
-        if hp < damage then
+        local heroHP = spGetUnitHealth(unitID)
+        if heroHP <= damage then
             if attackerID and heroes[attackerID] then
-                local killXP = 40 + (0.13 * heroes[unitID]:getXP())
-                local allyTeamID = spGetUnitAllyTeam(attackerID)
+                local attackerTeamID = spGetUnitAllyTeam(attackerID)
+                local killXP = heroes[unitID]:getKillXP()
                 local x, y, z = spGetUnitPosition(unitID)
-                local inRangeHeroes = getHeroesInRange(getAllyTeamHeros(allyTeamID), {x = x, z = z}, 1000)
-                for i = 1, #inRangeHeroes do
-                    inRangeHeroes[i]:giveXP(killXP/#inRangeHeroes)
-                end
+                sides[attackerTeamID]:shareXP({x = x, z = z}, killXP)
             end
 
-            heroes[unitID]:die()
-            return 0
+            local heroTeamID = spGetUnitAllyTeam(unitID)
+            sides[heroTeamID]:heroDied(heroes[unitID])
+            return 0, 0
         end
     end
 
