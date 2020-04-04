@@ -23,13 +23,6 @@ local function callScript(unitID, funcName, args)
     end
 end
 
-local function updateHealth(unitID, minHealth, maxHealth) -- TODO: keep hp ratio the same as max hp changes
-    local level = spGetUnitRulesParam(unitID, "level")
-    local armour = spGetUnitRulesParam(unitID, "armour") or 0
-    local health = (level / (16 - level)) * (maxHealth - minHealth) + minHealth + armour
-    spSetUnitMaxHealth(unitID, health)
-end
-
 local Hero = {}
 Hero.__index = Hero
 
@@ -139,10 +132,17 @@ function Hero:getPosition()
 end
 
 function Hero:_updateStats()
+    local unitID = self._ID
     local stats = self._upgadeDefs.stats
-    local level = spGetUnitRulesParam(self._ID, "level")
-    callScript(self._ID, "UpdateScale", {level = level, minScale = stats.minScale, maxScale = stats.maxScale})
-    updateHealth(self._ID, stats.minHP, stats.maxHP)
+    local level = spGetUnitRulesParam(unitID, "level")
+    callScript(unitID, "UpdateScale", {level = level, minScale = stats.minScale, maxScale = stats.maxScale})
+
+    local armour = spGetUnitRulesParam(unitID, "armour") or 0
+    local currHealth, currMaxHealth = spGetUnitHealth(unitID)
+    local newMaxHealth = (level / (16 - level)) * (stats.maxHP - stats.minHP) + stats.minHP + armour
+    local newHealth = currHealth * newMaxHealth / currMaxHealth
+    spSetUnitMaxHealth(unitID, newMaxHealth)
+    spSetUnitHealth(unitID, newHealth)
 end
 
 return Hero
