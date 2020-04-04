@@ -73,11 +73,11 @@ layout[2].buildings = {
 ----------------------------------
 
 layout[1].playerUnits = {
-    {unitName = "basiccon", x = -140, z = 350, dir = "e", metalIncome = 6, isBlocking = false, energyIncome = 6},
+    {unitName = "basiccon", x = -140, z = 350, dir = "e", metalIncome = 2, isBlocking = false, energyIncome = 200},
 }
 
 layout[2].playerUnits = {
-    {unitName = "basiccon", x = 520, z = 410, dir = "w", metalIncome = 6, isBlocking = false, energyIncome = 6},
+    {unitName = "basiccon", x = 520, z = 410, dir = "w", metalIncome = 2, isBlocking = false, energyIncome = 200},
 }
 
 
