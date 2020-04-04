@@ -2,7 +2,7 @@ local Queue = VFS.Include("LuaRules/Gadgets/Data/Queue.lua")
 
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 
-IdleClones = {}
+local IdleClones = {}
 IdleClones.__index = IdleClones
 
 function IdleClones.new(attackPos)

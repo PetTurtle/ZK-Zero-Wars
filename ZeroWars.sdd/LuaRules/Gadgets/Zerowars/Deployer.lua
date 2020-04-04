@@ -10,7 +10,7 @@ local spCreateUnit = Spring.CreateUnit
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 
-Deployer = {}
+local Deployer = {}
 Deployer.__index = Deployer
 
 local mapCenter = Game.mapSizeX/2

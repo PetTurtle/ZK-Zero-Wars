@@ -1,6 +1,6 @@
 local RespawnPool = VFS.Include("LuaRules/Gadgets/HeroUnits/RespawnPool.lua")
 
-Side = {}
+local Side = {}
 Side.__index = Side
 
 function Side.new(allyTeamID, layout)

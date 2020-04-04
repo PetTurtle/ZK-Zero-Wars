@@ -8,7 +8,7 @@ local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetUnitStates = Spring.GetUnitStates
 local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 
-StateCopier = {}
+local StateCopier = {}
 StateCopier.__index = StateCopier
 
 function StateCopier.new()

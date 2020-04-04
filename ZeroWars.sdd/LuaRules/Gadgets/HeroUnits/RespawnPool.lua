@@ -1,7 +1,7 @@
 -- SyncedRead
 local spGetGameFrame = Spring.GetGameFrame
 
-RespawnPool = {}
+local RespawnPool = {}
 RespawnPool.__index = RespawnPool
 
 -------------------------------------

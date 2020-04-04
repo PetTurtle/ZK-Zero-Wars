@@ -5,7 +5,7 @@ local spSetUnitBlocking = Spring.SetUnitBlocking
 local spGetPlayerList = Spring.GetPlayerList
 local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
 
-Platform = {}
+local Platform = {}
 Platform.__index = Platform
 
 function Platform.new(rect)

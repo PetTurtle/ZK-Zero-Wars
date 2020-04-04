@@ -12,7 +12,7 @@ local heavyTimeout = 7000 -- 3.88m
 local artyTimeout = 4000 -- 2.22m
 local antiairTimeout = 200 --1800 -- 1.00m
 
-CloneTimeout = {}
+local CloneTimeout = {}
 CloneTimeout.__index = CloneTimeout
 
 function CloneTimeout.new()

@@ -5,7 +5,7 @@ local spSetUnitBlocking = Spring.SetUnitBlocking
 
 local spGetTeamList = Spring.GetTeamList
 
-Side = {}
+local Side = {}
 Side.__index = Side
 
 function Side.new(allyID, platforms)
