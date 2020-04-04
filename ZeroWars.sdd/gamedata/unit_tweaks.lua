@@ -3,9 +3,18 @@ local unit_tweaks = {
         customparams = {
             statsname = nil,
             comDrone = true,
-            morphto_1 = [[heroreaver]],
+            morphto_1 = [[heroknight]],
             morphcost_1 = 1,
-            morphtime_1 = 1
+            morphtime_1 = 1,
+            morphto_2 = [[heroreaver]],
+            morphcost_2 = 1,
+            morphtime_2 = 1,
+            morphto_3 = [[heropuppy]],
+            morphcost_3 = 1,
+            morphtime_3 = 1,
+            morphto_4 = [[herosniper]],
+            morphcost_4 = 1,
+            morphtime_4 = 1,
         }
     },
     chicken = {

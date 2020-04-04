@@ -31,7 +31,7 @@ return {
         idleAutoHeal = 20,
         idleTime = 150,
         leaveTracks = true,
-        maxDamage = 820,
+        maxDamage = 2000,
         maxSlope = 36,
         maxVelocity = 1.71,
         maxWaterDepth = 22,
@@ -39,7 +39,7 @@ return {
         movementClass = [[KBOT3]],
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]],
         objectName = [[Spherewarrior.s3o]],
-        script = [[cloakriot.lua]],
+        script = [[heroreaver.lua]],
         selfDestructAs = [[SMALL_UNITEX]],
         sfxtypes = {
             explosiongenerators = {
@@ -55,52 +55,85 @@ return {
         trackWidth = 20,
         turnRate = 1800,
         upright = true,
+        canManualFire = true,
         weapons = {
             {
-                def = [[WARRIOR_WEAPON]],
+                def = [[GRENADE_LAUNCHER]],
+                badTargetCategory = [[FIXEDWING]],
+                onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]]
+            },
+            {
+                def = [[EMP_DGUN]],
                 badTargetCategory = [[FIXEDWING]],
                 onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]]
             }
         },
         weaponDefs = {
-            WARRIOR_WEAPON = {
-                name = [[Heavy Pulse MG]],
-                accuracy = 350,
-                alphaDecay = 0.7,
-                areaOfEffect = 96,
+            GRENADE_LAUNCHER = {
+                name = [[Grenade Launcher]],
+                accuracy = 400,
+                areaOfEffect = 250,
                 burnblow = true,
-                burst = 3,
-                burstrate = 0.1,
-                craterBoost = 0.15,
-                craterMult = 0.3,
-                customParams = {
-                    light_camera_height = 1600,
-                    light_color = [[0.8 0.76 0.38]],
-                    light_radius = 150
-                },
+                burst = 1,
+                burstrate = 0.3,
                 damage = {
-                    default = 45,
-                    planes = 45,
-                    subs = 2.25
+                    default = 120
                 },
-                edgeEffectiveness = 0.5,
+                edgeEffectiveness = 0.8,
                 explosionGenerator = [[custom:EMG_HIT_HE]],
                 firestarter = 70,
-                impulseBoost = 0,
-                impulseFactor = 0.4,
-                intensity = 0.7,
+                impulseBoost = 50,
+                intensity = 1,
                 interceptedByShieldType = 1,
+                model = [[wep_b_fabby.s3o]],
                 noSelfDamage = true,
                 range = 275,
-                reloadtime = 0.5,
-                rgbColor = [[1 0.95 0.4]],
-                separation = 1.5,
-                soundHit = [[weapon/cannon/emg_hit]],
-                soundStart = [[weapon/heavy_emg]],
-                stages = 10,
+                reloadtime = 1.2,
+                soundHit = [[explosion/ex_med6]],
+                soundHitVolume = 6,
+                soundStart = [[weapon/cannon/mini_cannon]],
+                soundStartVolume = 2,
                 turret = true,
                 weaponType = [[Cannon]],
-                weaponVelocity = 550
+                weaponVelocity = 230
+            },
+            EMP_DGUN = {
+                name = [[E.M.P Blast]],
+                commandFire = true,
+                areaOfEffect = 160,
+                burst = 20,
+                burstRate = 0.08,
+                craterBoost = 0,
+                craterMult = 0,
+                customParams = {
+                    light_color = [[0.75 0.75 0.56]],
+                    light_radius = 220
+                },
+                damage = {
+                    default = 1200
+                },
+                duration = 8,
+                edgeEffectiveness = 0.8,
+                explosionGenerator = [[custom:YELLOW_LIGHTNINGPLOSION]],
+                fireStarter = 0,
+                impulseBoost = 0,
+                impulseFactor = 0,
+                intensity = 12,
+                interceptedByShieldType = 1,
+                noSelfDamage = true,
+                paralyzer = true,
+                paralyzeTime = 6,
+                range = 200,
+                reloadtime = 2.7,
+                sprayAngle = 2048,
+                rgbColor = [[1 1 0.25]],
+                soundStart = [[weapon/lightning_fire]],
+                soundTrigger = true,
+                texture1 = [[lightning]],
+                thickness = 10,
+                turret = true,
+                weaponType = [[LightningCannon]],
+                weaponVelocity = 450
             }
         },
         featureDefs = {
