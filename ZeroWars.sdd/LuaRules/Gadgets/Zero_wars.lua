@@ -23,6 +23,7 @@ local Deployer = VFS.Include("LuaRules/Gadgets/Zerowars/Deployer.lua")
 local CloneTimeout = VFS.Include("LuaRules/Gadgets/Zerowars/CloneTimeout.lua")
 local IdleClones = VFS.Include("LuaRules/Gadgets/Zerowars/IdleClones.lua")
 local Layout = VFS.Include("LuaRules/Gadgets/Zerowars/Layout.lua")
+local ControlPoint = VFS.Include("LuaRules/Gadgets/Zerowars/ControlPoint.lua")
 
 local spDestroyUnit = Spring.DestroyUnit
 local spSetTeamResource = Spring.SetTeamResource
@@ -46,6 +47,7 @@ local MAPSIZEZ = Game.mapSizeZ
 
 local gameStarted = false
 local sides = {}
+local controlPoints = {}
 local deployer
 local cloneTimeout
 local idleClones
@@ -68,6 +70,9 @@ local function onStart()
             spDestroyUnit(unit, false, true)
         end
     end
+
+    -- Create ControlPoints
+    controlPoints[1] = ControlPoint.new({x = 4095, y = 128, z = 1535}, 3)
 
     gameStarted = true
 end
@@ -93,7 +98,7 @@ function gadget:Initialize()
 
     sides[1] = Side.new(allyTeamList[1], Layout[1].platforms)
     sides[2] = Side.new(allyTeamList[2], Layout[2].platforms)
-    
+
     deployer = Deployer.new()
     cloneTimeout = CloneTimeout.new()
     idleClones = IdleClones.new({[allyTeamList[1]] = Layout[1].attackXPos, [allyTeamList[2]] = Layout[2].attackXPos})
@@ -123,6 +128,10 @@ function gadget:GameFrame(frame)
     if frame > 0 and frame % UPDATEFRAME == 0 then
         cloneTimeout:clear(frame)
         idleClones:command()
+
+        for i, controlPoint in pairs(controlPoints) do
+            controlPoint:update()
+        end
     end
 
     -- spawn deploy Queue units
@@ -133,7 +142,9 @@ end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
     local ud = UnitDefs[unitDefID]
-    if ud.customParams.hero then return end
+    if ud.customParams.hero then
+        return
+    end
 
     local x = spGetUnitPosition(unitID)
     if x < 1000 then
