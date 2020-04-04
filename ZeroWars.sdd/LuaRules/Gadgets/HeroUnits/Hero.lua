@@ -52,7 +52,7 @@ function Hero:update(frame)
     end
 end
 
-function Hero:upgrade(unitID, unitDefID, unitTeam, pathID)
+function Hero:upgrade(unitDefID, unitTeam, pathID)
     local points = spGetUnitRulesParam(self._ID, "points")
     if points > 0 then
         local pathLvl = spGetUnitRulesParam(self._ID, pathID)
@@ -61,7 +61,7 @@ function Hero:upgrade(unitID, unitDefID, unitTeam, pathID)
 
             spSetUnitRulesParam(self._ID, pathID, pathLvl)
             spSetUnitRulesParam(self._ID, "points", points - 1)
-            self._upgadeDefs[pathID][pathLvl].upgrade(unitID, unitDefID, unitTeam)
+            self._upgadeDefs[pathID][pathLvl].upgrade(self._ID, unitDefID, unitTeam)
 
             self:_updateStats()
         end

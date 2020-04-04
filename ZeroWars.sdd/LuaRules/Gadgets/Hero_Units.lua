@@ -104,7 +104,7 @@ end
 -------------------------------------
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
     if cmdID == CMD_HERO_UPGRADE and heroes[unitID] then
-        heroes[unitID]:upgrade(unitID, unitDefID, unitTeam, "path" .. cmdParams[1])
+        heroes[unitID]:upgrade(unitDefID, unitTeam, "path" .. cmdParams[1])
         return true
     end
 
