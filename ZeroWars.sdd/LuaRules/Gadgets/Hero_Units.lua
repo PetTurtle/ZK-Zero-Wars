@@ -40,7 +40,6 @@ local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 -- Variables
 local heroes = {}
 local sides = {}
-local xpMulti = 1000
 local CMD_HERO_UPGRADE = 49731
 local CMD_HERO_CHEAT_XP = 49732
 local CMD_HERO_CHEAT_Level = 49733
