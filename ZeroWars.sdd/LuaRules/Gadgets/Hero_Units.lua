@@ -167,7 +167,7 @@ end
 -- Give attackers xp on hero kill
 -------------------------------------
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, attackerID)
-    if heroes[unitID] then
+    if heroes[unitID] and not paralyzer then
         local heroHP = spGetUnitHealth(unitID)
         if heroHP <= damage then
             if attackerID and heroes[attackerID] then
