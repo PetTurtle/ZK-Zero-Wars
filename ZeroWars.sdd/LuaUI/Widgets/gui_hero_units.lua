@@ -203,12 +203,12 @@ end
 
 local function toggleCheats(state)
 	if state and not cheats then
-		window:AddChild(cheatXPButton)
-		window:AddChild(cheatLevelButton)
+		cheatXPButton:SetVisibility(state)
+		cheatLevelButton:SetVisibility(state)
 		cheats = true
 	elseif not state and cheats then
-		window:RemoveChild(cheatXPButton)
-		window:RemoveChild(cheatLevelButton)
+		cheatXPButton:SetVisibility(state)
+		cheatLevelButton:SetVisibility(state)
 		cheats = false
 	end
 end
@@ -222,6 +222,7 @@ local function setUpdateBlocked(id, params, level)
 	upgradeButtons[id].OnClick = nil
 	upgradeButtons[id].backgroundColor = inactiveColor
 	setUpdateParams(id, params, level)
+	upgradeButtons[id]:Invalidate()
 end
 
 local function setUpdateOption(id, params, level)
@@ -232,12 +233,14 @@ local function setUpdateOption(id, params, level)
 	}
 	upgradeButtons[id].backgroundColor = activeColor
 	setUpdateParams(id, params, level)
+	upgradeButtons[id]:Invalidate()
 end
 
 local function setUpgradeMaxed(id)
 	upgradeButtons[id]:SetCaption("Max Level")
 	upgradeButtons[id].tooltip = "Max Level"
 	upgradeButtons[id].backgroundColor = inactiveColor
+	upgradeButtons[id]:Invalidate()
 end
 
 local function UpdateUI(unitID, ud)
@@ -261,7 +264,6 @@ local function UpdateUI(unitID, ud)
 	end
 
 	local upgadeDefs = HeroUnitDefs[ud.name]
-
 	for i = 1, 3 do
 		local pathLevel = spGetUnitRulesParam(unitID, "path" .. i)
 
@@ -316,10 +318,12 @@ function widget:Shutdown()
 	window:Dispose()
 end
 
-function widget:GameProgress(serverFrameNum)
-	if heroID then
+function widget:GameFrame(n)
+	if n % 15 == 0 and heroID then
 		local ud = UnitDefs[spGetUnitDefID(heroID)]
 		UpdateUI(heroID, ud)
+
+		toggleCheats(Spring.IsCheatingEnabled())
 	end
 end
 
