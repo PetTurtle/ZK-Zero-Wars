@@ -18,7 +18,7 @@ function Platform.new(rect)
     return instance
 end
 
-function Platform:onStart(units)
+function Platform:onStart(units, buildings)
     local xOffset = self._rect:getX()
     local zOffset = self._rect:getZ()
 
@@ -28,7 +28,7 @@ function Platform:onStart(units)
                 spCreateUnit(
                 units[j].unitName,
                 xOffset + units[j].x,
-                100,
+                200,
                 zOffset + units[j].z,
                 units[j].dir,
                 self._teamList[i]
@@ -37,6 +37,11 @@ function Platform:onStart(units)
             spSetUnitResourcing(unitID, "ume", units[j].energyIncome or 0)
             spSetUnitBlocking(unitID, units[j].isBlocking or true, units[j].isBlocking or true)
         end
+    end
+
+    for i, unit in pairs(buildings) do
+        local team = self._teamList[(i % #self._teamList) + 1]
+        spCreateUnit(unit.unitName, xOffset + unit.x, 200, zOffset + unit.z, unit.dir, team)
     end
 end
 

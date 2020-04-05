@@ -80,5 +80,18 @@ layout[2].playerUnits = {
     {unitName = "basiccon", x = 520, z = 410, dir = "w", metalIncome = 2, isBlocking = false, energyIncome = 200},
 }
 
+layout[1].platfromBuildings = {
+    {unitName = "mextier1", x = -256, z = 240, dir = "e"},
+    {unitName = "mextier1", x = -256, z = 336, dir = "e"},
+    {unitName = "mextier1", x = -256, z = 432, dir = "e"},
+    {unitName = "mextier1", x = -256, z = 528, dir = "e"},
+}
+layout[2].platfromBuildings = {
+    {unitName = "mextier1", x = 624, z = 240, dir = "e"},
+    {unitName = "mextier1", x = 624, z = 336, dir = "e"},
+    {unitName = "mextier1", x = 624, z = 432, dir = "e"},
+    {unitName = "mextier1", x = 624, z = 528, dir = "e"},
+}
+
 
 return layout

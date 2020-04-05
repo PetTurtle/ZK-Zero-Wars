@@ -29,7 +29,7 @@ function Side.new(allyID, platforms)
     return instance
 end
 
-function Side:onStart(buildings, playerUnits, customParams)
+function Side:onStart(buildings, playerUnits, platformBuildings)
     local baseID, turretId
     local mainTeam = spGetTeamList(self._allyID)[1]
     for i = 1, #buildings do
@@ -48,7 +48,7 @@ function Side:onStart(buildings, playerUnits, customParams)
 
     -- deploy platforms
     for i = 1, #self._platforms do
-        self._platforms[i]:onStart(playerUnits)
+        self._platforms[i]:onStart(playerUnits, platformBuildings)
     end
 end
 

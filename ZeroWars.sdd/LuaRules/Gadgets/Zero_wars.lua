@@ -53,8 +53,8 @@ local cloneTimeout
 local idleClones
 
 local function onStart()
-    sides[1]:onStart(Layout[1].buildings, Layout[1].playerUnits)
-    sides[2]:onStart(Layout[2].buildings, Layout[2].playerUnits)
+    sides[1]:onStart(Layout[1].buildings, Layout[1].playerUnits, Layout[1].platfromBuildings)
+    sides[2]:onStart(Layout[2].buildings, Layout[2].playerUnits, Layout[2].platfromBuildings)
 
     -- Clear resources
     for i, allyTeam in pairs(spGetAllyTeamList()) do
