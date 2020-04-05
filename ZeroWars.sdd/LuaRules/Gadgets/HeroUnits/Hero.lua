@@ -22,6 +22,18 @@ local function callScript(unitID, funcName, args)
     end
 end
 
+local function xpForLevel(level)
+    return 100*level*level + 500
+end
+
+local function getTotalXP(level)
+    local total = 0
+    for i = 0, level do
+        total = total + xpForLevel(i)
+    end
+    return total
+end
+
 local Hero = {}
 Hero.__index = Hero
 
@@ -88,7 +100,7 @@ function Hero:giveXP(xp)
     if not self._maxLevel then
         local newXP = self:getXP() + xp
         local level = spGetUnitRulesParam(self._ID, "level")
-        local xpNeeded = 1000 + (level * 500) -- 200 -> 450-> lvl(x) = lvl(x-1) + 250*(x-1)
+        local xpNeeded = xpForLevel(level)
 
         while newXP >= xpNeeded do
             self:levelUp()
@@ -118,7 +130,9 @@ end
 
 function Hero:getKillXP()
     local currXP = spGetUnitRulesParam(self._ID, "xp")
-    return 40 + (0.13 * currXP)
+    local level = spGetUnitRulesParam(self._ID, "level")
+    local totalXP = getTotalXP(level-1)
+    return 40 + (0.13 * (totalXP + currXP))
 end
 
 function Hero:getLevel()

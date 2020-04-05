@@ -115,7 +115,7 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
             heroes[unitID]:giveXP(100)
         elseif cmdID == CMD_HERO_CHEAT_Level and heroes[unitID] then
             local level = heroes[unitID]:getLevel()
-            local xpNeeded = 1000 + (level * 500)
+            local xpNeeded = 100*level*level + 500
             heroes[unitID]:giveXP(xpNeeded)
         end
     end

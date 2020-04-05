@@ -41,6 +41,10 @@ local visible = true
 local cheats = true
 local heroID
 
+local function xpForLevel(level)
+    return 100*level*level + 500
+end
+
 local function CurrentModuleClick(self, path)
 	spGiveOrderToUnit(heroID, CMD_CUSTOM_UPGRADE, {path}, 0)
 end
@@ -248,7 +252,7 @@ local function UpdateUI(unitID, ud)
 	local xp = spGetUnitRulesParam(unitID, "xp")
 	local level = spGetUnitRulesParam(unitID, "level")
 	local points = spGetUnitRulesParam(unitID, "points")
-	local xpNeeded = 1000 + (level * 500)
+	local xpNeeded = xpForLevel(level)
 
 	levelLabel:SetCaption("Level " .. (level + 1))
 	pointsLabel:SetCaption("Points " .. points)
