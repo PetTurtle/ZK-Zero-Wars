@@ -88,7 +88,7 @@ function Hero:giveXP(xp)
     if not self._maxLevel then
         local newXP = self:getXP() + xp
         local level = spGetUnitRulesParam(self._ID, "level")
-        local xpNeeded = 1000 + (level * 500)
+        local xpNeeded = 1000 + (level * 500) -- 200 -> 450-> lvl(x) = lvl(x-1) + 250*(x-1)
 
         while newXP >= xpNeeded do
             self:levelUp()

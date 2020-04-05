@@ -9,14 +9,9 @@ local mapinfo = {
 	description = "made for zero-k",
 	author      = "petturtle",
 	version     = "v1.6",
-	--mutator   = "deployment";
-	--mapfile   = "", --// location of smf/sm3 file (optional)
-	modtype     = 3, --// 1=primary, 0=hidden, 3=map
+	modtype     = 3,
 	depend      = {"Map Helper v1"},
 	replace     = {},
-
-	--startpic   = "", --// deprecated
-	--StartMusic = "", --// deprecated
 
 	maphardness     = 100,
 	notDeformable   = true,
@@ -27,84 +22,14 @@ local mapinfo = {
 	voidWater       = true,
 	autoShowMetal   = true,
 
-
 	smf = {
 		minheight = -25,
 		maxheight = 200,
-		--smtFileName0 = "",
-		--smtFileName1 = "",
-		--smtFileName.. = "",
-		--smtFileNameN = "",
 	},
 
-	sound = {
-		--// Sets the _reverb_ preset (= echo parameters),
-		--// passfilter (the direct sound) is unchanged.
-		--//
-		--// To get a list of all possible presets check:
-		--//   https://github.com/spring/spring/blob/master/rts/System/Sound/OpenAL/EFXPresets.cpp
-		--//
-		--// Hint:
-		--// You can change the preset at runtime via:
-		--//   /tset UseEFX [1|0]
-		--//   /tset snd_eaxpreset preset_name   (may change to a real cmd in the future)
-		--//   /tset snd_filter %gainlf %gainhf  (may    "   "  "  "    "  "   "    "   )
-		preset = "default",
-
-		passfilter = {
-			--// Note, you likely want to set these
-			--// tags due to the fact that they are
-			--// _not_ set by `preset`!
-			--// So if you want to create a muffled
-			--// sound you need to use them.
-			gainlf = 1.0,
-			gainhf = 1.0,
-		},
-
-		reverb = {
-			--// Normally you just want use the `preset` tag
-			--// but you can use handtweak a preset if wanted
-			--// with the following tags.
-			--// To know their function & ranges check the
-			--// official OpenAL1.1 SDK document.
-			
-			--density
-			--diffusion
-			--gain
-			--gainhf
-			--gainlf
-			--decaytime
-			--decayhflimit
-			--decayhfratio
-			--decaylfratio
-			--reflectionsgain
-			--reflectionsdelay
-			--reflectionspan
-			--latereverbgain
-			--latereverbdelay
-			--latereverbpan
-			--echotime
-			--echodepth
-			--modtime
-			--moddepth
-			--airabsorptiongainhf
-			--hfreference
-			--lfreference
-			--roomrollofffactor
-		},
-	},
 
 	resources = {
-		--grassBladeTex = "",
-
-		--grassShadingTex = "",
 		detailTex = "detailtexblurred.bmp",
-		--specularTex = "",
-		--splatDetailTex = "",
-		--splatDistrTex = "",
-		--skyReflectModTex = "",
-		--detailNormalTex = "",
-		--lightEmissionTex = "",
 	},
 
 	splats = {
@@ -171,8 +96,6 @@ local mapinfo = {
 		specularFactor = 1.0,
 		specularPower  = 20.0,
 
-		--planeColor = {0.0, 0.4, 0.0},
-
 		surfaceColor  = {0.75, 0.8, 0.85},
 		surfaceAlpha  = 0.55,
 		diffuseColor  = {1.0, 1.0, 1.0},
@@ -194,15 +117,6 @@ local mapinfo = {
 
 		shoreWaves = false,
 		forceRendering = false,
-
-		--// undefined == load them from resources.lua!
-		--texture =       "",
-		--foamTexture =   "",
-		--normalTexture = "",
-		--caustics = {
-		--	"",
-		--	"",
-		--},
 	},
 
 	teams = {
