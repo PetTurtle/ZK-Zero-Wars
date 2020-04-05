@@ -331,8 +331,8 @@ function widget:CommandsChanged()
 	local units = spGetSelectedUnits()
 	if units then
 		for i = 1, #units do
-			local ud = UnitDefs[spGetUnitDefID(units[i])]
-			if ud.customParams.hero and spGetUnitRulesParam(units[i], "level") then
+			if spGetUnitRulesParam(units[i], "level") then
+				local ud = UnitDefs[spGetUnitDefID(units[i])]
 				UpdateUI(units[i], ud)
 				setVisible(true)
 				return
