@@ -57,6 +57,9 @@ return {
         trackWidth = 12,
         turnRate = 1800,
         canManualFire = true,
+        reclaimable = false,
+        canSelfD = false,
+        capturable = false,
         weapons = {
             {
                 def = [[MISSILE]],

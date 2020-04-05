@@ -68,6 +68,9 @@ unitDef = {
   turnRate            = 1000,
   upright             = false,
   workerTime          = 20,
+  reclaimable         = false,
+  canSelfD = false,
+  capturable = false,
 
   featureDefs         = {
 

@@ -11,6 +11,10 @@ unitDef = {
     metalMake = 8,
     footprintX = 6,
     footprintZ = 6,
+    reclaimable = false,
+    canSelfD = false,
+    capturable = false,
+
     customParams = {},
     featureDefs = {
         DEAD = {

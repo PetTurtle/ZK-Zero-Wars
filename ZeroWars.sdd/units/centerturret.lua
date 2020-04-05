@@ -27,7 +27,10 @@ unitDef = {
     objectName                    = [[heavyturret.s3o]],
     script                        = [[centerturret.lua]],
     selfDestructAs                = [[LARGE_BUILDINGEX]],
-  
+    reclaimable         = false,
+    canSelfD = false,
+    capturable = false,
+
     sfxtypes               = {
   
       explosiongenerators = {

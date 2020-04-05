@@ -56,6 +56,9 @@ return {
         turnRate = 1800,
         upright = true,
         canManualFire = true,
+        reclaimable = false,
+        canSelfD = false,
+        capturable = false,
         weapons = {
             {
                 def = [[GRENADE_LAUNCHER]],

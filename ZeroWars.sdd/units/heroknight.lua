@@ -58,6 +58,9 @@ return {
         turnRate = 1400,
         upright = true,
         canManualFire = true,
+        reclaimable = false,
+        canSelfD = false,
+        capturable = false,
         weapons = {
             {
                 def = [[MAINLASER]],

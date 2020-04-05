@@ -10,6 +10,10 @@ unitDef = {
     footprintX = 4,
     footprintZ = 4,
     buildCostMetal = 600,
+    reclaimable = false,
+    canSelfD = false,
+    capturable = false,
+
     customParams = {
         soundselect = [[cloaker_select]],
         collisionvolumescales = [[60 70 60]],

@@ -11,9 +11,12 @@ unitDef = {
     metalMake = 6,
     footprintX = 6,
     footprintZ = 6,
+    reclaimable = false,
+    canSelfD = false,
+    capturable = false,
     customParams = {
         morphto = [[mextier4]],
-        morphcost = 1200,
+        morphcost = 1200
     },
     featureDefs = {
         DEAD = {
