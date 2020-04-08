@@ -11,8 +11,6 @@ return {
         canMove = true,
         canPatrol = true,
         category = [[LAND]],
-        cloakCost = 1,
-        cloakCostMoving = 5,
         collisionVolumeOffsets = [[0 0 0]],
         collisionVolumeScales = [[30 60 30]],
         collisionVolumeType = [[cylY]],
@@ -23,9 +21,7 @@ return {
         customParams = {
             hero = true,
             modelradius = [[15]],
-            dontfireatradarcommand = "0"
         },
-        decloakOnFire = false,
         explodeAs = [[BIG_UNITEX]],
         footprintX = 3,
         footprintZ = 3,
@@ -34,12 +30,10 @@ return {
         idleTime = 1800,
         leaveTracks = true,
         losEmitHeight = 40,
-        initCloaked = true,
         maxDamage = 560,
         maxSlope = 36,
         maxVelocity = 1.4,
         maxWaterDepth = 22,
-        minCloakDistance = 155,
         movementClass = [[KBOT3]],
         noChaseCategory = [[TERRAFORM FIXEDWING GUNSHIP SUB]],
         objectName = [[sharpshooter.s3o]],
@@ -79,7 +73,7 @@ return {
             GAUSS = {
                 name = [[Light Gauss Cannon]],
                 alphaDecay = 0.12,
-                areaOfEffect = 16,
+                areaOfEffect = 50,
                 avoidfeature = false,
                 bouncerebound = 0.15,
                 bounceslip = 1,
@@ -91,8 +85,7 @@ return {
                     single_hit = true
                 },
                 damage = {
-                    default = 200.1,
-                    planes = 200.1
+                    default = 300
                 },
                 explosionGenerator = [[custom:gauss_hit_m]],
                 groundbounce = 1,
@@ -122,7 +115,7 @@ return {
             SHOCKRIFLE = {
                 name = [[Pulsed Particle Projector]],
                 commandFire = true,
-                areaOfEffect = 16,
+                areaOfEffect = 30,
                 colormap = [[0 0 0.4 0   0 0 0.6 0.3   0 0 0.8 0.6   0 0 0.9 0.8   0 0 1 1   0 0 1 1]],
                 craterBoost = 0,
                 craterMult = 0,

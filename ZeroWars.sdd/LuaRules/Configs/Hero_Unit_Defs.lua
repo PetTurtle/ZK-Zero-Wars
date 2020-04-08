@@ -41,7 +41,7 @@ local HeroUpgradeDefs = {
         path1 = {
             -- weapon dmg params
             [1] = {
-                name = "Heavy Grenade",
+                name = "HEAT Batrey",
                 desc = "+20 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
                 end
@@ -148,7 +148,7 @@ local HeroUpgradeDefs = {
             }
         }
     },
-    heroreaver = {
+    heroduck = {
         stats = {
             minHP = 2000,
             maxHP = 9000,
@@ -405,27 +405,31 @@ local HeroUpgradeDefs = {
         path1 = {
             -- weapon dmg params
             [1] = {
-                name = "Heavy Grenade",
-                desc = "+20 dmg",
+                name = "Higher Calibre",
+                desc = "+100 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 400)
                 end
             },
             [2] = {
-                name = "HESH Ammo",
-                desc = "+30 aoe",
+                name = "Shrapnel",
+                desc = "+60 aoe",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponDamages(unitID, 1, "damageAreaOfEffect", 110)
                 end
             },
             [3] = {
-                name = "Impact Upgrade",
-                desc = "+20 dmg",
+                name = "Improved Percing",
+                desc = "+100 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 500)
                 end
             },
             [4] = {
-                name = "Cluster Grenade",
-                desc = "+30 aoe",
+                name = "Improved Piercing",
+                desc = "+100 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 600)
                 end
             }
         },
@@ -433,81 +437,92 @@ local HeroUpgradeDefs = {
             -- weapon fire params
             [1] = {
                 name = "Extended Mag",
-                desc = "1.0s between shots",
+                desc = "1.75s between shots",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.75)
                 end
             },
             [2] = {
-                name = "Autoloader",
-                desc = "0.8s between shots",
+                name = "Improved Firerate",
+                desc = "1.5s between shots",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.5)
                 end
             },
             [3] = {
-                name = "Double Salvo",
-                desc = "Two Salvos",
+                name = "Semi-Automatic",
+                desc = "1.25s between shots",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.25)
                 end
             },
             [4] = {
-                name = "Lazer Accuracy",
-                desc = " Grenades never miss",
+                name = "Belt-Fed",
+                desc = " 1s between shots",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1)
                 end
             }
         },
         path3 = {
-            -- armour
+            -- speed
             [1] = {
-                name = "Light Armour",
-                desc = "1000 HP Increase",
+                name = "Improved Servo",
+                desc = "+ Unit Max Speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    Spring.MoveCtrl.SetGroundMoveTypeData(unitID, "maxSpeed", 60)
                 end
             },
             [2] = {
-                name = "Medium Armour",
-                desc = "2000 HP Increase",
+                name = "Advanced Motors",
+                desc = "+ Unit Max Speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    Spring.MoveCtrl.SetGroundMoveTypeData(unitID, "maxSpeed", 75)
                 end
             },
             [3] = {
-                name = "Heavy Armour",
-                desc = "3000 HP Increase",
+                name = "Industrial Motors",
+                desc = "+ Unit Max Speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    Spring.MoveCtrl.SetGroundMoveTypeData(unitID, "maxSpeed", 90)
                 end
             },
             [4] = {
-                name = "Ultimate Armour",
-                desc = "5000 HP Increase",
+                name = "Experimental Servo",
+                desc = "+ Unit Max Speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    Spring.MoveCtrl.SetGroundMoveTypeData(unitID, "maxSpeed", 105)
                 end
             }
         },
         path4 = {
             -- dgun
             [1] = {
-                name = "E.M.P Blast",
-                desc = "Stuns All Units in radius",
+                name = "Shock Rifle",
+                desc = "Pulsed Particle Projector",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     enableManualFire(unitID)
                 end
             },
             [2] = {
-                name = "E.M.P Overdrive",
-                desc = "Increase Stun for 4s",
+                name = "Higher Calibre",
+                desc = "+ 1000 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 2, 3500)
                 end
             },
             [3] = {
-                name = "E.M.P Overclock",
-                desc = "Increase Stun for 5s",
+                name = "H.E.A.T Ammo",
+                desc = "+150 aoe",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponDamages(unitID, 2, "damageAreaOfEffect", 180)
                 end
             },
             [4] = {
-                name = "E.M.P Storm",
-                desc = "Increase Stun By 6s",
+                name = "Max Calibre",
+                desc = "+ 1000 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 2, 4500)
                 end
             }
         }
