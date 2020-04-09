@@ -1,5 +1,6 @@
 include "UnitScaler.lua"
 
+local base = piece 'base'
 local gun = piece "gun"
 local yaw = piece "yaw"
 local pelvis = piece "pelvis"
@@ -169,13 +170,50 @@ local function WalkThread()
 	end
 end
 
+local function ShotScript()
+	Sleep(1)
+	EmitSfx(lfoot, 1027)
+	EmitSfx(rfoot, 1027)
+	Explode(lcalf, SFX.FALL)
+	Explode(rcalf, SFX.FALL)
+	Explode(lfoot, SFX.FALL)
+	Explode(rfoot, SFX.FALL)
+	Spring.PlaySoundFile("sounds/weapon/missile/sabot_fire.wav", 5, px, py, pz)
+	Sleep(1000)
+end
+
 function script.Create()
 	Turn(fire, x_axis, math.rad(-45.000000))
 	StartThread(GG.Script.SmokeUnit, unitID, {pelvis})
 end
 
 function UpdateScale(params)
-	GG.SetScale(unitID, pelvis, params.level, params.minScale, params.maxScale)
+	GG.SetScale(unitID, base, params.level, params.minScale, params.maxScale)
+end
+
+function jumping(jumpPercent)
+end
+
+function preJump(turn, distance)
+end
+
+function beginJump()
+	StartThread(ShotScript)
+end
+
+function halfJump()
+end
+
+function endJump()
+	Signal(SIG_MOVE)
+
+	Move(pelvis, y_axis, 0.000000, 1.000000)
+	Turn(rthigh, x_axis, 0, math.rad(200.000000))
+	Turn(rcalf, x_axis, 0, math.rad(200.000000))
+	Turn(rfoot, x_axis, 0, math.rad(200.000000))
+	Turn(lthigh, x_axis, 0, math.rad(200.000000))
+	Turn(lcalf, x_axis, 0, math.rad(200.000000))
+	Turn(lfoot, x_axis, 0, math.rad(200.000000))
 end
 
 function script.StartMoving()
@@ -219,23 +257,6 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(gun, x_axis)
 	StartThread(RestoreAfterDelay)
 	return true
-end
-
-local function ShotScript()
-	Sleep(1)
-	Explode(lcalf, SFX.FALL)
-	Explode(rcalf, SFX.FALL)
-	Explode(lfoot, SFX.FALL)
-	Explode(rfoot, SFX.FALL)
-	--GG.PuppyHandler_Shot(unitID)
-end
-
-function script.Shot()
-	--StartThread(ShotScript)
-end
-
-function script.BlockShot(num, targetID)
-	--return GG.PuppyHandler_IsHidden(unitID) or GG.OverkillPrevention_CheckBlock(unitID, targetID, 407, 15, 0.25)
 end
 
 function script.Killed(recentDamage, maxHealth)
