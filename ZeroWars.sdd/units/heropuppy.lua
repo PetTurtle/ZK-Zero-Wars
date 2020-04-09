@@ -21,7 +21,13 @@ return {
         selectionVolumeType = [[ellipsoid]],
         customParams = {
             hero = true,
-            modelradius = [[10]]
+            modelradius = [[10]],
+            canjump = 1,
+            jump_range = 400,
+            jump_height = 50,
+            jump_speed = 12,
+            jump_reload = 1,
+            jump_from_midair = 1
         },
         explodeAs = [[TINY_BUILDINGEX]],
         footprintX = 2,
