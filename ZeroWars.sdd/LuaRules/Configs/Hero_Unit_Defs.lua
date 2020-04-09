@@ -20,13 +20,12 @@ local function setWeaponDamage(unitID, weaponID, damage)
     end
 end
 
-local function enableManualFire(unitID)
-    local manualFireIndex = spFindUnitCmdDesc(unitID, CMD.MANUALFIRE)
-    if manualFireIndex then
-        local cmdTable = spGetUnitCmdDescs(unitID, manualFireIndex)
-        --cmdTable.hidden = false
+local function enableCmd(unitID, CMD)
+    local index = spFindUnitCmdDesc(unitID, CMD)
+    if index then
+        local cmdTable = spGetUnitCmdDescs(unitID, index)
         cmdTable.disabled = false
-        spEditUnitCmdDesc(unitID, manualFireIndex, cmdTable)
+        spEditUnitCmdDesc(unitID, index, cmdTable)
     end
 end
 
@@ -125,7 +124,7 @@ local HeroUpgradeDefs = {
                 name = "E.M.P Blast",
                 desc = "Stuns All Units in radius",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    enableManualFire(unitID)
+                    enableCmd(unitID, CMD.MANUALFIRE)
                 end
             },
             [2] = {
@@ -255,25 +254,28 @@ local HeroUpgradeDefs = {
                 name = "E.M.P Blast",
                 desc = "Stuns All Units in radius",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    enableManualFire(unitID)
+                    enableCmd(unitID, CMD.MANUALFIRE)
                 end
             },
             [2] = {
                 name = "E.M.P Overdrive",
                 desc = "Increase Stun for 4s",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponDamages(unitID, 2, "paralyzeDamageTime", 4)
                 end
             },
             [3] = {
                 name = "E.M.P Overclock",
-                desc = "Increase Stun for 5s",
+                desc = "Increase Stun for 6s",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponDamages(unitID, 2, "paralyzeDamageTime", 6)
                 end
             },
             [4] = {
                 name = "E.M.P Storm",
-                desc = "Increase Stun By 6s",
+                desc = "Increase Stun By 8s",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponDamages(unitID, 2, "paralyzeDamageTime", 8)
                 end
             }
         }
@@ -288,7 +290,7 @@ local HeroUpgradeDefs = {
         path1 = {
             -- weapon dmg params
             [1] = {
-                name = "Heavy Grenade",
+                name = "Missile Pods",
                 desc = "+20 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
                 end
@@ -354,14 +356,15 @@ local HeroUpgradeDefs = {
                 end
             },
             [3] = {
-                name = "Heavy Armour",
-                desc = "3000 HP Increase",
+                name = "Jump",
+                desc = "unlock jump",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    enableCmd(unitID, CMD_JUMP)
                 end
             },
             [4] = {
                 name = "Ultimate Armour",
-                desc = "5000 HP Increase",
+                desc = "3000 HP Increase",
                 upgrade = function(unitID, unitDefID, unitTeam)
                 end
             }
@@ -369,28 +372,31 @@ local HeroUpgradeDefs = {
         path4 = {
             -- dgun
             [1] = {
-                name = "E.M.P Blast",
-                desc = "Stuns All Units in radius",
+                name = "Puppy Spawner",
+                desc = "spawns 4 puppies",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    enableManualFire(unitID)
+                    enableCmd(unitID, CMD.MANUALFIRE)
                 end
             },
             [2] = {
-                name = "E.M.P Overdrive",
-                desc = "Increase Stun for 4s",
+                name = "Flock of Puppies",
+                desc = "spawns 6 puppies",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 2, "burst", 6)
                 end
             },
             [3] = {
-                name = "E.M.P Overclock",
-                desc = "Increase Stun for 5s",
+                name = "Herd of Puppies",
+                desc = "spawns 8 puppies",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 2, "burst", 8)
                 end
             },
             [4] = {
-                name = "E.M.P Storm",
-                desc = "Increase Stun By 6s",
+                name = "Puppy Army",
+                desc = "spawns 12 puppies",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 2, "burst", 12)
                 end
             }
         }
@@ -501,7 +507,7 @@ local HeroUpgradeDefs = {
                 name = "Shock Rifle",
                 desc = "Pulsed Particle Projector",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    enableManualFire(unitID)
+                    enableCmd(unitID, CMD.MANUALFIRE)
                 end
             },
             [2] = {
