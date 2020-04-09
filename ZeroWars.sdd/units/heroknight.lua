@@ -119,6 +119,10 @@ return {
             },
             GAUSS = {
                 name = [[Gauss Battery]],
+                avoidGround = false,
+                avoidFriendly = false,
+                avoidFeature = false,
+                avoidNeutral = false,
                 commandFire = true,
                 alphaDecay = 0.12,
                 areaOfEffect = 16,
@@ -135,7 +139,7 @@ return {
                     reaim_time = 1
                 },
                 damage = {
-                    default = 500,
+                    default = 500
                 },
                 explosionGenerator = [[custom:gauss_hit_h]],
                 groundbounce = 1,

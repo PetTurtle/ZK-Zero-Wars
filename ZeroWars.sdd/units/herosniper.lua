@@ -114,6 +114,10 @@ return {
             },
             SHOCKRIFLE = {
                 name = [[Pulsed Particle Projector]],
+                avoidGround = false,
+                avoidFriendly = false,
+                avoidFeature  = false,
+                avoidNeutral  = false,
                 commandFire = true,
                 areaOfEffect = 30,
                 colormap = [[0 0 0.4 0   0 0 0.6 0.3   0 0 0.8 0.6   0 0 0.9 0.8   0 0 1 1   0 0 1 1]],
