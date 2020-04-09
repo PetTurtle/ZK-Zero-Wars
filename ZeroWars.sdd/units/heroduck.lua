@@ -92,6 +92,10 @@ return {
             },
             EMP_DGUN = {
                 name = [[E.M.P Blast]],
+                avoidGround = false,
+                avoidFriendly = false,
+                avoidFeature  = false,
+                avoidNeutral  = false,
                 commandfire = true,
                 areaOfEffect = 48,
                 craterBoost = 0,
@@ -100,7 +104,7 @@ return {
                     default = 8000
                 },
                 paralyzer = true,
-                paralyzeTime = 8,
+                paralyzeTime = 3,
                 gravityAffected = true,
                 explosionGenerator = [[custom:LIGHTNINGPLOSION128AoE]] --[[custom:LIGHTNINGPLOSION]],
                 separation = 5,
