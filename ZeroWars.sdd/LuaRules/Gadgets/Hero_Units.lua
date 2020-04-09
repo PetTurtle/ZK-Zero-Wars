@@ -141,6 +141,13 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
             cmdTable.disabled = true
             spEditUnitCmdDesc(unitID, manualFireIndex, cmdTable)
         end
+        -- disables jump
+        local jumpIndex = spFindUnitCmdDesc(unitID, CMD_JUMP)
+        if jumpIndex then
+            local cmdTable = spGetUnitCmdDescs(unitID, jumpIndex)
+            cmdTable.disabled = true
+            spEditUnitCmdDesc(unitID, jumpIndex, cmdTable)
+        end
     end
 end
 
