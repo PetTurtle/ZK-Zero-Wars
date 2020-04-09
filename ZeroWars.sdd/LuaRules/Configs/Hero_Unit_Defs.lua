@@ -32,8 +32,8 @@ end
 local HeroUpgradeDefs = {
     heroknight = {
         stats = {
-            minHP = 2000,
-            maxHP = 9000,
+            minHP = 3000,
+            maxHP = 10000,
             minScale = 1,
             maxScale = 2
         },
@@ -282,10 +282,10 @@ local HeroUpgradeDefs = {
     },
     heropuppy = {
         stats = {
-            minHP = 2000,
-            maxHP = 9000,
-            minScale = 1,
-            maxScale = 2
+            minHP = 1400,
+            maxHP = 7500,
+            minScale = 1.5,
+            maxScale = 3
         },
         path1 = {
             -- weapon dmg params
@@ -403,8 +403,8 @@ local HeroUpgradeDefs = {
     },
     herosniper = {
         stats = {
-            minHP = 2000,
-            maxHP = 9000,
+            minHP = 1400,
+            maxHP = 7000,
             minScale = 1,
             maxScale = 2
         },
