@@ -158,9 +158,9 @@ local HeroUpgradeDefs = {
             -- weapon dmg params
             [1] = {
                 name = "Heavy Grenade",
-                desc = "+20 dmg",
+                desc = "+200 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    setWeaponDamage(unitID, 1, 140)
+                    setWeaponDamage(unitID, 1, 600)
                 end
             },
             [2] = {
@@ -172,9 +172,9 @@ local HeroUpgradeDefs = {
             },
             [3] = {
                 name = "Impact Upgrade",
-                desc = "+20 dmg",
+                desc = "+200 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    setWeaponDamage(unitID, 1, 160)
+                    setWeaponDamage(unitID, 1, 800)
                 end
             },
             [4] = {
@@ -291,26 +291,30 @@ local HeroUpgradeDefs = {
             -- weapon dmg params
             [1] = {
                 name = "Missile Pods",
-                desc = "+20 dmg",
+                desc = "+100 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 500)
                 end
             },
             [2] = {
                 name = "HESH Ammo",
-                desc = "+30 aoe",
+                desc = "+50 aoe",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponDamages(unitID, 1, "damageAreaOfEffect", 100)
                 end
             },
             [3] = {
                 name = "Impact Upgrade",
-                desc = "+20 dmg",
+                desc = "+100 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 600)
                 end
             },
             [4] = {
                 name = "Cluster Grenade",
-                desc = "+30 aoe",
+                desc = "+50 aoe",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponDamages(unitID, 1, "damageAreaOfEffect", 150)
                 end
             }
         },
@@ -320,24 +324,29 @@ local HeroUpgradeDefs = {
                 name = "Extended Mag",
                 desc = "1.0s between shots",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1)
                 end
             },
             [2] = {
                 name = "Autoloader",
                 desc = "0.8s between shots",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.8)
                 end
             },
             [3] = {
                 name = "Double Salvo",
                 desc = "Two Salvos",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.2)
+                    spSetUnitWeaponState(unitID, 1, "burst", 2)
                 end
             },
             [4] = {
-                name = "Lazer Accuracy",
-                desc = " Grenades never miss",
+                name = "Overdrive",
+                desc = "less time between salvoes",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.8)
                 end
             }
         },
@@ -345,14 +354,16 @@ local HeroUpgradeDefs = {
             -- armour
             [1] = {
                 name = "Light Armour",
-                desc = "1000 HP Increase",
+                desc = "+1000 HP",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitRulesParam(unitID, "armour", 1000)
                 end
             },
             [2] = {
                 name = "Medium Armour",
-                desc = "2000 HP Increase",
+                desc = "+1000 HP",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitRulesParam(unitID, "armour", 2000)
                 end
             },
             [3] = {
@@ -364,8 +375,9 @@ local HeroUpgradeDefs = {
             },
             [4] = {
                 name = "Ultimate Armour",
-                desc = "3000 HP Increase",
+                desc = "+1000 HP",
                 upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitRulesParam(unitID, "armour", 3000)
                 end
             }
         },

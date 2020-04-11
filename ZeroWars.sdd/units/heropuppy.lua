@@ -26,7 +26,7 @@ return {
             jump_range = 400,
             jump_height = 50,
             jump_speed = 12,
-            jump_reload = 1,
+            jump_reload = 6,
             jump_from_midair = 1
         },
         explodeAs = [[TINY_BUILDINGEX]],
@@ -80,7 +80,9 @@ return {
         weaponDefs = {
             MISSILE = {
                 name = [[Legless Puppy]],
-                areaOfEffect = 40,
+                areaOfEffect = 50,
+                burst = 1,
+                burstrate = 0.5,
                 cegTag = [[VINDIBACK]],
                 craterBoost = 1,
                 craterMult = 2,
@@ -88,7 +90,7 @@ return {
                     burst = Shared.BURST_RELIABLE
                 },
                 damage = {
-                    default = 410.1
+                    default = 400
                 },
                 fireStarter = 70,
                 flightTime = 0.8,
@@ -97,7 +99,7 @@ return {
                 interceptedByShieldType = 2,
                 model = [[puppymissile.s3o]],
                 noSelfDamage = true,
-                range = 170,
+                range = 250,
                 reloadtime = 1.5,
                 smokeTrail = false,
                 soundHit = [[explosion/ex_med5]],
@@ -115,44 +117,42 @@ return {
             SPAWNERMISSILE = {
                 name = [[Legless Puppy]],
                 commandFire = true,
-                areaOfEffect = 40,
-                cegTag = [[VINDIBACK]],
-                burst = 8,
-                burstrate = 0.2,
-                accuracy = 500,
-                sprayAngle = 1180,
+                areaOfEffect = 128,
+                accuracy = 512,
+                burst = 4,
+                burstrate = 0.3,
+                cegTag = [[slam_trail]],
+                craterBoost = 0,
+                craterMult = 0,
                 customParams = {
-                    burst = Shared.BURST_RELIABLE,
                     spawns_name = "jumpscout",
-                    spawns_expire = 60,
+                    spawns_expire = 30,
                     spawn_blocked_by_shield = 1
                 },
-                damage = {
-                    default = 410.1,
-                    planes = 410.1,
-                    subs = 20.5
-                },
-                fireStarter = 70,
-                flightTime = 0.8,
-                impulseBoost = 0.75,
-                impulseFactor = 0.3,
+                flightTime = 12,
+                fireStarter = 100,
+                impulseFactor = 0,
+                damage = {default = 200},
+                edgeEffectiveness = 0.5,
+                explosionGenerator = [[custom:MEDMISSILE_EXPLOSION]],
                 interceptedByShieldType = 1,
                 model = [[puppymissile.s3o]],
-                noSelfDamage = true,
-                range = 250,
-                reloadtime = 1.5,
-                smokeTrail = false,
                 soundHit = [[explosion/ex_med5]],
                 soundHitVolume = 8,
                 soundStart = [[weapon/missile/sabot_fire]],
                 soundStartVolume = 7,
-                startVelocity = 300,
-                tracks = true,
-                turnRate = 56000,
+                range = 550,
+                reloadtime = 15,
+                smokeTrail = false,
+                trajectoryHeight = 1,
+                turnRate = 1000,
                 turret = true,
-                weaponAcceleration = 300,
                 weaponType = [[MissileLauncher]],
-                weaponVelocity = 400
+                weaponAcceleration = 250,
+                weaponVelocity = 250,
+                startVelocity = 250,
+                wobble = 5000,
+                dance = 5
             }
         },
         featureDefs = {
