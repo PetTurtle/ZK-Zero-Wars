@@ -262,7 +262,7 @@ local function UpdateUI(unitID, ud)
 		xpProgressbar:SetMinMax(0, 1)
 		xpProgressbar:SetCaption("Max Level")
 	else
-		xpProgressbar:SetValue(xp)
+		xpProgressbar:SetValue(math.floor(xp))
 		xpProgressbar:SetMinMax(0, xpNeeded)
 		xpProgressbar:SetCaption(xp .. "/" .. xpNeeded)
 	end
