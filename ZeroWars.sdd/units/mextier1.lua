@@ -16,7 +16,7 @@ unitDef = {
     capturable = false,
     customParams = {
         morphto = [[mextier2]],
-        morphcost = 300
+        morphcost = 200
     },
     featureDefs = {
         DEAD = {
