@@ -96,7 +96,7 @@ return {
                 noExplode = true,
                 noSelfDamage = true,
                 numbounce = 40,
-                range = 560,
+                range = 580,
                 reloadtime = 2,
                 rgbColor = [[0.5 1 1]],
                 separation = 0.5,
