@@ -23,7 +23,7 @@ return {
         footprintX = 2,
         footprintZ = 2,
         iconType = [[amphtorpraider]],
-        idleAutoHeal = 100,
+        idleAutoHeal = 250,
         idleTime = 200,
         leaveTracks = true,
         maxDamage = 2000,
