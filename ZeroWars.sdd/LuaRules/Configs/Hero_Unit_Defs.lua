@@ -41,30 +41,30 @@ local HeroUpgradeDefs = {
             -- weapon dmg params
             [1] = {
                 name = "Plasma Upgrade",
-                desc = "+100 dmg",
+                desc = "+50 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    setWeaponDamage(unitID, 1, 200)
+                    setWeaponDamage(unitID, 1, 100)
                 end
             },
             [2] = {
                 name = "Ionized plasma",
-                desc = "+100 dmg",
+                desc = "+50 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    setWeaponDamage(unitID, 1, 300)
+                    setWeaponDamage(unitID, 1, 150)
                 end
             },
             [3] = {
                 name = "Tesla Upgrade",
-                desc = "+100 dmg",
+                desc = "+50 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    setWeaponDamage(unitID, 1, 400)
+                    setWeaponDamage(unitID, 1, 200)
                 end
             },
             [4] = {
                 name = "Sun Core",
-                desc = "+100 dmg",
+                desc = "+50 dmg",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    setWeaponDamage(unitID, 1, 500)
+                    setWeaponDamage(unitID, 1, 250)
                 end
             }
         },

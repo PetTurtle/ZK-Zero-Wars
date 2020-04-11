@@ -79,7 +79,7 @@ return {
                 areaOfEffect = 8,
                 coreThickness = 1,
                 damage = {
-                    default = 100,
+                    default = 50,
                 },
                 duration = 0.016,
                 edgeEffectiveness = 1,
@@ -88,7 +88,7 @@ return {
                 impactOnly = true,
                 impulseFactor = 0,
                 interceptedByShieldType = 1,
-                range = 470,
+                range = 450,
                 reloadtime = 0.2,
                 rgbColor = [[0.2 0.2 1]],
                 soundHit = [[weapon/laser/medlaser_hit]],
