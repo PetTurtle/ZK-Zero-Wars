@@ -13,7 +13,7 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local Deployer = {}
 Deployer.__index = Deployer
 
-local mapCenter = Game.mapSizeX/2
+local mapCenter = Game.mapSizeX / 2
 
 function Deployer.new()
     local instance = {
@@ -31,9 +31,9 @@ function Deployer:add(platformUnits, offset, faceDir, attackXPos)
         local ud
         local buildProgress
         for j = #units, 1, -1 do
-            ud = UnitDefs[spGetUnitDefID(units[i])]
+            ud = UnitDefs[spGetUnitDefID(units[j])]
             buildProgress = select(5, spGetUnitHealth(units[j]))
-            if buildProgress < 1.0 and not (ud.isBuilding or ud.isBuilder or ud.customParams.customcom or ud.customParams.comDrone)then
+            if buildProgress < 1.0 or (ud.isBuilding or ud.isBuilder) then
                 table.remove(units, j)
             end
         end
@@ -62,15 +62,29 @@ function Deployer:deploy()
             ud = UnitDefs[unitDefID]
             x, y, z = spGetUnitPosition(units[i])
             if x then
-                if ud.canFly then y = 200 else y = 128 end
+                if ud.canFly then
+                    y = 200
+                else
+                    y = 128
+                end
 
                 clone = spCreateUnit(unitDefID, x + offset.x, y, z + offset.z, group.faceDir, group.teamID)
                 self._stateCopier:copyUnitStates(units[i], clone)
 
                 spSetUnitRulesParam(clone, "clone", 1)
                 spSetUnitRulesParam(clone, "original", units[i])
-                spGiveOrderToUnit(clone, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, mapCenter, 128, z + offset.z}, {"alt"})
-                spGiveOrderToUnit(clone, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, group.attackXPos, 128, z + offset.z}, {"alt"})
+                spGiveOrderToUnit(
+                    clone,
+                    CMD.INSERT,
+                    {-1, CMD.FIGHT, CMD.OPT_SHIFT, mapCenter, 128, z + offset.z},
+                    {"alt"}
+                )
+                spGiveOrderToUnit(
+                    clone,
+                    CMD.INSERT,
+                    {-1, CMD.FIGHT, CMD.OPT_SHIFT, group.attackXPos, 128, z + offset.z},
+                    {"alt"}
+                )
 
                 clones[cloneCount] = clone
                 cloneCount = cloneCount + 1
