@@ -32,7 +32,7 @@ return {
         explodeAs = [[TINY_BUILDINGEX]],
         footprintX = 2,
         footprintZ = 2,
-        iconType = [[kbotbomb]],
+        iconType = [[commander1]],
         idleAutoHeal = 250,
         idleTime = 200,
         leaveTracks = true,

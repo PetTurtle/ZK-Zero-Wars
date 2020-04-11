@@ -26,7 +26,7 @@ return {
         explodeAs = [[BIG_UNITEX]],
         footprintX = 3,
         footprintZ = 3,
-        iconType = [[kbotassault]],
+        iconType = [[commander1]],
         idleTime = 1800,
         leaveTracks = true,
         losEmitHeight = 35,

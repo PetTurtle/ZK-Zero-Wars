@@ -25,7 +25,7 @@ return {
         explodeAs = [[BIG_UNITEX]],
         footprintX = 3,
         footprintZ = 3,
-        iconType = [[sniper]],
+        iconType = [[commander1]],
         idleAutoHeal = 250,
         idleTime = 200,
         leaveTracks = true,
