@@ -205,8 +205,7 @@ function script.QueryWeapon()
 end
 
 function script.FireWeapon()
-	EmitSfx(flare, GG.Script.UNIT_SFX1)
-	EmitSfx(flare, GG.Script.UNIT_SFX1)
+	--EmitSfx (flare, 1024)
 end
 
 function script.AimWeapon(num, heading, pitch)

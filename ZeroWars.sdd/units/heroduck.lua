@@ -106,7 +106,7 @@ return {
                 paralyzer = true,
                 paralyzeTime = 3,
                 gravityAffected = true,
-                explosionGenerator = [[custom:LIGHTNINGPLOSION128AoE]]
+                explosionGenerator = [[custom:LIGHTNINGPLOSION128AoE]],
                 separation = 5,
                 impulseBoost = 0,
                 impulseFactor = 0,

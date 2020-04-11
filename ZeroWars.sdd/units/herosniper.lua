@@ -129,7 +129,7 @@ return {
                     restrict_in_widgets = 1
                 },
                 damage = {
-                    default = 2500
+                    default = 4000
                 },
                 explosionGenerator = [[custom:spectre_hit]],
                 fireTolerance = 512, -- 2.8 degrees
