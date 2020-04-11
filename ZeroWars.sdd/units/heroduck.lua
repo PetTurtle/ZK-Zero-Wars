@@ -65,14 +65,14 @@ return {
         weaponDefs = {
             GRENADE_LAUNCHER = {
                 name = [[Grenade Launcher]],
-                areaOfEffect = 144,
+                areaOfEffect = 120,
                 burst = 1,
                 burstrate = 0.3,
                 damage = {
-                    default = 200
+                    default = 400
                 },
                 edgeEffectiveness = 0.8,
-                explosionGenerator = [[custom:EMG_HIT_HE]],
+                explosionGenerator = [[custom:flakplosion]],
                 firestarter = 150,
                 impulseBoost = 50,
                 impulseFactor = 0.5,
@@ -106,7 +106,7 @@ return {
                 paralyzer = true,
                 paralyzeTime = 3,
                 gravityAffected = true,
-                explosionGenerator = [[custom:LIGHTNINGPLOSION128AoE]] --[[custom:LIGHTNINGPLOSION]],
+                explosionGenerator = [[custom:LIGHTNINGPLOSION128AoE]]
                 separation = 5,
                 impulseBoost = 0,
                 impulseFactor = 0,
@@ -115,7 +115,7 @@ return {
                 noExplode = true,
                 noSelfDamage = true,
                 range = 500,
-                reloadtime = 1.5,
+                reloadtime = 16,
                 size = 30,
                 soundHit = [[weapon/more_lightning_fast]],
                 soundStart = [[weapon/LightningBolt]],
