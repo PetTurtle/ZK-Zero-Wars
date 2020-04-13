@@ -43,6 +43,9 @@ unitDef = {
     useBuildingGroundDecal = true,
     workerTime = 0,
     yardMap = [[ooo ooo ooo]],
+    reclaimable         = false,
+    canSelfD = false,
+    capturable = false,
 
     weapons = {
         {

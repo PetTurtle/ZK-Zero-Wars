@@ -6,16 +6,10 @@ unitDef = {
   activateWhenBuilt   = true,
   brakeRate           = 1.5,
   buildCostMetal      = 150,
-  buildDistance       = 500,
+  buildDistance       = 128,
   builder             = true,
 
   buildoptions        = {
-    [[staticmex]],
-    [[energysolar]],
-    [[energyfusion]],
-    [[energysingu]],
-    [[energypylon]],
-    
     [[cloakraid]],
     [[spiderassault]],
     [[cloakskirm]],
@@ -26,7 +20,6 @@ unitDef = {
     [[tankraid]],
     [[spiderriot]],
     [[amphimpulse]],
-    [[basiccon]],
     
     [[factoryair]],
     [[factorylight]],
@@ -74,7 +67,10 @@ unitDef = {
   trackWidth          = 22,
   turnRate            = 1000,
   upright             = false,
-  workerTime          = 10,
+  workerTime          = 20,
+  reclaimable         = false,
+  canSelfD = false,
+  capturable = false,
 
   featureDefs         = {
 
