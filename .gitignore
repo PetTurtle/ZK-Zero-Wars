@@ -6,3 +6,4 @@ zerowars/.vscode/
 ZeroWars.sdd/.vscode/
 
 ZeroWars.sdd/makefile
+.vscode/settings.json
