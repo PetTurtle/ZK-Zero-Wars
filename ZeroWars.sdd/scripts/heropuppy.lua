@@ -1,5 +1,3 @@
-include "UnitScaler.lua"
-
 local base = piece 'base'
 local gun = piece "gun"
 local yaw = piece "yaw"
@@ -185,10 +183,6 @@ end
 function script.Create()
 	Turn(fire, x_axis, math.rad(-45.000000))
 	StartThread(GG.Script.SmokeUnit, unitID, {pelvis})
-end
-
-function UpdateScale(params)
-	GG.SetScale(unitID, base, params.level, params.minScale, params.maxScale)
 end
 
 function jumping(jumpPercent)

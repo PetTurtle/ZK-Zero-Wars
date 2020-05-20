@@ -1,5 +1,3 @@
-include "UnitScaler.lua"
-
 local base = piece 'base'
 local chest = piece 'chest'
 local aim = piece 'aim'
@@ -137,10 +135,6 @@ end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-end
-
-function UpdateScale(params)
-	GG.SetScale(unitID, base, params.level, params.minScale, params.maxScale)
 end
 
 function script.StartMoving()

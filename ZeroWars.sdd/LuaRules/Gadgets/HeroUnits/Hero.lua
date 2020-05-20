@@ -148,7 +148,9 @@ function Hero:_updateStats()
     local unitID = self._ID
     local stats = self._upgadeDefs.stats
     local level = spGetUnitRulesParam(unitID, "level")
-    callScript(unitID, "UpdateScale", {level = level, minScale = stats.minScale, maxScale = stats.maxScale})
+    local scale = (level / 16) * (stats.maxScale - stats.minScale) + stats.minScale
+
+    GG.UnitScale(unitID, scale)
 
     local armour = spGetUnitRulesParam(unitID, "armour") or 0
     local currHealth, currMaxHealth = spGetUnitHealth(unitID)

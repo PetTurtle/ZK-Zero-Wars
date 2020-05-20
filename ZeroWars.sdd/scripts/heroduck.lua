@@ -1,8 +1,6 @@
 --linear constant 65536
 
 include "constants.lua"
-include "UnitScaler.lua"
-
 local base, torso, head = piece("base", "torso", "head")
 local rthigh, rshin, rfoot, lthigh, lshin, lfoot = piece("rthigh", "rshin", "rfoot", "lthigh", "lshin", "lfoot")
 local lturret, rturret, lflare, rflare = piece("lturret", "rturret", "lflare", "rflare")
@@ -122,10 +120,6 @@ end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-end
-
-function UpdateScale(params)
-	GG.SetScale(unitID, base, params.level, params.minScale, params.maxScale)
 end
 
 local function RestoreAfterDelay()

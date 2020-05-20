@@ -1,5 +1,4 @@
 include "constants.lua"
-include "UnitScaler.lua"
 
 --------------------------------------------------------------------------------
 -- pieces
@@ -204,10 +203,6 @@ function script.Create()
 	UnpackGunInstant()
 	StartThread(IdleAnim)
 	--StartThread(TorsoHeadingThread)
-end
-
-function UpdateScale(params)
-	GG.SetScale(unitID, base, params.level, params.minScale, params.maxScale)
 end
 
 function script.AimFromWeapon(num)
