@@ -18,16 +18,16 @@ local unit_tweaks = {
         }
     },
     chicken = {
-        buildcostmetal = 80,
-        buildcostenergy = 80,
-        buildtime = 80,
+        buildcostmetal = 60,
+        buildcostenergy = 60,
+        buildtime = 60,
         footprintX = 2,
         footprintZ = 2
     },
     chicken_leaper = {
-        buildcostmetal = 260,
-        buildcostenergy = 260,
-        buildtime = 260,
+        buildcostmetal = 220,
+        buildcostenergy = 220,
+        buildtime = 220,
         maxVelocity = 3.2,
         weaponDefs = {
             WEAPON = {
@@ -37,9 +37,9 @@ local unit_tweaks = {
         }
     },
     chickens = {
-        buildcostmetal = 125,
-        buildcostenergy = 125,
-        buildtime = 125
+        buildcostmetal = 110,
+        buildcostenergy = 110,
+        buildtime = 110
     },
     chickenwurm = {
         buildcostmetal = 400,
@@ -54,14 +54,14 @@ local unit_tweaks = {
         footprintZ = 3
     },
     chickena = {
-        buildcostmetal = 800,
-        buildcostenergy = 800,
-        buildtime = 800
+        buildcostmetal = 320,
+        buildcostenergy = 320,
+        buildtime = 320
     },
     chickenc = {
-        buildcostmetal = 750,
-        buildcostenergy = 750,
-        buildtime = 750
+        buildcostmetal = 540,
+        buildcostenergy = 540,
+        buildtime = 540
     },
     chicken_roc = {
         buildcostmetal = 800,
@@ -69,16 +69,16 @@ local unit_tweaks = {
         buildtime = 800
     },
     chickenf = {
-        buildcostmetal = 500,
-        buildcostenergy = 500,
-        buildtime = 500,
+        buildcostmetal = 420,
+        buildcostenergy = 420,
+        buildtime = 420,
         footprintX = 3,
         footprintZ = 3
     },
     chicken_blimpy = {
-        buildcostmetal = 500,
-        buildcostenergy = 500,
-        buildtime = 500,
+        buildcostmetal = 480,
+        buildcostenergy = 480,
+        buildtime = 480,
         turnRate = 3000,
         turnRadius = 450,
         weaponDefs = {DODOBOMB = {reloadtime = 4}},
@@ -96,35 +96,35 @@ local unit_tweaks = {
         buildtime = 410
     },
     chickenr = {
-        buildcostmetal = 350,
-        buildcostenergy = 350,
-        buildtime = 350,
+        buildcostmetal = 110,
+        buildcostenergy = 110,
+        buildtime = 110,
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_shield = {
-        buildcostmetal = 1200,
-        buildcostenergy = 1200,
-        buildtime = 1200,
-        weaponDefs = {SHIELD = {shieldPower = 2000, shieldPowerRegen = 20, shieldRadius = 100, shieldStartingPower = 2000}}
+        buildcostmetal = 400,
+        buildcostenergy = 400,
+        buildtime = 400,
+        weaponDefs = {SHIELD = {shieldPower = 2000, shieldPowerRegen = 30, shieldRadius = 100, shieldStartingPower = 2000}}
     },
     chicken_tiamat = {
-        buildcostmetal = 4000,
-        buildcostenergy = 4000,
-        buildtime = 4000,
+        buildcostmetal = 2000,
+        buildcostenergy = 2000,
+        buildtime = 2000,
         weaponDefs = {
-            SHIELD = {shieldPower = 2000, shieldPowerRegen = 20, shieldRadius = 100, shieldStartingPower = 2000}
+            SHIELD = {shieldPower = 2000, shieldPowerRegen = 30, shieldRadius = 100, shieldStartingPower = 2000}
         }
     },
     chickenblobber = {
-        buildcostmetal = 1300,
-        buildcostenergy = 1300,
-        buildtime = 1300,
+        buildcostmetal = 1000,
+        buildcostenergy = 1000,
+        buildtime = 1000,
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_dragon = {
-        buildcostmetal = 12000,
-        buildcostenergy = 12000,
-        buildtime = 12000
+        buildcostmetal = 10000,
+        buildcostenergy = 10000,
+        buildtime = 10000
     },
     cloakbomb = {
         weaponDefs = {cloakbomb_DEATH = {areaOfEffect = 200}}
@@ -139,7 +139,7 @@ local unit_tweaks = {
         weaponDefs = {shieldbomb_DEATH = {areaOfEffect = 200}}
     },
     dronecarry = {
-        buildCostMetal = 70,
+        buildCostMetal = 80,
         maxDamage = 80,
         reclaimable = true
     },
