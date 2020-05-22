@@ -141,20 +141,12 @@ function gadget:GameFrame(frame)
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
-    local ud = UnitDefs[unitDefID]
-    if ud.customParams.hero then
-        return
-    end
-
-    local x = spGetUnitPosition(unitID)
-    if x < 1000 then
-        spSetUnitNeutral(unitID, true)
-        if x >= 384 then -- on right platform
-            Spring.MoveCtrl.Enable(unitID, false)
-        end
-    elseif x > Game.mapSizeX - 1000 then
-        spSetUnitNeutral(unitID, true)
-        if x <= 7817 then -- on left platform
+    -- disable unit movement built by builders ( not spawned )
+    -- so platform units build to be cloned can't be controlled
+    if builderID then
+        local ud = UnitDefs[unitDefID]
+        if not (ud.isBuilding or ud.isBuilder) then
+            spSetUnitNeutral(unitID, true)
             Spring.MoveCtrl.Enable(unitID, false)
         end
     end
@@ -195,16 +187,6 @@ function gadget:UnitIdle(unitID, unitDefID, unitTeam)
     if spGetUnitRulesParam(unitID, "clone") then
         idleClones:add(unitID)
     end
-end
-
-function gadget:AllowUnitCreation(unitDefID, builderID, builderTeam, x, y, z, facing)
-    if gameStarted then
-        local ud = UnitDefs[unitDefID]
-        if x and x >= 384 and x <= 7817 and (ud.isBuilding or ud.isBuilder) then
-            return false
-        end
-    end
-    return true
 end
 
 -- disallow wreck creation
