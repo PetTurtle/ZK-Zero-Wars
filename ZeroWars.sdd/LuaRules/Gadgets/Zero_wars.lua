@@ -23,7 +23,6 @@ local Deployer = VFS.Include("LuaRules/Gadgets/Zerowars/Deployer.lua")
 local CloneTimeout = VFS.Include("LuaRules/Gadgets/Zerowars/CloneTimeout.lua")
 local IdleClones = VFS.Include("LuaRules/Gadgets/Zerowars/IdleClones.lua")
 local Layout = VFS.Include("LuaRules/Gadgets/Zerowars/Layout.lua")
-local ControlPoint = VFS.Include("LuaRules/Gadgets/Zerowars/ControlPoint.lua")
 
 local spGameOver = Spring.GameOver
 local spDestroyUnit = Spring.DestroyUnit
@@ -37,14 +36,11 @@ local spGetTeamList = Spring.GetTeamList
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitIsDead = Spring.GetUnitIsDead
 local spGetAllyTeamList = Spring.GetAllyTeamList
-local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitExperience = Spring.GetUnitExperience
 
 local SPAWNFRAME = 800
 local UPDATEFRAME = 30
-local MAPSIZEX = Game.mapSizeX
-local MAPSIZEZ = Game.mapSizeZ
 
 local gameStarted = false
 local sides = {}
@@ -103,7 +99,8 @@ local function onStart()
     end
 
     -- Create ControlPoints
-    controlPoints[1] = ControlPoint.new({x = 4095, y = 128, z = 1535}, 3)
+    GG.createControlPoint(4095, 128, 1535, 3)
+    -- controlPoints[1] = ControlPoint.new({x = 4095, y = 128, z = 1535}, 3)
 
     gameStarted = true
 end

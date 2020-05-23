@@ -49,6 +49,7 @@ end
 function script.Create()
     Turn(pump2, y_axis, -0.523598776)
     Turn(pump3, y_axis, 0.523598776)
+    StartThread(Initialize)
 end
 
 function activate(params)
