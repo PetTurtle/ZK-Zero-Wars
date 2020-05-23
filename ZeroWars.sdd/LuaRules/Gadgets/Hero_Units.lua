@@ -30,6 +30,7 @@ local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 
 -- SyncedRead
 local spGetTeamList = Spring.GetTeamList
+local spGetPlayerList = Spring.GetPlayerList
 local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
@@ -38,11 +39,15 @@ local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 
 -- Variables
-local heroes = {}
-local sides = {}
+
+local XPSCALER = 0.1
 local CMD_HERO_UPGRADE = 49731
 local CMD_HERO_CHEAT_XP = 49732
 local CMD_HERO_CHEAT_Level = 49733
+
+local heroes = {}
+local sides = {}
+local xpmultipier = 1.0
 
 local function isHero(unitDefID)
     return UnitDefs[unitDefID].customParams.hero
@@ -84,6 +89,9 @@ function gadget:Initialize()
         gadgetHandler:RemoveGadget()
         return
     end
+
+    local playerList = spGetPlayerList(true)
+    xpmultipier = 1.0 + (#playerList * XPSCALER)
 
     sides[allyTeamList[1]] = Side.new(allyTeamList[1], Layout[1])
     sides[allyTeamList[2]] = Side.new(allyTeamList[2], Layout[2])
@@ -163,7 +171,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 
     if heroes[attackerID] then
         local allyTeamID = spGetUnitAllyTeam(attackerID)
-        local killXP = UnitDefs[unitDefID].metalCost
+        local killXP = UnitDefs[unitDefID].metalCost * xpmultipier
         local x, y, z = spGetUnitPosition(unitID)
         sides[allyTeamID]:shareXP({x = x, z = z}, killXP)
     end
@@ -179,7 +187,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
         if heroHP <= damage then
             if attackerID and heroes[attackerID] then
                 local attackerTeamID = spGetUnitAllyTeam(attackerID)
-                local killXP = heroes[unitID]:getKillXP()
+                local killXP = heroes[unitID]:getKillXP() * xpmultipier
                 local x, y, z = spGetUnitPosition(unitID)
                 sides[attackerTeamID]:shareXP({x = x, z = z}, killXP)
             end
