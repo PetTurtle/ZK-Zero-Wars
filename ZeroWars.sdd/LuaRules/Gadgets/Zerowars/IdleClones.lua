@@ -27,7 +27,7 @@ function IdleClones:command()
             local cQueue = Spring.GetCommandQueue(unitID, 1)
             if cQueue and #cQueue == 0 then
                 local x, y, z = Spring.GetUnitPosition(unitID)
-                Spring.GiveOrderToUnit(unitID, CMD.INSERT, {-1, CMD.FIGHT, CMD.OPT_SHIFT, self._attackPos[allyID], 0, z}, {"alt"})
+                Spring.GiveOrderToUnit(unitID, CMD.FIGHT, {self._attackPos[allyID], 0, z}, {"alt"})
             end
         end
     end
