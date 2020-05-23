@@ -10,7 +10,7 @@ local normalTimeout = 5000 -- 2.77m
 local skirmTimeout = 4000 -- 2.22m
 local heavyTimeout = 7000 -- 3.88m
 local artyTimeout = 4000 -- 2.22m
-local antiairTimeout = 200 --1800 -- 1.00m
+local antiairTimeout = 1800 -- 1.00m
 
 local CloneTimeout = {}
 CloneTimeout.__index = CloneTimeout
