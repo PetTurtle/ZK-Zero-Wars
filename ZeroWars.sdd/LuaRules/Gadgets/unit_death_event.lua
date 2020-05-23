@@ -35,5 +35,6 @@ end
 function gadget:UnitDestroyed(unitID)
     if _events[unitID] then
         _events[unitID]()
+        table.remove(_events, unitID)
     end
 end

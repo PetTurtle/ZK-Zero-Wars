@@ -68,3 +68,9 @@ function gadget:GameFrame(frame)
         end
     end
 end
+
+function gadget:UnitDestroyed(unitID)
+    if controlPoints[unitID] then
+        table.remove(controlPoints, unitID)
+    end
+end
