@@ -11,9 +11,7 @@ function gadget:GetInfo()
     }
 end
 
-if not gadgetHandler:IsSyncedCode() then
-    return false
-end
+if not gadgetHandler:IsSyncedCode() then return false end
 
 -----------------------------------------
 -----------------------------------------
@@ -50,40 +48,36 @@ local cloneTimeout
 local idleClones
 
 local function onStart()
-    sides[1]:onStart(Layout[1].buildings, Layout[1].playerUnits, Layout[1].platfromBuildings)
-    sides[2]:onStart(Layout[2].buildings, Layout[2].playerUnits, Layout[2].platfromBuildings)
+    sides[1]:onStart(Layout[1].buildings, Layout[1].playerUnits,
+                     Layout[1].platfromBuildings)
+    sides[2]:onStart(Layout[2].buildings, Layout[2].playerUnits,
+                     Layout[2].platfromBuildings)
 
-    -- End Game When Side 1's Base Dies
+    -- end game when side 1's base dies
     GG.AddOnDeathEvent(sides[1]._baseID,
-    function ()
-        spGameOver({sides[2]._allyID})
-    end)
+                       function() spGameOver({sides[2]._allyID}) end)
 
-    -- End Game When Side 2's Base Dies
+    -- end game when side 2's base dies
     GG.AddOnDeathEvent(sides[2]._baseID,
-    function ()
-        spGameOver({sides[1]._allyID})
-    end)
+                       function() spGameOver({sides[1]._allyID}) end)
 
-    -- Reward Side 2 for killing turret
-    GG.AddOnDeathEvent(sides[1]._turretID,
-    function ()
+    -- reward side 2 for killing turret
+    GG.AddOnDeathEvent(sides[1]._turretID, function()
         local teamList = spGetTeamList(sides[2]._allyID)
         for j = 1, #teamList do
             spAddTeamResource(teamList[j], "metal", 800)
         end
     end)
 
-    -- Reward Side 1 for killing turret
-    GG.AddOnDeathEvent(sides[2]._turretID,
-    function ()
+    -- reward side 1 for killing turret
+    GG.AddOnDeathEvent(sides[2]._turretID, function()
         local teamList = spGetTeamList(sides[1]._allyID)
         for j = 1, #teamList do
             spAddTeamResource(teamList[j], "metal", 800)
         end
     end)
 
-    -- Clear resources
+    -- clear resources
     for i, allyTeam in pairs(spGetAllyTeamList()) do
         for j, team in pairs(spGetTeamList(allyTeam)) do
             spSetTeamResource(team, "metal", 0)
@@ -93,14 +87,11 @@ local function onStart()
     -- remove default commanders
     for i, unit in pairs(spGetAllUnits()) do
         local ud = UnitDefs[spGetUnitDefID(unit)]
-        if ud.customParams.commtype then
-            spDestroyUnit(unit, false, true)
-        end
+        if ud.customParams.commtype then spDestroyUnit(unit, false, true) end
     end
 
-    -- Create ControlPoints
+    -- create controlPoint
     GG.createControlPoint(4095, 128, 1535, 3)
-    -- controlPoints[1] = ControlPoint.new({x = 4095, y = 128, z = 1535}, 3)
 
     gameStarted = true
 end
@@ -122,14 +113,15 @@ function gadget:Initialize()
 
     deployer = Deployer.new()
     cloneTimeout = CloneTimeout.new()
-    idleClones = IdleClones.new({[allyTeamList[1]] = Layout[1].attackXPos, [allyTeamList[2]] = Layout[2].attackXPos})
+    idleClones = IdleClones.new({
+        [allyTeamList[1]] = Layout[1].attackXPos,
+        [allyTeamList[2]] = Layout[2].attackXPos
+    })
 end
 
 function gadget:GameFrame(frame)
     if not gameStarted then
-        if frame == 2 then
-            onStart()
-        end
+        if frame == 2 then onStart() end
         return
     end
 
@@ -137,12 +129,9 @@ function gadget:GameFrame(frame)
         -- deploy next platform
         for i = 1, #sides do
             sides[i]:nextPlatform()
-            deployer:add(
-                sides[i]:getUnits(),
-                sides[i]:getOffset(Layout[i].deployRect),
-                Layout[i].faceDir,
-                Layout[i].attackXPos
-            )
+            deployer:add(sides[i]:getUnits(),
+                         sides[i]:getOffset(Layout[i].deployRect),
+                         Layout[i].faceDir, Layout[i].attackXPos)
         end
     end
 
@@ -156,9 +145,7 @@ function gadget:GameFrame(frame)
     end
 
     -- spawn deploy Queue units
-    if deployer:size() > 0 then
-        cloneTimeout:add(deployer:deploy(), frame)
-    end
+    if deployer:size() > 0 then cloneTimeout:add(deployer:deploy(), frame) end
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
@@ -173,10 +160,9 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
     end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
-    if gameStarted then
-        return
-    end
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID,
+                              attackerDefID, attackerTeam)
+    if gameStarted then return end
 
     -- transfer clone experience to original
     if spGetUnitRulesParam(unitID, "clone") then
@@ -189,15 +175,11 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 end
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-    if spGetUnitRulesParam(unitID, "clone") then
-        idleClones:add(unitID)
-    end
+    if spGetUnitRulesParam(unitID, "clone") then idleClones:add(unitID) end
 end
 
 -- disallow wreck creation
-function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
-    return false
-end
+function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z) return false end
 
 function gadget:TeamDied(teamID)
     local allyID = select(6, Spring.GetTeamInfo(teamID))
