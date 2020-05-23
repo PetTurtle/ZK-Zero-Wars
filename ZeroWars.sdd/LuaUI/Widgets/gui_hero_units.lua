@@ -249,7 +249,7 @@ end
 
 local function UpdateUI(unitID, ud)
 	heroID = unitID
-	local xp = spGetUnitRulesParam(unitID, "xp")
+	local xp = math.floor(spGetUnitRulesParam(unitID, "xp"))
 	local level = spGetUnitRulesParam(unitID, "level")
 	local points = spGetUnitRulesParam(unitID, "points")
 	local xpNeeded = xpForLevel(level)
@@ -262,7 +262,7 @@ local function UpdateUI(unitID, ud)
 		xpProgressbar:SetMinMax(0, 1)
 		xpProgressbar:SetCaption("Max Level")
 	else
-		xpProgressbar:SetValue(math.floor(xp))
+		xpProgressbar:SetValue(xp)
 		xpProgressbar:SetMinMax(0, xpNeeded)
 		xpProgressbar:SetCaption(xp .. "/" .. xpNeeded)
 	end
