@@ -209,7 +209,7 @@ function script.AimWeapon(num, heading, pitch)
 	StartThread(RestoreAfterDelay)
 	aiming = true
 	
-	Turn(chest, y_axis, heading, math.rad(150))
+	Turn(chest, y_axis, heading, math.rad(400))
 	Turn(chest, x_axis, -pitch-0.08, math.rad(60))
 	WaitForTurn(chest, y_axis)
 	WaitForTurn(chest, x_axis)
