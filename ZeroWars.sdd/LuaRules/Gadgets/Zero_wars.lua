@@ -25,6 +25,7 @@ local IdleClones = VFS.Include("LuaRules/Gadgets/Zerowars/IdleClones.lua")
 local Layout = VFS.Include("LuaRules/Gadgets/Zerowars/Layout.lua")
 local ControlPoint = VFS.Include("LuaRules/Gadgets/Zerowars/ControlPoint.lua")
 
+local spGameOver = Spring.GameOver
 local spDestroyUnit = Spring.DestroyUnit
 local spSetTeamResource = Spring.SetTeamResource
 local spSetUnitNeutral = Spring.SetUnitNeutral
@@ -56,6 +57,36 @@ local function onStart()
     sides[1]:onStart(Layout[1].buildings, Layout[1].playerUnits, Layout[1].platfromBuildings)
     sides[2]:onStart(Layout[2].buildings, Layout[2].playerUnits, Layout[2].platfromBuildings)
 
+    -- End Game When Side 1's Base Dies
+    GG.AddOnDeathEvent(sides[1]._baseID,
+    function ()
+        spGameOver({sides[2]._allyID})
+    end)
+
+    -- End Game When Side 2's Base Dies
+    GG.AddOnDeathEvent(sides[2]._baseID,
+    function ()
+        spGameOver({sides[1]._allyID})
+    end)
+
+    -- Reward Side 2 for killing turret
+    GG.AddOnDeathEvent(sides[1]._turretID,
+    function ()
+        local teamList = spGetTeamList(sides[2]._allyID)
+        for j = 1, #teamList do
+            spAddTeamResource(teamList[j], "metal", 800)
+        end
+    end)
+
+    -- Reward Side 1 for killing turret
+    GG.AddOnDeathEvent(sides[2]._turretID,
+    function ()
+        local teamList = spGetTeamList(sides[1]._allyID)
+        for j = 1, #teamList do
+            spAddTeamResource(teamList[j], "metal", 800)
+        end
+    end)
+
     -- Clear resources
     for i, allyTeam in pairs(spGetAllyTeamList()) do
         for j, team in pairs(spGetTeamList(allyTeam)) do
@@ -75,13 +106,6 @@ local function onStart()
     controlPoints[1] = ControlPoint.new({x = 4095, y = 128, z = 1535}, 3)
 
     gameStarted = true
-end
-
-local function getOtherSide(side)
-    if sides[1] == side then
-        return sides[2]
-    end
-    return sides[1]
 end
 
 function gadget:Initialize()
@@ -153,7 +177,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 end
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
-    if not gameStarted then
+    if gameStarted then
         return
     end
 
@@ -162,22 +186,6 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
         local original = spGetUnitRulesParam(unitID, "original")
         if original and not spGetUnitIsDead(original) then
             spSetUnitExperience(original, spGetUnitExperience(unitID))
-            return
-        end
-    end
-
-    -- check special side units
-    for i = 1, #sides do
-        local other = getOtherSide(sides[i])
-        if unitID == sides[i]:getBaseID() then
-            Spring.GameOver({other:getAllyID()})
-            return
-        end
-        if unitID == sides[i]:getTurretID() then
-            local teamList = spGetTeamList(other:getAllyID())
-            for j = 1, #teamList do
-                spAddTeamResource(teamList[j], "metal", 800)
-            end
             return
         end
     end
