@@ -4,7 +4,7 @@ import re
 import shutil
 from filecmp import dircmp
 
-ZKPATH = "/home/undoblaze/.steam/debian-installation/steamapps/common/Zero-K"
+ZKPATH = ""
 ZKMAPPATH = ZKPATH + "/maps"
 CURRDIR = os.path.dirname(os.path.realpath('__file__'))
 
