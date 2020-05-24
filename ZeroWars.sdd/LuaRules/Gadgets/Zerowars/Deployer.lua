@@ -1,5 +1,4 @@
 local Queue = VFS.Include("LuaRules/Gadgets/Data/Queue.lua")
-local StateCopier = VFS.Include("LuaRules/Gadgets/Zerowars/StateCopier.lua")
 
 local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitIsDead = Spring.GetUnitIsDead
@@ -18,7 +17,6 @@ local mapCenter = Game.mapSizeX / 2
 function Deployer.new()
     local instance = {
         _spawnQueue = Queue.new(),
-        _stateCopier = StateCopier.new(),
         _spawnAmount = 12
     }
     setmetatable(instance, Deployer)
@@ -58,18 +56,9 @@ function Deployer:deploy()
 
     for i = 1, #units do
         if not spGetUnitIsDead(units[i]) then
-            unitDefID = spGetUnitDefID(units[i])
-            ud = UnitDefs[unitDefID]
             x, y, z = spGetUnitPosition(units[i])
             if x then
-                if ud.canFly then
-                    y = 200
-                else
-                    y = 128
-                end
-
-                clone = spCreateUnit(unitDefID, x + offset.x, y, z + offset.z, group.faceDir, group.teamID)
-                self._stateCopier:copyUnitStates(units[i], clone)
+                clone = GG.cloneUnit(units[i], x + offset.x, 300, z + offset.z, group.faceDir, group.teamID)
 
                 spSetUnitRulesParam(clone, "clone", 1)
                 spSetUnitRulesParam(clone, "original", units[i])
