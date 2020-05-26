@@ -1,32 +1,70 @@
+local width = 294
+local height = 768
+
+local leftX = 90
+local rightX = 7809
+
+local y1 = 128
+local y2 = 1152
+local y3 = 2176
+
 return {
 	[0] = {
 		nameLong = "A-Lobsters",
 		nameShort = "A",
 		startpoints = {
-			{4096, 1214},
+			{leftX + (width / 2), y1 + (height / 2)},
+			{leftX + (width / 2), y2 + (height / 2)},
+			{leftX + (width / 2), y3 + (height / 2)}
 		},
 		boxes = {
 			{
-				{3968, 1152},
-				{4224, 1152},
-				{4224, 1279},
-				{3968, 1279},
+				{leftX, y1},
+				{leftX + width, y1},
+				{leftX + width, y1 + height},
+				{leftX, y1 + height}
 			},
-		},
+			{
+				{leftX, y2},
+				{leftX + width, y2},
+				{leftX + width, y2 + height},
+				{leftX, y2 + height}
+			},
+			{
+				{leftX, y3},
+				{leftX + width, y3},
+				{leftX + width, y3 + height},
+				{leftX, y3 + height}
+			}
+		}
 	},
 	[1] = {
 		nameLong = "B-Lobsters",
 		nameShort = "B",
 		startpoints = {
-			{4096, 1854},
+			{rightX + (width / 2), y1 + (height / 2)},
+			{rightX + (width / 2), y2 + (height / 2)},
+			{rightX + (width / 2), y3 + (height / 2)}
 		},
 		boxes = {
 			{
-				{3968, 1792},
-				{4224, 1792},
-				{4224, 1920},
-				{3968, 1920},
+				{rightX, y1},
+				{rightX + width, y1},
+				{rightX + width, y1 + height},
+				{rightX, y1 + height}
 			},
-		},
-	},
+			{
+				{rightX, y2},
+				{rightX + width, y2},
+				{rightX + width, y2 + height},
+				{rightX, y2 + height}
+			},
+			{
+				{rightX, y3},
+				{rightX + width, y3},
+				{rightX + width, y3 + height},
+				{rightX, y3 + height}
+			}
+		}
+	}
 }
