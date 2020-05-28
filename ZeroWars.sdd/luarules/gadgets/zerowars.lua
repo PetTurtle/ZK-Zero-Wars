@@ -9,36 +9,37 @@ function gadget:GetInfo()
     }
 end
 
-local Map = include("luarules/gadgets/util/map.lua")
-local centerBuildings, platformBuildings = include("luarules/configs/zerowars_map.lua")
+if (not gadgetHandler:IsSyncedCode()) then
+    return false
+end
 
-if gadgetHandler:IsSyncedCode() then
-    local map
-    local leftTeam, rightTeam
+local Map = VFS.Include("luarules/gadgets/util/map.lua")
+local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
+local centerBuildings, platformBuildings, platforms = VFS.Include("luarules/configs/zerowars_map.lua")
 
-    function gadget:GamePreload()
-        map = Map.new()
-        leftTeam, rightTeam = map:getTeamSides()
+local map = Map.new()
+local sides = {}
+local leftAllyTeamID, rightAllyTeamID
 
-        for i, building in pairs(centerBuildings[1]) do
-            Spring.CreateUnit(building.unitName, building.x, 128, building.z, building.dir, leftTeam)
-        end
+local function GenerateSides()
+    leftAllyTeamID, rightAllyTeamID = map:getAllyTeams()
+    sides[tonumber(leftAllyTeamID)] = Side.new(leftAllyTeamID, centerBuildings[1], platformBuildings[1], platforms[1])
+    sides[tonumber(rightAllyTeamID)] = Side.new(rightAllyTeamID, centerBuildings[2], platformBuildings[2], platforms[2])
+end
 
-        for i, building in pairs(centerBuildings[2]) do
-            Spring.CreateUnit(building.unitName, building.x, 128, building.z, building.dir, rightTeam)
-        end
+function gadget:GamePreload()
+    GenerateSides()
+end
 
-        -- spawn buildings
-    end
+function gadget:AllowStartPosition(playerID, teamID, readyState, clampedX, clampedY, clampedZ, rawX, rawY, rawZ)
+    local allyTeamID = select(6, Spring.GetTeamInfo(teamID))
+    sides[allyTeamID]:updatePlayerSpawn(playerID, clampedX, clampedZ)
+    return true
+end
 
-    function gadget:AllowStartPosition(playerID, teamID, readyState, clampedX, clampedY, clampedZ, rawX, rawY, rawZ)
-        -- assign player to platform
-        return true
-    end
-else -- UNSYNCED
-    function gadget:Initialize()
-    end
+function gadget:Initialize()
+end
 
-    function gadget:Shutdown()
-    end
+function gadget:GameOver()
+    gadgetHandler:RemoveGadget(self)
 end
