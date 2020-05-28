@@ -1,3 +1,28 @@
+local Rect = VFS.Include("luarules/gadgets/util/rect.lua")
+
+local width = 368
+local height = 752
+
+local leftX = 384
+local rightX = Game.mapSizeX - width - leftX - 16
+
+local y1 = 128
+local y2 = 1152
+local y3 = 2176
+
+local platforms = {
+    [1] = {
+        [1] = Rect.new(leftX, y1, width, height),
+        [2] = Rect.new(leftX, y2, width, height),
+        [3] = Rect.new(leftX, y3, width, height)
+    },
+    [2] = {
+        [1] = Rect.new(rightX, y1, width, height),
+        [2] = Rect.new(rightX, y2, width, height),
+        [3] = Rect.new(rightX, y3, width, height)
+    }
+}
+
 local centerBuildings = {
     [1] = {
         {unitName = "nexus", x = 2496, z = 1530, dir = "e"},
@@ -21,17 +46,17 @@ local centerBuildings = {
 
 local platformBuildings = {
     [1] = {
-        {unitName = "mextier1", x = -256, z = 240, dir = "e"},
-        {unitName = "mextier1", x = -256, z = 336, dir = "e"},
-        {unitName = "mextier1", x = -256, z = 432, dir = "e"},
-        {unitName = "mextier1", x = -256, z = 528, dir = "e"}
+        {unitName = "staticmex", x = -256, z = 240, dir = "e"},
+        {unitName = "staticmex", x = -256, z = 336, dir = "e"},
+        {unitName = "staticmex", x = -256, z = 432, dir = "e"},
+        {unitName = "staticmex", x = -256, z = 528, dir = "e"}
     },
     [2] = {
-        {unitName = "mextier1", x = 624, z = 240, dir = "e"},
-        {unitName = "mextier1", x = 624, z = 336, dir = "e"},
-        {unitName = "mextier1", x = 624, z = 432, dir = "e"},
-        {unitName = "mextier1", x = 624, z = 528, dir = "e"}
+        {unitName = "staticmex", x = 624, z = 240, dir = "e"},
+        {unitName = "staticmex", x = 624, z = 336, dir = "e"},
+        {unitName = "staticmex", x = 624, z = 432, dir = "e"},
+        {unitName = "staticmex", x = 624, z = 528, dir = "e"}
     }
 }
 
-return centerBuildings, platformBuildings
+return centerBuildings, platformBuildings, platforms
