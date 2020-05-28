@@ -7,16 +7,17 @@ function Map.new()
     return instance
 end
 
-function Map:getTeamSides()
+function Map:getAllyTeams()
     local leftSide, rightSide
     local allyTeamList = Spring.GetAllyTeamList()
     local x, y = self:getAllyTeamSpawn(allyTeamList[1])
+    local GaiaAllyID = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
     if x > 3000 then
-        leftSide = allyTeamList[2]
-        rightSide = allyTeamList[1]
+        leftSide = allyTeamList[2] or GaiaAllyID
+        rightSide = allyTeamList[1] or GaiaAllyID
     else
-        leftSide = allyTeamList[1]
-        rightSide = allyTeamList[2]
+        leftSide = allyTeamList[1] or GaiaAllyID
+        rightSide = allyTeamList[2] or GaiaAllyID
     end
     return leftSide, rightSide
 end
