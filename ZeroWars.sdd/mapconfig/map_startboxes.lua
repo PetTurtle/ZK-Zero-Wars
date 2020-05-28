@@ -1,8 +1,8 @@
-local width = 294
+local width = 384
 local height = 768
 
-local leftX = 90
-local rightX = 7809
+local leftX = 384
+local rightX = 7424
 
 local y1 = 128
 local y2 = 1152
