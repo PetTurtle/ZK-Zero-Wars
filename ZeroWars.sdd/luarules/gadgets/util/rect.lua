@@ -1,17 +1,17 @@
 local Rect = {}
 Rect.__index = Rect
 
-function Rect.new(x, z, width, height)
+function Rect.new(_x, _z, _width, _height)
     local instance = {
-        x = x,
-        z = z,
-        width = w,
-        height = h,
+        x = _x,
+        z = _z,
+        width = _width,
+        height = _height,
         buildMask = {
-            x = math.floor(x / 16),
-            y = math.floor(z / 16),
-            width = math.floor(w / 16),
-            height = math.floor(h / 16)
+            x = math.floor(_x / 16),
+            z = math.floor(_z / 16),
+            width = math.floor(_width / 16),
+            height = math.floor(_height / 16)
         }
     }
     setmetatable(instance, Rect)
