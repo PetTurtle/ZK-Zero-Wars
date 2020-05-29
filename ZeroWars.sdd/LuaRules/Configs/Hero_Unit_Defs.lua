@@ -501,30 +501,34 @@ local HeroUpgradeDefs = {
             -- speed
             [1] = {
                 name = "Improved Servo",
-                desc = "+ Unit Max Speed",
+                desc = "1.25x move speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    Spring.MoveCtrl.SetGroundMoveTypeData(unitID, "maxSpeed", 60)
+                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 1.25)
+                    GG.UpdateUnitAttributes(unitID)
                 end
             },
             [2] = {
                 name = "Advanced Motors",
-                desc = "+ Unit Max Speed",
+                desc = "1.5x move speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    Spring.MoveCtrl.SetGroundMoveTypeData(unitID, "maxSpeed", 75)
+                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 1.5)
+                    GG.UpdateUnitAttributes(unitID)
                 end
             },
             [3] = {
                 name = "Industrial Motors",
-                desc = "+ Unit Max Speed",
+                desc = "1.75x move speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    Spring.MoveCtrl.SetGroundMoveTypeData(unitID, "maxSpeed", 90)
+                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 1.75)
+                    GG.UpdateUnitAttributes(unitID)
                 end
             },
             [4] = {
                 name = "Experimental Servo",
-                desc = "+ Unit Max Speed",
+                desc = "2x move speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    Spring.MoveCtrl.SetGroundMoveTypeData(unitID, "maxSpeed", 105)
+                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 2)
+                    GG.UpdateUnitAttributes(unitID)
                 end
             }
         },
