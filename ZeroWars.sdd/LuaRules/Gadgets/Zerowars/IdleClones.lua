@@ -25,12 +25,12 @@ function IdleClones:command()
     -- prevent noop orders from adding to idle queue while iterating
     _commanding = true
     while self._idle:size() > 0 do
-        pcall(self:command_unit, unitID)
+        pcall(self:command_unit)
     end
     _commanding = false
 end
 
-function IdleClones:command_unit(unitID)
+function IdleClones:command_unit()
     local unitID = self._idle:pop()
     local allyID = spGetUnitAllyTeam(unitID)
     local x1 = self._attackPos[allyID]
