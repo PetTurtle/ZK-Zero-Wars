@@ -26,7 +26,10 @@ function IdleClones:command()
     _commanding = true
     while self._idle:size() > 0 do
         local unitID = self._idle:pop()
-        pcall(self.command_unit, self, unitID)
+        local success, err = pcall(self.command_unit, self, unitID)
+        if not success then
+            Spring.Echo("Error: IdleClones \n" .. err)
+        end
     end
     _commanding = false
 end
