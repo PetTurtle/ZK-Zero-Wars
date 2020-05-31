@@ -72,30 +72,30 @@ local HeroUpgradeDefs = {
             -- weapon fire params
             [1] = {
                 name = "Lazer Cooling",
-                desc = "0.18s between shots",
+                desc = "+10% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.18)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.10, weaponNum = 1})
                 end
             },
             [2] = {
                 name = "Heat Pipes",
-                desc = "0.15s between shots",
+                desc = "+33% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.15)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.33, weaponNum = 1})
                 end
             },
             [3] = {
                 name = "Nitrogen Tank",
-                desc = "0.13s between shots",
+                desc = "+50% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.13)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.5, weaponNum = 1})
                 end
             },
             [4] = {
                 name = "Sub Zero",
-                desc = "0.1s between shots",
+                desc = "+75% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.1)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.75, weaponNum = 1})
                 end
             }
         },
@@ -204,31 +204,31 @@ local HeroUpgradeDefs = {
             -- weapon fire params
             [1] = {
                 name = "Extended Mag",
-                desc = "1.0s between shots",
+                desc = "+30% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.3, weaponNum = 1})
                 end
             },
             [2] = {
                 name = "Autoloader",
-                desc = "0.8s between shots",
+                desc = "+50% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.8)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.5, weaponNum = 1})
                 end
             },
             [3] = {
                 name = "Double Salvo",
                 desc = "Two Salvos",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.3)
                     spSetUnitWeaponState(unitID, 1, "burst", 2)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.0, weaponNum = 1})
                 end
             },
             [4] = {
                 name = "Liquid Cooling",
-                desc = "Less time between salvos",
+                desc = "+30% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.0)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.3, weaponNum = 1})
                 end
             }
         },
@@ -337,41 +337,41 @@ local HeroUpgradeDefs = {
             -- weapon fire params
             [1] = {
                 name = "Extended Mag",
-                desc = "1.0s between shots",
+                desc = "+50% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.5, weaponNum = 1})
                 end
             },
             [2] = {
                 name = "Autoloader",
-                desc = "0.8s between shots",
+                desc = "+80% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.8)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.8, weaponNum = 1})
                 end
             },
             [3] = {
                 name = "Double Salvo",
                 desc = "Two Salvos",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.2)
                     spSetUnitWeaponState(unitID, 1, "burst", 2)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.0, weaponNum = 1})
                 end
             },
             [4] = {
                 name = "Overdrive",
-                desc = "less time between salvoes",
+                desc = "+30% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 0.8)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.3, weaponNum = 1})
                 end
             }
         },
         path3 = {
             -- armour
             [1] = {
-                name = "Light Armour",
-                desc = "+1000 HP",
+                name = "Jump",
+                desc = "unlock jump",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitRulesParam(unitID, "armour", 1000)
+                    enableCmd(unitID, CMD_JUMP)
                 end
             },
             [2] = {
@@ -382,10 +382,10 @@ local HeroUpgradeDefs = {
                 end
             },
             [3] = {
-                name = "Jump",
-                desc = "unlock jump",
+                name = "Light Armour",
+                desc = "+1000 HP",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    enableCmd(unitID, CMD_JUMP)
+                    spSetUnitRulesParam(unitID, "armour", 1000)
                 end
             },
             [4] = {
@@ -470,30 +470,30 @@ local HeroUpgradeDefs = {
             -- weapon fire params
             [1] = {
                 name = "Extended Mag",
-                desc = "1.75s between shots",
+                desc = "+20% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.75)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.2, weaponNum = 1})
                 end
             },
             [2] = {
                 name = "Improved Firerate",
-                desc = "1.5s between shots",
+                desc = "+40% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.5)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.4, weaponNum = 1})
                 end
             },
             [3] = {
                 name = "Semi-Automatic",
-                desc = "1.25s between shots",
+                desc = "+60% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1.25)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.6, weaponNum = 1})
                 end
             },
             [4] = {
                 name = "Belt-Fed",
-                desc = " 1s between shots",
+                desc = "+80% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitWeaponState(unitID, 1, "reloadTime", 1)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.8, weaponNum = 1})
                 end
             }
         },
