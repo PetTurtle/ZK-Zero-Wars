@@ -40,14 +40,12 @@ local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 
 -- Variables
 
-local XPSCALER = 0.1
 local CMD_HERO_UPGRADE = 49731
 local CMD_HERO_CHEAT_XP = 49732
 local CMD_HERO_CHEAT_Level = 49733
 
 local heroes = {}
 local sides = {}
-local xpmultipier = 1.0
 
 local function isHero(unitDefID)
     return UnitDefs[unitDefID].customParams.hero
@@ -62,6 +60,30 @@ local function getHeroesInRange(heroes, cPos, radius)
         end
     end
     return inRange
+end
+
+local function onHeroKill(unitID, attackerID, attackerTeam)
+    if attackerID then
+        local heroXP = heroes[unitID]:getTotalXP()
+        local x, y, z = spGetUnitPosition(unitID)
+        local killXP = (heroXP / 2) + 100
+        sides[attackerTeam]:shareXP({x = x, z = z}, killXP)
+    end
+
+    local heroTeamID = spGetUnitAllyTeam(unitID)
+    sides[heroTeamID]:heroDied(heroes[unitID])
+end
+
+local function onKill(unitID, unitDefID, attackerID, attackerTeam)
+    if attackerID then
+        local killXP = UnitDefs[unitDefID].metalCost
+        local x, y, z = spGetUnitPosition(unitID)
+        if not heroes[attackerID] then
+            killXP = killXP / 2
+        end
+
+        sides[attackerTeam]:shareXP({x = x, z = z}, killXP)
+    end
 end
 
 local function onStart()
@@ -89,9 +111,6 @@ function gadget:Initialize()
         gadgetHandler:RemoveGadget()
         return
     end
-
-    local playerList = spGetPlayerList(true)
-    xpmultipier = 1.0 + (#playerList * XPSCALER)
 
     sides[allyTeamList[1]] = Side.new(allyTeamList[1], Layout[1])
     sides[allyTeamList[2]] = Side.new(allyTeamList[2], Layout[2])
@@ -169,12 +188,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
         return
     end
 
-    if heroes[attackerID] then
-        local allyTeamID = spGetUnitAllyTeam(attackerID)
-        local killXP = UnitDefs[unitDefID].metalCost * xpmultipier
-        local x, y, z = spGetUnitPosition(unitID)
-        sides[allyTeamID]:shareXP({x = x, z = z}, killXP)
-    end
+    onKill(unitID, unitDefID, attackerID, attackerTeam)
 end
 
 -------------------------------------
@@ -185,15 +199,8 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
     if heroes[unitID] and not paralyzer then
         local heroHP = spGetUnitHealth(unitID)
         if heroHP <= damage then
-            if attackerID and heroes[attackerID] then
-                local attackerTeamID = spGetUnitAllyTeam(attackerID)
-                local killXP = heroes[unitID]:getKillXP() * xpmultipier
-                local x, y, z = spGetUnitPosition(unitID)
-                sides[attackerTeamID]:shareXP({x = x, z = z}, killXP)
-            end
-
-            local heroTeamID = spGetUnitAllyTeam(unitID)
-            sides[heroTeamID]:heroDied(heroes[unitID])
+            local attackerTeam = spGetUnitAllyTeam(attackerID) or nil
+            onHeroKill(unitID, attackerTeam, attackerTeam)
             return 0, 0
         end
     end

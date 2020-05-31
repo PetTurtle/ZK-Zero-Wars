@@ -22,14 +22,14 @@ local function callScript(unitID, funcName, args)
     end
 end
 
-local function xpForLevel(level)
+local function levelXP(level)
     return 100*level*level + 500
 end
 
-local function getTotalXP(level)
+local function totalLevelXP(level)
     local total = 0
     for i = 0, level do
-        total = total + xpForLevel(i)
+        total = total + levelXP(i)
     end
     return total
 end
@@ -100,7 +100,7 @@ function Hero:giveXP(xp)
     if not self._maxLevel then
         local newXP = self:getXP() + xp
         local level = spGetUnitRulesParam(self._ID, "level")
-        local xpNeeded = xpForLevel(level)
+        local xpNeeded = levelXP(level)
 
         while newXP >= xpNeeded do
             self:levelUp()
@@ -128,11 +128,11 @@ function Hero:getXP()
     return spGetUnitRulesParam(self._ID, "xp")
 end
 
-function Hero:getKillXP()
+function Hero:getTotalXP()
     local currXP = spGetUnitRulesParam(self._ID, "xp")
     local level = spGetUnitRulesParam(self._ID, "level")
-    local totalXP = getTotalXP(level-1)
-    return 40 + (0.13 * (totalXP + currXP))
+    local totalXP = totalLevelXP(level-1)
+    return totalXP + currXP
 end
 
 function Hero:getLevel()
@@ -151,7 +151,7 @@ function Hero:_updateStats()
     local scale = (level / 16) * (stats.maxScale - stats.minScale) + stats.minScale
 
     GG.UnitScale(unitID, scale)
-
+    
     local armour = spGetUnitRulesParam(unitID, "armour") or 0
     local currHealth, currMaxHealth = spGetUnitHealth(unitID)
     local newMaxHealth = (level / 16) * (stats.maxHP - stats.minHP) + stats.minHP + armour
