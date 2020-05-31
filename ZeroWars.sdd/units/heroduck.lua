@@ -97,7 +97,7 @@ return {
                 avoidFeature  = false,
                 avoidNeutral  = false,
                 commandfire = true,
-                areaOfEffect = 48,
+                areaOfEffect = 80,
                 craterBoost = 0,
                 craterMult = 0,
                 damage = {
