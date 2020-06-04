@@ -21,6 +21,7 @@ local sides = {}
 local map = Map.new()
 
 local function GenerateSides()
+    allyStarts = map:getAllyStarts()
     allyStarts.Left = tonumber(allyStarts.Left or 0)
     allyStarts.Right = tonumber(allyStarts.Right or 0)
     sides[allyStarts.Left] = Side.new(allyStarts.Left, centerBuildings[1], platforms[1])
@@ -28,8 +29,6 @@ local function GenerateSides()
 end
 
 function gadget:GamePreload()
-    allyStarts = map:getAllyStarts()
-
     GenerateSides()
 end
 
