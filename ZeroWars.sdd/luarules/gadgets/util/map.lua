@@ -9,7 +9,7 @@ end
 
 function Map:replaceStartUnit(unitName)
     for teamID, spawn in pairs(GG.CommanderSpawnLocation) do
-        GG.DropUnit(unitName, spawn.x, spawn.y, spawn.z, spawn.facing, teamID, true, 5000, 1000, 1000, 300)
+        Spring.CreateUnit(unitName, spawn.x, spawn.y, spawn.z, spawn.facing, teamID)
         local nearbyUnits = Spring.GetUnitsInCylinder(spawn.x, spawn.z, 50, teamID)
         if nearbyUnits and #nearbyUnits then
             Spring.DestroyUnit(nearbyUnits[1], false, true)
