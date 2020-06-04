@@ -13,12 +13,12 @@ if (not gadgetHandler:IsSyncedCode()) then
     return false
 end
 
+local Map = VFS.Include("luarules/gadgets/util/map.lua")
 local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
-local getAllyStarts = VFS.Include("luarules/configs/map_ally_starts.lua")
 local centerBuildings, platforms = VFS.Include("luarules/configs/map_zerowars.lua")
 
 local sides = {}
-local allyStarts
+local map = Map.new()
 
 local function GenerateSides()
     allyStarts.Left = tonumber(allyStarts.Left or 0)
@@ -28,15 +28,18 @@ local function GenerateSides()
 end
 
 function gadget:GamePreload()
-    allyStarts = getAllyStarts()
+    allyStarts = map:getAllyStarts()
 
     GenerateSides()
+end
+
+function gadget:GameStart()
+    map:replaceStartUnit("builder")
 end
 
 function gadget:AllowStartPosition(playerID, teamID, readyState, clampedX, clampedY, clampedZ, rawX, rawY, rawZ)
     local allyTeamID = select(6, Spring.GetTeamInfo(teamID))
     sides[allyTeamID]:updatePlayerSpawn(playerID, clampedX, clampedZ)
-    Spring.Echo(readyState)
     return true
 end
 
