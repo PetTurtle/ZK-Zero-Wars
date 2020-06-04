@@ -10,8 +10,8 @@ local y3 = 2176
 
 return {
 	[0] = {
-		nameLong = "A-Lobsters",
-		nameShort = "A",
+		nameLong = "Left-Lobsters",
+		nameShort = "Left",
 		startpoints = {
 			{leftX + (width / 2), y1 + (height / 2)},
 			{leftX + (width / 2), y2 + (height / 2)},
@@ -39,8 +39,8 @@ return {
 		}
 	},
 	[1] = {
-		nameLong = "B-Lobsters",
-		nameShort = "B",
+		nameLong = "Right-Lobsters",
+		nameShort = "Right",
 		startpoints = {
 			{rightX + (width / 2), y1 + (height / 2)},
 			{rightX + (width / 2), y2 + (height / 2)},

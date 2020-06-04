@@ -13,21 +13,23 @@ if (not gadgetHandler:IsSyncedCode()) then
     return false
 end
 
-local Map = VFS.Include("luarules/gadgets/util/map.lua")
 local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
-local centerBuildings, platformBuildings, platforms = VFS.Include("luarules/configs/zerowars_map.lua")
+local getAllyStarts = VFS.Include("luarules/configs/map_ally_starts.lua")
+local centerBuildings, platformBuildings, platforms = VFS.Include("luarules/configs/map_zerowars.lua")
 
-local map = Map.new()
 local sides = {}
-local leftAllyTeamID, rightAllyTeamID
+local allyStarts
 
 local function GenerateSides()
-    leftAllyTeamID, rightAllyTeamID = map:getAllyTeams()
-    sides[tonumber(leftAllyTeamID)] = Side.new(leftAllyTeamID, centerBuildings[1], platformBuildings[1], platforms[1])
-    sides[tonumber(rightAllyTeamID)] = Side.new(rightAllyTeamID, centerBuildings[2], platformBuildings[2], platforms[2])
+    allyStarts.Left = tonumber(allyStarts.Left or 0)
+    allyStarts.Right = tonumber(allyStarts.Right or 0)
+    sides[allyStarts.Left] = Side.new(allyStarts.Left, centerBuildings[1], platformBuildings[1], platforms[1])
+    sides[allyStarts.Right] = Side.new(allyStarts.Right, centerBuildings[2], platformBuildings[2], platforms[2])
 end
 
 function gadget:GamePreload()
+    allyStarts = getAllyStarts()
+
     GenerateSides()
 end
 
