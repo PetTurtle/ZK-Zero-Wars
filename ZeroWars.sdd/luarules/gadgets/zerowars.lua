@@ -34,6 +34,7 @@ end
 
 function gadget:GameStart()
     map:replaceStartUnit("builder")
+    map:setMetalStorage(300)
 end
 
 function gadget:AllowStartPosition(playerID, teamID, readyState, clampedX, clampedY, clampedZ, rawX, rawY, rawZ)

@@ -17,6 +17,14 @@ function Map:replaceStartUnit(unitName)
     end
 end
 
+function Map:setMetalStorage(amount)
+    for i, allyTeam in pairs(Spring.GetAllyTeamList()) do
+        for j, team in pairs(Spring.GetTeamList(allyTeam)) do
+            Spring.SetTeamResource(team, "metal", amount)
+        end
+    end
+end
+
 function Map:getAllyStart(allyTeamID)
     local teamList = Spring.GetTeamList(allyTeamID)
     if teamList and #teamList then
