@@ -18,9 +18,9 @@ local unit_tweaks = {
         }
     },
     chicken = {
-        buildcostmetal = 45,
-        buildcostenergy = 45,
-        buildtime = 45,
+        buildcostmetal = 30,
+        buildcostenergy = 30,
+        buildtime = 30,
         footprintX = 2,
         footprintZ = 2
     },
@@ -37,9 +37,9 @@ local unit_tweaks = {
         }
     },
     chickens = {
-        buildcostmetal = 110,
-        buildcostenergy = 110,
-        buildtime = 110
+        buildcostmetal = 90,
+        buildcostenergy = 90,
+        buildtime = 90
     },
     chickenwurm = {
         buildcostmetal = 400,
@@ -47,21 +47,21 @@ local unit_tweaks = {
         buildtime = 400
     },
     chicken_dodo = {
-        buildcostmetal = 120,
-        buildcostenergy = 120,
-        buildtime = 120,
+        buildcostmetal = 90,
+        buildcostenergy = 90,
+        buildtime = 90,
         footprintX = 3,
         footprintZ = 3
     },
     chickena = {
-        buildcostmetal = 320,
-        buildcostenergy = 320,
-        buildtime = 320
+        buildcostmetal = 250,
+        buildcostenergy = 250,
+        buildtime = 250
     },
     chickenc = {
-        buildcostmetal = 480,
-        buildcostenergy = 480,
-        buildtime = 480
+        buildcostmetal = 380,
+        buildcostenergy = 380,
+        buildtime = 380
     },
     chicken_roc = {
         buildcostmetal = 800,
@@ -69,16 +69,16 @@ local unit_tweaks = {
         buildtime = 800
     },
     chickenf = {
-        buildcostmetal = 300,
-        buildcostenergy = 300,
-        buildtime = 300,
+        buildcostmetal = 200,
+        buildcostenergy = 200,
+        buildtime = 200,
         footprintX = 3,
         footprintZ = 3
     },
     chicken_blimpy = {
-        buildcostmetal = 350,
-        buildcostenergy = 350,
-        buildtime = 350,
+        buildcostmetal = 250,
+        buildcostenergy = 250,
+        buildtime = 250,
         turnRate = 3000,
         turnRadius = 450,
         weaponDefs = {DODOBOMB = {reloadtime = 4}},
@@ -96,23 +96,23 @@ local unit_tweaks = {
         buildtime = 410
     },
     chickenr = {
-        buildcostmetal = 110,
-        buildcostenergy = 110,
-        buildtime = 110,
+        buildcostmetal = 90,
+        buildcostenergy = 90,
+        buildtime = 90,
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_shield = {
-        buildcostmetal = 380,
-        buildcostenergy = 380,
-        buildtime = 380,
-        weaponDefs = {SHIELD = {shieldPower = 2000, shieldPowerRegen = 30, shieldRadius = 100, shieldStartingPower = 2000}}
+        buildcostmetal = 300,
+        buildcostenergy = 300,
+        buildtime = 300,
+        weaponDefs = {SHIELD = {shieldPower = 3000, shieldPowerRegen = 30, shieldRadius = 100, shieldStartingPower = 2000}}
     },
     chicken_tiamat = {
-        buildcostmetal = 1600,
-        buildcostenergy = 1600,
-        buildtime = 1600,
+        buildcostmetal = 1000,
+        buildcostenergy = 1000,
+        buildtime = 1000,
         weaponDefs = {
-            SHIELD = {shieldPower = 2000, shieldPowerRegen = 30, shieldRadius = 100, shieldStartingPower = 2000}
+            SHIELD = {shieldPower = 3000, shieldPowerRegen = 30, shieldRadius = 100, shieldStartingPower = 2000}
         }
     },
     chickenblobber = {
@@ -122,9 +122,9 @@ local unit_tweaks = {
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_dragon = {
-        buildcostmetal = 9000,
-        buildcostenergy = 9000,
-        buildtime = 9000
+        buildcostmetal = 8000,
+        buildcostenergy = 8000,
+        buildtime = 8000
     },
     cloakbomb = {
         weaponDefs = {cloakbomb_DEATH = {areaOfEffect = 300}}
