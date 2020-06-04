@@ -76,13 +76,14 @@ end
 
 local function onKill(unitID, unitDefID, attackerID, attackerTeam)
     if attackerID then
+        local attackerAllyTeam = spGetUnitAllyTeam(attackerID)
         local killXP = UnitDefs[unitDefID].metalCost
         local x, y, z = spGetUnitPosition(unitID)
         if not heroes[attackerID] then
             killXP = killXP / 2
         end
 
-        sides[attackerTeam]:shareXP({x = x, z = z}, killXP)
+        sides[attackerAllyTeam]:shareXP({x = x, z = z}, killXP)
     end
 end
 
@@ -182,13 +183,13 @@ end
 -- Remove hero on self-destruct
 -- Give attackers xp
 -------------------------------------
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID)
     if heroes[unitID] then
         table.remove(heroes, unitID)
         return
     end
 
-    onKill(unitID, unitDefID, attackerID, attackerTeam)
+    onKill(unitID, unitDefID, attackerID)
 end
 
 -------------------------------------
@@ -199,8 +200,10 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
     if heroes[unitID] and not paralyzer then
         local heroHP = spGetUnitHealth(unitID)
         if heroHP <= damage then
-            local attackerTeam = spGetUnitAllyTeam(attackerID) or nil
-            onHeroKill(unitID, attackerTeam, attackerTeam)
+            if attackerID then -- attackerID not gauranteed
+                local attackerTeam = spGetUnitAllyTeam(attackerID) or nil
+                onHeroKill(unitID, attackerTeam, attackerTeam)
+            end
             return 0, 0
         end
     end
