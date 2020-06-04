@@ -44,19 +44,4 @@ local centerBuildings = {
     }
 }
 
-local platformBuildings = {
-    [1] = {
-        {unitName = "staticmex", x = -256, z = 240, dir = "e"},
-        {unitName = "staticmex", x = -256, z = 336, dir = "e"},
-        {unitName = "staticmex", x = -256, z = 432, dir = "e"},
-        {unitName = "staticmex", x = -256, z = 528, dir = "e"}
-    },
-    [2] = {
-        {unitName = "staticmex", x = 624, z = 240, dir = "e"},
-        {unitName = "staticmex", x = 624, z = 336, dir = "e"},
-        {unitName = "staticmex", x = 624, z = 432, dir = "e"},
-        {unitName = "staticmex", x = 624, z = 528, dir = "e"}
-    }
-}
-
-return centerBuildings, platformBuildings, platforms
+return centerBuildings, platforms

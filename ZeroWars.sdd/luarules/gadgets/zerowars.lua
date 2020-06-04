@@ -15,7 +15,7 @@ end
 
 local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
 local getAllyStarts = VFS.Include("luarules/configs/map_ally_starts.lua")
-local centerBuildings, platformBuildings, platforms = VFS.Include("luarules/configs/map_zerowars.lua")
+local centerBuildings, platforms = VFS.Include("luarules/configs/map_zerowars.lua")
 
 local sides = {}
 local allyStarts
@@ -23,8 +23,8 @@ local allyStarts
 local function GenerateSides()
     allyStarts.Left = tonumber(allyStarts.Left or 0)
     allyStarts.Right = tonumber(allyStarts.Right or 0)
-    sides[allyStarts.Left] = Side.new(allyStarts.Left, centerBuildings[1], platformBuildings[1], platforms[1])
-    sides[allyStarts.Right] = Side.new(allyStarts.Right, centerBuildings[2], platformBuildings[2], platforms[2])
+    sides[allyStarts.Left] = Side.new(allyStarts.Left, centerBuildings[1], platforms[1])
+    sides[allyStarts.Right] = Side.new(allyStarts.Right, centerBuildings[2], platforms[2])
 end
 
 function gadget:GamePreload()
@@ -36,6 +36,7 @@ end
 function gadget:AllowStartPosition(playerID, teamID, readyState, clampedX, clampedY, clampedZ, rawX, rawY, rawZ)
     local allyTeamID = select(6, Spring.GetTeamInfo(teamID))
     sides[allyTeamID]:updatePlayerSpawn(playerID, clampedX, clampedZ)
+    Spring.Echo(readyState)
     return true
 end
 
