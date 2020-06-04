@@ -63,15 +63,16 @@ local function getHeroesInRange(heroes, cPos, radius)
 end
 
 local function onHeroKill(unitID, attackerID, attackerTeam)
+    local hero =  heroes[unitID]
+
     if attackerID then
-        local heroXP = heroes[unitID]:getTotalXP()
         local x, y, z = spGetUnitPosition(unitID)
-        local killXP = (heroXP / 2) + 100
+        local killXP = hero:getKillXP()
         sides[attackerTeam]:shareXP({x = x, z = z}, killXP)
     end
 
     local heroTeamID = spGetUnitAllyTeam(unitID)
-    sides[heroTeamID]:heroDied(heroes[unitID])
+    sides[heroTeamID]:heroDied(hero)
 end
 
 local function onKill(unitID, unitDefID, attackerID, attackerTeam)

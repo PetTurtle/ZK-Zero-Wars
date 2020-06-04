@@ -128,6 +128,11 @@ function Hero:getXP()
     return spGetUnitRulesParam(self._ID, "xp")
 end
 
+function Hero:getKillXP() 
+    local level = spGetUnitRulesParam(self._ID, "level")
+    return = levelXP(level) / 3
+end
+
 function Hero:getTotalXP()
     local currXP = spGetUnitRulesParam(self._ID, "xp")
     local level = spGetUnitRulesParam(self._ID, "level")
