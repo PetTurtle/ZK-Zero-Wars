@@ -3,20 +3,23 @@ local Platform = VFS.Include("luarules/gadgets/zerowars/platform.lua")
 local Side = {}
 Side.__index = Side
 
-function Side.new(_allyTeamID, _centerBuildings, _rects)
+function Side.new(_allyTeamID, _platformRects, _deployRect, _buildings) 
     local instance = {
         allyTeamID = _allyTeamID or 0,
         teams = Spring.GetTeamList(_allyTeamID),
+        deployRect = _deployRect,
         platforms = {
-            Platform.new(_rects[1]),
-            Platform.new(_rects[2]),
-            Platform.new(_rects[3])
+            Platform.new(_platformRects[1]),
+            Platform.new(_platformRects[2]),
+            Platform.new(_platformRects[3])
         }
     }
     setmetatable(instance, Side)
 
-    for i, building in pairs(_centerBuildings) do
-        Spring.CreateUnit(building.unitName, building.x, 128, building.z, building.dir, instance.teams[1])
+    for i, building in pairs(_buildings) do
+        local unitID = Spring.CreateUnit(building.unitName, building.x, 128, building.z, building.dir, instance.teams[1])
+        Spring.SetUnitNoSelect(unitID, building.noSelectable or false)
+        Spring.SetUnitNeutral(unitID, building.neutral or false)
     end
 
     return instance
