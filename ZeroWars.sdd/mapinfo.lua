@@ -120,8 +120,8 @@ local mapinfo = {
 	},
 
 	teams = {
-		[0] = {startPos = {x = 1155, z = 1030}},
-		[1] = {startPos = {x = 4995, z = 1030}},
+		[0] = {startPos = {x = 1155, z = 1536}},
+		[1] = {startPos = {x = 4995, z = 1536}},
 	},
 
 	terrainTypes = {
