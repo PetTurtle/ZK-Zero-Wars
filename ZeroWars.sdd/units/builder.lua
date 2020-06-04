@@ -67,6 +67,9 @@ unitDef = {
     trackWidth          = 22,
     turnRate            = 1000,
     upright             = false,
+    energyMake          = 10000,
+    metalStorage        = 50000,
+    energyStorage       = 50000,
     workerTime          = 20,
   
     featureDefs         = {
