@@ -10,23 +10,17 @@ unitDef = {
     builder             = true,
   
     buildoptions        = {
-      [[cloakraid]],
-      [[spiderassault]],
-      [[cloakskirm]],
-      [[spideremp]],
-      [[veharty]],
-      [[dronecarry]],
-  
-      [[tankraid]],
-      [[spiderriot]],
-      [[amphimpulse]],
-      
-    --   [[factoryair]],
-    --   [[factorylight]],
-    --   [[factorymedium]],
-    --   [[factoryheavy]],
-    --   [[factoryspecial]],
-    --   [[factorychicken]],
+      [[factorycloak]],
+      [[factoryshield]],
+      [[factoryveh]],
+      [[factorytank]],
+      [[factoryspider]],
+      [[factoryjump]],
+      [[factoryamph]],
+      [[factoryhover]],
+      [[factoryplane]],
+      [[factorygunship]],
+      [[factoryship]],
     },
   
     buildPic            = [[amphcon.png]],
@@ -35,10 +29,7 @@ unitDef = {
     category            = [[LAND UNARMED]],
     corpse              = [[DEAD]],
   
-    customParams        = {
-      amph_regen = 10,
-      amph_submerged_at = 40,
-    },
+    customParams        = {},
   
     explodeAs           = [[BIG_UNITEX]],
     energyStorage       = 1000,

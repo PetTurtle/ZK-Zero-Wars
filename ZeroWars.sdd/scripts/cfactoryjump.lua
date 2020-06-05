@@ -1,0 +1,95 @@
+include "constants.lua"
+
+local spGetUnitTeam = Spring.GetUnitTeam
+
+--------------------------------------------------------------------------------
+-- pieces
+--------------------------------------------------------------------------------
+local base, center1, center2, side1, side2, pad = piece("base", "center1", "center2", "side1", "side2", "pad")
+local head1, head2, nano1, nano2, nano3, nano4 = piece("head1", "head2", "nano1", "nano2", "nano3", "nano4")
+
+--local vars
+local nanoPieces = {nano1, nano2, nano3, nano4}
+local nanoIdx = 1
+local smokePiece = {base, head1, head2}
+
+local SIG_Open = 1
+local SIG_Close = 2
+
+--opening animation of the factory
+local function Open()
+    Signal(SIG_Close)
+    --SetSignalMask(SIG_Open)
+
+    Move(center1, z_axis, 0, 10)
+    Move(center2, z_axis, 0, 10)
+    Move(side1, z_axis, 0, 10)
+    Move(side2, z_axis, 0, 10)
+    WaitForMove(center1, z_axis)
+    WaitForMove(center2, z_axis)
+    --Sleep(500)
+
+    --	SetUnitValue(COB.YARD_OPEN, 1) --Tobi said its not necessary
+    SetUnitValue(COB.BUGGER_OFF, 1)
+    SetUnitValue(COB.INBUILDSTANCE, 1)
+end
+
+function script.Create()
+    Spring.SetUnitNanoPieces(unitID, nanoPieces)
+    Move(center1, z_axis, 20)
+    Move(center2, z_axis, 20)
+    Move(side1, z_axis, 20)
+    Move(side2, z_axis, 10)
+    while (GetUnitValue(COB.BUILD_PERCENT_LEFT) ~= 0) do
+        Sleep(400)
+    end
+    StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+    Open()
+end
+
+function script.QueryNanoPiece()
+    if (nanoIdx == 4) then
+        nanoIdx = 1
+    else
+        nanoIdx = nanoIdx + 1
+    end
+
+    local nano = nanoPieces[nanoIdx]
+
+    --// send to LUPS
+    GG.LUPS.QueryNanoPiece(unitID, unitDefID, spGetUnitTeam(unitID), nano)
+
+    return nano
+end
+
+function script.QueryBuildInfo()
+    return pad
+end
+
+--death and wrecks
+function script.Killed(recentDamage, maxHealth)
+    local severity = recentDamage / maxHealth
+
+    if (severity <= .25) then
+        Explode(base, SFX.NONE)
+        Explode(center1, SFX.NONE)
+        Explode(center2, SFX.NONE)
+        Explode(head1, SFX.NONE)
+        Explode(head2, SFX.NONE)
+        return 1 -- corpsetype
+    elseif (severity <= .5) then
+        Explode(base, SFX.NONE)
+        Explode(center1, SFX.NONE)
+        Explode(center2, SFX.NONE)
+        Explode(head1, SFX.SHATTER)
+        Explode(head2, SFX.SHATTER)
+        return 1 -- corpsetype
+    else
+        Explode(base, SFX.SHATTER)
+        Explode(center1, SFX.SHATTER)
+        Explode(center2, SFX.SHATTER)
+        Explode(head1, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
+        Explode(head2, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
+        return 2 -- corpsetype
+    end
+end
