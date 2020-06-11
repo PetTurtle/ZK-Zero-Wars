@@ -160,7 +160,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         local allyTeamID = spGetUnitAllyTeam(unitID)
         local hero = Hero.new(unitID, unitDefID)
         heroes[unitID] = hero
-        sides[allyTeamID]:addHero(hero)
+        sides[allyTeamID]:addHero(unitID, hero)
 
         -- disables manual fire
         local manualFireIndex = spFindUnitCmdDesc(unitID, CMD.MANUALFIRE)
@@ -186,6 +186,8 @@ end
 -------------------------------------
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID)
     if heroes[unitID] then
+        local allyTeamID = spGetUnitAllyTeam(unitID)
+        sides[allyTeamID]:removeHero(unitID)
         table.remove(heroes, unitID)
         return
     end

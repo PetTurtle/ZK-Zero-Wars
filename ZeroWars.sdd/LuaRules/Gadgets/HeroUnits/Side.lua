@@ -35,10 +35,18 @@ end
 -- Add New Hero, usually when player chooses one
 -- @param hero hero class
 -------------------------------------
-function Side:addHero(hero)
-    local heroes = self._heroes
-    heroes[#heroes + 1] = hero
+function Side:addHero(heroID, hero)
+    self._heroes[heroID] = hero
     self._respawnPool:addHero(hero)
+end
+
+-------------------------------------
+-- Removes Hero from side (usually from selfD)
+-- @param heroID
+-------------------------------------
+function Side:removeHero(heroID)
+    assert(self._heroes[heroID])
+    self._heroes[heroID] = nil
 end
 
 -------------------------------------
@@ -59,7 +67,7 @@ end
 -------------------------------------
 function Side:getHeroesInRange(center, radius)
     local inRange = {}
-    for i, hero in pairs(self._heroes) do
+    for heroID, hero in pairs(self._heroes) do
         local pos = hero:getPosition()
         if math.sqrt(math.pow(center.x - pos.x, 2) + math.pow(center.z - pos.z, 2)) <= radius then
             inRange[#inRange + 1] = hero
