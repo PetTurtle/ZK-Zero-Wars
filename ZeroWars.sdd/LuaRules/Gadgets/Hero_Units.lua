@@ -161,6 +161,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         local hero = Hero.new(unitID, unitDefID)
         heroes[unitID] = hero
         sides[allyTeamID]:addHero(unitID, hero)
+        GG.UnitUncapturable(unitID)
 
         -- disables manual fire
         local manualFireIndex = spFindUnitCmdDesc(unitID, CMD.MANUALFIRE)
