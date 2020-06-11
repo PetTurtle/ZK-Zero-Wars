@@ -48,8 +48,6 @@ return {
         upright = true,
         canManualFire = true,
         reclaimable = false,
-        canSelfD = false,
-        capturable = false,
         weapons = {
             {
                 def = [[GRENADE_LAUNCHER]],
