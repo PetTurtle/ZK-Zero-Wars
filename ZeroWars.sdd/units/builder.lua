@@ -28,11 +28,8 @@ unitDef = {
     canPatrol           = true,
     category            = [[LAND UNARMED]],
     corpse              = [[DEAD]],
-  
     customParams        = {},
-  
     explodeAs           = [[BIG_UNITEX]],
-    energyStorage       = 1000,
     footprintX          = 2,
     footprintZ          = 2,
     iconType            = [[builder]],
@@ -42,7 +39,6 @@ unitDef = {
     maxDamage           = 850,
     maxSlope            = 36,
     maxVelocity         = 1.7,
-    metalStorage        = 1000,
     minCloakDistance    = 75,
     movementClass       = [[AKBOT2]],
     objectName          = [[amphcon.s3o]],
@@ -58,9 +54,8 @@ unitDef = {
     trackWidth          = 22,
     turnRate            = 1000,
     upright             = false,
-    energyMake          = 10000,
-    metalStorage        = 50000,
-    energyStorage       = 50000,
+    metalStorage        = 1000,
+    energyStorage       = 1000,
     workerTime          = 20,
   
     featureDefs         = {
