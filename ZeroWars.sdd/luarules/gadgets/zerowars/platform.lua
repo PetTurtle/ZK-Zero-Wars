@@ -12,7 +12,7 @@ function Platform.new(_rect)
 end
 
 function Platform:addBuilder(builderID)
-    self.builders[builderID] = true
+    table.insert(self.builders, builderID)
 end
 
 function Platform:hasActiveBuilder()

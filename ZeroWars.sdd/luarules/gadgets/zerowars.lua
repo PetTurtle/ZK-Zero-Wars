@@ -17,6 +17,8 @@ local Map = VFS.Include("luarules/gadgets/util/map.lua")
 local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
 local platforms, deployRects, buildings  = VFS.Include("luarules/configs/map_zerowars.lua")
 
+local SPAWNFRAME = 800
+
 local sides = {}
 local map = Map.new()
 
@@ -36,13 +38,28 @@ function gadget:GameStart()
     local builders = map:replaceStartUnit("builder")
     map:setMetalStorage(300)
 
-    for builderID in pairs(builders) do
+    for _, builderID in pairs(builders) do
         local allyTeamID = Spring.GetUnitAllyTeam(builderID)
         sides[allyTeamID]:addBuilder(builderID)
     end
 
     for _, side in pairs(sides) do
         side:removedUnusedPlatforms()
+    end
+end
+
+function gadget:GameFrame(frame)
+    if frame > 0 and frame % SPAWNFRAME == 0 then
+        for _, side in pairs(sides) do
+            if side:hasPlatforms() then
+                local platform = side:nextPlatform()
+                for _, builderID in pairs(platform.builders) do
+                    local teamID = Spring.GetUnitTeam(builderID)
+                    local eIncome = Spring.GetTeamRulesParam(teamID, "OD_team_energyIncome") or 0
+                    Spring.SetTeamResource(teamID, "metal", eIncome)
+                end
+            end
+        end
     end
 end
 

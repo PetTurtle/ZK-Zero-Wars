@@ -12,7 +12,8 @@ function Side.new(_allyTeamID, _platformRects, _deployRect, _buildings)
             Platform.new(_platformRects[1]),
             Platform.new(_platformRects[2]),
             Platform.new(_platformRects[3])
-        }
+        },
+        iterator = 0
     }
     setmetatable(instance, Side)
 
@@ -36,12 +37,22 @@ function Side:addBuilder(builderID)
 end
 
 function Side:removedUnusedPlatforms()
+    local remaining = {}
     for _, platform in pairs(self.platforms) do
-        if not platform:hasActiveBuilder() then
-            self.platforms[platform] = nil
-            Spring.Echo("Removed Platform: " .. _)
+        if platform:hasActiveBuilder() then
+            remaining[#remaining + 1] = platform
         end
     end
+    self.platforms = remaining
+end
+
+function Side:nextPlatform()
+    self.iterator = ((self.iterator + 1) % #self.platforms)
+    return self.platforms[self.iterator + 1]
+end
+
+function Side:hasPlatforms()
+    return #self.platforms > 0
 end
 
 return Side
