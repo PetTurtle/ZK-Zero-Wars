@@ -21,7 +21,7 @@ local sides = {}
 local map = Map.new()
 
 local function GenerateSides()
-    allyStarts = map:getAllyStarts()
+    local allyStarts = map:getAllyStarts()
     allyStarts.Left = tonumber(allyStarts.Left or 0)
     allyStarts.Right = tonumber(allyStarts.Right or 0)
     sides[allyStarts.Left] = Side.new(allyStarts.Left,  platforms.Left, deployRects.Left, buildings.Left)
@@ -33,8 +33,17 @@ function gadget:GamePreload()
 end
 
 function gadget:GameStart()
-    map:replaceStartUnit("builder")
+    local builders = map:replaceStartUnit("builder")
     map:setMetalStorage(300)
+
+    for builderID in pairs(builders) do
+        local allyTeamID = Spring.GetUnitAllyTeam(builderID)
+        sides[allyTeamID]:addBuilder(builderID)
+    end
+
+    for _, side in pairs(sides) do
+        side:removedUnusedPlatforms()
+    end
 end
 
 function gadget:Initialize()

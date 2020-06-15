@@ -25,14 +25,22 @@ function Side.new(_allyTeamID, _platformRects, _deployRect, _buildings)
     return instance
 end
 
-function Side:updatePlayerSpawn(playerID, x, z)
-    for i = 1, #self.platforms do
-        local platform = self.platforms[i]
-        if platform:hasPlayer(playerID) then
-            platform:removePlayer(playerID)
+function Side:addBuilder(builderID)
+    local x, y, z = Spring.GetUnitPosition(builderID)
+    for _, platform in pairs(self.platforms) do
+        if platform.deployZone:hasPoint(x, z) then
+            platform:addBuilder(builderID)
+            return
         end
+    end
+end
 
-        platform:addPlayer(playerID, x, z)
+function Side:removedUnusedPlatforms()
+    for _, platform in pairs(self.platforms) do
+        if not platform:hasActiveBuilder() then
+            self.platforms[platform] = nil
+            Spring.Echo("Removed Platform: " .. _)
+        end
     end
 end
 

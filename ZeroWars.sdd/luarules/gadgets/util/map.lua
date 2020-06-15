@@ -8,15 +8,17 @@ function Map.new()
 end
 
 function Map:replaceStartUnit(unitName)
+    local replacements = {}
     for teamID, spawn in pairs(GG.CommanderSpawnLocation) do
         local unitID = Spring.CreateUnit(unitName, spawn.x, spawn.y, spawn.z, spawn.facing, teamID)
         Spring.SetUnitRulesParam(unitID, "facplop", 1, {inlos = true})
-        
+        replacements[unitID] = true
         local nearbyUnits = Spring.GetUnitsInCylinder(spawn.x, spawn.z, 50, teamID)
         if nearbyUnits and #nearbyUnits then
             Spring.DestroyUnit(nearbyUnits[1], false, true)
         end
     end
+    return replacements
 end
 
 function Map:setMetalStorage(amount)
