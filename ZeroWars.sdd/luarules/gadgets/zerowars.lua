@@ -30,8 +30,8 @@ local function GenerateSides()
     local allyStarts = map:getAllyStarts()
     allyStarts.Left = tonumber(allyStarts.Left or 0)
     allyStarts.Right = tonumber(allyStarts.Right or 0)
-    sides[allyStarts.Left] = Side.new(allyStarts.Left,  platforms.Left, deployRects.Left, buildings.Left)
-    sides[allyStarts.Right] = Side.new(allyStarts.Right, platforms.Right, deployRects.Right, buildings.Right)
+    sides[allyStarts.Left] = Side.new(allyStarts.Left, allyStarts.Right, platforms.Left, deployRects.Left, buildings.Left)
+    sides[allyStarts.Right] = Side.new(allyStarts.Right, allyStarts.Left, platforms.Right, deployRects.Right, buildings.Right)
     deployData[allyStarts.Left] = sideData.Left
     deployData[allyStarts.Right] = sideData.Right
 end

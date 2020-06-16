@@ -30,8 +30,8 @@ local deployRects = {
 
 local buildings = {
     Left = {
-        {unitName = "nexus", x = 2496, z = 1530, dir = "e"},
-        {unitName = "nexusturret", x = 3264, z = 1530, dir = "e"},
+        {unitName = "nexus", x = 2496, z = 1530, dir = "e", endGame = true},
+        {unitName = "nexusturret", x = 3264, z = 1530, dir = "e", killReward = 800},
         {unitName = "staticrearm", x = 1550, z = 1226, dir = "e", noSelectable = true, neutral = true},
         {unitName = "staticrearm", x = 1550, z = 1386, dir = "e", noSelectable = true, neutral = true},
         {unitName = "staticrearm", x = 1550, z = 1529, dir = "e", noSelectable = true, neutral = true},
@@ -39,8 +39,8 @@ local buildings = {
         {unitName = "staticrearm", x = 1550, z = 1848, dir = "e", noSelectable = true, neutral = true}
     },
     Right = {
-        {unitName = "nexus", x = 5696, z = 1530, dir = "w"},
-        {unitName = "nexusturret", x = 4930, z = 1530, dir = "w"},
+        {unitName = "nexus", x = 5696, z = 1530, dir = "w", endGame = true},
+        {unitName = "nexusturret", x = 4930, z = 1530, dir = "w", killReward = 800},
         {unitName = "staticrearm", x = 6641, z = 1226, dir = "w", noSelectable = true, neutral = true},
         {unitName = "staticrearm", x = 6641, z = 1386, dir = "w", noSelectable = true, neutral = true},
         {unitName = "staticrearm", x = 6641, z = 1529, dir = "w", noSelectable = true, neutral = true},
