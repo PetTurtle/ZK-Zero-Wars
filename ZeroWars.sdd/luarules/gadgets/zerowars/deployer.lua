@@ -42,11 +42,13 @@ function Deployer:deploy()
     local units = group.units
     local offset = group.offset
     local clone, x, y, z
+    local clones = {}
     for i = #units, math.max(1, #units - spawnAmount), -1 do
         if not Spring.GetUnitIsDead(units[i]) then
             x, y, z = Spring.GetUnitPosition(units[i])
             if x then
                 clone = GG.cloneUnit(units[i], x + offset.x, 300, z + offset.z, group.faceDir, group.teamID)
+                clones[#clones + 1] = clone
 
                 Spring.SetUnitRulesParam(clone, "clone", 1)
                 Spring.SetUnitRulesParam(clone, "original", units[i])
@@ -66,8 +68,13 @@ function Deployer:deploy()
             end
         end
     end
+    
     if #units == 0 then
         self.spawnQueue:pop()
+    end
+
+    if #clones > 0 then
+        return clones
     end
 end
 

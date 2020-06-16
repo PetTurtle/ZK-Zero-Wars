@@ -17,6 +17,7 @@ local Map = VFS.Include("luarules/gadgets/util/map.lua")
 local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
 local Deployer = VFS.Include("luarules/gadgets/zerowars/deployer.lua")
 local IdleClones = VFS.Include("luarules/gadgets/zerowars/idle_clones.lua")
+local CloneTimeout = VFS.Include("luarules/gadgets/zerowars/clone_timeout.lua")
 local platforms, deployRects, buildings, sideData  = VFS.Include("luarules/configs/map_zerowars.lua")
 
 local SPAWNFRAME = 800
@@ -28,6 +29,7 @@ local deployData = {}
 local map = Map.new()
 local deployer = Deployer.new()
 local idleClones
+local cloneTimeout = CloneTimeout.new()
 
 local function GenerateSides()
     local allyStarts = map:getAllyStarts()
@@ -83,9 +85,14 @@ function gadget:GameFrame(frame)
         NextWave()
     end
     if frame > 0 and frame % UPDATEFRAME == 0 then
+        cloneTimeout:clear(frame)
         idleClones:command()
     end
-    deployer:deploy()
+
+    local clones = deployer:deploy()
+    if clones then
+        cloneTimeout:add(clones, frame)
+    end
 end
 
 -- disable unit movement built by builders ( not spawned )
