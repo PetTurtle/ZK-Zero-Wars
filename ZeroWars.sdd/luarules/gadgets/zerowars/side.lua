@@ -22,9 +22,13 @@ function Side.new(_allyTeamID, _enemyAllyID, _platformRects, _deployRect, _build
         Spring.SetUnitNoSelect(unitID, building.noSelectable or false)
         Spring.SetUnitNeutral(unitID, building.neutral or false)
 
+        if building.notBlocking then
+            Spring.SetUnitBlocking(unitID, false, false)
+        end
+
         if building.endGame then
-            GG.AddOnDeathEvent(unitID, function() 
-                Spring.GameOver({_enemyAllyID}) 
+            GG.AddOnDeathEvent(unitID, function()
+                Spring.GameOver({_enemyAllyID})
             end)
         end
 
