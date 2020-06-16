@@ -68,7 +68,7 @@ end
 
 function gadget:GameStart()
     local builders = map:replaceStartUnit("builder")
-    map:setMetalStorage(1000)
+    map:setMetalStorage(600)
 
     for _, builderID in pairs(builders) do
         local allyTeamID = Spring.GetUnitAllyTeam(builderID)
