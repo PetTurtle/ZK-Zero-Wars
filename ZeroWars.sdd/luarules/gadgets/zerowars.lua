@@ -77,6 +77,22 @@ function gadget:GameFrame(frame)
     deployer:deploy()
 end
 
+-- transfer clone experience to original
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
+    if Spring.GetUnitRulesParam(unitID, "clone") then
+        local original = Spring.GetUnitRulesParam(unitID, "original")
+        if original and not Spring.GetUnitIsDead(original) then
+            Spring.SetUnitExperience(original, Spring.GetUnitExperience(unitID))
+            return
+        end
+    end
+end
+
+-- disallow wreck creation
+function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
+    return false
+end
+
 function gadget:Initialize()
 end
 
