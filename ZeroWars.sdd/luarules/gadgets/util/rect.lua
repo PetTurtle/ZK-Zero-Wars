@@ -65,4 +65,10 @@ function Rect:getCenter()
     return self.x + (self.width / 2), self.z + (self.height / 2)
 end
 
+function Rect:getOffset(rect)
+    local x, z = self:getTopLeft()
+    local x2, z2 = rect:getTopLeft()
+    return {x = x2 - x, z = z2 - z}
+end 
+
 return Rect

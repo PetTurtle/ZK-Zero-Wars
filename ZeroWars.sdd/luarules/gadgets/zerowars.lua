@@ -15,12 +15,16 @@ end
 
 local Map = VFS.Include("luarules/gadgets/util/map.lua")
 local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
-local platforms, deployRects, buildings  = VFS.Include("luarules/configs/map_zerowars.lua")
+local Deployer = VFS.Include("luarules/gadgets/zerowars/deployer.lua")
+local platforms, deployRects, buildings, sideData  = VFS.Include("luarules/configs/map_zerowars.lua")
 
 local SPAWNFRAME = 800
 
 local sides = {}
+local deployData = {}
+
 local map = Map.new()
+local deployer = Deployer.new()
 
 local function GenerateSides()
     local allyStarts = map:getAllyStarts()
@@ -28,6 +32,24 @@ local function GenerateSides()
     allyStarts.Right = tonumber(allyStarts.Right or 0)
     sides[allyStarts.Left] = Side.new(allyStarts.Left,  platforms.Left, deployRects.Left, buildings.Left)
     sides[allyStarts.Right] = Side.new(allyStarts.Right, platforms.Right, deployRects.Right, buildings.Right)
+    deployData[allyStarts.Left] = sideData.Left
+    deployData[allyStarts.Right] = sideData.Right
+end
+
+local function NextWave()
+    for allyTeam, side in pairs(sides) do
+        if side:hasPlatforms() then
+            local platform = side:nextPlatform()
+            for _, builderID in pairs(platform.builders) do
+                local teamID = Spring.GetUnitTeam(builderID)
+                local eIncome = Spring.GetTeamRulesParam(teamID, "OD_team_energyIncome") or 0
+                Spring.SetTeamResource(teamID, "metal", eIncome)
+
+                local data = deployData[allyTeam]
+                deployer:add(platform.deployZone, data.deployRect, teamID, data.faceDir, data.attackX)
+            end
+        end
+    end
 end
 
 function gadget:GamePreload()
@@ -50,17 +72,9 @@ end
 
 function gadget:GameFrame(frame)
     if frame > 0 and frame % SPAWNFRAME == 0 then
-        for _, side in pairs(sides) do
-            if side:hasPlatforms() then
-                local platform = side:nextPlatform()
-                for _, builderID in pairs(platform.builders) do
-                    local teamID = Spring.GetUnitTeam(builderID)
-                    local eIncome = Spring.GetTeamRulesParam(teamID, "OD_team_energyIncome") or 0
-                    Spring.SetTeamResource(teamID, "metal", eIncome)
-                end
-            end
-        end
+        NextWave()
     end
+    deployer:deploy()
 end
 
 function gadget:Initialize()

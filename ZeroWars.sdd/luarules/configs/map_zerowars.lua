@@ -49,4 +49,17 @@ local buildings = {
     }
 }
 
-return platforms, deployRects, buildings 
+local sideData = {
+    Left = {
+        faceDir = "e",
+        attackX = 5888,
+        deployRect = Rect.new(1664, 1152, width, height)
+    },
+    Right = {
+        faceDir = "w",
+        attackX = 2303,
+        deployRect = Rect.new(6144, 1152, width, height)
+    }
+}
+
+return platforms, deployRects, buildings, sideData
