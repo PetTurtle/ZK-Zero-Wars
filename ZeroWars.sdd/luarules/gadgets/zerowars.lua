@@ -77,6 +77,18 @@ function gadget:GameFrame(frame)
     deployer:deploy()
 end
 
+-- disable unit movement built by builders ( not spawned )
+-- so platform units build to be cloned can't be controlled
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+    if builderID then
+        local ud = UnitDefs[unitDefID]
+        if not (ud.isBuilding or ud.isBuilder) then
+            Spring.SetUnitNeutral(unitID, true)
+            Spring.MoveCtrl.Enable(unitID, false)
+        end
+    end
+end
+
 -- transfer clone experience to original
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
     if Spring.GetUnitRulesParam(unitID, "clone") then
