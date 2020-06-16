@@ -20,7 +20,7 @@ local IdleClones = VFS.Include("luarules/gadgets/zerowars/idle_clones.lua")
 local CloneTimeout = VFS.Include("luarules/gadgets/zerowars/clone_timeout.lua")
 local platforms, deployRects, buildings, sideData  = VFS.Include("luarules/configs/map_zerowars.lua")
 
-local SPAWNFRAME = 800
+local SPAWNFRAME = 1000
 local UPDATEFRAME = 30
 
 local sides = {}
@@ -52,8 +52,8 @@ local function NextWave()
             local platform = side:nextPlatform()
             for _, builderID in pairs(platform.builders) do
                 local teamID = Spring.GetUnitTeam(builderID)
-                local eIncome = Spring.GetTeamRulesParam(teamID, "OD_team_energyIncome") or 0
-                Spring.SetTeamResource(teamID, "metal", eIncome)
+                local eCurr, eStor, ePull, eInco, eExpe, eShar, eSent, eReci = Spring.GetTeamResources(teamID, "energy")
+                Spring.AddTeamResource(teamID, "metal", eInco)
 
                 local data = deployData[allyTeam]
                 deployer:add(platform.deployZone, data.deployRect, teamID, data.faceDir, data.attackX)
@@ -68,7 +68,7 @@ end
 
 function gadget:GameStart()
     local builders = map:replaceStartUnit("builder")
-    map:setMetalStorage(600)
+    map:setMetalStorage(1000)
 
     for _, builderID in pairs(builders) do
         local allyTeamID = Spring.GetUnitAllyTeam(builderID)
@@ -103,6 +103,9 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         if not (ud.isBuilding or ud.isBuilder) then
             Spring.SetUnitNeutral(unitID, true)
             Spring.MoveCtrl.Enable(unitID, false)
+
+            local deploy_income = ud.customParams.deploy_income or 0
+            Spring.SetUnitResourcing(unitID, "ume", deploy_income)
         end
     end
 end
