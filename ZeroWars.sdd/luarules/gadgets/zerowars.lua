@@ -49,13 +49,11 @@ end
 local function NextWave()
     for allyTeam, side in pairs(sides) do
         if side:hasPlatforms() then
+            side:provideIncome()
             local platform = side:nextPlatform()
             for _, builderID in pairs(platform.builders) do
-                local teamID = Spring.GetUnitTeam(builderID)
-                local eCurr, eStor, ePull, eInco, eExpe, eShar, eSent, eReci = Spring.GetTeamResources(teamID, "energy")
-                Spring.AddTeamResource(teamID, "metal", eInco)
-
                 local data = deployData[allyTeam]
+                local teamID = Spring.GetUnitTeam(builderID)
                 deployer:add(platform.deployZone, data.deployRect, teamID, data.faceDir, data.attackX)
             end
         end

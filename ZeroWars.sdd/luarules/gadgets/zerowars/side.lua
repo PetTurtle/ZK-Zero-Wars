@@ -74,4 +74,15 @@ function Side:hasPlatforms()
     return #self.platforms > 0
 end
 
+function Side:provideIncome()
+    for i = 1, #self.platforms do
+        local platform = self.platforms[i]
+        for _, builderID in pairs(platform.builders) do
+            local teamID = Spring.GetUnitTeam(builderID)
+            local eCurr, eStor, ePull, eInco, eExpe, eShar, eSent, eReci = Spring.GetTeamResources(teamID, "energy")
+            Spring.AddTeamResource(teamID, "metal", eInco)
+        end
+    end
+end
+
 return Side
