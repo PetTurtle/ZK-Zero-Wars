@@ -1,12 +1,12 @@
-local width = 384
-local height = 768
+local width = 368 - 16 -- 384 -- 16
+local height = 752 - 16 -- 768 -- 16
 
-local leftX = 384
-local rightX = 7424
+local leftX = 384 + 16
+local rightX = 7424 + 16
 
-local y1 = 128
-local y2 = 1152
-local y3 = 2176
+local y1 = 128 + 16
+local y2 = 1152 + 16
+local y3 = 2176 + 16
 
 return {
 	[0] = {
