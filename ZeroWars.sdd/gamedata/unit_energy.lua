@@ -1,115 +1,117 @@
 local unit_energy = {
-    amphaa = {energyMake = 1}, -- Angler
-    amphassault = {energyMake = 1}, -- Grizzly
-    amphbomb = {energyMake = 1}, -- Limpet
-    amphfloater = {energyMake = 1}, -- Buoy
-    amphimpulse = {energyMake = 1}, -- Archer
-    amphlaunch = {energyMake = 1}, -- Lobster
-    amphraid = {energyMake = 1}, -- Duck
-    amphriot = {energyMake = 1}, -- Scallop
-    bomberdisarm = {energyMake = 1}, -- Thunderbird
-    bomberheavy = {energyMake = 1}, -- Likho
-    bomberprec = {energyMake = 1}, -- Raven
-    bomberriot = {energyMake = 1}, -- Phoenix
-    bomberstrike = {energyMake = 1}, -- Kestrel
-    chicken = {energyMake = 1}, -- Chicken
-    chicken_blimpy = {energyMake = 1}, -- Blimpy
-    chicken_digger = {energyMake = 1}, -- Digger
-    chicken_dodo = {energyMake = 1}, -- Dodo
-    chicken_dragon = {energyMake = 1}, -- Dragon
-    chicken_leaper = {energyMake = 1}, -- Leaper
-    chicken_pigeon = {energyMake = 1}, -- Rafflesia
-    chicken_roc = {energyMake = 1}, -- Roc
-    chicken_shield = {energyMake = 1}, -- Blooper
-    chicken_spidermonkey = {energyMake = 1}, -- Spidermonkey
-    chicken_tiamat = {energyMake = 1}, -- Tiamat
-    chickena = {energyMake = 1}, -- Cockatrice
-    chickenblobber = {energyMake = 1}, -- Blobber
-    chickenc = {energyMake = 1}, -- Basilisk
-    chickenf = {energyMake = 1}, -- Talon
-    chickenr = {energyMake = 1}, -- Lobber
-    chickens = {energyMake = 1}, -- Spiker
-    chickenwurm = {energyMake = 1}, -- Wurm
-    cloakaa = {energyMake = 1}, -- Gremlin
-    cloakarty = {energyMake = 1}, -- Sling
-    cloakassault = {energyMake = 1}, -- Knight
-    cloakbomb = {energyMake = 1}, -- Imp
-    cloakheavyraid = {energyMake = 1}, -- Scythe
-    cloakjammer = {energyMake = 1}, -- Iris
-    cloakraid = {energyMake = 1}, -- Glaive
-    cloakriot = {energyMake = 1}, -- Reaver
-    cloakskirm = {energyMake = 1}, -- Ronin
-    cloaksnipe = {energyMake = 1}, -- Phantom
-    dronecarry = {energyMake = 1}, -- Gull
-    dronefighter = {energyMake = 1}, -- Spicula
-    droneheavyslow = {energyMake = 1}, -- Viper
-    dronelight = {energyMake = 1}, -- Firefly
-    grebe = {energyMake = 1}, -- Grebe
-    gunshipaa = {energyMake = 1}, -- Trident
-    gunshipassault = {energyMake = 1}, -- Revenant
-    gunshipbomb = {energyMake = 1}, -- Blastwing
-    gunshipemp = {energyMake = 1}, -- Gnat
-    gunshipheavyskirm = {energyMake = 1}, -- Nimbus
-    gunshipkrow = {energyMake = 1}, -- Krow
-    gunshipraid = {energyMake = 1}, -- Locust
-    gunshipskirm = {energyMake = 1}, -- Harpy
-    hoveraa = {energyMake = 1}, -- Flail
-    hoverarty = {energyMake = 1}, -- Lance
-    hoverassault = {energyMake = 1}, -- Halberd
-    hoverdepthcharge = {energyMake = 1}, -- Claymore
-    hoverheavyraid = {energyMake = 1}, -- Bolas
-    hoverraid = {energyMake = 1}, -- Dagger
-    hoverriot = {energyMake = 1}, -- Mace
-    hoverskirm = {energyMake = 1}, -- Scalpel
-    jumpaa = {energyMake = 1}, -- Toad
-    jumparty = {energyMake = 1}, -- Firewalker
-    jumpassault = {energyMake = 1}, -- Jack
-    jumpblackhole = {energyMake = 1}, -- Placeholder
-    jumpbomb = {energyMake = 1}, -- Skuttle
-    jumpraid = {energyMake = 1}, -- Pyro
-    jumpscout = {energyMake = 1}, -- Puppy
-    jumpskirm = {energyMake = 1}, -- Moderator
-    jumpsumo = {energyMake = 1}, -- Jugglenaut
-    nebula = {energyMake = 1}, -- Nebula
-    planefighter = {energyMake = 1}, -- Swift
-    planeheavyfighter = {energyMake = 1}, -- Raptor
-    planescout = {energyMake = 1}, -- Owl
-    shieldaa = {energyMake = 1}, -- Vandal
-    shieldarty = {energyMake = 1}, -- Racketeer
-    shieldassault = {energyMake = 1}, -- Thug
-    shieldbomb = {energyMake = 1}, -- Snitch
-    shieldfelon = {energyMake = 1}, -- Felon
-    shieldraid = {energyMake = 1}, -- Bandit
-    shieldriot = {energyMake = 1}, -- Outlaw
-    shieldscout = {energyMake = 1}, -- Dirtbag
-    shieldshield = {energyMake = 1}, -- Aspis
-    shieldskirm = {energyMake = 1}, -- Rogue
-    spideraa = {energyMake = 1}, -- Tarantula
-    spideranarchid = {energyMake = 1}, -- Anarchid
-    spiderantiheavy = {energyMake = 1}, -- Widow
-    spiderassault = {energyMake = 1}, -- Hermit
-    spidercrabe = {energyMake = 1}, -- Crab
-    spideremp = {energyMake = 1}, -- Venom
-    spiderriot = {energyMake = 1}, -- Redback
-    spiderscout = {energyMake = 1}, -- Flea
-    spiderskirm = {energyMake = 1}, -- Recluse
-    tankaa = {energyMake = 1}, -- Ettin
-    tankarty = {energyMake = 1}, -- Emissary
-    tankassault = {energyMake = 1}, -- Minotaur
-    tankheavyarty = {energyMake = 1}, -- Tremor
-    tankheavyassault = {energyMake = 1}, -- Cyclops
-    tankheavyraid = {energyMake = 1}, -- Blitz
-    tankraid = {energyMake = 1}, -- Kodachi
-    tankriot = {energyMake = 1}, -- Ogre
-    vehaa = {energyMake = 1}, -- Crasher
-    veharty = {energyMake = 1}, -- Badger
-    vehassault = {energyMake = 1}, -- Ravager
-    vehcapture = {energyMake = 1}, -- Dominatrix
-    vehheavyarty = {energyMake = 1}, -- Impaler
-    vehraid = {energyMake = 1}, -- Scorcher
-    vehriot = {energyMake = 1}, -- Ripper
-    vehscout = {energyMake = 1}, -- Dart
-    vehsupport = {energyMake = 1}, -- Fencer
+    amphaa = {customParams = { deploy_income = 20 }}, -- Angler
+    amphassault = {customParams = { deploy_income = 8 }}, -- Grizzly
+    amphbomb = {customParams = { deploy_income = 8 }}, -- Limpet
+    amphfloater = {customParams = { deploy_income = 12 }}, -- Buoy
+    amphimpulse = {customParams = { deploy_income = 10 }}, -- Archer
+    amphlaunch = {customParams = { deploy_income = 0 }}, -- Lobster
+    amphraid = {customParams = { deploy_income = 12 }}, -- Duck
+    amphriot = {customParams = { deploy_income = 12 }}, -- Scallop
+    bomberdisarm = {customParams = { deploy_income = 8 }}, -- Thunderbird
+    bomberheavy = {customParams = { deploy_income = 8 }}, -- Likho
+    bomberprec = {customParams = { deploy_income = 30 }}, -- Raven
+    bomberriot = {customParams = { deploy_income = 20 }}, -- Phoenix
+    bomberstrike = {customParams = { deploy_income = 16 }}, -- Kestrel
+    chicken = {customParams = { deploy_income = 4 }}, -- Chicken
+    chicken_blimpy = {customParams = { deploy_income = 20 }}, -- Blimpy
+    chicken_digger = {customParams = { deploy_income = 0 }}, -- Digger
+    chicken_dodo = {customParams = { deploy_income = 8 }}, -- Dodo
+    chicken_dragon = {customParams = { deploy_income = 4 }}, -- Dragon
+    chicken_leaper = {customParams = { deploy_income = 4 }}, -- Leaper
+    chicken_pigeon = {customParams = { deploy_income = 4 }}, -- Rafflesia
+    chicken_roc = {customParams = { deploy_income = 4 }}, -- Roc
+    chicken_shield = {customParams = { deploy_income = 20 }}, -- Blooper
+    chicken_spidermonkey = {customParams = { deploy_income = 28 }}, -- Spidermonkey
+    chicken_tiamat = {customParams = { deploy_income = 16 }}, -- Tiamat
+    chickena = {customParams = { deploy_income = 12 }}, -- Cockatrice
+    chickenblobber = {customParams = { deploy_income = 0 }}, -- Blobber
+    chickenc = {customParams = { deploy_income = 16 }}, -- Basilisk
+    chickenf = {customParams = { deploy_income = 2 }}, -- Talon
+    chickenr = {customParams = { deploy_income = 0 }}, -- Lobber
+    chickens = {customParams = { deploy_income = 24 }}, -- Spiker
+    chickenwurm = {customParams = { deploy_income = 8 }}, -- Wurm
+    cloakaa = {customParams = { deploy_income = 12 }}, -- Gremlin
+    cloakarty = {customParams = { deploy_income = 4 }}, -- Sling
+    cloakassault = {customParams = { deploy_income = 8 }}, -- Knight
+    cloakbomb = {customParams = { deploy_income = 20 }}, -- Imp
+    cloakheavyraid = {customParams = { deploy_income = 16 }}, -- Scythe
+    cloakjammer = {customParams = { deploy_income = 0 }}, -- Iris
+    cloakraid = {customParams = { deploy_income = 16 }}, -- Glaive
+    cloakriot = {customParams = { deploy_income = 20 }}, -- Reaver
+    cloakskirm = {customParams = { deploy_income = 12 }}, -- Ronin
+    cloaksnipe = {customParams = { deploy_income = 8 }}, -- Phantom
+    dronecarry = {customParams = { deploy_income = 2 }}, -- Gull
+    dronefighter = {customParams = { deploy_income = 2 }}, -- Spicula
+    droneheavyslow = {customParams = { deploy_income = 2 }}, -- Viper
+    dronelight = {customParams = { deploy_income = 2 }}, -- Firefly
+    grebe = {customParams = { deploy_income = 12 }}, -- Grebe
+    gunshipaa = {customParams = { deploy_income = 24 }}, -- Trident
+    gunshipassault = {customParams = { deploy_income = 24 }}, -- Revenant
+    gunshipbomb = {customParams = { deploy_income = 8 }}, -- Blastwing
+    gunshipemp = {customParams = { deploy_income = 6 }}, -- Gnat
+    gunshipheavyskirm = {customParams = { deploy_income = 20 }}, -- Nimbus
+    gunshipkrow = {customParams = { deploy_income = 20 }}, -- Krow
+    gunshipraid = {customParams = { deploy_income = 8 }}, -- Locust
+    gunshipskirm = {customParams = { deploy_income = 22 }}, -- Harpy
+    hoveraa = {customParams = { deploy_income = 24 }}, -- Flail
+    hoverarty = {customParams = { deploy_income = 8 }}, -- Lance
+    hoverassault = {customParams = { deploy_income = 8 }}, -- Halberd
+    hoverdepthcharge = {customParams = { deploy_income = 20 }}, -- Claymore
+    hoverheavyraid = {customParams = { deploy_income = 16 }}, -- Bolas
+    hoverraid = {customParams = { deploy_income = 16 }}, -- Dagger
+    hoverriot = {customParams = { deploy_income = 30 }}, -- Mace
+    hoverskirm = {customParams = { deploy_income = 28 }}, -- Scalpel
+    hoverminer = {customParams = { deploy_income = 12 }}, -- Dampener
+    hovershotgun = {customParams = { deploy_income = 12 }}, -- hovershotgun
+    jumpaa = {customParams = { deploy_income = 8 }}, -- Toad
+    jumparty = {customParams = { deploy_income = 0 }}, -- Firewalker
+    jumpassault = {customParams = { deploy_income = 20 }}, -- Jack
+    jumpblackhole = {customParams = { deploy_income = 0 }}, -- Placeholder
+    jumpbomb = {customParams = { deploy_income = 24 }}, -- Skuttle
+    jumpraid = {customParams = { deploy_income = 16 }}, -- Pyro
+    jumpscout = {customParams = { deploy_income = 10 }}, -- Puppy
+    jumpskirm = {customParams = { deploy_income = 20 }}, -- Moderator
+    jumpsumo = {customParams = { deploy_income = 20 }}, -- Jugglenaut
+    nebula = {customParams = { deploy_income = 40 }}, -- Nebula
+    planefighter = {customParams = { deploy_income = 20 }}, -- Swift
+    planeheavyfighter = {customParams = { deploy_income = 24 }}, -- Raptor
+    planescout = {customParams = { deploy_income = 4 }}, -- Owl
+    shieldaa = {customParams = { deploy_income = 16 }}, -- Vandal
+    shieldarty = {customParams = { deploy_income = 0 }}, -- Racketeer
+    shieldassault = {customParams = { deploy_income = 8 }}, -- Thug
+    shieldbomb = {customParams = { deploy_income = 14 }}, -- Snitch
+    shieldfelon = {customParams = { deploy_income = 5 }}, -- Felon
+    shieldraid = {customParams = { deploy_income = 12 }}, -- Bandit
+    shieldriot = {customParams = { deploy_income = 8 }}, -- Outlaw
+    shieldscout = {customParams = { deploy_income = 8 }}, -- Dirtbag
+    shieldshield = {customParams = { deploy_income = 8 }}, -- Aspis
+    shieldskirm = {customParams = { deploy_income = 12 }}, -- Rogue
+    spideraa = {customParams = { deploy_income = 20 }}, -- Tarantula
+    spideranarchid = {customParams = { deploy_income = 16 }}, -- Anarchid
+    spiderantiheavy = {customParams = { deploy_income = 8 }}, -- Widow
+    spiderassault = {customParams = { deploy_income = 8 }}, -- Hermit
+    spidercrabe = {customParams = { deploy_income = 4 }}, -- Crab
+    spideremp = {customParams = { deploy_income = 20 }}, -- Venom
+    spiderriot = {customParams = { deploy_income = 28 }}, -- Redback
+    spiderscout = {customParams = { deploy_income = 8 }}, -- Flea
+    spiderskirm = {customParams = { deploy_income = 10 }}, -- Recluse
+    tankaa = {customParams = { deploy_income = 20 }}, -- Ettin
+    tankarty = {customParams = { deploy_income = 16 }}, -- Emissary
+    tankassault = {customParams = { deploy_income = 16 }}, -- Minotaur
+    tankheavyarty = {customParams = { deploy_income = 0 }}, -- Tremor
+    tankheavyassault = {customParams = { deploy_income = 4 }}, -- Cyclops
+    tankheavyraid = {customParams = { deploy_income = 20 }}, -- Blitz
+    tankraid = {customParams = { deploy_income = 12 }}, -- Kodachi
+    tankriot = {customParams = { deploy_income = 28 }}, -- Ogre
+    vehaa = {customParams = { deploy_income = 35 }}, -- Crasher
+    veharty = {customParams = { deploy_income = 4 }}, -- Badger
+    vehassault = {customParams = { deploy_income = 16 }}, -- Ravager
+    vehcapture = {customParams = { deploy_income = 30 }}, -- Dominatrix
+    vehheavyarty = {customParams = { deploy_income = 12 }}, -- Impaler
+    vehraid = {customParams = { deploy_income = 16 }}, -- Scorcher
+    vehriot = {customParams = { deploy_income = 22 }}, -- Ripper
+    vehscout = {customParams = { deploy_income = 12 }}, -- Dart
+    vehsupport = {customParams = { deploy_income = 20 }}, -- Fencer
 }
 
 return unit_energy

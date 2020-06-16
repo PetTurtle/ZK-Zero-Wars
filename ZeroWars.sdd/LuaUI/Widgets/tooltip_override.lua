@@ -1945,10 +1945,9 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				maxHealthLabel(true, healthOverride or ud.health, IMAGE.HEALTH)
 				maxHealthShown = true
 
-				if ud.customParams.income_energy or ud.customParams.upkeep_energy then
-					local e_income = ud.customParams.income_energy or 0
-					local e_upkeep = ud.customParams.upkeep_energy or 0
-					energyIncomeLabel(true, FormatPlusMinus(e_income - e_upkeep), IMAGE.ENERGY)
+				if ud.customParams.deploy_income then
+					local deploy_income = tonumber(ud.customParams.deploy_income)
+					energyIncomeLabel(true, FormatPlusMinus(deploy_income), IMAGE.ENERGY)
 				else
 					energyIncomeLabel(false)
 				end
