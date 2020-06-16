@@ -16,15 +16,18 @@ end
 local Map = VFS.Include("luarules/gadgets/util/map.lua")
 local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
 local Deployer = VFS.Include("luarules/gadgets/zerowars/deployer.lua")
+local IdleClones = VFS.Include("luarules/gadgets/zerowars/idle_clones.lua")
 local platforms, deployRects, buildings, sideData  = VFS.Include("luarules/configs/map_zerowars.lua")
 
 local SPAWNFRAME = 800
+local UPDATEFRAME = 30
 
 local sides = {}
 local deployData = {}
 
 local map = Map.new()
 local deployer = Deployer.new()
+local idleClones
 
 local function GenerateSides()
     local allyStarts = map:getAllyStarts()
@@ -34,6 +37,11 @@ local function GenerateSides()
     sides[allyStarts.Right] = Side.new(allyStarts.Right, allyStarts.Left, platforms.Right, deployRects.Right, buildings.Right)
     deployData[allyStarts.Left] = sideData.Left
     deployData[allyStarts.Right] = sideData.Right
+
+    idleClones = IdleClones.new({
+        [allyStarts.Left] = sideData.Left.attackX,
+        [allyStarts.Right] = sideData.Right.attackX
+    })
 end
 
 local function NextWave()
@@ -74,6 +82,9 @@ function gadget:GameFrame(frame)
     if frame > 0 and frame % SPAWNFRAME == 0 then
         NextWave()
     end
+    if frame > 0 and frame % UPDATEFRAME == 0 then
+        idleClones:command()
+    end
     deployer:deploy()
 end
 
@@ -98,6 +109,10 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
             return
         end
     end
+end
+
+function gadget:UnitIdle(unitID, unitDefID, unitTeam)
+    if Spring.GetUnitRulesParam(unitID, "clone") then idleClones:add(unitID) end
 end
 
 -- disallow wreck creation
