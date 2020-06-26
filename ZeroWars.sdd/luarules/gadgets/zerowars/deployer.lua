@@ -19,17 +19,28 @@ function Deployer:add(rect, targetRect, teamID, faceDir, attackX)
     local units = Spring.GetUnitsInRectangle(xmin, zmin, xmax, zmax, teamID)
     local unit, ud, buildProgress
     local validUnits = {}
+    local unitSpeeds = {}
     for i = 1, #units do
         unit = units[i]
         ud = UnitDefs[Spring.GetUnitDefID(unit)]
         buildProgress = select(5, Spring.GetUnitHealth(unit))
         if buildProgress >= 1.0 and not (ud.isBuilding or ud.isBuilder) then
+            local commands = Spring.GetCommandQueue(unit, -1)
+            local speed = ud.speed
+            if commands and #commands > 0 and commands[1].id == CMD.GUARD then
+                local guardUnitID = commands[1].params[1]
+                local guardUnitDefID = Spring.GetUnitDefID(guardUnitID)
+                local guardUnitSpeed =  UnitDefs[guardUnitDefID].speed
+                speed = math.min(guardUnitSpeed, speed)
+            end
+            
+            unitSpeeds[#unitSpeeds + 1] = speed
             validUnits[#validUnits + 1] = unit
         end
     end
     if #validUnits > 0 then
         local offset = rect:getOffset(targetRect)
-        self.spawnQueue:push({units = validUnits, offset = offset, teamID = teamID, faceDir = faceDir, attackX = attackX})
+        self.spawnQueue:push({units = validUnits, offset = offset, teamID = teamID, faceDir = faceDir, attackX = attackX, unitSpeeds = unitSpeeds})
     end
 end
 
@@ -40,6 +51,7 @@ function Deployer:deploy()
 
     local group = self.spawnQueue:peek()
     local units = group.units
+    local unitSpeeds = group.unitSpeeds
     local offset = group.offset
     local clone, x, y, z
     local clones = {}
@@ -49,9 +61,10 @@ function Deployer:deploy()
             if x then
                 clone = GG.cloneUnit(units[i], x + offset.x, 300, z + offset.z, group.faceDir, group.teamID)
                 clones[#clones + 1] = clone
-
+                
                 Spring.SetUnitRulesParam(clone, "clone", 1)
                 Spring.SetUnitRulesParam(clone, "original", units[i])
+                Spring.MoveCtrl.SetGroundMoveTypeData(clone, "maxSpeed", unitSpeeds[i]) -- Simpler to set the speed then calculate % increase using upgradesSpeedMult
                 Spring.GiveOrderToUnit(
                     clone,
                     CMD.INSERT,
