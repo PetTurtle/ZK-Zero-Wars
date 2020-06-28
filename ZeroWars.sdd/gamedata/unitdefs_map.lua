@@ -16,8 +16,8 @@ for name, ud in pairs(UnitDefs) do
 	ud.collideFirebase = false
 end
 
--- remove friendly fire damage
 for name, ud in pairs(UnitDefs) do
+	-- remove friendly fire damage
 	if ud.weapondefs then
 		if (ud.unitname ~= "chicken_dodo") then
 			for _, wd in pairs(ud.weapondefs) do
@@ -28,6 +28,10 @@ for name, ud in pairs(UnitDefs) do
 				end
 			end
 		end
+	end
+	-- set unit buildmast to 2
+	if not (ud.builder or ud.isBuilder) then
+		ud.buildingMask = 2
 	end
 end
 

@@ -7,7 +7,7 @@ function Platform.new(_rect)
         builders = {}
     }
     setmetatable(instance, Platform)
-    instance.deployZone:setBuildMaskOutline(0)
+    instance.deployZone:setBuildMask(2)
     return instance
 end
 
