@@ -1,3 +1,4 @@
+VFS.Include("LuaRules/Configs/customcmds.h.lua")
 local Queue = VFS.Include("luarules/gadgets/util/queue.lua")
 local spawnAmount = 12
 local mapCenter = Game.mapSizeX / 2
@@ -64,7 +65,7 @@ function Deployer:deploy()
                 
                 Spring.SetUnitRulesParam(clone, "clone", 1)
                 Spring.SetUnitRulesParam(clone, "original", units[i])
-                Spring.MoveCtrl.SetGroundMoveTypeData(clone, "maxSpeed", unitSpeeds[i]) -- Simpler to set the speed then calculate % increase using upgradesSpeedMult
+                Spring.GiveOrderToUnit(clone, CMD_WANTED_SPEED, {unitSpeeds[i]}, 0)
                 Spring.GiveOrderToUnit(
                     clone,
                     CMD.INSERT,
