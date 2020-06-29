@@ -12,14 +12,16 @@ for _, ud in pairs(UnitDefs) do
         ud.buildcostenergy = ud.buildtime
     end
 
-    -- remove friendly fire damage
     if ud.weapondefs then
+        -- remove friendly fire damage
         if (ud.unitname ~= "chicken_dodo") then
             for _, wd in pairs(ud.weapondefs) do
-                if not wd.customparams then
-                    wd.customparams = {nofriendlyfire = 1}
-                else
+                if wd.customparams then
                     wd.customparams.nofriendlyfire = 1
+                else
+                    wd.customparams = {nofriendlyfire = 1}
+                end
+            end
                 end
             end
         end
