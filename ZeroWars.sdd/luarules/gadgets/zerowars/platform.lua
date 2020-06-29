@@ -13,6 +13,7 @@ end
 
 function Platform:addBuilder(builderID)
     table.insert(self.builders, builderID)
+    GG.UnitScale(builderID, 2)
 end
 
 function Platform:hasActiveBuilder()
