@@ -22,7 +22,12 @@ for _, ud in pairs(UnitDefs) do
                     wd.customparams = {nofriendlyfire = 1}
                 end
             end
-                end
+        end
+
+        -- d-guns can be fired by AI
+        for _, wd in pairs(ud.weapondefs) do
+            if wd.commandFire then
+                wd.commandFire = false
             end
         end
     end
