@@ -41,7 +41,6 @@ function Side.new(_allyTeamID, _enemyAllyID, _platformRects, _deployRect, _build
             end)
         end
     end
-
     return instance
 end
 

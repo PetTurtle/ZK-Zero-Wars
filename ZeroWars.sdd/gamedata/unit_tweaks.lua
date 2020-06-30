@@ -1,17 +1,27 @@
 local unit_tweaks = {
+    chicken_drone_starter = {
+        customparams = {
+            statsname = nil,
+            comDrone = true,
+            morphto_1 = [[heroknight]],
+            morphcost_1 = 1,
+            morphtime_1 = 1,
+            morphto_2 = [[heroduck]],
+            morphcost_2 = 1,
+            morphtime_2 = 1,
+            morphto_3 = [[heropuppy]],
+            morphcost_3 = 1,
+            morphtime_3 = 1,
+            morphto_4 = [[herosniper]],
+            morphcost_4 = 1,
+            morphtime_4 = 1
+        }
+    },
     factorycloak = {
-        buildoptions  = {
-            [[builder]],
-            [[cloakraid]],
-            [[cloakheavyraid]],
-            [[cloakskirm]],
-            [[cloakriot]],
-            [[cloakassault]],
-            [[cloakarty]],
-            [[cloaksnipe]],
-            [[cloakaa]],
-            [[cloakbomb]],
-            [[striderantiheavy]],
+        buildoptions = {
+            [[builder]], [[cloakraid]], [[cloakheavyraid]], [[cloakskirm]],
+            [[cloakriot]], [[cloakassault]], [[cloakarty]], [[cloaksnipe]],
+            [[cloakaa]], [[cloakbomb]], [[striderantiheavy]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -21,51 +31,37 @@ local unit_tweaks = {
             pos_riot = [[cloakriot]],
             pos_anti_air = [[cloakaa]],
             pos_assault = [[cloakassault]],
-            pos_artillery= [[cloakarty]],
+            pos_artillery = [[cloakarty]],
             pos_heavy_something = [[cloaksnipe]],
             pos_special = [[cloakbomb]],
-            pos_utility = [[striderantiheavy]],
+            pos_utility = [[striderantiheavy]]
         },
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactorycloak.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     factoryshield = {
-        buildoptions  = {
-            [[builder]]
-        },
-        customParams = {
-            pos_constructor = [[builder]],
-        },
+        buildoptions = {[[builder]]},
+        customParams = {pos_constructor = [[builder]]},
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactoryshield.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     factoryveh = {
-        buildoptions  = {
-            [[builder]]
-        },
-        customParams = {
-            pos_constructor = [[builder]],
-        },
+        buildoptions = {[[builder]]},
+        customParams = {pos_constructor = [[builder]]},
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactoryveh.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     factorytank = {
-        buildoptions  = {
-            [[builder]],
-            [[tankraid]],
-            [[tankheavyraid]],
-            [[tankriot]],
-            [[tankarty]],
-            [[striderarty]],
-            [[tankaa]],
-            [[tankassault]],
-            [[tankheavyassault]],
+        buildoptions = {
+            [[builder]], [[tankraid]], [[tankheavyraid]], [[tankriot]],
+            [[tankarty]], [[striderarty]], [[tankaa]], [[tankassault]],
+            [[tankheavyassault]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -76,26 +72,18 @@ local unit_tweaks = {
             pos_assault = [[tankassault]],
             pos_artillery = [[striderarty]],
             pos_heavy_something = [[tankheavyassault]],
-            pos_utility = [[striderarty]],
+            pos_utility = [[striderarty]]
         },
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactorytank.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     factoryhover = {
-        buildoptions  = {
-            [[builder]],
-            [[hoverraid]],
-            [[hoverheavyraid]],
-            [[hoverdepthcharge]],
-            [[hoverriot]],
-            [[hoverskirm]],
-            [[hoverarty]],
-            [[hoveraa]],
-            [[hoverassault]],
-            [[hoverminer]],
-            [[hovershotgun]],
+        buildoptions = {
+            [[builder]], [[hoverraid]], [[hoverheavyraid]],
+            [[hoverdepthcharge]], [[hoverriot]], [[hoverskirm]], [[hoverarty]],
+            [[hoveraa]], [[hoverassault]], [[hoverminer]], [[hovershotgun]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -108,24 +96,17 @@ local unit_tweaks = {
             pos_artillery = [[hoverarty]],
             pos_heavy_something = [[hovershotgun]],
             pos_special = [[hoverdepthcharge]],
-            pos_utility = [[hoverminer]],
+            pos_utility = [[hoverminer]]
         },
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactoryhover.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     factoryamph = {
-        buildoptions  = {
-            [[builder]],
-            [[amphraid]],
-            [[amphimpulse]],
-            [[amphfloater]],
-            [[amphriot]],
-            [[amphassault]],
-            [[grebe]],
-            [[amphaa]],
-            [[amphbomb]],
+        buildoptions = {
+            [[builder]], [[amphraid]], [[amphimpulse]], [[amphfloater]],
+            [[amphriot]], [[amphassault]], [[grebe]], [[amphaa]], [[amphbomb]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -136,37 +117,26 @@ local unit_tweaks = {
             pos_anti_air = [[amphaa]],
             pos_assault = [[grebe]],
             pos_heavy_something = [[amphassault]],
-            pos_special = [[amphbomb]],
+            pos_special = [[amphbomb]]
         },
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactoryamph.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     factoryjump = {
-        buildoptions  = {
-            [[builder]]
-        },
-        customParams = {
-            pos_constructor = [[builder]],
-        },
+        buildoptions = {[[builder]]},
+        customParams = {pos_constructor = [[builder]]},
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactoryjump.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     factoryspider = {
-        buildoptions  = {
-            [[builder]],
-            [[spiderscout]],
-            [[spiderassault]],
-            [[spideremp]],
-            [[spiderriot]],
-            [[spiderskirm]],
-            [[spidercrabe]],
-            [[spideraa]],
-            [[spiderantiheavy]],
-            [[spideranarchid]],
+        buildoptions = {
+            [[builder]], [[spiderscout]], [[spiderassault]], [[spideremp]],
+            [[spiderriot]], [[spiderskirm]], [[spidercrabe]], [[spideraa]],
+            [[spiderantiheavy]], [[spideranarchid]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -178,26 +148,18 @@ local unit_tweaks = {
             pos_assault = [[spiderassault]],
             pos_artillery = [[spideranarchid]],
             pos_heavy_something = [[spidercrabe]],
-            pos_special = [[spiderantiheavy]],
+            pos_special = [[spiderantiheavy]]
         },
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactoryspider.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     factorygunship = {
-        buildoptions  = {
-            [[builder]],
-            [[gunshipbomb]],
-            [[gunshipemp]],
-            [[gunshipraid]],
-            [[gunshipskirm]],
-            [[gunshipheavyskirm]],
-            [[gunshipassault]],
-            [[gunshipkrow]],
-            [[gunshipaa]],
-            [[dronelight]],
-            [[nebula]],
+        buildoptions = {
+            [[builder]], [[gunshipbomb]], [[gunshipemp]], [[gunshipraid]],
+            [[gunshipskirm]], [[gunshipheavyskirm]], [[gunshipassault]],
+            [[gunshipkrow]], [[gunshipaa]], [[dronelight]], [[nebula]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -210,26 +172,19 @@ local unit_tweaks = {
             pos_artillery = [[gunshipheavyskirm]],
             pos_heavy_something = [[gunshipkrow]],
             pos_special = [[dronelight]],
-            pos_utility = [[nebula]],
+            pos_utility = [[nebula]]
 
         },
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactorygunship.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     factoryplane = {
-        buildoptions  = {
-            [[builder]],
-            [[planefighter]],
-            [[planeheavyfighter]],
-            [[bomberprec]],
-            [[bomberriot]],
-            [[bomberdisarm]],
-            [[bomberheavy]],
-            [[planescout]],
-            [[planelightscout]],
-            [[bomberstrike]],
+        buildoptions = {
+            [[builder]], [[planefighter]], [[planeheavyfighter]],
+            [[bomberprec]], [[bomberriot]], [[bomberdisarm]], [[bomberheavy]],
+            [[planescout]], [[planelightscout]], [[bomberstrike]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -241,12 +196,12 @@ local unit_tweaks = {
             pos_artillery = [[planelightscout]],
             pos_heavy_something = [[bomberheavy]],
             pos_special = [[bomberdisarm]],
-            pos_utility = [[planescout]],
+            pos_utility = [[planescout]]
         },
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactoryplane.lua]],
-        yardMap = "",
+        yardMap = ""
     },
     chicken = {
         buildcostmetal = 25,
@@ -260,23 +215,10 @@ local unit_tweaks = {
         buildcostenergy = 220,
         buildtime = 220,
         maxVelocity = 3.2,
-        weaponDefs = {
-            WEAPON = {
-                range = 65,
-                impulseBoost = 1250
-            }
-        }
+        weaponDefs = {WEAPON = {range = 65, impulseBoost = 1250}}
     },
-    chickens = {
-        buildcostmetal = 90,
-        buildcostenergy = 90,
-        buildtime = 90
-    },
-    chickenwurm = {
-        buildcostmetal = 400,
-        buildcostenergy = 400,
-        buildtime = 400
-    },
+    chickens = {buildcostmetal = 90, buildcostenergy = 90, buildtime = 90},
+    chickenwurm = {buildcostmetal = 400, buildcostenergy = 400, buildtime = 400},
     chicken_dodo = {
         buildcostmetal = 75,
         buildcostenergy = 75,
@@ -284,21 +226,9 @@ local unit_tweaks = {
         footprintX = 3,
         footprintZ = 3
     },
-    chickena = {
-        buildcostmetal = 220,
-        buildcostenergy = 220,
-        buildtime = 220
-    },
-    chickenc = {
-        buildcostmetal = 350,
-        buildcostenergy = 350,
-        buildtime = 350
-    },
-    chicken_roc = {
-        buildcostmetal = 800,
-        buildcostenergy = 800,
-        buildtime = 800
-    },
+    chickena = {buildcostmetal = 220, buildcostenergy = 220, buildtime = 220},
+    chickenc = {buildcostmetal = 350, buildcostenergy = 350, buildtime = 350},
+    chicken_roc = {buildcostmetal = 800, buildcostenergy = 800, buildtime = 800},
     chickenf = {
         buildcostmetal = 150,
         buildcostenergy = 150,
@@ -336,14 +266,26 @@ local unit_tweaks = {
         buildcostmetal = 600,
         buildcostenergy = 600,
         buildtime = 600,
-        weaponDefs = {SHIELD = {shieldPower = 2000, shieldPowerRegen = 30, shieldRadius = 100, shieldStartingPower = 2000}}
+        weaponDefs = {
+            SHIELD = {
+                shieldPower = 2000,
+                shieldPowerRegen = 30,
+                shieldRadius = 100,
+                shieldStartingPower = 2000
+            }
+        }
     },
     chicken_tiamat = {
         buildcostmetal = 1000,
         buildcostenergy = 1000,
         buildtime = 1000,
         weaponDefs = {
-            SHIELD = {shieldPower = 2000, shieldPowerRegen = 30, shieldRadius = 100, shieldStartingPower = 2000}
+            SHIELD = {
+                shieldPower = 2000,
+                shieldPowerRegen = 30,
+                shieldRadius = 100,
+                shieldStartingPower = 2000
+            }
         }
     },
     chickenblobber = {
@@ -357,50 +299,19 @@ local unit_tweaks = {
         buildcostenergy = 8000,
         buildtime = 8000
     },
-    cloakbomb = {
-        weaponDefs = {cloakbomb_DEATH = {areaOfEffect = 300}}
-    },
-    amphbomb = {
-        weaponDefs = {AMPHBOMB_DEATH = {areaOfEffect = 300}}
-    },
-    jumpbomb = {
-        weaponDefs = {jumpbomb_DEATH = {areaOfEffect = 300}}
-    },
-    shieldbomb = {
-        weaponDefs = {shieldbomb_DEATH = {areaOfEffect = 300}}
-    },
-    dronecarry = {
-        buildCostMetal = 80,
-        maxDamage = 80,
-        reclaimable = true
-    },
-    dronelight = {
-        buildCostMetal = 50,
-        maxDamage = 150,
-        reclaimable = true
-    },
-    droneheavyslow = {
-        buildCostMetal = 120,
-        maxDamage = 300,
-        reclaimable = true
-    },
+    cloakbomb = {weaponDefs = {cloakbomb_DEATH = {areaOfEffect = 300}}},
+    amphbomb = {weaponDefs = {AMPHBOMB_DEATH = {areaOfEffect = 300}}},
+    jumpbomb = {weaponDefs = {jumpbomb_DEATH = {areaOfEffect = 300}}},
+    shieldbomb = {weaponDefs = {shieldbomb_DEATH = {areaOfEffect = 300}}},
+    dronecarry = {buildCostMetal = 80, maxDamage = 80, reclaimable = true},
+    dronelight = {buildCostMetal = 50, maxDamage = 150, reclaimable = true},
+    droneheavyslow = {buildCostMetal = 120, maxDamage = 300, reclaimable = true},
     bomberstrike = {
         weaponDefs = {MISSILE = {damage = {default = 700, planes = 700}}}
     },
-    grebe = {
-        noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
-    },
-    spideranarchid = {
-        weaponDefs = {
-            LASER = {
-                range = 400,
-            }
-        }
-    },
-    hoverassault = {
-        maxDamage = 1000,
-        maxVelocity = 2.8
-    },
+    grebe = {noChaseCategory = [[TERRAFORM FIXEDWING SUB]]},
+    spideranarchid = {weaponDefs = {LASER = {range = 400}}},
+    hoverassault = {maxDamage = 1000, maxVelocity = 2.8},
     nebula = {
         footprintX = 5,
         footprintZ = 15,
@@ -412,9 +323,7 @@ local unit_tweaks = {
         collisionVolumeScales = [[92 120 92]],
         customparams = {modelradius = [[40]]}
     },
-    staticrearm = {
-        workerTime = 30
-    }
+    staticrearm = {workerTime = 30}
 }
 
 return unit_tweaks

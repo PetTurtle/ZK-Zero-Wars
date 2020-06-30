@@ -9,7 +9,7 @@ function gadget:GetInfo()
     }
 end
 
-if (not gadgetHandler:IsSyncedCode()) then
+if not gadgetHandler:IsSyncedCode() then
     return false
 end
 
@@ -18,7 +18,7 @@ local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
 local Deployer = VFS.Include("luarules/gadgets/zerowars/deployer.lua")
 local IdleClones = VFS.Include("luarules/gadgets/zerowars/idle_clones.lua")
 local CloneTimeout = VFS.Include("luarules/gadgets/zerowars/clone_timeout.lua")
-local platforms, deployRects, buildings, sideData  = VFS.Include("luarules/configs/map_zerowars.lua")
+local platforms, deployRects, buildings, sideData = VFS.Include("luarules/configs/map_zerowars.lua")
 
 local SPAWNFRAME = 1000
 local UPDATEFRAME = 30
@@ -102,8 +102,10 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
             Spring.SetUnitNeutral(unitID, true)
             Spring.MoveCtrl.Enable(unitID, false)
 
-            local deploy_income = ud.customParams.deploy_income or 0
-            Spring.SetUnitResourcing(unitID, "ume", deploy_income)
+            if ud.customParams and ud.customParams.deploy_income then
+                local deploy_income = ud.customParams.deploy_income
+                Spring.SetUnitResourcing(unitID, "ume", deploy_income)
+            end
         end
     end
 end
