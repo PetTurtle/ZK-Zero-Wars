@@ -134,7 +134,7 @@ local HeroUpgradeDefs = {
             -- dgun
             [1] = {
                 name = "Gauss Blast",
-                desc = "Stuns All Units in radius",
+                desc = "Pierces units in a line",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     enableCmd(unitID, CMD.MANUALFIRE)
                 end
@@ -267,7 +267,7 @@ local HeroUpgradeDefs = {
             -- dgun
             [1] = {
                 name = "E.M.P Blast",
-                desc = "Stuns All Units in radius",
+                desc = "Stuns all units in radius",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     enableCmd(unitID, CMD.MANUALFIRE)
                 end
@@ -375,14 +375,14 @@ local HeroUpgradeDefs = {
                 end
             },
             [2] = {
-                name = "Medium Armour",
+                name = "Light Armour",
                 desc = "+1000 HP",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitRulesParam(unitID, "armour", 2000)
                 end
             },
             [3] = {
-                name = "Light Armour",
+                name = "Medium Armour",
                 desc = "+1000 HP",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitRulesParam(unitID, "armour", 1000)
@@ -563,7 +563,146 @@ local HeroUpgradeDefs = {
                 end
             }
         }
-    }
+    },
+    herodante = {
+        stats = {
+            minHP = 3500,
+            maxHP = 12000,
+            minScale = 0.6,
+            maxScale = 1.3
+        },
+        path1 = {
+            -- rocket weapon params
+            [1] = {
+                name = "Fire Rockets",
+                desc = "enable 2x fire rocket weapons",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "range", 460)
+                end
+            },
+            [2] = {
+                name = "Advanced Explosives",
+                desc = "+120 dmg each",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 240)
+                end
+            },
+            [3] = {
+                name = "Quadra Rockets",
+                desc = "4 rockets",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "burst", 4)
+                end
+            },
+            [4] = {
+                name = "Hell Fire",
+                desc = "+240 dmg each",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 480)
+                end
+            }
+        },
+        path2 = {
+            -- heatray weapon params
+            [1] = {
+                name = "Double Heatray",
+                desc = "enable 2x heatray weapons",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 2, "range", 430)
+                end
+            },
+            [2] = {
+                name = "Heat Core",
+                desc = "+50% dmg",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 2, 75)
+                end
+            },
+            [3] = {
+                name = "Heat Pipelines",
+                desc = "+20% dmg, 1.3x move speed",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 2, 85)
+                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 1.3)
+                    GG.UpdateUnitAttributes(unitID)
+                end
+            },
+            [4] = {
+                name = "Sun Core",
+                desc = "+30% dmg, 1.6x move speed",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 2, 100)
+                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 1.6)
+                    GG.UpdateUnitAttributes(unitID)
+                end
+            }
+        },
+        path3 = {
+            -- Autoregen 
+            -- GG.SetUnitIdleRegen(unitID, 600, 250)
+            -- (unitID, regenidletime = number / 30, regenamount)
+            -- regenamount displayed on healthbar does currently not update its value
+            [1] = {
+                name = "Faster Repair",
+                desc = "reduce regentime to 5 sec",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    GG.SetUnitIdleRegen(unitID, 150, 250)
+                end
+            },
+            [2] = {
+                name = "Medium Repair",
+                desc = "+50 hp/s reduce regentime to 4 sec",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    GG.SetUnitIdleRegen(unitID, 120, 300)
+                end
+            },
+            [3] = {
+                name = "Enhanced Repair",
+                desc = "+100 hp/s reduce regentime to 3.5 sec",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    GG.SetUnitIdleRegen(unitID, 105, 400)
+                end
+            },
+            [4] = {
+                name = "Ultimate Repair",
+                desc = "+100 hp/s reduce regentime to 3 sec",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    GG.SetUnitIdleRegen(unitID, 90, 500)
+                end
+            }
+        },
+        path4 = {
+            -- dgun
+            [1] = {
+                name = "Rocket Salvo",
+                desc = "Fires 30 upgraded rockets, disables rocket attack while reloading",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    enableCmd(unitID, CMD.MANUALFIRE)
+                end
+            },
+            [2] = {
+                name = "Extra Rockets",
+                desc = "Fires 50 upgraded rockets, disables rocket attack while reloading",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 3, "burst", 25)
+                end
+            },
+            [3] = {
+                name = "Rocket Swarm",
+                desc = "Fires 70 upgraded rockets, disables rocket attack while reloading",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 3, "burst", 35)
+                end
+            },
+            [4] = {
+                name = "Rocket Armada",
+                desc = "Fires 100 upgraded rockets, disables rocket attack while reloading",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 3, "burst", 50)
+                end
+            }
+        }
+    },
 }
 
 return HeroUpgradeDefs
