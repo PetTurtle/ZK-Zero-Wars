@@ -129,16 +129,15 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         local hero = Hero.new(unitID, unitDefID)
         heroes[unitID] = hero
         heroTeams[allyTeamID]:addHero(unitID, hero)
-        --GG.UnitUncapturable(unitID)
 
         -- disables manual fire
         local manualFireIndex = spFindUnitCmdDesc(unitID, CMD.MANUALFIRE)
         if manualFireIndex then
             local cmdTable = spGetUnitCmdDescs(unitID, manualFireIndex)
-            --cmdTable.hidden = true
             cmdTable.disabled = true
             spEditUnitCmdDesc(unitID, manualFireIndex, cmdTable)
         end
+        
         -- disables jump
         local jumpIndex = spFindUnitCmdDesc(unitID, CMD_JUMP)
         if jumpIndex then
