@@ -773,7 +773,7 @@ local HeroUpgradeDefs = {
             }
         },
         path3 = {
-            -- speed
+            -- armour and range
             [1] = {
                 name = "Light Armour",
                 desc = "+1000 HP",
