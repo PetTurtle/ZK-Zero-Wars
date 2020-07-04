@@ -79,21 +79,21 @@ local HeroUpgradeDefs = {
             },
             [2] = {
                 name = "Heat Pipes",
-                desc = "+33% fire rate",
+                desc = "+23% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.33, weaponNum = 1})
                 end
             },
             [3] = {
                 name = "Nitrogen Tank",
-                desc = "+50% fire rate",
+                desc = "+17% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.5, weaponNum = 1})
                 end
             },
             [4] = {
                 name = "Sub Zero",
-                desc = "+75% fire rate",
+                desc = "+25% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.75, weaponNum = 1})
                 end
@@ -211,14 +211,14 @@ local HeroUpgradeDefs = {
             },
             [2] = {
                 name = "Autoloader",
-                desc = "+50% fire rate",
+                desc = "+20% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.5, weaponNum = 1})
                 end
             },
             [3] = {
                 name = "Double Salvo",
-                desc = "Two Salvos",
+                desc = "Two Salvos, reload upgrades reverted",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitWeaponState(unitID, 1, "burst", 2)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.0, weaponNum = 1})
@@ -344,14 +344,14 @@ local HeroUpgradeDefs = {
             },
             [2] = {
                 name = "Autoloader",
-                desc = "+80% fire rate",
+                desc = "+30% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.8, weaponNum = 1})
                 end
             },
             [3] = {
                 name = "Double Salvo",
-                desc = "Two Salvos",
+                desc = "Two Salvos, reload upgrades reverted",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitWeaponState(unitID, 1, "burst", 2)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.0, weaponNum = 1})
@@ -369,7 +369,7 @@ local HeroUpgradeDefs = {
             -- armour
             [1] = {
                 name = "Jump",
-                desc = "unlock jump",
+                desc = "Unlock jump",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     enableCmd(unitID, CMD_JUMP)
                 end
@@ -378,14 +378,14 @@ local HeroUpgradeDefs = {
                 name = "Light Armour",
                 desc = "+1000 HP",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitRulesParam(unitID, "armour", 2000)
+                    spSetUnitRulesParam(unitID, "armour", 1000)
                 end
             },
             [3] = {
                 name = "Medium Armour",
                 desc = "+1000 HP",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    spSetUnitRulesParam(unitID, "armour", 1000)
+                    spSetUnitRulesParam(unitID, "armour", 2000)
                 end
             },
             [4] = {
@@ -400,28 +400,28 @@ local HeroUpgradeDefs = {
             -- dgun
             [1] = {
                 name = "Puppy Spawner",
-                desc = "spawns 4 puppies",
+                desc = "Spawns 4 puppies",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     enableCmd(unitID, CMD.MANUALFIRE)
                 end
             },
             [2] = {
                 name = "Flock of Puppies",
-                desc = "spawns 6 puppies",
+                desc = "Spawns 6 puppies",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitWeaponState(unitID, 2, "burst", 6)
                 end
             },
             [3] = {
                 name = "Herd of Puppies",
-                desc = "spawns 8 puppies",
+                desc = "Spawns 8 puppies",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitWeaponState(unitID, 2, "burst", 8)
                 end
             },
             [4] = {
                 name = "Puppy Army",
-                desc = "spawns 12 puppies",
+                desc = "Spawns 12 puppies",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitWeaponState(unitID, 2, "burst", 12)
                 end
@@ -477,21 +477,21 @@ local HeroUpgradeDefs = {
             },
             [2] = {
                 name = "Improved Firerate",
-                desc = "+40% fire rate",
+                desc = "+20% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.4, weaponNum = 1})
                 end
             },
             [3] = {
                 name = "Semi-Automatic",
-                desc = "+60% fire rate",
+                desc = "+20% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.6, weaponNum = 1})
                 end
             },
             [4] = {
                 name = "Belt-Fed",
-                desc = "+80% fire rate",
+                desc = "+20% fire rate",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.8, weaponNum = 1})
                 end
@@ -575,7 +575,7 @@ local HeroUpgradeDefs = {
             -- rocket weapon params
             [1] = {
                 name = "Fire Rockets",
-                desc = "enable 2x fire rocket weapons",
+                desc = "Enable 2x fire rocket weapons",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitWeaponState(unitID, 1, "range", 460)
                 end
@@ -606,7 +606,7 @@ local HeroUpgradeDefs = {
             -- heatray weapon params
             [1] = {
                 name = "Double Heatray",
-                desc = "enable 2x heatray weapons",
+                desc = "Enable 2x heatray weapons",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitWeaponState(unitID, 2, "range", 430)
                 end
@@ -644,7 +644,7 @@ local HeroUpgradeDefs = {
             -- regenamount displayed on healthbar does currently not update its value
             [1] = {
                 name = "Faster Repair",
-                desc = "reduce regentime to 5 sec",
+                desc = "Reduce regentime to 5 sec",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     GG.SetUnitIdleRegen(unitID, 150, 250)
                 end
@@ -699,6 +699,138 @@ local HeroUpgradeDefs = {
                 desc = "Fires 100 upgraded rockets, disables rocket attack while reloading",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     spSetUnitWeaponState(unitID, 3, "burst", 50)
+                end
+            }
+        }
+    },
+    heromoderator = {
+        stats = {
+            minHP = 1200,
+            maxHP = 6000,
+            minScale = 1,
+            maxScale = 2
+        },
+        path1 = {
+            -- weapon dmg params
+            [1] = {
+                name = "Adv Beamlaser",
+                desc = "+1000 dmg, +1000 slowdmg",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 2000)
+                end
+            },
+            [2] = {
+                name = "Engergy Cristal",
+                desc = "+1000 dmg, +1000 slowdmg",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 3000)
+                end
+            },
+            [3] = {
+                name = "Beam Bundling",
+                desc = "+1000 dmg, +1000 slowdmg",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 4000)
+                end
+            },
+            [4] = {
+                name = "Power Cristal",
+                desc = "+1000 dmg, +1000 slowdmg",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 1, 5000)
+                end
+            }
+        },
+        path2 = {
+            -- weapon fire params
+            [1] = {
+                name = "Cooling System",
+                desc = "+25% fire rate",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.25, weaponNum = 1})
+                end
+            },
+            [2] = {
+                name = "Adv Circuits",
+                desc = "+25% fire rate",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.5, weaponNum = 1})
+                end
+            },
+            [3] = {
+                name = "Cryo Stabylizer",
+                desc = "+25% fire rate",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 1.75, weaponNum = 1})
+                end
+            },
+            [4] = {
+                name = "Resonant Conduit",
+                desc = "+25% fire rate",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    GG.Attributes.AddEffect(unitID, "weapon1", {reload = 2.0, weaponNum = 1})
+                end
+            }
+        },
+        path3 = {
+            -- speed
+            [1] = {
+                name = "Light Armour",
+                desc = "+1000 HP",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitRulesParam(unitID, "armour", 1000)
+                end
+            },
+            [2] = {
+                name = "Medium Armour",
+                desc = "+1000 HP",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitRulesParam(unitID, "armour", 2000)
+                end
+            },
+            [3] = {
+                name = "Adv Targeting",
+                desc = "+100 range",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "range", 520)
+                end
+            },
+            [4] = {
+                name = "Precision Module",
+                desc = "+100 range",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    spSetUnitWeaponState(unitID, 1, "range", 620)
+                end
+            }
+        },
+        path4 = {
+            -- dgun
+            [1] = {
+                name = "Disruptor Bomb",
+                desc = "Slows and damages in an area",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    enableCmd(unitID, CMD.MANUALFIRE)
+                end
+            },
+            [2] = {
+                name = "Time Distortion",
+                desc = "+350 dmg, +2100 slowdmg",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 2, 700)
+                end
+            },
+            [3] = {
+                name = "Chronomancy",
+                desc = "+350 dmg, +2100 slowdmg",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 2, 1050)
+                end
+            },
+            [4] = {
+                name = "Violet Slugger",
+                desc = "+450 dmg, +2700 slowdmg",
+                upgrade = function(unitID, unitDefID, unitTeam)
+                    setWeaponDamage(unitID, 2, 1500)
                 end
             }
         }
