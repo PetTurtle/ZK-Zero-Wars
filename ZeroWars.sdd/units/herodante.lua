@@ -29,7 +29,7 @@ herodante = {
   idleTime            = 200,
   leaveTracks         = true,
   losEmitHeight       = 50,
-  maxDamage           = 3500,
+  maxDamage           = 1600,
   maxSlope            = 36,
   maxVelocity         = 1.75,
   maxWaterDepth       = 22,
@@ -49,7 +49,7 @@ herodante = {
       [[custom:RAIDMUZZLE]],
     },
   },
-  sightDistance       = 600,
+  sightDistance       = 385,
   trackOffset         = 0,
   trackStrength       = 8,
   trackStretch        = 0.6,
@@ -271,7 +271,7 @@ herodante = {
       },
       
       damage                  = {
-        default = 480,
+        default = 360,
         subs    = 6,
       },
 
