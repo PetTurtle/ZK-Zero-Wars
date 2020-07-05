@@ -18,6 +18,9 @@ local unit_tweaks = {
             morphto_5 = [[herodante]],
             morphcost_5 = 1,
             morphtime_5 = 1,
+            morphto_6 = [[heromoderator]],
+            morphcost_6 = 1,
+            morphtime_6 = 1,
         }
     },
     chicken = {
