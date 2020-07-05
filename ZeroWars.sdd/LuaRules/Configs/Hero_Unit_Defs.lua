@@ -566,8 +566,8 @@ local HeroUpgradeDefs = {
     },
     herodante = {
         stats = {
-            minHP = 3500,
-            maxHP = 12000,
+            minHP = 1600,
+            maxHP = 11000,
             minScale = 0.6,
             maxScale = 1.3
         },
@@ -596,9 +596,9 @@ local HeroUpgradeDefs = {
             },
             [4] = {
                 name = "Hell Fire",
-                desc = "+240 dmg each",
+                desc = "+120 dmg each",
                 upgrade = function(unitID, unitDefID, unitTeam)
-                    setWeaponDamage(unitID, 1, 480)
+                    setWeaponDamage(unitID, 1, 360)
                 end
             }
         },
@@ -620,19 +620,19 @@ local HeroUpgradeDefs = {
             },
             [3] = {
                 name = "Heat Pipelines",
-                desc = "+20% dmg, 1.3x move speed",
+                desc = "+20% dmg, 1.2x move speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     setWeaponDamage(unitID, 2, 85)
-                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 1.3)
+                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 1.2)
                     GG.UpdateUnitAttributes(unitID)
                 end
             },
             [4] = {
                 name = "Sun Core",
-                desc = "+30% dmg, 1.6x move speed",
+                desc = "+30% dmg, 1.5x move speed",
                 upgrade = function(unitID, unitDefID, unitTeam)
                     setWeaponDamage(unitID, 2, 100)
-                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 1.6)
+                    Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", 1.5)
                     GG.UpdateUnitAttributes(unitID)
                 end
             }
