@@ -24,6 +24,7 @@ local function enableCmd(unitID, CMD, state)
     if index then
         local cmdTable = Spring.GetUnitCmdDescs(unitID, index)
         cmdTable.disabled = not state
+        cmdTable.hidden = not state
         Spring.EditUnitCmdDesc(unitID, index, cmdTable)
     end
 end
@@ -152,14 +153,25 @@ function UnitEditor.WeaponParalyzeTime(unit, weaponID, multiplier)
 end
 
 function UnitEditor.EnableCommand(unit, command, state)
+    unit[command] = {block = not state}
     enableCmd(unit.unitID, command, state)
 end
 
-function UnitEditor.CustomParam(unit, param) end
+function UnitEditor.CustomParam(unit, param) end -- TODO: Add
 
 local function EditUnit(unitID, update, ...)
     local unit = units[unitID] or NewEditedUnit(unitID)
     UnitEditor[update](unit, ...)
+end
+
+function gadget:AllowCommand(unitID, _, _, cmdID)
+    if units[unitID] then
+        local unit = units[unitID]
+        if unit[cmdID] and unit[cmdID].block then
+            return false
+        end
+    end
+    return true
 end
 
 function gadget:Initialize()

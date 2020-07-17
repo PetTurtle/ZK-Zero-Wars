@@ -21,15 +21,10 @@ local Layout = VFS.Include("luarules/configs/hero_layout.lua")
 local Hero = VFS.Include("luarules/gadgets/unit_heroes/hero.lua")
 local HeroTeams = VFS.Include("luarules/gadgets/unit_heroes/hero_team.lua")
 
--- SyncedCtrl
-local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
-
 -- SyncedRead
 local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
-local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
-local spGetUnitCmdDescs = Spring.GetUnitCmdDescs
 
 -- Variables
 
@@ -101,10 +96,9 @@ end
 -------------------------------------
 -- Hero upgrade command listener
 -------------------------------------
-function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
+function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
     if cmdID == CMD_HERO_UPGRADE and heroes[unitID] then
         heroes[unitID]:upgrade(unitDefID, unitTeam, "path" .. cmdParams[1])
-        return true
     end
 
     if Spring.IsCheatingEnabled() then
@@ -116,8 +110,6 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
             heroes[unitID]:giveXP(xpNeeded)
         end
     end
-
-    return true
 end
 
 -------------------------------------
@@ -129,22 +121,6 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         local hero = Hero.new(unitID, unitDefID)
         heroes[unitID] = hero
         heroTeams[allyTeamID]:addHero(unitID, hero)
-
-        -- disables manual fire
-        local manualFireIndex = spFindUnitCmdDesc(unitID, CMD.MANUALFIRE)
-        if manualFireIndex then
-            local cmdTable = spGetUnitCmdDescs(unitID, manualFireIndex)
-            cmdTable.disabled = true
-            spEditUnitCmdDesc(unitID, manualFireIndex, cmdTable)
-        end
-        
-        -- disables jump
-        local jumpIndex = spFindUnitCmdDesc(unitID, CMD_JUMP)
-        if jumpIndex then
-            local cmdTable = spGetUnitCmdDescs(unitID, jumpIndex)
-            cmdTable.disabled = true
-            spEditUnitCmdDesc(unitID, jumpIndex, cmdTable)
-        end
     end
 end
 
