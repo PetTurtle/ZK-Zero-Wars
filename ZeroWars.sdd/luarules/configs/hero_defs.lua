@@ -76,7 +76,7 @@ local HeroDefs = {
         path4 = {
             {
                 name = "Gauss Blast",
-                desc = "Unlock Gause Blast",
+                desc = "Unlock Gauss Blast",
                 params = {{"EnableCommand", CMD.MANUALFIRE, true}},
                 requiredUpgrades = 6
             }, {
