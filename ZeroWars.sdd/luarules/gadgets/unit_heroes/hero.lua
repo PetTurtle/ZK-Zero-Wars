@@ -10,17 +10,13 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitHealth = Spring.GetUnitHealth
 
-local HeroUnitDefs = include("luarules/configs/hero_defs.lua")
+local HeroUnitDefs = VFS.Include("luarules/configs/hero_defs.lua")
 
-local function levelXP(level)
-    return 100*level*level + 500
-end
+local function levelXP(level) return 100 * level * level + 500 end
 
 local function totalLevelXP(level)
     local total = 0
-    for i = 0, level do
-        total = total + levelXP(i)
-    end
+    for i = 0, level do total = total + levelXP(i) end
     return total
 end
 
@@ -44,7 +40,15 @@ function Hero.new(unitID, unitDefID)
     spSetUnitRulesParam(unitID, "path2", 0)
     spSetUnitRulesParam(unitID, "path3", 0)
     spSetUnitRulesParam(unitID, "path4", 0)
-    instance:_updateStats()
+
+    local onReady = instance._upgadeDefs.onReady
+    if onReady then
+        for i = 1, #onReady do
+            local param = onReady[i]
+            GG.EditUnit(instance._ID, param[1], param[2] or nil,
+                        param[3] or nil, param[4] or nil, param[5] or nil)
+        end
+    end
 
     return instance
 end
@@ -58,15 +62,22 @@ end
 function Hero:upgrade(unitDefID, unitTeam, pathID)
     local points = spGetUnitRulesParam(self._ID, "points")
     if points > 0 then
-        local pathLvl = spGetUnitRulesParam(self._ID, pathID)
-        if pathLvl < 4 then
-            pathLvl = pathLvl + 1
-
-            spSetUnitRulesParam(self._ID, pathID, pathLvl)
-            spSetUnitRulesParam(self._ID, "points", points - 1)
-            self._upgadeDefs[pathID][pathLvl].upgrade(self._ID, unitDefID, unitTeam)
-
-            self:_updateStats()
+        local pathLvl = spGetUnitRulesParam(self._ID, pathID) + 1
+        if pathLvl <= #self._upgadeDefs[pathID] then
+            local level = spGetUnitRulesParam(self._ID, "level")
+            local requiredUpgrades = self._upgadeDefs[pathID][pathLvl]
+                                         .requiredUpgrades
+            if requiredUpgrades <= level - points then
+                local params = self._upgadeDefs[pathID][pathLvl].params
+                for i = 1, #params do
+                    local param = params[i]
+                    GG.EditUnit(self._ID, param[1], param[2] or nil,
+                                param[3] or nil, param[4] or nil,
+                                param[5] or nil)
+                end
+                spSetUnitRulesParam(self._ID, pathID, pathLvl)
+                spSetUnitRulesParam(self._ID, "points", points - 1)
+            end
         end
     end
 end
@@ -79,11 +90,16 @@ function Hero:levelUp()
         local points = spGetUnitRulesParam(self._ID, "points")
         spSetUnitRulesParam(self._ID, "points", points + 1)
 
-        self:_updateStats()
-
-        if level == 16 then
-            self._maxLevel = true
+        local onLevelUp = self._upgadeDefs.onLevelUp
+        if onLevelUp then
+            for i = 1, #onLevelUp do
+                local param = onLevelUp[i]
+                GG.EditUnit(self._ID, param[1], param[2] or nil,
+                            param[3] or nil, param[4] or nil, param[5] or nil)
+            end
         end
+
+        if level == 16 then self._maxLevel = true end
     end
 end
 
@@ -111,15 +127,11 @@ function Hero:heal()
     spSetUnitHealth(self._ID, maxHealth)
 end
 
-function Hero:setPosition(pos)
-    spSetUnitPosition(self._ID, pos.x, pos.y, pos.z)
-end
+function Hero:setPosition(pos) spSetUnitPosition(self._ID, pos.x, pos.y, pos.z) end
 
-function Hero:getXP()
-    return spGetUnitRulesParam(self._ID, "xp")
-end
+function Hero:getXP() return spGetUnitRulesParam(self._ID, "xp") end
 
-function Hero:getKillXP() 
+function Hero:getKillXP()
     local level = spGetUnitRulesParam(self._ID, "level")
     return levelXP(level) / 3
 end
@@ -127,33 +139,15 @@ end
 function Hero:getTotalXP()
     local currXP = spGetUnitRulesParam(self._ID, "xp")
     local level = spGetUnitRulesParam(self._ID, "level")
-    local totalXP = totalLevelXP(level-1)
+    local totalXP = totalLevelXP(level - 1)
     return totalXP + currXP
 end
 
-function Hero:getLevel()
-    return spGetUnitRulesParam(self._ID, "level")
-end
+function Hero:getLevel() return spGetUnitRulesParam(self._ID, "level") end
 
 function Hero:getPosition()
     local x, y, z = spGetUnitPosition(self._ID)
     return {x = x, y = y, z = z}
-end
-
-function Hero:_updateStats()
-    local unitID = self._ID
-    local stats = self._upgadeDefs.stats
-    local level = spGetUnitRulesParam(unitID, "level")
-    local scale = (level / 16) * (stats.maxScale - stats.minScale) + stats.minScale
-
-    GG.UnitScale(unitID, scale)
-    
-    local armour = spGetUnitRulesParam(unitID, "armour") or 0
-    local currHealth, currMaxHealth = spGetUnitHealth(unitID)
-    local newMaxHealth = (level / 16) * (stats.maxHP - stats.minHP) + stats.minHP + armour
-    local newHealth = currHealth * newMaxHealth / currMaxHealth
-    spSetUnitMaxHealth(unitID, newMaxHealth)
-    spSetUnitHealth(unitID, newHealth)
 end
 
 return Hero

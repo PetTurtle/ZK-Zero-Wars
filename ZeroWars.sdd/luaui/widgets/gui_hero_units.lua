@@ -241,6 +241,7 @@ local function setUpdateOption(id, params, level)
 end
 
 local function setUpgradeMaxed(id)
+	upgradeButtons[id].OnClick = nil
 	upgradeButtons[id]:SetCaption("Max Level")
 	upgradeButtons[id].tooltip = "Max Level"
 	upgradeButtons[id].backgroundColor = inactiveColor
@@ -268,29 +269,19 @@ local function UpdateUI(unitID, ud)
 	end
 
 	local upgadeDefs = HeroDefs[ud.name]
-	for i = 1, 3 do
+	for i = 1, 4 do
 		local pathLevel = spGetUnitRulesParam(unitID, "path" .. i)
-
-		if pathLevel >= 4 then
+		if pathLevel < 4 then
+			local upgradeCount = level - points
+			local requiredUpgrades = upgadeDefs["path" .. i][pathLevel + 1].requiredUpgrades
+			if points > 0 and upgradeCount >= requiredUpgrades then
+				setUpdateOption(i, upgadeDefs["path" .. i][pathLevel + 1], pathLevel + 1)
+			else
+				setUpdateBlocked(i, upgadeDefs["path" .. i][pathLevel + 1], pathLevel + 1)
+			end
+		else
 			setUpgradeMaxed(i)
-		elseif points > 0 then
-			setUpdateOption(i, upgadeDefs["path" .. i][pathLevel + 1], pathLevel + 1)
-		else
-			setUpdateBlocked(i, upgadeDefs["path" .. i][pathLevel + 1], pathLevel + 1)
 		end
-	end
-
-	if level >= 8 then
-		local pathLevel = spGetUnitRulesParam(unitID, "path4")
-		if pathLevel >= 4 then
-			setUpgradeMaxed(4)
-		elseif points > 0 then
-			setUpdateOption(4, upgadeDefs["path4"][pathLevel + 1], pathLevel + 1)
-		else
-			setUpdateBlocked(4, upgadeDefs["path4"][pathLevel + 1], pathLevel + 1)
-		end
-	else
-		setUpdateBlocked(4, upgadeDefs["path4"][1], 1)
 	end
 end
 
