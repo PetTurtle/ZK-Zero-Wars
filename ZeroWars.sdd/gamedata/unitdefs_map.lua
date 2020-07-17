@@ -6,10 +6,12 @@ local OverwriteTableInplace = Spring.Utilities.OverwriteTableInplace
 UnitDefs["factoryship"] = UnitDefs["factorychicken"]
 
 for _, ud in pairs(UnitDefs) do
-    -- set chicken cost
     if (ud.unitname:sub(1, 7) == "chicken") then
+        -- set chicken cost
         ud.buildcostmetal = ud.buildtime
         ud.buildcostenergy = ud.buildtime
+        -- make chickens reclaimable
+        ud.reclaimable = true
     end
 
     if ud.weapondefs then
