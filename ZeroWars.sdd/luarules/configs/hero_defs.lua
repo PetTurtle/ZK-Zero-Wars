@@ -76,7 +76,7 @@ local HeroDefs = {
         path4 = {
             {
                 name = "Gauss Blast",
-                desc = "Pierces units in a line",
+                desc = "Unlock Gause Blast",
                 params = {{"EnableCommand", CMD.MANUALFIRE, true}},
                 requiredUpgrades = 6
             }, {
@@ -236,7 +236,7 @@ local HeroDefs = {
                 requiredUpgrades = 1
             }, {
                 name = "Double Salvo",
-                desc = "Two Salvos\n-40% FireRate",
+                desc = "Two Salvos\n-40% Fire Rate",
                 params = {{"WeaponBurst", 1, 1}, {"WeaponReload", 1, -0.4}},
                 requiredUpgrades = 4
             }, {
@@ -345,22 +345,22 @@ local HeroDefs = {
         path3 = {
             {
                 name = "Improved Servo",
-                desc = "+20% move speed",
+                desc = "+20% Movement Speed",
                 params = {{"MoveSpeed", "0.20"}},
                 requiredUpgrades = 0
             }, {
                 name = "Advanced Motors",
-                desc = "+20% move speed",
+                desc = "+20% Movement Speed",
                 params = {{"MoveSpeed", "0.20"}},
                 requiredUpgrades = 1
             }, {
                 name = "Industrial Motors",
-                desc = "+20% move speed",
+                desc = "+20% Movement Speed",
                 params = {{"MoveSpeed", "0.20"}},
                 requiredUpgrades = 4
             }, {
                 name = "Experimental Servo",
-                desc = "+20% move speed",
+                desc = "+20% Movement Speed",
                 params = {{"MoveSpeed", "0.20"}},
                 requiredUpgrades = 6
             }
@@ -431,12 +431,12 @@ local HeroDefs = {
                 requiredUpgrades = 1
             }, {
                 name = "Heat Pipelines",
-                desc = "+15% Damage\n+20% Move Speed",
+                desc = "+15% Damage\n+20% Movement Speed",
                 params = {{"WeaponDamage", 2, 0.2}, {"MoveSpeed", 0.15}},
                 requiredUpgrades = 4
             }, {
                 name = "Sun Core",
-                desc = "+15% Damage\n+20% Move Speed",
+                desc = "+15% Damage\n+20% Movement Speed",
                 params = {{"WeaponDamage", 2, 0.2}, {"MoveSpeed", 0.15}},
                 requiredUpgrades = 6
             }
