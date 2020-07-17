@@ -27,6 +27,7 @@ function RespawnPool:addHero(hero)
     local respawnTime = self:_getHeroRespawnTime(hero)
     table.insert(self._pool, {hero = hero, respawnTime = respawnTime})
     hero:setPosition(self._deathPoint)
+    hero.dead = true
 end
 
 function RespawnPool:update(frame)
@@ -55,6 +56,7 @@ end
 function RespawnPool:_respawnHero(hero)
     hero:heal()
     hero:setPosition(self._spawnPoint)
+    hero.dead = false
 end
 
 return RespawnPool

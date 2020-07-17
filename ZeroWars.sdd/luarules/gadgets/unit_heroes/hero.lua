@@ -29,7 +29,8 @@ function Hero.new(unitID, unitDefID)
     local instance = {
         _ID = unitID,
         _upgadeDefs = HeroUnitDefs[ud.name],
-        _maxLevel = false
+        _maxLevel = false,
+        dead = false,
     }
     setmetatable(instance, Hero)
 
