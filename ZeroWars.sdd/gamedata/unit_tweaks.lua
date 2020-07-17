@@ -17,7 +17,7 @@ local unit_tweaks = {
             morphtime_4 = 1,
             morphto_5 = [[herodante]],
             morphcost_5 = 1,
-            morphtime_5 = 1,
+            morphtime_5 = 1
         }
     },
     factorycloak = {
@@ -128,8 +128,23 @@ local unit_tweaks = {
         yardMap = ""
     },
     factoryjump = {
-        buildoptions = {[[builder]]},
-        customParams = {pos_constructor = [[builder]]},
+        buildoptions = {
+            [[builder]], [[jumpscout]], [[jumpraid]], [[jumpskirm]],
+            [[jumpbackhole]], [[jumpaa]], [[jumpassault]], [[jumpbomb]],
+            [[jumpsumo]], [[striderdante]]
+        },
+        customParams = {
+            pos_constructor = [[builder]],
+            pos_raider = [[jumpraid]],
+            pos_weird_raider = [[jumpscout]],
+            pos_skirmisher = [[jumpskirm]],
+            pos_riot = [[jumpbackhole]],
+            pos_anti_air = [[jumpaa]],
+            pos_assault = [[jumpassault]],
+            pos_artillery = [[striderdante]],
+            pos_heavy_something = [[jumpsumo]],
+            pos_special = [[jumpbomb]]
+        },
         buildCostMetal = 800,
         buildDistance = 800,
         script = [[cfactoryjump.lua]],
@@ -139,7 +154,7 @@ local unit_tweaks = {
         buildoptions = {
             [[builder]], [[spiderscout]], [[spiderassault]], [[spideremp]],
             [[spiderriot]], [[spiderskirm]], [[spidercrabe]], [[spideraa]],
-            [[spiderantiheavy]], [[spideranarchid]]
+            [[spiderantiheavy]], [[spideranarchid]], [[striderscorpion]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -151,7 +166,8 @@ local unit_tweaks = {
             pos_assault = [[spiderassault]],
             pos_artillery = [[spideranarchid]],
             pos_heavy_something = [[spidercrabe]],
-            pos_special = [[spiderantiheavy]]
+            pos_special = [[spiderantiheavy]],
+            pos_utility = [[striderscorpion]]
         },
         buildCostMetal = 800,
         buildDistance = 800,
