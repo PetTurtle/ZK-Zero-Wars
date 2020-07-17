@@ -56,6 +56,7 @@ unitDef = {
     upright             = false,
     metalStorage        = 1000,
     energyStorage       = 1000,
+    reclaimable         = false,
     workerTime          = 20,
   
     featureDefs         = {

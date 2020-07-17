@@ -52,6 +52,7 @@ return {
         trackWidth = 38,
         turnRate = 597,
         upright = true,
+        reclaimable = false,
         workerTime = 0,
 
         weapons = {

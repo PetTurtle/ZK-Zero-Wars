@@ -30,6 +30,7 @@ unitDef = {
     reclaimable = false,
     canSelfD = false,
     capturable = false,
+    reclaimable = false,
     sfxtypes = {
         explosiongenerators = {
             [[custom:none]]
