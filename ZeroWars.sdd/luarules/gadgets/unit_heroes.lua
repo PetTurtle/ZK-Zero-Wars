@@ -40,7 +40,6 @@ local function isHero(unitDefID)
     return UnitDefs[unitDefID].customParams.hero
 end
 
-
 local function onHeroKill(unitID, attackerID, attackerTeam)
     local hero =  heroes[unitID]
 
@@ -56,12 +55,15 @@ local function onHeroKill(unitID, attackerID, attackerTeam)
     heroTeams[heroTeamID]:heroDied(hero)
 end
 
-local function onKill(unitID, unitDefID, attackerID, attackerTeam)
+local function onKill(unitID, unitDefID, attackerID)
     if attackerID then
         local attackerAllyTeam = spGetUnitAllyTeam(attackerID)
         local killXP = UnitDefs[unitDefID].metalCost
         local x, _, z = spGetUnitPosition(unitID)
-        if not heroes[attackerID] then
+        if heroes[attackerID] then
+            local attackerTeam = Spring.GetUnitTeam(attackerID)
+            Spring.AddTeamResource(attackerTeam, "metal", killXP / 2)
+        else
             killXP = killXP / 2
         end
 
