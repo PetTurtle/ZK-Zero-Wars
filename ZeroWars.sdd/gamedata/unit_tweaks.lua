@@ -17,7 +17,10 @@ local unit_tweaks = {
             morphtime_4 = 1,
             morphto_5 = [[herodante]],
             morphcost_5 = 1,
-            morphtime_5 = 1
+            morphtime_5 = 1,
+            morphto_6 = [[heromoderator]],
+            morphcost_6 = 1,
+            morphtime_6 = 1
         }
     },
     factorycloak = {
