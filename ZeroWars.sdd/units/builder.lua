@@ -1,7 +1,7 @@
 unitDef = {
     unitname            = [[builder]],
     name                = [[Builder]],
-    description         = [[Builder, Builds at 20 m/s]],
+    description         = [[Builder]],
     acceleration        = 1.2,
     activateWhenBuilt   = true,
     brakeRate           = 1.5,
