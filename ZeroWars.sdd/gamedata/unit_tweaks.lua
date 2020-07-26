@@ -242,9 +242,9 @@ local unit_tweaks = {
     chickens = {buildcostmetal = 90, buildcostenergy = 90, buildtime = 90},
     chickenwurm = {buildcostmetal = 400, buildcostenergy = 400, buildtime = 400},
     chicken_dodo = {
-        buildcostmetal = 75,
-        buildcostenergy = 75,
-        buildtime = 75,
+        buildcostmetal = 60,
+        buildcostenergy = 60,
+        buildtime = 60,
         footprintX = 3,
         footprintZ = 3
     },
@@ -259,9 +259,9 @@ local unit_tweaks = {
         footprintZ = 3
     },
     chicken_blimpy = {
-        buildcostmetal = 300,
-        buildcostenergy = 300,
-        buildtime = 300,
+        buildcostmetal = 220,
+        buildcostenergy = 220,
+        buildtime = 220,
         turnRate = 3000,
         turnRadius = 450,
         weaponDefs = {DODOBOMB = {reloadtime = 4}},
@@ -285,9 +285,9 @@ local unit_tweaks = {
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_shield = {
-        buildcostmetal = 600,
-        buildcostenergy = 600,
-        buildtime = 600,
+        buildcostmetal = 300,
+        buildcostenergy = 300,
+        buildtime = 300,
         weaponDefs = {
             SHIELD = {
                 shieldPower = 2000,
@@ -298,9 +298,9 @@ local unit_tweaks = {
         }
     },
     chicken_tiamat = {
-        buildcostmetal = 1000,
-        buildcostenergy = 1000,
-        buildtime = 1000,
+        buildcostmetal = 700,
+        buildcostenergy = 700,
+        buildtime = 700,
         weaponDefs = {
             SHIELD = {
                 shieldPower = 2000,
@@ -311,9 +311,9 @@ local unit_tweaks = {
         }
     },
     chickenblobber = {
-        buildcostmetal = 1500,
-        buildcostenergy = 1500,
-        buildtime = 1500,
+        buildcostmetal = 1200,
+        buildcostenergy = 1200,
+        buildtime = 1200,
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_dragon = {
