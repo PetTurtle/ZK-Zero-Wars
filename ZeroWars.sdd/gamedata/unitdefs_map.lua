@@ -1,5 +1,5 @@
 local unitTweaks = VFS.Include("gamedata/unit_tweaks.lua")
-local unitEnergy = VFS.Include("gamedata/unit_energy.lua")
+local unitEnergyMulti = VFS.Include("gamedata/unit_energy_multi.lua")
 local OverwriteTableInplace = Spring.Utilities.OverwriteTableInplace
 
 -- replace shipFactory with chickenFactory
@@ -54,13 +54,13 @@ if unitTweaks and type(unitTweaks) == "table" then
     end
 end
 
+
 -- apply unitEnergy
-if unitEnergy and type(unitEnergy) == "table" then
+if unitEnergyMulti and type(unitEnergyMulti) == "table" then
     Spring.Echo("Loading custom units energy for zero-wars")
-    for name, ud in pairs(UnitDefs) do
-        if unitEnergy[name] then
-            Spring.Echo("Loading custom units energy for " .. name)
-            OverwriteTableInplace(ud, lowerkeys(unitEnergy[name]), true)
-        end
+	for name, ud in pairs(UnitDefs) do
+		local footprint = (ud.footprintx or 1) * (ud.footprintz or 1)
+		ud.customparams = ud.customparams or {}
+		ud.customparams.deploy_income = footprint * (unitEnergyMulti[name] or 1)
     end
 end
