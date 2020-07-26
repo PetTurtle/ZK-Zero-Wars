@@ -13,33 +13,33 @@ local heropuppy = {
     path1 = {
         {
             name = "Missile Pods",
-            desc = "+40% Damage",
+            desc = "+50% Damage",
             params = {
-                {"WeaponDamage", 1, 0.40}
+                {"WeaponDamage", 1, 0.50}
             },
             requiredUpgrades = 0
         },
         {
             name = "HESH Ammo",
-            desc = "+50% AOE",
+            desc = "+50% Damage",
             params = {
-                {"WeaponAOE", 1, 0.5}
+                {"WeaponDamage", 1, 0.50}
             },
             requiredUpgrades = 1
         },
         {
             name = "Impact Upgrade",
-            desc = "+40% Damage",
+            desc = "+50% Damage",
             params = {
-                {"WeaponDamage", 1, 0.40}
+                {"WeaponDamage", 1, 0.50}
             },
             requiredUpgrades = 4
         },
         {
             name = "Cluster Grenade",
-            desc = "+50% AOE",
+            desc = "+50% Damage",
             params = {
-                {"WeaponAOE", 1, 0.5}
+                {"WeaponDamage", 1, 0.50}
             },
             requiredUpgrades = 6
         }
