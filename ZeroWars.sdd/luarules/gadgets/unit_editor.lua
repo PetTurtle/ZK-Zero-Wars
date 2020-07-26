@@ -188,7 +188,8 @@ end -- TODO: Add
 
 local function EditUnit(unitID, update, ...)
     local unit = units[unitID] or NewEditedUnit(unitID)
-    UnitEditor[update](unit, ...)
+	UnitEditor[update](unit, ...)
+	GG.UpdateUnitAttributes(unitID)
 end
 
 function gadget:AllowCommand(unitID, _, _, cmdID)
