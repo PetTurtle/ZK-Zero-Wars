@@ -1710,6 +1710,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 	
 	local costInfoUpdate = GetImageWithText(leftPanel, "costInfoUpdate", PIC_HEIGHT + 4, IMAGE.COST, nil, nil, ICON_SIZE, 5)
 	local energyIncomeLabel = GetImageWithText(leftPanel, "energyIncomeLabel", PIC_HEIGHT + 2*LEFT_SPACE + 4, IMAGE.ENERGY, nil, nil, ICON_SIZE, 5)
+	local energyEfficientLabel = GetImageWithText(rightPanel, "energyEfficientLabel", PIC_HEIGHT + 50, IMAGE.METAL, nil, nil, ICON_SIZE, 5)
 
 	local metalInfoUpdate = GetImageWithText(leftPanel, "metalInfoUpdate", PIC_HEIGHT + LEFT_SPACE + 4, IMAGE.METAL, nil, nil, ICON_SIZE, 5)
 	local energyInfoUpdate = GetImageWithText(leftPanel, "energyInfoUpdate", PIC_HEIGHT + 2*LEFT_SPACE + 4, IMAGE.ENERGY, nil, nil, ICON_SIZE, 5)
@@ -1947,9 +1948,12 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 
 				if ud.customParams.deploy_income then
 					local deploy_income = tonumber(ud.customParams.deploy_income)
+					local deploy_efficiency = ud.customParams.deploy_efficiency
 					energyIncomeLabel(true, FormatPlusMinus(deploy_income), IMAGE.ENERGY)
+					energyEfficientLabel(true, deploy_efficiency, IMAGE.METAL)
 				else
 					energyIncomeLabel(false)
+					energyEfficientLabel(false)
 				end
 
 				if blueprint then
