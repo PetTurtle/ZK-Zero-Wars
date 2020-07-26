@@ -12,6 +12,7 @@ unitDef = {
   buildingGroundDecalSizeY = 8,
   buildingGroundDecalType = [[factorycloak_aoplane.dds]],
   buildoptions = {
+	[[builder]],
     [[chicken]],
     [[chickens]],
     [[chicken_spidermonkey]],
