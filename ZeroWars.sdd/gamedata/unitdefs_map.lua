@@ -54,13 +54,16 @@ if unitTweaks and type(unitTweaks) == "table" then
     end
 end
 
-
 -- apply unitEnergy
 if unitEnergyMulti and type(unitEnergyMulti) == "table" then
     Spring.Echo("Loading custom units energy for zero-wars")
-	for name, ud in pairs(UnitDefs) do
-		local footprint = (ud.footprintx or 1) * (ud.footprintz or 1)
-		ud.customparams = ud.customparams or {}
-		ud.customparams.deploy_income = footprint * (unitEnergyMulti[name] or 1)
+    for name, ud in pairs(UnitDefs) do
+        if unitEnergyMulti[name] then
+			local footprint = (ud.footprintx or 1) * (ud.footprintz or 1)
+            ud.customparams = ud.customparams or {}
+            ud.customparams.deploy_income = footprint * unitEnergyMulti[name][1]
+            ud.customparams.deploy_efficiency = unitEnergyMulti[name][2]
+        end
     end
 end
+
