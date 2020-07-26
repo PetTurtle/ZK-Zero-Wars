@@ -68,10 +68,10 @@ end
 function UnitEditor.IdleRegen(unit, regenTimeMulti, regenAmountMulti)
     unit.regenTime = (unit.regenTime or 1) + regenTimeMulti
     unit.regenAmount = (unit.regenAmount or 1) + regenAmountMulti
-    local originalRegenTime = UnitDefs[unit.defID].idleTime
-    local originalRegenAmount = UnitDefs[unit.defID].idleAutoHeal
-    GG.SetUnitIdleRegen(unit.unitID, originalRegenTime * unit.regenTime,
-                        originalRegenAmount * unit.regenAmount)
+	local original_regen = (UnitDefs[unit.defID].customParams.idle_regen or UnitDefs[unit.defID].idleAutoHeal)
+    local new_regen_time = UnitDefs[unit.defID].idleTime * unit.regenTime
+	local new_regen_amount = original_regen * unit.regenAmount
+	GG.SetUnitIdleRegen(unit.unitID, new_regen_time, new_regen_amount)
 end
 
 function UnitEditor.MoveSpeed(unit, multiplier)
