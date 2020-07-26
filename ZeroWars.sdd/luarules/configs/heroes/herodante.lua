@@ -84,33 +84,33 @@ local herodante = {
     path3 = {
         {
             name = "Faster Repair",
-            desc = "+30% Faster Regen Time",
+            desc = "+25% Faster Regen Time",
             params = {
-                {"IdleRegen", -0.30, 0}
+                {"IdleRegen", -0.25, 0}
             },
             requiredUpgrades = 0
         },
         {
             name = "Medium Repair",
-            desc = "+20% Regen Amount",
+            desc = "+15% Regen Amount",
             params = {
-                {"IdleRegen", 0, 0.2}
+                {"IdleRegen", 0, 0.15}
             },
             requiredUpgrades = 1
         },
         {
             name = "Enhanced Repair",
-            desc = "+30% Faster Regen Time\n+20% Regen Amount",
+            desc = "+15% Faster Regen Time\n+10% Regen Amount",
             params = {
-                {"IdleRegen", -0.3, 0.2}
+                {"IdleRegen", -0.15, 0.10}
             },
             requiredUpgrades = 4
         },
         {
             name = "Ultimate Repair",
-            desc = "+30% Faster Regen Time\n+20% Regen Amount",
+            desc = "+15% Faster Regen Time\n+10% Regen Amount",
             params = {
-                {"IdleRegen", -0.3, 0.2}
+                {"IdleRegen", -0.15, 0.1}
             },
             requiredUpgrades = 6
         }
