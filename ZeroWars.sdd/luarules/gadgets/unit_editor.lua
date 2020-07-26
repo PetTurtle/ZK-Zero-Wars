@@ -18,9 +18,7 @@ local units = {}
 local addEffect
 
 local function SetWeaponDamage(unitID, weaponID, damage)
-    for i = 1, 6 do
-        Spring.SetUnitWeaponDamages(unitID, weaponID, i, damage)
-    end
+    Spring.SetUnitWeaponDamages(unitID, weaponID, {damage, damage, damage, damage, damage, damage})
 end
 
 local function enableCmd(unitID, CMD, state)
@@ -165,8 +163,9 @@ end
 function UnitEditor.WeaponDamage(unit, weaponID, multiplier)
     local weapon = unit.weapons[weaponID]
     local originalDamage = WeaponDefs[weapon.ID].damages[1]
-    weapon.damage = (weapon.damage or 1) + multiplier
-    SetWeaponDamage(originalDamage * weapon.damage)
+	weapon.damage = (weapon.damage or 1) + multiplier
+	Spring.Echo(originalDamage * weapon.damage)
+    SetWeaponDamage(unit.unitID, weaponID, originalDamage * weapon.damage)
 end
 
 function UnitEditor.WeaponParalyzeTime(unit, weaponID, multiplier)
