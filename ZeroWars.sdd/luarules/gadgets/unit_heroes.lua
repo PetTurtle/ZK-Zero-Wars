@@ -104,7 +104,7 @@ end
 -- Block Hero Commands When Dead
 -------------------------------------
 function gadget:AllowCommand(unitID, _, _, cmdID)
-    if heroes[unitID] and heroes[unitID].dead and not ALLOWED_ON_DEAD_CMD(cmdID) then
+    if heroes[unitID] and heroes[unitID].dead and not ALLOWED_ON_DEAD_CMD[cmdID] then
         return false
     end
     return true
