@@ -29,9 +29,9 @@ function Map:setMetalStorage(amount)
     end
 end
 
-function Map:getAllyStart(allyTeamID)
-    local teamList = Spring.GetTeamList(allyTeamID)
-    if teamList and #teamList then
+function Map:getAllyStart(allyTeam)
+	local teamList = Spring.GetTeamList(allyTeam)
+	if teamList and #teamList > 0 then
         local boxID = Spring.GetTeamRulesParam(teamList[1], "start_box_id")
         if boxID then
             local startName = GG.startBoxConfig[boxID].nameShort
