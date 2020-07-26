@@ -80,7 +80,6 @@ return {
                 damage = {default = 300},
                 explosionGenerator = [[custom:gauss_hit_m]],
                 groundbounce = 1,
-                impactOnly = true,
                 impulseBoost = 0,
                 impulseFactor = 0,
                 interceptedByShieldType = 1,
