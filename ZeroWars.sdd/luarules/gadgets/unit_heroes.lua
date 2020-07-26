@@ -31,6 +31,11 @@ local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local CMD_HERO_UPGRADE = 49731
 local CMD_HERO_CHEAT_XP = 49732
 local CMD_HERO_CHEAT_Level = 49733
+local ALLOWED_ON_DEAD_CMD = {
+	CMD_HERO_UPGRADE,
+	CMD_HERO_CHEAT_XP,
+	CMD_HERO_CHEAT_Level
+}
 
 local map = Map.new()
 local heroes = {}
@@ -99,7 +104,7 @@ end
 -- Block Hero Commands When Dead
 -------------------------------------
 function gadget:AllowCommand(unitID, _, _, cmdID)
-    if heroes[unitID] and heroes[unitID].dead then
+    if heroes[unitID] and heroes[unitID].dead and not ALLOWED_ON_DEAD_CMD(cmdID) then
         return false
     end
     return true
