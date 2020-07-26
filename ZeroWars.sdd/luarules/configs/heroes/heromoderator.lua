@@ -22,7 +22,7 @@ local heromoderator = {
             name = "Energy Crystal",
             desc = "+50% Damage\n+50% Slow Damage",
             params = {
-                {"WeaponDamage", 2, 0.20}
+                {"WeaponDamage", 1, 0.50}
             },
             requiredUpgrades = 1
         },
@@ -30,7 +30,7 @@ local heromoderator = {
             name = "Beam Bundling",
             desc = "+50% Damage\n+50% Slow Damage",
             params = {
-                {"WeaponDamage", 2, 0.20}
+                {"WeaponDamage", 1, 0.50}
             },
             requiredUpgrades = 4
         },
@@ -38,7 +38,7 @@ local heromoderator = {
             name = "Power Crystal",
             desc = "+50% Damage\n+50% Slow Damage",
             params = {
-                {"WeaponDamage", 2, 0.20}
+                {"WeaponDamage", 1, 0.50}
             },
             requiredUpgrades = 6
         }
