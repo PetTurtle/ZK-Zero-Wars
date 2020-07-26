@@ -18,14 +18,14 @@ return {
         customParams = {hero = true, modelradius = [[15]], aim_lookahead = 200},
 
         explodeAs = [[CRAWL_BLASTSML]],
-        footprintX = 3,
-        footprintZ = 3,
+        footprintX = 4,
+        footprintZ = 4,
         iconType = [[commander1]],
         idleAutoHeal = 250,
         idleTime = 200,
         leaveTracks = true,
         losEmitHeight = 50,
-        maxDamage = 3000,
+        maxDamage = 2000,
         maxSlope = 36,
         maxVelocity = 1.75,
         maxWaterDepth = 22,
@@ -44,7 +44,7 @@ return {
                 [[custom:RAIDMUZZLE]]
             }
         },
-        sightDistance = 600,
+        sightDistance = 385,
         trackOffset = 0,
         trackStrength = 8,
         trackStretch = 0.6,
@@ -95,7 +95,7 @@ return {
                     flamethrower = [[1]],
                     setunitsonfire = "1",
                     burnchance = "0.4", -- Per-impact
-                    burntime = [[450]],
+                    burntime = [[90]],
 
                     light_camera_height = 1800,
                     light_color = [[0.6 0.39 0.18]],
@@ -191,6 +191,7 @@ return {
                 customParams = {
                     setunitsonfire = "1",
                     burnchance = "1",
+                    burntime = [[90]],
                     reaim_time = 1
                 },
 
@@ -238,6 +239,7 @@ return {
                 customParams = {
                     setunitsonfire = "1",
                     burnchance = "1",
+                    burntime = [[90]],
 
                     light_color = [[0.8 0.4 0.1]],
                     light_radius = 320,
