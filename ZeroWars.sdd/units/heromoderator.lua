@@ -109,7 +109,7 @@ return {
                 minIntensity = 1,
                 noSelfDamage = true,
                 range = 420,
-                reloadtime = 10,
+                reloadtime = 8,
                 rgbColor = [[0.3 0 0.4]],
                 soundStart = [[weapon/laser/heavy_laser5]],
                 soundStartVolume = 3.8,
