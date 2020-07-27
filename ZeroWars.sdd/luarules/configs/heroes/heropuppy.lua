@@ -90,27 +90,27 @@ local heropuppy = {
         },
         {
             name = "Light Armour",
-            desc = "+1000 HP",
+            desc = "+800 HP",
             params = {
-                {"Armour", "1000"},
+                {"Armour", "800"},
                 {"Scale", 0.05}
             },
             requiredUpgrades = 1
         },
         {
             name = "Medium Armour",
-            desc = "+1000 HP",
+            desc = "+800 HP",
             params = {
-                {"Armour", "1000"},
+                {"Armour", "800"},
                 {"Scale", 0.05}
             },
             requiredUpgrades = 4
         },
         {
             name = "Ultimate Armour",
-            desc = "+1000 HP",
+            desc = "+800 HP",
             params = {
-                {"Armour", "1000"},
+                {"Armour", "800"},
                 {"Scale", 0.05}
             },
             requiredUpgrades = 6
