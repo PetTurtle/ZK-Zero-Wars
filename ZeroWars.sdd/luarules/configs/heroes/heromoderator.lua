@@ -12,33 +12,33 @@ local heromoderator = {
     path1 = {
         {
             name = "Adv Beamlaser",
-            desc = "+50% Damage\n+50% Slow Damage",
+            desc = "+60% Damage\n+60% Slow Damage",
             params = {
-                {"WeaponDamage", 1, 0.5}
+                {"WeaponDamage", 1, 0.6}
             },
             requiredUpgrades = 0
         },
         {
             name = "Energy Crystal",
-            desc = "+50% Damage\n+50% Slow Damage",
+            desc = "+60% Damage\n+60% Slow Damage",
             params = {
-                {"WeaponDamage", 1, 0.50}
+                {"WeaponDamage", 1, 0.6}
             },
             requiredUpgrades = 1
         },
         {
             name = "Beam Bundling",
-            desc = "+50% Damage\n+50% Slow Damage",
+            desc = "+60% Damage\n+60% Slow Damage",
             params = {
-                {"WeaponDamage", 1, 0.50}
+                {"WeaponDamage", 1, 0.6}
             },
             requiredUpgrades = 4
         },
         {
             name = "Power Crystal",
-            desc = "+50% Damage\n+50% Slow Damage",
+            desc = "+60% Damage\n+60% Slow Damage",
             params = {
-                {"WeaponDamage", 1, 0.50}
+                {"WeaponDamage", 1, 0.6}
             },
             requiredUpgrades = 6
         }
@@ -46,33 +46,33 @@ local heromoderator = {
     path2 = {
         {
             name = "Cooling System",
-            desc = "+20% Fire Rate",
+            desc = "+25% Fire Rate",
             params = {
-                {"WeaponReload", 1, 0.2}
+                {"WeaponReload", 1, 0.25}
             },
             requiredUpgrades = 0
         },
         {
             name = "Adv Circuits",
-            desc = "+20% Fire Rate",
+            desc = "+25% Fire Rate",
             params = {
-                {"WeaponReload", 1, 0.2}
+                {"WeaponReload", 1, 0.25}
             },
             requiredUpgrades = 1
         },
         {
             name = "Cryo Stabylizer",
-            desc = "+20% Fire Rate",
+            desc = "+25% Fire Rate",
             params = {
-                {"WeaponReload", 1, 0.2}
+                {"WeaponReload", 1, 0.25}
             },
             requiredUpgrades = 4
         },
         {
             name = "Resonant Conduit",
-            desc = "+20% Fire Rate",
+            desc = "+25% Fire Rate",
             params = {
-                {"WeaponReload", 1, 0.2}
+                {"WeaponReload", 1, 0.25}
             },
             requiredUpgrades = 6
         }
