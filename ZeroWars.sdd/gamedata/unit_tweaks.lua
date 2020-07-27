@@ -249,7 +249,7 @@ local unit_tweaks = {
         footprintZ = 3
     },
     chickena = {buildcostmetal = 220, buildcostenergy = 220, buildtime = 220},
-    chickenc = {buildcostmetal = 350, buildcostenergy = 350, buildtime = 350},
+    chickenc = {buildcostmetal = 400, buildcostenergy = 400, buildtime = 400},
     chicken_roc = {buildcostmetal = 800, buildcostenergy = 800, buildtime = 800},
     chickenf = {
         buildcostmetal = 150,
@@ -259,9 +259,9 @@ local unit_tweaks = {
         footprintZ = 3
     },
     chicken_blimpy = {
-        buildcostmetal = 220,
-        buildcostenergy = 220,
-        buildtime = 220,
+        buildcostmetal = 300,
+        buildcostenergy = 300,
+        buildtime = 300,
         turnRate = 3000,
         turnRadius = 450,
         weaponDefs = {DODOBOMB = {reloadtime = 4}},
