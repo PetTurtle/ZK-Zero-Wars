@@ -118,7 +118,6 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
             local deploy_income = ud.customParams.deploy_income
             local team_income = Spring.GetTeamRulesParam(unitTeam, "deploy_income") or 0
             Spring.SetTeamRulesParam(unitTeam, "deploy_income", team_income + deploy_income)
-            Spring.Echo("NewIncomeA: " .. (team_income + deploy_income))
         end
     end
 end
@@ -131,7 +130,6 @@ function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
             local deploy_income = ud.customParams.deploy_income
             local team_income = Spring.GetTeamRulesParam(unitTeam, "deploy_income") or 0
             Spring.SetTeamRulesParam(unitTeam, "deploy_income", team_income - deploy_income)
-            Spring.Echo("NewIncomeB: " .. (team_income - deploy_income))
         end
     end
 end
@@ -151,7 +149,6 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
             local deploy_income = ud.customParams.deploy_income
             local team_income = Spring.GetTeamRulesParam(unitTeam, "deploy_income") or 0
             Spring.SetTeamRulesParam(unitTeam, "deploy_income", team_income - deploy_income)
-            Spring.Echo("NewIncomeC: " .. (team_income - deploy_income))
         end
     end
 end

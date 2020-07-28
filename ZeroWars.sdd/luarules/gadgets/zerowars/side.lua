@@ -81,7 +81,6 @@ function Side:provideIncome()
         for _, builderID in pairs(platform.builders) do
 			local teamID = Spring.GetUnitTeam(builderID)
 			local team_income = Spring.GetTeamRulesParam(teamID, "deploy_income") or 0
-			Spring.Echo(team_income)
             Spring.AddTeamResource(teamID, "metal", team_income)
         end
     end

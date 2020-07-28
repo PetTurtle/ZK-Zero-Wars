@@ -164,7 +164,6 @@ function UnitEditor.WeaponDamage(unit, weaponID, multiplier)
     local weapon = unit.weapons[weaponID]
     local originalDamage = WeaponDefs[weapon.ID].damages[1]
 	weapon.damage = (weapon.damage or 1) + multiplier
-	Spring.Echo(originalDamage * weapon.damage)
     SetWeaponDamage(unit.unitID, weaponID, originalDamage * weapon.damage)
 end
 
