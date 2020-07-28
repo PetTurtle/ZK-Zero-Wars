@@ -103,8 +103,8 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
             Spring.MoveCtrl.Enable(unitID, false)
 
             if ud.customParams and ud.customParams.deploy_income then
-                local deploy_income = ud.customParams.deploy_income
-                Spring.SetUnitResourcing(unitID, "ume", deploy_income)
+				local deploy_income = ud.customParams.deploy_income
+				GG.Overdrive.AddUnitResourceGeneration(unitID, 0, deploy_income, false)
             end
         end
     end
