@@ -17,6 +17,8 @@ function Side.new(_allyTeamID, _enemyAllyID, _platformRects, _deployRect, _build
     }
     setmetatable(instance, Side)
 
+	GG.Overdrive.AddInnateIncome(instance.allyTeamID, 8, -2)
+
     for _, building in pairs(_buildings) do
         local unitID = Spring.CreateUnit(building.unitName, building.x, 128, building.z, building.dir, instance.teams[1])
         Spring.SetUnitNoSelect(unitID, building.noSelectable or false)
