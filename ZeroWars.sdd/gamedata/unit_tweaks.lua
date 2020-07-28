@@ -329,7 +329,7 @@ local unit_tweaks = {
     dronelight = {buildCostMetal = 50, maxDamage = 150, reclaimable = true},
     droneheavyslow = {buildCostMetal = 120, maxDamage = 300, reclaimable = true},
     bomberstrike = {
-        weaponDefs = {MISSILE = {damage = {default = 700, planes = 700}}}
+        weaponDefs = {MISSILE = {damage = {default = 270, planes = 270}}}
     },
     grebe = {noChaseCategory = [[TERRAFORM FIXEDWING SUB]]},
     spideranarchid = {weaponDefs = {LASER = {range = 400}}},
