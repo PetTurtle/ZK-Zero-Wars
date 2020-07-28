@@ -12,33 +12,33 @@ local herosniper = {
     path1 = {
         {
             name = "Higher Calibre",
-            desc = "+50% Damage",
+            desc = "+25% Damage",
             params = {
-                {"WeaponDamage", 1, 0.5}
+                {"WeaponDamage", 1, 0.25}
             },
             requiredUpgrades = 0
         },
         {
             name = "Shrapnel",
-            desc = "+60% AOE",
+            desc = "+25% AOE",
             params = {
-                {"WeaponAOE", 1, 0.6}
+                {"WeaponAOE", 1, 0.25}
             },
             requiredUpgrades = 1
         },
         {
             name = "Improved Percing",
-            desc = "+50% Damage",
+            desc = "+25% Damage",
             params = {
-                {"WeaponDamage", 1, 0.5}
+                {"WeaponDamage", 1, 0.25}
             },
             requiredUpgrades = 4
         },
         {
             name = "Improved Piercing",
-            desc = "+50% Damage",
+            desc = "+25% Damage",
             params = {
-                {"WeaponDamage", 1, 0.5}
+                {"WeaponDamage", 1, 0.25}
             },
             requiredUpgrades = 6
         }

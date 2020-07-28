@@ -13,33 +13,33 @@ local heropuppy = {
     path1 = {
         {
             name = "Missile Pods",
-            desc = "+50% Damage",
+            desc = "+30% Damage",
             params = {
-                {"WeaponDamage", 1, 0.50}
+                {"WeaponDamage", 1, 0.30}
             },
             requiredUpgrades = 0
         },
         {
             name = "HESH Ammo",
-            desc = "+50% Damage",
+            desc = "+30% Damage",
             params = {
-                {"WeaponDamage", 1, 0.50}
+                {"WeaponDamage", 1, 0.30}
             },
             requiredUpgrades = 1
         },
         {
             name = "Impact Upgrade",
-            desc = "+50% Damage",
+            desc = "+30% Damage",
             params = {
-                {"WeaponDamage", 1, 0.50}
+                {"WeaponDamage", 1, 0.30}
             },
             requiredUpgrades = 4
         },
         {
             name = "Cluster Grenade",
-            desc = "+50% Damage",
+            desc = "+30% Damage",
             params = {
-                {"WeaponDamage", 1, 0.50}
+                {"WeaponDamage", 1, 0.30}
             },
             requiredUpgrades = 6
         }
@@ -47,17 +47,17 @@ local heropuppy = {
     path2 = {
         {
             name = "Extended Mag",
-            desc = "+40% Fire Rate",
+            desc = "+25% Fire Rate",
             params = {
-                {"WeaponReload", 1, 0.4}
+                {"WeaponReload", 1, 0.25}
             },
             requiredUpgrades = 0
         },
         {
             name = "Autoloader",
-            desc = "+40% Fire Rate",
+            desc = "+25% Fire Rate",
             params = {
-                {"WeaponReload", 1, 0.4}
+                {"WeaponReload", 1, 0.25}
             },
             requiredUpgrades = 1
         },
@@ -72,9 +72,9 @@ local heropuppy = {
         },
         {
             name = "Overdrive",
-            desc = "+40% Fire Rate",
+            desc = "+25% Fire Rate",
             params = {
-                {"WeaponReload", 1, 0.4}
+                {"WeaponReload", 1, 0.25}
             },
             requiredUpgrades = 6
         }

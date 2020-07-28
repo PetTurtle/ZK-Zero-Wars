@@ -12,9 +12,9 @@ local heroduck = {
     path1 = {
         {
             name = "Heavy Grenade",
-            desc = "+50% Damage",
+            desc = "+25% Damage",
             params = {
-                {"WeaponDamage", 1, 0.5}
+                {"WeaponDamage", 1, 0.25}
             },
             requiredUpgrades = 0
         },
@@ -28,9 +28,9 @@ local heroduck = {
         },
         {
             name = "Impact Upgrade",
-            desc = "+50% Damage",
+            desc = "+25% Damage",
             params = {
-                {"WeaponDamage", 1, 0.5}
+                {"WeaponDamage", 1, 0.25}
             },
             requiredUpgrades = 4
         },

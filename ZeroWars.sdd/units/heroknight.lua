@@ -25,7 +25,7 @@ return {
         iconType = [[commander1]],
         leaveTracks = true,
         losEmitHeight = 35,
-        maxDamage = 3000,
+        maxDamage = 1750,
         idleAutoHeal = 250,
         idleTime = 200,
         maxSlope = 36,
