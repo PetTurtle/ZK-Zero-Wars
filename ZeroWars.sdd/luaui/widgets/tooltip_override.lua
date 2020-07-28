@@ -1968,7 +1968,11 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				elseif spaceClickLabel and not unitID then
 					spaceClickLabel:SetPos(nil, PIC_HEIGHT + 30, nil, nil, nil, true)
 				end
+			else
+				energyIncomeLabel(false)
+				energyEfficientLabel(false)
 			end
+
 		end
 		
 		if timeInfoUpdate and not blueprint then
