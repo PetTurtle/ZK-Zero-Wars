@@ -92,17 +92,17 @@ local herodante = {
         },
         {
             name = "Medium Repair",
-            desc = "+15% Regen Amount",
+            desc = "+10% Faster Regen Time\n+10% Regen Amount",
             params = {
-                {"IdleRegen", 0, 0.15}
+                {"IdleRegen", -0.10, 0.10}
             },
             requiredUpgrades = 1
         },
         {
             name = "Enhanced Repair",
-            desc = "+15% Faster Regen Time\n+10% Regen Amount",
+            desc = "+10% Faster Regen Time\n+10% Regen Amount",
             params = {
-                {"IdleRegen", -0.15, 0.10}
+                {"IdleRegen", -0.10, 0.10}
             },
             requiredUpgrades = 4
         },
@@ -126,25 +126,25 @@ local herodante = {
         },
         {
             name = "Extra Rockets",
-            desc = "+5 Rockets",
+            desc = "+6 Rockets",
             params = {
-                {"WeaponBurst", 3, 5}
+                {"WeaponBurst", 3, 6}
             },
             requiredUpgrades = 8
         },
         {
             name = "Rocket Swarm",
-            desc = "+5 Rockets",
+            desc = "+6 Rockets",
             params = {
-                {"WeaponBurst", 3, 5}
+                {"WeaponBurst", 3, 6}
             },
             requiredUpgrades = 10
         },
         {
             name = "Rocket Armada",
-            desc = "+5 Rockets",
+            desc = "+6 Rockets",
             params = {
-                {"WeaponBurst", 3, 5}
+                {"WeaponBurst", 3, 6}
             },
             requiredUpgrades = 12
         }

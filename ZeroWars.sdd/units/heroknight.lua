@@ -106,7 +106,7 @@ return {
                 craterBoost = 0,
                 craterMult = 0,
                 customParams = {single_hit_multi = true, reaim_time = 1},
-                damage = {default = 2000},
+                damage = {default = 1400},
                 explosionGenerator = [[custom:gauss_hit_h]],
                 groundbounce = 1,
                 impactOnly = true,
