@@ -123,7 +123,7 @@ return {
                 flightTime = 12,
                 fireStarter = 100,
                 impulseFactor = 0,
-                damage = {default = 500},
+                damage = {default = 600},
                 edgeEffectiveness = 0.5,
                 explosionGenerator = [[custom:MEDMISSILE_EXPLOSION]],
                 interceptedByShieldType = 1,
