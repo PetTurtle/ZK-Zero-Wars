@@ -1,5 +1,5 @@
 local unitTweaks = VFS.Include("gamedata/unit_tweaks.lua")
-local unitEnergyMulti = VFS.Include("gamedata/unit_energy_multi.lua")
+local unitPaybackTweaks = VFS.Include("gamedata/unit_payback_tweaks.lua")
 local OverwriteTableInplace = Spring.Utilities.OverwriteTableInplace
 
 -- replace shipFactory with chickenFactory
@@ -55,14 +55,15 @@ if unitTweaks and type(unitTweaks) == "table" then
 end
 
 -- apply unitEnergy
-if unitEnergyMulti and type(unitEnergyMulti) == "table" then
+local metalmult = (tonumber(Spring.GetModOptions().metalmult) or 1)
+if unitPaybackTweaks and type(unitPaybackTweaks) == "table" then
     Spring.Echo("Loading custom units energy for zero-wars")
     for name, ud in pairs(UnitDefs) do
-        if unitEnergyMulti[name] then
-			local footprint = (ud.footprintx or 1) * (ud.footprintz or 1)
+		if unitPaybackTweaks[name] then
+			local payback = math.floor(math.sqrt(ud.buildcostmetal) * metalmult * 0.6) + unitPaybackTweaks[name]
             ud.customparams = ud.customparams or {}
-            ud.customparams.deploy_income = footprint * unitEnergyMulti[name][1]
-            ud.customparams.deploy_efficiency = unitEnergyMulti[name][2]
+            ud.customparams.deploy_income = ud.buildcostmetal / payback
+            ud.customparams.deploy_efficiency = "Payback in " .. payback .. " waves"
         end
     end
 end
