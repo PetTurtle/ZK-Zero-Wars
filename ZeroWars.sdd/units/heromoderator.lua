@@ -6,7 +6,7 @@ return {
         acceleration = 0.6,
         activateWhenBuilt = true,
         brakeRate = 3.6,
-        buildCostMetal = 240,
+        buildCostMetal = 1500,
         builder = false,
         buildPic = [[jumpskirm.png]],
         canGuard = true,
@@ -96,7 +96,7 @@ return {
                     light_radius = 320
                 },
 
-                damage = {default = 1000.1},
+                damage = {default = 400},
 
                 explosionGenerator = [[custom:flash2purple]],
                 fireStarter = 30,

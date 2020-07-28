@@ -5,7 +5,7 @@ return {
         description = [[Hero Sniper Bot]],
         acceleration = 0.9,
         brakeRate = 1.2,
-        buildCostMetal = 750,
+        buildCostMetal = 1500,
         buildPic = [[cloaksnipe.png]],
         canGuard = true,
         canMove = true,
@@ -77,7 +77,7 @@ return {
                     burst = Shared.BURST_RELIABLE,
                     single_hit = true
                 },
-                damage = {default = 300},
+                damage = {default = 200},
                 explosionGenerator = [[custom:gauss_hit_m]],
                 groundbounce = 1,
                 impulseBoost = 0,

@@ -5,7 +5,7 @@ return {
         description = [[Hero Assault/Riot Strider]],
         acceleration = 0.295,
         brakeRate = 1.435,
-        buildCostMetal = 2500,
+        buildCostMetal = 1500,
         builder = false,
         buildPic = [[striderdante.png]],
         canGuard = true,
@@ -106,7 +106,7 @@ return {
                     reaim_time = 1
                 },
 
-                damage = {default = 15, subs = 0.15},
+                damage = {default = 10},
 
                 duration = 0.01,
                 explosionGenerator = [[custom:SMOKE]],
@@ -151,7 +151,7 @@ return {
                     reaim_time = 1
                 },
 
-                damage = {default = 49, planes = 49, subs = 2.45},
+                damage = {default = 25},
 
                 duration = 0.3,
                 dynDamageExp = 1,
@@ -181,7 +181,7 @@ return {
 
             NAPALM_ROCKETS = {
                 name = [[Napalm Rockets]],
-                areaOfEffect = 228,
+                areaOfEffect = 114,
                 burst = 2,
                 burstrate = 0.1,
                 cegTag = [[missiletrailredsmall]],
@@ -195,7 +195,7 @@ return {
                     reaim_time = 1
                 },
 
-                damage = {default = 120.8, subs = 6},
+                damage = {default = 120.8},
 
                 edgeEffectiveness = 0.75,
                 explosionGenerator = [[custom:napalm_phoenix]],
