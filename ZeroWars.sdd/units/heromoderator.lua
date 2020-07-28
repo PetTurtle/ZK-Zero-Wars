@@ -96,7 +96,7 @@ return {
                     light_radius = 320
                 },
 
-                damage = {default = 400},
+                damage = {default = 500},
 
                 explosionGenerator = [[custom:flash2purple]],
                 fireStarter = 30,
@@ -144,7 +144,7 @@ return {
                     reaim_time = 1
                 },
 
-                damage = {default = 350, subs = 17.5},
+                damage = {default = 500, subs = 17.5},
 
                 explosionGenerator = [[custom:riotballplus2_purple]],
                 explosionSpeed = 5,

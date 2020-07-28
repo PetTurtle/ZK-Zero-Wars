@@ -12,33 +12,33 @@ local heromoderator = {
     path1 = {
         {
             name = "Adv Beamlaser",
-            desc = "+25% Damage\n+25% Slow Damage",
+            desc = "+35% Damage\n+35% Slow Damage",
             params = {
-                {"WeaponDamage", 1, 0.25}
+                {"WeaponDamage", 1, 0.35}
             },
             requiredUpgrades = 0
         },
         {
             name = "Energy Crystal",
-            desc = "+25% Damage\n+25% Slow Damage",
+            desc = "+35% Damage\n+35% Slow Damage",
             params = {
-                {"WeaponDamage", 1, 0.25}
+                {"WeaponDamage", 1, 0.35}
             },
             requiredUpgrades = 1
         },
         {
             name = "Beam Bundling",
-            desc = "+25% Damage\n+25% Slow Damage",
+            desc = "+35% Damage\n+35% Slow Damage",
             params = {
-                {"WeaponDamage", 1, 0.25}
+                {"WeaponDamage", 1, 0.35}
             },
             requiredUpgrades = 4
         },
         {
             name = "Power Crystal",
-            desc = "+25% Damage\n+25% Slow Damage",
+            desc = "+35% Damage\n+35% Slow Damage",
             params = {
-                {"WeaponDamage", 1, 0.25}
+                {"WeaponDamage", 1, 0.35}
             },
             requiredUpgrades = 6
         }
