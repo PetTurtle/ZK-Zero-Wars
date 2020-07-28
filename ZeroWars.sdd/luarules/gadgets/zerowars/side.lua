@@ -17,7 +17,7 @@ function Side.new(_allyTeamID, _enemyAllyID, _platformRects, _deployRect, _build
     }
     setmetatable(instance, Side)
 
-	GG.Overdrive.AddInnateIncome(instance.allyTeamID, 8, -2)
+	GG.Overdrive.AddInnateIncome(instance.allyTeamID, 3, -2)
 
     for _, building in pairs(_buildings) do
         local unitID = Spring.CreateUnit(building.unitName, building.x, 128, building.z, building.dir, instance.teams[1])
@@ -79,9 +79,10 @@ function Side:provideIncome()
     for i = 1, #self.platforms do
         local platform = self.platforms[i]
         for _, builderID in pairs(platform.builders) do
-            local teamID = Spring.GetUnitTeam(builderID)
-            local eCurr, eStor, ePull, eInco, eExpe, eShar, eSent, eReci = Spring.GetTeamResources(teamID, "energy")
-            Spring.AddTeamResource(teamID, "metal", eInco)
+			local teamID = Spring.GetUnitTeam(builderID)
+			local team_income = Spring.GetTeamRulesParam(teamID, "deploy_income") or 0
+			Spring.Echo(team_income)
+            Spring.AddTeamResource(teamID, "metal", team_income)
         end
     end
 end
