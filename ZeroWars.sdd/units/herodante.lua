@@ -195,7 +195,7 @@ return {
                     reaim_time = 1
                 },
 
-                damage = {default = 120.8},
+                damage = {default = 80},
 
                 edgeEffectiveness = 0.75,
                 explosionGenerator = [[custom:napalm_phoenix]],
@@ -229,7 +229,7 @@ return {
                 avoidFeature = false,
                 avoidFriendly = false,
                 avoidNeutral = false,
-                burst = 15,
+                burst = 16,
                 burstrate = 0.1,
                 cegTag = [[missiletrailredsmall]],
                 commandfire = true,
@@ -246,7 +246,7 @@ return {
                     reaim_time = 1
                 },
 
-                damage = {default = 480, subs = 6},
+                damage = {default = 240},
 
                 dance = 15,
                 edgeEffectiveness = 0.75,
