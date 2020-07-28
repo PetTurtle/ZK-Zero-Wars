@@ -65,10 +65,7 @@ local function onKill(unitID, unitDefID, attackerID)
         local attackerAllyTeam = spGetUnitAllyTeam(attackerID)
         local killXP = UnitDefs[unitDefID].metalCost
         local x, _, z = spGetUnitPosition(unitID)
-        if heroes[attackerID] then
-            local attackerTeam = Spring.GetUnitTeam(attackerID)
-            Spring.AddTeamResource(attackerTeam, "metal", killXP / 2)
-        else
+        if not heroes[attackerID] then
             killXP = killXP / 2
         end
 
