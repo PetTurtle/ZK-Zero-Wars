@@ -159,8 +159,8 @@ return {
                 soundHit = [[weapon/aoe_aura2]],
                 soundHitVolume = 8,
                 soundStart = [[weapon/cannon/cannon_fire3]],
-                -- startVelocity           = 350,
-                -- trajectoryHeight        = 0.3,
+                startVelocity           = 350,
+                trajectoryHeight        = 0.3,
                 turret = true,
                 weaponType = [[Cannon]],
                 weaponVelocity = 350
