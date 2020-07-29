@@ -22,9 +22,9 @@ local herodante = {
         },
         {
             name = "Advanced Explosives",
-            desc = "+20% Rocket Damage",
+            desc = "+25% Rocket Damage",
             params = {
-                {"WeaponDamage", 2, 0.20}
+                {"WeaponDamage", 2, 0.25}
             },
             requiredUpgrades = 1
         },
@@ -38,9 +38,9 @@ local herodante = {
         },
         {
             name = "Hell Fire",
-            desc = "+20% Rocket Damage",
+            desc = "+25% Rocket Damage",
             params = {
-                {"WeaponDamage", 1, 0.20}
+                {"WeaponDamage", 1, 0.25}
             },
             requiredUpgrades = 6
         }
@@ -126,7 +126,7 @@ local herodante = {
         },
         {
             name = "Extra Rockets",
-            desc = "+6 Rockets",
+            desc = "+12 Rockets",
             params = {
                 {"WeaponBurst", 3, 6}
             },
@@ -134,7 +134,7 @@ local herodante = {
         },
         {
             name = "Rocket Swarm",
-            desc = "+6 Rockets",
+            desc = "+12 Rockets",
             params = {
                 {"WeaponBurst", 3, 6}
             },
@@ -142,7 +142,7 @@ local herodante = {
         },
         {
             name = "Rocket Armada",
-            desc = "+6 Rockets",
+            desc = "+12 Rockets",
             params = {
                 {"WeaponBurst", 3, 6}
             },
