@@ -298,9 +298,9 @@ local unit_tweaks = {
         }
     },
     chicken_tiamat = {
-        buildcostmetal = 700,
-        buildcostenergy = 700,
-        buildtime = 700,
+        buildcostmetal = 750,
+        buildcostenergy = 750,
+        buildtime = 750,
         weaponDefs = {
             SHIELD = {
                 shieldPower = 2000,
