@@ -49,7 +49,6 @@ end
 local function NextWave()
     for allyTeam, side in pairs(sides) do
         if side:hasPlatforms() then
-            side:provideIncome()
             local platform = side:nextPlatform()
             for _, builderID in pairs(platform.builders) do
                 local data = deployData[allyTeam]
@@ -105,31 +104,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
             if ud.customParams and ud.customParams.deploy_income then
 				local deploy_income = ud.customParams.deploy_income
 				GG.Overdrive.AddUnitResourceGeneration(unitID, 0, deploy_income, false)
-				Spring.SetUnitRulesParam(unitID, "is_original", 1)
             end
-        end
-    end
-end
-
-function gadget:UnitFinished(unitID, unitDefID, unitTeam)
-    if Spring.GetUnitRulesParam(unitID, "is_original") then
-        local ud = UnitDefs[unitDefID]
-        if ud.customParams and ud.customParams.deploy_income then
-            local deploy_income = ud.customParams.deploy_income
-            local team_income = Spring.GetTeamRulesParam(unitTeam, "deploy_income") or 0
-            Spring.SetTeamRulesParam(unitTeam, "deploy_income", team_income + deploy_income)
-        end
-    end
-end
-
-
-function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
-    if Spring.GetUnitRulesParam(unitID, "is_original") then
-        local ud = UnitDefs[unitDefID]
-        if ud.customParams and ud.customParams.deploy_income then
-            local deploy_income = ud.customParams.deploy_income
-            local team_income = Spring.GetTeamRulesParam(unitTeam, "deploy_income") or 0
-            Spring.SetTeamRulesParam(unitTeam, "deploy_income", team_income - deploy_income)
         end
     end
 end
@@ -142,17 +117,8 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
             Spring.SetUnitExperience(original, Spring.GetUnitExperience(unitID))
             return
         end
-	elseif Spring.GetUnitRulesParam(unitID, "is_original") then
-		local _, _, _, _, buildProgress = Spring.GetUnitHealth(unitID)
-        local ud = UnitDefs[unitDefID]
-        if buildProgress == 1 and ud.customParams and ud.customParams.deploy_income then
-            local deploy_income = ud.customParams.deploy_income
-            local team_income = Spring.GetTeamRulesParam(unitTeam, "deploy_income") or 0
-            Spring.SetTeamRulesParam(unitTeam, "deploy_income", team_income - deploy_income)
-        end
-    end
+	end
 end
-
 
 function gadget:UnitIdle(unitID, unitDefID, unitTeam)
     if Spring.GetUnitRulesParam(unitID, "clone") then idleClones:add(unitID) end

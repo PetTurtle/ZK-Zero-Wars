@@ -75,15 +75,4 @@ function Side:hasPlatforms()
     return #self.platforms > 0
 end
 
-function Side:provideIncome()
-    for i = 1, #self.platforms do
-        local platform = self.platforms[i]
-        for _, builderID in pairs(platform.builders) do
-			local teamID = Spring.GetUnitTeam(builderID)
-			local team_income = Spring.GetTeamRulesParam(teamID, "deploy_income") or 0
-            Spring.AddTeamResource(teamID, "metal", team_income)
-        end
-    end
-end
-
 return Side

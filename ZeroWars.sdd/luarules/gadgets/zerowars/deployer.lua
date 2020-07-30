@@ -33,7 +33,13 @@ function Deployer:add(rect, targetRect, teamID, faceDir, attackX)
                 local guardUnitDefID = Spring.GetUnitDefID(guardUnitID)
                 local guardUnitSpeed =  UnitDefs[guardUnitDefID].speed
                 speed = math.min(guardUnitSpeed, speed)
-            end
+			end
+			
+			-- provide deploy income
+			if ud.customParams and ud.customParams.deploy_income then
+				local deploy_income = ud.customParams.deploy_income or 0
+				Spring.AddTeamResource(teamID, "metal", deploy_income)
+			end
             
             unitSpeeds[#unitSpeeds + 1] = speed
             validUnits[#validUnits + 1] = unit
@@ -77,7 +83,10 @@ function Deployer:deploy()
                     CMD.INSERT,
                     {-1, CMD.FIGHT, CMD.OPT_SHIFT, group.attackX, 128, z + offset.z},
                     {"alt"}
-                )
+				)
+				
+
+
                 units[i] = nil
             end
         end
