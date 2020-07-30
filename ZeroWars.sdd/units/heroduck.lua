@@ -58,7 +58,7 @@ return {
         weaponDefs = {
             GRENADE_LAUNCHER = {
                 name = [[Grenade Launcher]],
-                areaOfEffect = 40,
+                areaOfEffect = 80,
                 burst = 1,
                 burstrate = 0.3,
                 damage = {default = 150},
