@@ -56,16 +56,14 @@ end
 
 -- apply unitEnergy
 local metalmult = (tonumber(Spring.GetModOptions().metalmult) or 1)
-local flatmetalreduction = 4
 if unitPaybackTweaks and type(unitPaybackTweaks) == "table" then
     Spring.Echo("Loading custom units energy for zero-wars")
     for name, ud in pairs(UnitDefs) do
 		if unitPaybackTweaks[name] then
-			local payback = math.floor(math.sqrt(ud.buildcostmetal) * 0.6) + unitPaybackTweaks[name]
+			local payback = math.floor(math.sqrt(ud.buildcostmetal / 4 + 35)) + unitPaybackTweaks[name]
             ud.customparams = ud.customparams or {}
-            ud.customparams.deploy_income = ((ud.buildcostmetal / payback) - flatmetalreduction) * metalmult
-            local wavepayback = math.floor(ud.buildcostmetal / ud.customparams.deploy_income)
-            ud.customparams.deploy_efficiency = "Payback in " .. wavepayback .. " waves"
+            ud.customparams.deploy_income = (ud.buildcostmetal / payback) * metalmult
+            ud.customparams.deploy_efficiency = "Payback in " .. payback / metalmult .. " waves"
         end
     end
 end
