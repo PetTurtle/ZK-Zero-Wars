@@ -28,7 +28,10 @@ function RespawnPool:addHero(hero)
     table.insert(self._pool, {hero = hero, respawnTime = respawnTime})
 	hero:setPosition(self._deathPoint)
 	hero:heal()
-    hero.dead = true
+	Spring.GiveOrderToUnit(hero._ID, CMD.STOP, 0, 0)
+	hero.dead = true
+	Spring.SetUnitNeutral(hero._ID, true)
+	Spring.MoveCtrl.SetNoBlocking(hero._ID, true)
 end
 
 function RespawnPool:update(frame)
@@ -56,8 +59,11 @@ end
 -------------------------------------
 function RespawnPool:_respawnHero(hero)
     hero:heal()
-    hero:setPosition(self._spawnPoint)
-    hero.dead = false
+	hero:setPosition(self._spawnPoint)
+	Spring.GiveOrderToUnit(hero._ID, CMD.STOP, 0, 0)
+	hero.dead = false
+	Spring.SetUnitNeutral(hero._ID, false)
+	Spring.MoveCtrl.SetNoBlocking(hero._ID, false)
 end
 
 return RespawnPool
