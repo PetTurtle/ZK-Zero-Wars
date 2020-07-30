@@ -96,7 +96,7 @@ return {
                     light_radius = 320
                 },
 
-                damage = {default = 500},
+                damage = {default = 100},
 
                 explosionGenerator = [[custom:flash2purple]],
                 fireStarter = 30,
@@ -109,7 +109,7 @@ return {
                 minIntensity = 1,
                 noSelfDamage = true,
                 range = 420,
-                reloadtime = 6,
+                reloadtime = 1,
                 rgbColor = [[0.3 0 0.4]],
                 soundStart = [[weapon/laser/heavy_laser5]],
                 soundStartVolume = 3.8,
@@ -144,7 +144,7 @@ return {
                     reaim_time = 1
                 },
 
-                damage = {default = 500, subs = 17.5},
+                damage = {default = 500},
 
                 explosionGenerator = [[custom:riotballplus2_purple]],
                 explosionSpeed = 5,
@@ -159,8 +159,8 @@ return {
                 soundHit = [[weapon/aoe_aura2]],
                 soundHitVolume = 8,
                 soundStart = [[weapon/cannon/cannon_fire3]],
-                -- startVelocity           = 350,
-                -- trajectoryHeight        = 0.3,
+                startVelocity           = 350,
+                trajectoryHeight        = 0.3,
                 turret = true,
                 weaponType = [[Cannon]],
                 weaponVelocity = 350

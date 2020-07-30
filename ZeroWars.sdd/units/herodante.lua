@@ -246,7 +246,7 @@ return {
                     reaim_time = 1
                 },
 
-                damage = {default = 240},
+                damage = {default = 120},
 
                 dance = 15,
                 edgeEffectiveness = 0.75,

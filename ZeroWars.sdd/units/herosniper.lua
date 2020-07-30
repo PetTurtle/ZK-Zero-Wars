@@ -118,7 +118,7 @@ return {
                     light_radius = 0,
                     restrict_in_widgets = 1
                 },
-                damage = {default = 3000},
+                damage = {default = 2000},
                 explosionGenerator = [[custom:spectre_hit]],
                 fireTolerance = 512, -- 2.8 degrees
                 impactOnly = true,

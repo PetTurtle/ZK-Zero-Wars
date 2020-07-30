@@ -60,10 +60,10 @@ if unitPaybackTweaks and type(unitPaybackTweaks) == "table" then
     Spring.Echo("Loading custom units energy for zero-wars")
     for name, ud in pairs(UnitDefs) do
 		if unitPaybackTweaks[name] then
-			local payback = math.floor(math.sqrt(ud.buildcostmetal) * metalmult * 0.6) + unitPaybackTweaks[name]
+			local payback = math.floor(math.sqrt(ud.buildcostmetal / 4 + 35)) + unitPaybackTweaks[name]
             ud.customparams = ud.customparams or {}
-            ud.customparams.deploy_income = ud.buildcostmetal / payback
-            ud.customparams.deploy_efficiency = "Payback in " .. payback .. " waves"
+            ud.customparams.deploy_income = (ud.buildcostmetal / payback) * metalmult
+            ud.customparams.deploy_efficiency = "Payback in " .. payback / metalmult .. " waves"
         end
     end
 end
