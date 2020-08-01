@@ -14,7 +14,7 @@ local herodante = {
     path1 = {
         {
             name = "Fire Rockets",
-            desc = "Unlock Fire Rockets",
+            desc = "Unlock Fire Rockets \n Required Upgrades 0",
             params = {
                 {"WeaponRange", 1, 1}
             },
@@ -22,7 +22,7 @@ local herodante = {
         },
         {
             name = "Advanced Explosives",
-            desc = "+25% Rocket Damage",
+            desc = "+25% Rocket Damage \n Required Upgrades 1",
             params = {
                 {"WeaponDamage", 2, 0.25}
             },
@@ -30,7 +30,7 @@ local herodante = {
         },
         {
             name = "Quadra Rockets",
-            desc = "+2 Rockets",
+            desc = "+2 Rockets \n Required Upgrades 4",
             params = {
                 {"WeaponBurst", 1, 2}
             },
@@ -38,7 +38,7 @@ local herodante = {
         },
         {
             name = "Hell Fire",
-            desc = "+25% Rocket Damage",
+            desc = "+25% Rocket Damage \n Required Upgrades 6",
             params = {
                 {"WeaponDamage", 1, 0.25}
             },
@@ -48,7 +48,7 @@ local herodante = {
     path2 = {
         {
             name = "Double Heatray",
-            desc = "Unlock Heatray",
+            desc = "Unlock Heatray \n Required Upgrades 0",
             params = {
                 {"WeaponRange", 2, 1}
             },
@@ -56,7 +56,7 @@ local herodante = {
         },
         {
             name = "Heat Core",
-            desc = "+15% Damage",
+            desc = "+15% Damage \n Required Upgrades 1",
             params = {
                 {"WeaponDamage", 2, 0.15}
             },
@@ -64,7 +64,7 @@ local herodante = {
         },
         {
             name = "Heat Pipelines",
-            desc = "+15% Damage\n+20% Movement Speed",
+            desc = "+15% Damage\n+20% Movement Speed \n Required Upgrades 4",
             params = {
                 {"WeaponDamage", 2, 0.2},
                 {"MoveSpeed", 0.15}
@@ -73,7 +73,7 @@ local herodante = {
         },
         {
             name = "Sun Core",
-            desc = "+15% Damage\n+20% Movement Speed",
+            desc = "+15% Damage\n+20% Movement Speed \n Required Upgrades 6",
             params = {
                 {"WeaponDamage", 2, 0.2},
                 {"MoveSpeed", 0.15}
@@ -84,7 +84,7 @@ local herodante = {
     path3 = {
         {
             name = "Faster Repair",
-            desc = "+25% Faster Regen Time",
+            desc = "+25% Faster Regen Time \n Required Upgrades 0",
             params = {
                 {"IdleRegen", -0.25, 0}
             },
@@ -92,7 +92,7 @@ local herodante = {
         },
         {
             name = "Medium Repair",
-            desc = "+10% Faster Regen Time\n+10% Regen Amount",
+            desc = "+10% Faster Regen Time\n+10% Regen Amount \n Required Upgrades 1",
             params = {
                 {"IdleRegen", -0.10, 0.10}
             },
@@ -100,7 +100,7 @@ local herodante = {
         },
         {
             name = "Enhanced Repair",
-            desc = "+10% Faster Regen Time\n+10% Regen Amount",
+            desc = "+10% Faster Regen Time\n+10% Regen Amount \n Required Upgrades 4",
             params = {
                 {"IdleRegen", -0.10, 0.10}
             },
@@ -108,7 +108,7 @@ local herodante = {
         },
         {
             name = "Ultimate Repair",
-            desc = "+15% Faster Regen Time\n+10% Regen Amount",
+            desc = "+15% Faster Regen Time\n+10% Regen Amount \n Required Upgrades 6",
             params = {
                 {"IdleRegen", -0.15, 0.1}
             },
@@ -118,7 +118,7 @@ local herodante = {
     path4 = {
         {
             name = "Rocket Salvo",
-            desc = "Unlock Rocket Salvo",
+            desc = "Unlock Rocket Salvo \n Required Upgrades 6",
             params = {
                 {"EnableCommand", CMD.MANUALFIRE, true}
             },
@@ -126,7 +126,7 @@ local herodante = {
         },
         {
             name = "Extra Rockets",
-            desc = "+12 Rockets",
+            desc = "+12 Rockets \n Required Upgrades 8",
             params = {
                 {"WeaponBurst", 3, 6}
             },
@@ -134,7 +134,7 @@ local herodante = {
         },
         {
             name = "Rocket Swarm",
-            desc = "+12 Rockets",
+            desc = "+12 Rockets \n Required Upgrades 10",
             params = {
                 {"WeaponBurst", 3, 6}
             },
@@ -142,7 +142,7 @@ local herodante = {
         },
         {
             name = "Rocket Armada",
-            desc = "+12 Rockets",
+            desc = "+12 Rockets \n Required Upgrades 12",
             params = {
                 {"WeaponBurst", 3, 6}
             },
