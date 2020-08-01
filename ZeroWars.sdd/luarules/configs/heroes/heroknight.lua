@@ -12,7 +12,7 @@ local heroknight = {
     path1 = {
         {
             name = "Plasma Upgrade",
-            desc = "+25% Damage",
+            desc = "+25% Damage \n Required Upgrades 0",
             params = {
                 {"WeaponDamage", 1, 0.25}
             },
@@ -20,7 +20,7 @@ local heroknight = {
         },
         {
             name = "Ionized plasma",
-            desc = "+25% Damage",
+            desc = "+25% Damage \n Required Upgrades 1",
             params = {
                 {"WeaponDamage", 1, 0.25}
             },
@@ -28,7 +28,7 @@ local heroknight = {
         },
         {
             name = "Tesla Upgrade",
-            desc = "+25% Damage",
+            desc = "+25% Damage \n Required Upgrades 4",
             params = {
                 {"WeaponDamage", 1, 0.25}
             },
@@ -36,7 +36,7 @@ local heroknight = {
         },
         {
             name = "Sun Core",
-            desc = "+25% Damage",
+            desc = "+25% Damage \n Required Upgrades 6",
             params = {
                 {"WeaponDamage", 1, 0.25}
             },
@@ -46,7 +46,7 @@ local heroknight = {
     path2 = {
         {
             name = "Lazer Cooling",
-            desc = "+15% Fire Rate",
+            desc = "+15% Fire Rate \n Required Upgrades 0",
             params = {
                 {"WeaponReload", 1, 0.15}
             },
@@ -54,7 +54,7 @@ local heroknight = {
         },
         {
             name = "Heat Pipes",
-            desc = "+15% Fire Rate",
+            desc = "+15% Fire Rate \n Required Upgrades 1",
             params = {
                 {"WeaponReload", 1, 0.15}
             },
@@ -62,7 +62,7 @@ local heroknight = {
         },
         {
             name = "Nitrogen Tank",
-            desc = "+15% Fire Rate",
+            desc = "+15% Fire Rate \n Required Upgrades 4",
             params = {
                 {"WeaponReload", 1, 0.15}
             },
@@ -70,7 +70,7 @@ local heroknight = {
         },
         {
             name = "Sub Zero",
-            desc = "+15% Fire Rate",
+            desc = "+15% Fire Rate \n Required Upgrades 6",
             params = {
                 {"WeaponReload", 1, 0.15}
             },
@@ -80,7 +80,7 @@ local heroknight = {
     path3 = {
         {
             name = "Light Armour",
-            desc = "+1500 HP",
+            desc = "+1500 HP \n Required Upgrades 0",
             params = {
                 {"Armour", "1500"}
             },
@@ -88,7 +88,7 @@ local heroknight = {
         },
         {
             name = "Medium Armour",
-            desc = "+1500 HP",
+            desc = "+1500 HP \n Required Upgrades 1",
             params = {
                 {"Armour", "1500"}
             },
@@ -96,7 +96,7 @@ local heroknight = {
         },
         {
             name = "Heavy Armour",
-            desc = "+1500 HP",
+            desc = "+1500 HP \n Required Upgrades 4",
             params = {
                 {
                     "Armour",
@@ -107,7 +107,7 @@ local heroknight = {
         },
         {
             name = "Ultimate Armour",
-            desc = "+1500 HP",
+            desc = "+1500 HP \n Required Upgrades 6",
             params = {
                 {
                     "Armour",
@@ -120,7 +120,7 @@ local heroknight = {
     path4 = {
         {
             name = "Gauss Blast",
-            desc = "Unlock Gauss Blast",
+            desc = "Unlock Gauss Blast \n Required Upgrades 6",
             params = {
                 {"EnableCommand", CMD.MANUALFIRE, true}
             },
@@ -128,7 +128,7 @@ local heroknight = {
         },
         {
             name = "Extra Gauss",
-            desc = "+1 Burst",
+            desc = "+1 Burst \n Required Upgrades 8",
             params = {
                 {"WeaponBurst", 2, 1}
             },
@@ -136,7 +136,7 @@ local heroknight = {
         },
         {
             name = "Gauss Array",
-            desc = "+1 Burst",
+            desc = "+1 Burst \n Required Upgrades 10",
             params = {
                 {"WeaponBurst", 2, 1}
             },
@@ -144,7 +144,7 @@ local heroknight = {
         },
         {
             name = "Recursive Gauss",
-            desc = "+2 Burst",
+            desc = "+2 Burst \n Required Upgrades 12",
             params = {
                 {"WeaponBurst", 2, 2}
             },
