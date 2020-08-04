@@ -226,9 +226,9 @@ local unit_tweaks = {
         yardMap = ""
     },
     chicken = {
-        buildcostmetal = 25,
-        buildcostenergy = 25,
-        buildtime = 25,
+        buildcostmetal = 30,
+        buildcostenergy = 30,
+        buildtime = 30,
         footprintX = 2,
         footprintZ = 2
     },
@@ -259,9 +259,9 @@ local unit_tweaks = {
         footprintZ = 3
     },
     chicken_blimpy = {
-        buildcostmetal = 300,
-        buildcostenergy = 300,
-        buildtime = 300,
+        buildcostmetal = 320,
+        buildcostenergy = 320,
+        buildtime = 320,
         turnRate = 3000,
         turnRadius = 450,
         weaponDefs = {DODOBOMB = {reloadtime = 4}},
@@ -298,9 +298,9 @@ local unit_tweaks = {
         }
     },
     chicken_tiamat = {
-        buildcostmetal = 750,
-        buildcostenergy = 750,
-        buildtime = 750,
+        buildcostmetal = 900,
+        buildcostenergy = 900,
+        buildtime = 900,
         weaponDefs = {
             SHIELD = {
                 shieldPower = 2000,
@@ -317,16 +317,16 @@ local unit_tweaks = {
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_dragon = {
-        buildcostmetal = 8000,
-        buildcostenergy = 8000,
-        buildtime = 8000
+        buildcostmetal = 7000,
+        buildcostenergy = 7000,
+        buildtime = 7000
     },
     cloakbomb = {weaponDefs = {cloakbomb_DEATH = {areaOfEffect = 300}}},
     amphbomb = {weaponDefs = {AMPHBOMB_DEATH = {areaOfEffect = 300}}},
     jumpbomb = {weaponDefs = {jumpbomb_DEATH = {areaOfEffect = 300}}},
     shieldbomb = {weaponDefs = {shieldbomb_DEATH = {areaOfEffect = 300}}},
     dronecarry = {buildCostMetal = 80, maxDamage = 80, reclaimable = true},
-    dronelight = {buildCostMetal = 50, maxDamage = 150, reclaimable = true},
+    dronelight = {buildCostMetal = 60, maxDamage = 150, reclaimable = true},
     droneheavyslow = {buildCostMetal = 120, maxDamage = 300, reclaimable = true},
     bomberstrike = {
         weaponDefs = {MISSILE = {damage = {default = 270, planes = 270}}}

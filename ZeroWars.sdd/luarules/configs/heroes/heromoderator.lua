@@ -12,7 +12,7 @@ local heromoderator = {
     path1 = {
         {
             name = "Adv Beamlaser",
-            desc = "+35% Damage\n+35% Slow Damage",
+            desc = "+35% Damage\n+35% Slow Damage \n Required Upgrades 0",
             params = {
                 {"WeaponDamage", 1, 0.35}
             },
@@ -20,7 +20,7 @@ local heromoderator = {
         },
         {
             name = "Energy Crystal",
-            desc = "+35% Damage\n+35% Slow Damage",
+            desc = "+35% Damage\n+35% Slow Damage \n Required Upgrades 1",
             params = {
                 {"WeaponDamage", 1, 0.35}
             },
@@ -28,7 +28,7 @@ local heromoderator = {
         },
         {
             name = "Beam Bundling",
-            desc = "+35% Damage\n+35% Slow Damage",
+            desc = "+35% Damage\n+35% Slow Damage \n Required Upgrades 4",
             params = {
                 {"WeaponDamage", 1, 0.35}
             },
@@ -36,7 +36,7 @@ local heromoderator = {
         },
         {
             name = "Power Crystal",
-            desc = "+35% Damage\n+35% Slow Damage",
+            desc = "+35% Damage\n+35% Slow Damage \n Required Upgrades 6",
             params = {
                 {"WeaponDamage", 1, 0.35}
             },
@@ -46,7 +46,7 @@ local heromoderator = {
     path2 = {
         {
             name = "Cooling System",
-            desc = "+25% Fire Rate",
+            desc = "+25% Fire Rate \n Required Upgrades 0",
             params = {
                 {"WeaponReload", 1, 0.25}
             },
@@ -54,7 +54,7 @@ local heromoderator = {
         },
         {
             name = "Adv Circuits",
-            desc = "+25% Fire Rate",
+            desc = "+25% Fire Rate \n Required Upgrades 1",
             params = {
                 {"WeaponReload", 1, 0.25}
             },
@@ -62,7 +62,7 @@ local heromoderator = {
         },
         {
             name = "Cryo Stabylizer",
-            desc = "+25% Fire Rate",
+            desc = "+25% Fire Rate \n Required Upgrades 4",
             params = {
                 {"WeaponReload", 1, 0.25}
             },
@@ -70,7 +70,7 @@ local heromoderator = {
         },
         {
             name = "Resonant Conduit",
-            desc = "+25% Fire Rate",
+            desc = "+25% Fire Rate \n Required Upgrades 6",
             params = {
                 {"WeaponReload", 1, 0.25}
             },
@@ -80,7 +80,7 @@ local heromoderator = {
     path3 = {
         {
             name = "Light Armour",
-            desc = "+800 HP",
+            desc = "+800 HP \n Required Upgrades 0",
             params = {
                 {"Armour", "800"}
             },
@@ -88,7 +88,7 @@ local heromoderator = {
         },
         {
             name = "Medium Armour",
-            desc = "+800 HP",
+            desc = "+800 HP \n Required Upgrades 1",
             params = {
                 {"Armour", "800"}
             },
@@ -96,7 +96,7 @@ local heromoderator = {
         },
         {
             name = "Adv Targeting",
-            desc = "+15% range",
+            desc = "+15% range \n Required Upgrades 4",
             params = {
                 {"WeaponRange", 1, 0.15}
             },
@@ -104,7 +104,7 @@ local heromoderator = {
         },
         {
             name = "Precision Module",
-            desc = "+15%  range",
+            desc = "+15%  range \n Required Upgrades 6",
             params = {
                 {"WeaponRange", 1, 0.15}
             },
@@ -114,7 +114,7 @@ local heromoderator = {
     path4 = {
         {
             name = "Disruptor Bomb",
-            desc = "Unlock Disruptor Bomb",
+            desc = "Unlock Disruptor Bomb \n Required Upgrades 6",
             params = {
                 {"EnableCommand", CMD.MANUALFIRE, true}
             },
@@ -122,7 +122,7 @@ local heromoderator = {
         },
         {
             name = "Time Distortion",
-            desc = "+50% Damage",
+            desc = "+50% Damage \n Required Upgrades 8",
             params = {
                 {"WeaponDamage", 2, 0.5}
             },
@@ -130,7 +130,7 @@ local heromoderator = {
         },
         {
             name = "Chronomancy",
-            desc = "+50% Damage",
+            desc = "+50% Damage \n Required Upgrades 10",
             params = {
                 {"WeaponDamage", 2, 0.5}
             },
@@ -138,7 +138,7 @@ local heromoderator = {
         },
         {
             name = "Violet Slugger",
-            desc = "+50% Damage",
+            desc = "+50% Damage \n Required Upgrades 12",
             params = {
                 {"WeaponDamage", 2, 0.5}
             },

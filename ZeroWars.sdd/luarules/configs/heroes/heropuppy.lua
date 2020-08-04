@@ -13,7 +13,7 @@ local heropuppy = {
     path1 = {
         {
             name = "Missile Pods",
-            desc = "+30% Damage",
+            desc = "+30% Damage \n Required Upgrades 0",
             params = {
                 {"WeaponDamage", 1, 0.30}
             },
@@ -21,7 +21,7 @@ local heropuppy = {
         },
         {
             name = "HESH Ammo",
-            desc = "+30% Damage",
+            desc = "+30% Damage \n Required Upgrades 1",
             params = {
                 {"WeaponDamage", 1, 0.30}
             },
@@ -29,7 +29,7 @@ local heropuppy = {
         },
         {
             name = "Impact Upgrade",
-            desc = "+30% Damage",
+            desc = "+30% Damage \n Required Upgrades 4",
             params = {
                 {"WeaponDamage", 1, 0.30}
             },
@@ -37,7 +37,7 @@ local heropuppy = {
         },
         {
             name = "Cluster Grenade",
-            desc = "+30% Damage",
+            desc = "+30% Damage \n Required Upgrades 6",
             params = {
                 {"WeaponDamage", 1, 0.30}
             },
@@ -47,7 +47,7 @@ local heropuppy = {
     path2 = {
         {
             name = "Extended Mag",
-            desc = "+25% Fire Rate",
+            desc = "+25% Fire Rate \n Required Upgrades 0",
             params = {
                 {"WeaponReload", 1, 0.25}
             },
@@ -55,7 +55,7 @@ local heropuppy = {
         },
         {
             name = "Autoloader",
-            desc = "+25% Fire Rate",
+            desc = "+25% Fire Rate \n Required Upgrades 1",
             params = {
                 {"WeaponReload", 1, 0.25}
             },
@@ -63,7 +63,7 @@ local heropuppy = {
         },
         {
             name = "Double Salvo",
-            desc = "Two Salvos\n-40% Fire Rate",
+            desc = "Two Salvos\n-40% Fire Rate \n Required Upgrades 4",
             params = {
                 {"WeaponBurst", 1, 1},
                 {"WeaponReload", 1, -0.4}
@@ -72,7 +72,7 @@ local heropuppy = {
         },
         {
             name = "Overdrive",
-            desc = "+25% Fire Rate",
+            desc = "+25% Fire Rate \n Required Upgrades 6",
             params = {
                 {"WeaponReload", 1, 0.25}
             },
@@ -82,7 +82,7 @@ local heropuppy = {
     path3 = {
         {
             name = "Jump",
-            desc = "Unlock Jump",
+            desc = "Unlock Jump \n Required Upgrades 0",
             params = {
                 {"EnableCommand", CMD_JUMP, true}
             },
@@ -90,7 +90,7 @@ local heropuppy = {
         },
         {
             name = "Light Armour",
-            desc = "+800 HP",
+            desc = "+800 HP \n Required Upgrades 1",
             params = {
                 {"Armour", "800"},
                 {"Scale", 0.05}
@@ -99,7 +99,7 @@ local heropuppy = {
         },
         {
             name = "Medium Armour",
-            desc = "+800 HP",
+            desc = "+800 HP \n Required Upgrades 4",
             params = {
                 {"Armour", "800"},
                 {"Scale", 0.05}
@@ -108,7 +108,7 @@ local heropuppy = {
         },
         {
             name = "Ultimate Armour",
-            desc = "+800 HP",
+            desc = "+800 HP \n Required Upgrades 6",
             params = {
                 {"Armour", "800"},
                 {"Scale", 0.05}
@@ -119,7 +119,7 @@ local heropuppy = {
     path4 = {
         {
             name = "Puppy Gun",
-            desc = "Unlock Puppy Gun",
+            desc = "Unlock Puppy Gun \n Required Upgrades 6",
             params = {
                 {"EnableCommand", CMD.MANUALFIRE, true}
             },
@@ -127,7 +127,7 @@ local heropuppy = {
         },
         {
             name = "Flock of Puppies",
-            desc = "+2 Puppies",
+            desc = "+2 Puppies \n Required Upgrades 8",
             params = {
                 {"WeaponBurst", 2, 2}
             },
@@ -135,7 +135,7 @@ local heropuppy = {
         },
         {
             name = "Herd of Puppies",
-            desc = "+2 Puppies",
+            desc = "+2 Puppies \n Required Upgrades 10",
             params = {
                 {"WeaponBurst", 2, 2}
             },
@@ -143,7 +143,7 @@ local heropuppy = {
         },
         {
             name = "Puppy Army",
-            desc = "+4 Puppies",
+            desc = "+4 Puppies \n Required Upgrades 12",
             params = {
                 {"WeaponBurst", 2, 4}
             },

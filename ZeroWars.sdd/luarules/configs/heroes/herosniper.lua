@@ -12,7 +12,7 @@ local herosniper = {
     path1 = {
         {
             name = "Higher Calibre",
-            desc = "+25% Damage",
+            desc = "+25% Damage \n Required Upgrades 0",
             params = {
                 {"WeaponDamage", 1, 0.25}
             },
@@ -20,7 +20,7 @@ local herosniper = {
         },
         {
             name = "Shrapnel",
-            desc = "+25% AOE",
+            desc = "+25% AOE \n Required Upgrades 1",
             params = {
                 {"WeaponAOE", 1, 0.25}
             },
@@ -28,7 +28,7 @@ local herosniper = {
         },
         {
             name = "Improved Percing",
-            desc = "+25% Damage",
+            desc = "+25% Damage \n Required Upgrades 4",
             params = {
                 {"WeaponDamage", 1, 0.25}
             },
@@ -36,7 +36,7 @@ local herosniper = {
         },
         {
             name = "Improved Piercing",
-            desc = "+25% Damage",
+            desc = "+25% Damage \n Required Upgrades 6",
             params = {
                 {"WeaponDamage", 1, 0.25}
             },
@@ -46,7 +46,7 @@ local herosniper = {
     path2 = {
         {
             name = "Extended Mag",
-            desc = "+20% Fire Rate",
+            desc = "+20% Fire Rate \n Required Upgrades 0",
             params = {
                 {"WeaponReload", 1, 0.2}
             },
@@ -54,7 +54,7 @@ local herosniper = {
         },
         {
             name = "Improved Firerate",
-            desc = "+20% Fire Rate",
+            desc = "+20% Fire Rate \n Required Upgrades 1",
             params = {
                 {"WeaponReload", 1, 0.2}
             },
@@ -62,7 +62,7 @@ local herosniper = {
         },
         {
             name = "Semi-Automatic",
-            desc = "+20% Fire Rate",
+            desc = "+20% Fire Rate \n Required Upgrades 4",
             params = {
                 {"WeaponReload", 1, 0.2}
             },
@@ -70,7 +70,7 @@ local herosniper = {
         },
         {
             name = "Belt-Fed",
-            desc = "+20% Fire Rate",
+            desc = "+20% Fire Rate \n Required Upgrades 6",
             params = {
                 {"WeaponReload", 1, 0.2}
             },
@@ -80,7 +80,7 @@ local herosniper = {
     path3 = {
         {
             name = "Improved Servo",
-            desc = "+20% Movement Speed",
+            desc = "+20% Movement Speed \n Required Upgrades 0",
             params = {
                 {"MoveSpeed", "0.20"}
             },
@@ -88,7 +88,7 @@ local herosniper = {
         },
         {
             name = "Advanced Motors",
-            desc = "+20% Movement Speed",
+            desc = "+20% Movement Speed \n Required Upgrades 1",
             params = {
                 {"MoveSpeed", "0.20"}
             },
@@ -96,7 +96,7 @@ local herosniper = {
         },
         {
             name = "Industrial Motors",
-            desc = "+20% Movement Speed",
+            desc = "+20% Movement Speed \n Required Upgrades 4",
             params = {
                 {"MoveSpeed", "0.20"}
             },
@@ -104,7 +104,7 @@ local herosniper = {
         },
         {
             name = "Experimental Servo",
-            desc = "+20% Movement Speed",
+            desc = "+20% Movement Speed \n Required Upgrades 6",
             params = {
                 {"MoveSpeed", "0.20"}
             },
@@ -114,7 +114,7 @@ local herosniper = {
     path4 = {
         {
             name = "Shock Rifle",
-            desc = "Unlock Shock Rifle",
+            desc = "Unlock Shock Rifle \n Required Upgrades 6",
             params = {
                 {"EnableCommand", CMD.MANUALFIRE, true}
             },
@@ -122,7 +122,7 @@ local herosniper = {
         },
         {
             name = "Higher Calibre",
-            desc = "+35% Damage",
+            desc = "+35% Damage \n Required Upgrades 8",
             params = {
                 {"WeaponDamage", 2, 0.35}
             },
@@ -130,7 +130,7 @@ local herosniper = {
         },
         {
             name = "H.E.A.T Ammo",
-            desc = "+35% Damage",
+            desc = "+35% Damage \n Required Upgrades 10",
             params = {
                 {"WeaponDamage", 2, 0.35}
             },
@@ -138,7 +138,7 @@ local herosniper = {
         },
         {
             name = "Max Calibre",
-            desc = "+35% Damage",
+            desc = "+35% Damage \n Required Upgrades 12",
             params = {
                 {"WeaponDamage", 2, 0.35}
             },
