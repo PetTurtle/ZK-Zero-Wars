@@ -85,8 +85,6 @@ function Deployer:deploy()
                     {"alt"}
 				)
 				
-
-
                 units[i] = nil
             end
         end
