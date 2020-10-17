@@ -46,7 +46,6 @@ end
 -------------------------------------
 function HeroTeam:addHero(heroID, hero)
     self._heroes[heroID] = hero
-    self._respawnPool:addHero(hero)
 end
 
 -------------------------------------
