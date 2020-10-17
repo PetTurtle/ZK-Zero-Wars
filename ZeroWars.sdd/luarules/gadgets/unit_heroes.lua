@@ -98,16 +98,6 @@ function gadget:GameFrame(frame)
 end
 
 -------------------------------------
--- Block Hero Commands When Dead
--------------------------------------
-function gadget:AllowCommand(unitID, _, _, cmdID)
-    if heroes[unitID] and heroes[unitID].dead and not ALLOWED_ON_DEAD_CMD[cmdID] then
-        return false
-    end
-    return true
-end
-
--------------------------------------
 -- Hero upgrade command listener
 -------------------------------------
 function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
@@ -125,7 +115,6 @@ function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
         end
     end
 end
-
 
 -------------------------------------
 -- Add hero when it's created
