@@ -57,6 +57,7 @@ local function CreateWindow()
 	window =
 		Chili.Window:New {
 		name = "ZeroWarsData",
+		classname = "main_window",
 		x = 0,
 		y = 0,
 		width = 201,
@@ -151,8 +152,8 @@ local function CreateWindow()
 
 	xpProgressbar =
 		Chili.Progressbar:New {
-		x = 3,
-		right = 0,
+		x = 10,
+		right = 10,
 		bottom = 10,
 		value = 45,
 		max = 1,
