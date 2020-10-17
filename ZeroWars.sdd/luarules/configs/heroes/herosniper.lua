@@ -113,7 +113,7 @@ local herosniper = {
     },
     path4 = {
         {
-            name = "Shock Rifle",
+            name = "Paralyze Rifle",
             desc = "Unlock Shock Rifle \n Required Upgrades 6",
             params = {
                 {"EnableCommand", CMD.MANUALFIRE, true}
@@ -122,25 +122,28 @@ local herosniper = {
         },
         {
             name = "Higher Calibre",
-            desc = "+35% Damage \n Required Upgrades 8",
+            desc = "+40% Paralyze Time \n +25% AOE \n Required Upgrades 8",
             params = {
-                {"WeaponDamage", 2, 0.35}
+                {"WeaponParalyzeTime", 2, 0.40},
+                {"WeaponAOE", 2, 0.25}
             },
             requiredUpgrades = 8
         },
         {
             name = "H.E.A.T Ammo",
-            desc = "+35% Damage \n Required Upgrades 10",
+            desc = "+40% Paralyze Time \n +25% AOE \n Required Upgrades 10",
             params = {
-                {"WeaponDamage", 2, 0.35}
+                {"WeaponParalyzeTime", 2, 0.40},
+                {"WeaponAOE", 2, 0.25}
             },
             requiredUpgrades = 10
         },
         {
             name = "Max Calibre",
-            desc = "+35% Damage \n Required Upgrades 12",
+            desc = "+40% Paralyze Time \n +25% AOE \n Required Upgrades 12",
             params = {
-                {"WeaponDamage", 2, 0.35}
+                {"WeaponParalyzeTime", 2, 0.40},
+                {"WeaponAOE", 2, 0.25}
             },
             requiredUpgrades = 12
         }
