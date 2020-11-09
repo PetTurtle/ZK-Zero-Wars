@@ -19,6 +19,7 @@ local Deployer = VFS.Include("luarules/gadgets/zerowars/deployer.lua")
 local IdleClones = VFS.Include("luarules/gadgets/zerowars/idle_clones.lua")
 local CloneTimeout = VFS.Include("luarules/gadgets/zerowars/clone_timeout.lua")
 local platforms, deployRects, buildings, sideData = VFS.Include("luarules/configs/map_zerowars.lua")
+local config = VFS.Include("luarules/configs/zerowars.config.lua")
 
 local SPAWNFRAME = 1000
 local UPDATEFRAME = 30
