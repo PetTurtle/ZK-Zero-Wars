@@ -32,6 +32,8 @@ local deployer = Deployer.new()
 local idleClones
 local cloneTimeout = CloneTimeout.new()
 
+local moveCtrlBuffer = {}
+
 local function GenerateSides()
     local allyStarts = map:getAllyStarts()
     allyStarts.Left = tonumber(allyStarts.Left or 0)
@@ -91,6 +93,13 @@ function gadget:GameFrame(frame)
     if clones then
         cloneTimeout:add(clones, frame)
     end
+
+    if #moveCtrlBuffer > 0 then
+      for i = 1, #moveCtrlBuffer do
+        Spring.MoveCtrl.Enable(moveCtrlBuffer[i], false)
+      end
+      moveCtrlBuffer = {}
+    end
 end
 
 -- disable unit movement built by builders ( not spawned )
@@ -100,11 +109,11 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         local ud = UnitDefs[unitDefID]
         if not (ud.isBuilding or ud.isBuilder) then
             Spring.SetUnitNeutral(unitID, true)
-            Spring.MoveCtrl.Enable(unitID, false)
+            moveCtrlBuffer[#moveCtrlBuffer + 1] = unitID
 
             if ud.customParams and ud.customParams.deploy_income then
-				local deploy_income = ud.customParams.deploy_income
-				GG.Overdrive.AddUnitResourceGeneration(unitID, 0, deploy_income, false)
+				      local deploy_income = ud.customParams.deploy_income
+				      GG.Overdrive.AddUnitResourceGeneration(unitID, 0, deploy_income, false)
             end
         end
     end
