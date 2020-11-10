@@ -13,7 +13,7 @@ local config = {
   Left = {
     faceDir = "e",
     attackPosX = 5888,
-    deployRect = { x = 1664, z = 1152, WIDTH, HEIGHT },
+    deployRect = { x = 1664, z = 1152, width = WIDTH, height = HEIGHT },
     nexus = { x = 2496, z = 1530 },
     nexusTurret = { x = 3264, z = 1530 },
     extraBuildings = { 
