@@ -89,7 +89,7 @@ local unit_tweaks = {
         buildoptions = {
             [[builder]], [[hoverraid]], [[hoverheavyraid]],
             [[hoverdepthcharge]], [[hoverriot]], [[hoverskirm]], [[hoverarty]],
-            [[hoveraa]], [[hoverassault]], [[hoverminer]], [[hovershotgun]]
+            [[hoveraa]], [[hoverassault]], [[choverminer]], [[chovershotgun]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -100,9 +100,9 @@ local unit_tweaks = {
             pos_anti_air = [[hoveraa]],
             pos_assault = [[hoverassault]],
             pos_artillery = [[hoverarty]],
-            pos_heavy_something = [[hovershotgun]],
+            pos_heavy_something = [[chovershotgun]],
             pos_special = [[hoverdepthcharge]],
-            pos_utility = [[hoverminer]]
+            pos_utility = [[choverminer]]
         },
         buildCostMetal = 800,
         buildDistance = 800,
@@ -112,7 +112,7 @@ local unit_tweaks = {
     factoryamph = {
         buildoptions = {
             [[builder]], [[amphraid]], [[amphimpulse]], [[amphfloater]],
-            [[amphriot]], [[amphassault]], [[grebe]], [[amphaa]], [[amphbomb]]
+            [[amphriot]], [[amphsupport]], [[amphassault]], [[cgrebe]], [[amphaa]], [[amphbomb]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -121,9 +121,10 @@ local unit_tweaks = {
             pos_skirmisher = [[amphfloater]],
             pos_riot = [[amphriot]],
             pos_anti_air = [[amphaa]],
-            pos_assault = [[grebe]],
+            pos_assault = [[cgrebe]],
             pos_heavy_something = [[amphassault]],
-            pos_special = [[amphbomb]]
+            pos_special = [[amphbomb]],
+            pos_utility = [[amphsupport]],
         },
         buildCostMetal = 800,
         buildDistance = 800,
@@ -157,7 +158,7 @@ local unit_tweaks = {
         buildoptions = {
             [[builder]], [[spiderscout]], [[spiderassault]], [[spideremp]],
             [[spiderriot]], [[spiderskirm]], [[spidercrabe]], [[spideraa]],
-            [[spiderantiheavy]], [[spideranarchid]], [[striderscorpion]]
+            [[spiderantiheavy]], [[cspideranarchid]], [[striderscorpion]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -167,7 +168,7 @@ local unit_tweaks = {
             pos_riot = [[spiderriot]],
             pos_anti_air = [[spideraa]],
             pos_assault = [[spiderassault]],
-            pos_artillery = [[spideranarchid]],
+            pos_artillery = [[cspideranarchid]],
             pos_heavy_something = [[spidercrabe]],
             pos_special = [[spiderantiheavy]],
             pos_utility = [[striderscorpion]]
@@ -181,7 +182,7 @@ local unit_tweaks = {
         buildoptions = {
             [[builder]], [[gunshipbomb]], [[gunshipemp]], [[gunshipraid]],
             [[gunshipskirm]], [[gunshipheavyskirm]], [[gunshipassault]],
-            [[gunshipkrow]], [[gunshipaa]], [[dronelight]], [[nebula]]
+            [[gunshipkrow]], [[gunshipaa]], [[dronelight]], [[cnebula]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -194,7 +195,7 @@ local unit_tweaks = {
             pos_artillery = [[gunshipheavyskirm]],
             pos_heavy_something = [[gunshipkrow]],
             pos_special = [[dronelight]],
-            pos_utility = [[nebula]]
+            pos_utility = [[cnebula]]
 
         },
         buildCostMetal = 800,
@@ -206,13 +207,13 @@ local unit_tweaks = {
         buildoptions = {
             [[builder]], [[planefighter]], [[planeheavyfighter]],
             [[bomberprec]], [[bomberriot]], [[bomberdisarm]], [[bomberheavy]],
-            [[planescout]], [[planelightscout]], [[bomberstrike]]
+            [[planescout]], [[planelightscout]], [[cbomberstrike]]
         },
         customParams = {
             pos_constructor = [[builder]],
             pos_raider = [[planefighter]],
             pos_weird_raider = [[planeheavyfighter]],
-            pos_skirmisher = [[bomberstrike]],
+            pos_skirmisher = [[cbomberstrike]],
             pos_riot = [[bomberriot]],
             pos_assault = [[bomberprec]],
             pos_artillery = [[planelightscout]],
@@ -328,17 +329,7 @@ local unit_tweaks = {
     dronecarry = {buildCostMetal = 80, maxDamage = 80, reclaimable = true},
     dronelight = {buildCostMetal = 60, maxDamage = 150, reclaimable = true},
     droneheavyslow = {buildCostMetal = 120, maxDamage = 300, reclaimable = true},
-    bomberstrike = {
-        weaponDefs = {MISSILE = {damage = {default = 270, planes = 270}}}
-    },
-    grebe = {noChaseCategory = [[TERRAFORM FIXEDWING SUB]]},
-    spideranarchid = {weaponDefs = {LASER = {range = 400}}},
     hoverassault = {maxDamage = 1000, maxVelocity = 2.8},
-    nebula = {
-        footprintX = 5,
-        footprintZ = 15,
-        weaponDefs = {CANNON = {areaOfEffect = 150, damage = {default = 50}}}
-    },
     striderdetriment = {
         selfDestructAs = [[ATOMIC_BLAST]],
         collisionVolumeOffsets = [[0 10 0]],
