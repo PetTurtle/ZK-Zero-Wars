@@ -5,7 +5,7 @@ A custom zero-k map mod: Send waves of units across the map to destroy the enemy
 
 ## Development ##
 
-1. Copy the ZeroWars.sdd to your Zero-K/maps folder
+1. Copy the ZeroWars.sdd to your Zero-K/games folder
 2. Change the version or name in the mapinfo.lua
 3. Disable "Only featured maps" in the Zero-K In-Game Settings under Lobby
 4. Load the map via Singleplayer & Coop -> Skirmish
