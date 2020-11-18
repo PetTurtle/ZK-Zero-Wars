@@ -39,6 +39,14 @@ function RespawnPool:_OnHeroDeath(hero, currentFrame, deathFrame)
     local respawnFrame = 4 * (30) * (hero:getLevel() + 1) + currentFrame
     table.insert(self._pool, {hero = hero, deathFrame = deathFrame, respawnFrame = respawnFrame})
 
+    local teamlist = Spring.GetTeamList()
+    local myTeamId = Spring.GetUnitTeam(hero._ID)
+    for _, teamID in pairs(teamlist) do   
+        if teamID ~= myTeamId then
+            Spring.AddTeamResource(teamID, "metal", 200)
+        end
+    end	
+	
     hero:heal()
     hero:setPosition(self._deathPoint)
     Spring.SetUnitNeutral(hero._ID, true)
