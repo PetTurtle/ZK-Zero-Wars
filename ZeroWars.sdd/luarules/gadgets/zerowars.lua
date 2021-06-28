@@ -71,6 +71,7 @@ function gadget:GameStart()
     map:setMetalStorage(600)
 
     for _, builderID in pairs(builders) do
+        Spring.SetUnitRulesParam(builderID, "facplop", 1, {inlos = true})
         local allyTeamID = Spring.GetUnitAllyTeam(builderID)
         sides[allyTeamID]:addBuilder(builderID)
     end

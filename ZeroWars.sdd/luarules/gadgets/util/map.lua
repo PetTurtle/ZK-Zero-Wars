@@ -8,14 +8,21 @@ function Map.new()
 end
 
 function Map:replaceStartUnit(unitName)
+    local replaceRadius = 64
     local replacements = {}
     for teamID, spawn in pairs(GG.CommanderSpawnLocation) do
-        local unitID = Spring.CreateUnit(unitName, spawn.x, spawn.y, spawn.z, spawn.facing, teamID)
-        Spring.SetUnitRulesParam(unitID, "facplop", 1, {inlos = true})
+        local unitSizeX = UnitDefNames[unitName].xsize
+        local unitSizeZ = UnitDefNames[unitName].zsize
+        local x = math.max(unitSizeX, math.min(Game.mapSizeX - unitSizeX, spawn.x))
+        local z = math.max(unitSizeZ, math.min(Game.mapSizeZ - unitSizeZ, spawn.z))
+        local y = Spring.GetGroundHeight(x, z)
+        local nearbyUnits = Spring.GetUnitsInCylinder(spawn.x, spawn.z, replaceRadius, teamID)
+        local unitID = Spring.CreateUnit(unitName, x, y, z, spawn.facing, teamID)
         table.insert(replacements, unitID)
-        local nearbyUnits = Spring.GetUnitsInCylinder(spawn.x, spawn.z, 50, teamID)
         if nearbyUnits and #nearbyUnits then
-            Spring.DestroyUnit(nearbyUnits[1], false, true)
+            for _, unitID in pairs(nearbyUnits) do
+                Spring.DestroyUnit(unitID, false, true)
+            end
         end
     end
     return replacements
