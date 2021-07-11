@@ -1,4 +1,4 @@
-local WIDTH = 386
+local WIDTH = 368
 local HEIGHT = 752
 local MAPWIDTH = Game.mapSizeX
 
