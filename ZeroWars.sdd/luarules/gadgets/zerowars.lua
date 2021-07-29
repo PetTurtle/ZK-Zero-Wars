@@ -43,7 +43,6 @@ local function InitSide(side, allyTeamID, enemyAllyTeamID)
     -- create nexus
     local nPos = side.nexus
     local nID = Spring.CreateUnit("nexus", nPos.x, 128, nPos.z, side.faceDir, teams[1])
-    Spring.SetUnitBlocking(nID, false, false)
     GG.AddOnDeathEvent(nID, function ()
         Spring.GameOver({enemyAllyTeamID})
     end)
@@ -51,7 +50,6 @@ local function InitSide(side, allyTeamID, enemyAllyTeamID)
     -- create center turret
     local tPos = side.nexusTurret
     local tID = Spring.CreateUnit("nexusturret", tPos.x, 128, tPos.z, side.faceDir, teams[1])
-    Spring.SetUnitBlocking(nID, false, false)
     GG.AddOnDeathEvent(tID, function ()
         local teamList = Spring.GetTeamList(enemyAllyTeamID)
         for i = 1, #teamList do
