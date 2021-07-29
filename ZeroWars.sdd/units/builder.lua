@@ -8,7 +8,7 @@ unitDef = {
     buildCostMetal      = 150,
     buildDistance       = 128,
     builder             = true,
-  
+
     buildoptions        = {
       [[factorycloak]],
       [[factoryshield]],
@@ -22,7 +22,7 @@ unitDef = {
       [[factorygunship]],
       [[factoryship]],
     },
-  
+
     buildPic            = [[amphcon.png]],
     canMove             = true,
     canPatrol           = true,
@@ -54,11 +54,11 @@ unitDef = {
     trackWidth          = 22,
     turnRate            = 1000,
     upright             = false,
-    metalStorage        = 1000,
-    energyStorage       = 1000,
+    metalStorage        = 1000000,
+    energyStorage       = 1000000,
     reclaimable         = false,
     workerTime          = 20,
-  
+
     featureDefs         = {
       DEAD  = {
         blocking         = true,
@@ -74,7 +74,7 @@ unitDef = {
         object           = [[debris2x2a.s3o]],
       },
     },
-  
+
   }
-  
+
   return lowerkeys({builder = unitDef})

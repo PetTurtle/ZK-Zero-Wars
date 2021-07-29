@@ -38,7 +38,7 @@ local function InitSide(side, allyTeamID, enemyAllyTeamID)
     local teams = Spring.GetTeamList(allyTeamID)
 
     -- set passive income
-    GG.Overdrive.AddInnateIncome(allyTeamID, 3, -2)
+    GG.Overdrive.AddInnateIncome(allyTeamID, -2, 1000)
 
     -- create nexus
     local nPos = side.nexus
@@ -78,6 +78,14 @@ local function GetPlatformID(side, x, z)
     return -1
 end
 
+local function AddUpgradeableMex(teamID, platID, side)
+    local plat = side.platforms[platID]
+    for i = 1, #side.mex do
+        local mex = side.mex[i]
+        Spring.CreateUnit("upgradeablemex", plat.x + mex.x, 128, plat.z + mex.z, 0, teamID)
+    end
+end
+
 local function AddBuilder(builderID, side)
     local teamID = Spring.GetUnitTeam(builderID)
     local x, _, z = Spring.GetUnitPosition(builderID)
@@ -92,6 +100,7 @@ local function AddBuilder(builderID, side)
     if plat.teamID == nil then
         plat.teamID = teamID
         plat.builderID = builderID
+        AddUpgradeableMex(teamID, platID, side)
         return
     end
 
@@ -137,16 +146,16 @@ function gadget:GameStart()
         side.platIterator = -1
     end
 
-    Util.SetGlobalMetalStorage(1000000)
+    --Util.SetGlobalMetalStorage(1000000)
 
     GG.UnitCMDBlocker.AllowCommand(1, 1)
-    
+
     GG.UnitCMDBlocker.AppendFilter(1, function(unitID, unitDefID, cmdID, cmdParams, cmdOptions, cmdTag, synced)
       -- allow bombers to rearm
       if cmdID == 1 then
         return bomberDefIDs[unitDefID] == true and synced == -1
       end
-      
+
       return true
     end)
 end
@@ -177,7 +186,7 @@ function gadget:GameFrame(frame)
                     )
 
                     GG.UnitCMDBlocker.AppendUnit(unitID, 1)
-                    
+
                     GG.AddOnIdleEvent(unitID, function ()
                         local x,_, z = Spring.GetUnitPosition(unitID)
                         if math.abs(x - side.attackPosX) > 200 then

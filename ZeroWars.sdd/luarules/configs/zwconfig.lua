@@ -9,6 +9,8 @@ local PLATFORM1 = 128
 local PLATFORM2 = 1152
 local PLATFORM3 = 2176
 
+local MEXXOFFSET = 0.7
+
 local config = {
   Left = {
     faceDir = "e",
@@ -16,17 +18,22 @@ local config = {
     deployRect = { x = 1664, z = 1152, width = WIDTH, height = HEIGHT },
     nexus = { x = 2496, z = 1530 },
     nexusTurret = { x = 3264, z = 1530 },
-    extraBuildings = { 
+    extraBuildings = {
       { unitName = "staticrearm", x = 1550, z = 1226 },
       { unitName = "staticrearm", x = 1550, z = 1386 },
       { unitName = "staticrearm", x = 1550, z = 1529 },
       { unitName = "staticrearm", x = 1550, z = 1703 },
       { unitName = "staticrearm", x = 1550, z = 1848 },
-    },   
+    },
     platforms = {
       { x = PADDINGLEFT, z = PLATFORM1, width = WIDTH, height = HEIGHT },
       { x = PADDINGLEFT, z = PLATFORM2, width = WIDTH, height = HEIGHT },
       { x = PADDINGLEFT, z = PLATFORM3, width = WIDTH, height = HEIGHT },
+    },
+    mex = {
+      { x = -WIDTH * MEXXOFFSET, z = HEIGHT * 0.1 },
+      { x = -WIDTH * MEXXOFFSET, z = HEIGHT * 0.5 },
+      { x = -WIDTH * MEXXOFFSET, z = HEIGHT * 0.9 }
     }
   },
   Right = {
@@ -46,6 +53,11 @@ local config = {
       { x = PADDINGRIGHT, z = PLATFORM1, width = WIDTH, height = HEIGHT },
       { x = PADDINGRIGHT, z = PLATFORM2, width = WIDTH, height = HEIGHT },
       { x = PADDINGRIGHT, z = PLATFORM3, width = WIDTH, height = HEIGHT },
+    },
+    mex = {
+      { x = WIDTH + (WIDTH * MEXXOFFSET), z = HEIGHT * 0.1 },
+      { x = WIDTH + (WIDTH * MEXXOFFSET), z = HEIGHT * 0.5 },
+      { x = WIDTH + (WIDTH * MEXXOFFSET), z = HEIGHT * 0.9 }
     }
   }
 }
