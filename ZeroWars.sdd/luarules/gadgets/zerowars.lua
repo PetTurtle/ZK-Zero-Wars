@@ -18,6 +18,7 @@ local Util = VFS.Include("luarules/gadgets/util/util.lua")
 local config = VFS.Include("luarules/configs/zwconfig.lua")
 
 local SPAWNFRAME = 1000
+local DEPLOYSPEED = 5
 local PLATFORMHEIGHT = 128
 local MAPCENTER = Game.mapSizeX / 2
 
@@ -135,7 +136,7 @@ function gadget:GameStart()
             if plat.teamID ~= nil then
                 Util.SetBuildMask(plat.x, plat.z, plat.width, plat.height, 2)
                 remainingPlatforms[#remainingPlatforms+1] = plat
-                plat.DeployZoneID = GG.DeployZones.Create(plat.x, plat.z, side.deployRect.x, side.deployRect.z, plat.width, plat.height, plat.teamID, side.faceDir, (SPAWNFRAME * 0.75)/30)
+                plat.DeployZoneID = GG.DeployZones.Create(plat.x, plat.z, side.deployRect.x, side.deployRect.z, plat.width, plat.height, plat.teamID, side.faceDir, DEPLOYSPEED)
                 GG.DeployZones.Blacklist(plat.DeployZoneID, plat.builderID)
             end
         end
@@ -143,8 +144,6 @@ function gadget:GameStart()
         side.platforms = remainingPlatforms
         side.platIterator = -1
     end
-
-    --Util.SetGlobalMetalStorage(1000000)
 
     GG.UnitCMDBlocker.AllowCommand(1, 1)
 
@@ -204,6 +203,12 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         if not (ud.isBuilding or ud.isBuilder) then
             Spring.SetUnitNeutral(unitID, true)
             GG.BlockUnitMovement.Block(unitID)
+            local cmdDescTable = Spring.GetUnitCmdDescs(unitID)
+            if cmdDescTable then
+                for i = 1, #cmdDescTable do
+                    Spring.RemoveUnitCmdDesc(unitID, i)
+                end
+            end
         end
     end
 end
