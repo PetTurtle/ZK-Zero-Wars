@@ -14,37 +14,61 @@ if not gadgetHandler:IsSyncedCode() then
   return false
 end
 
-local unlocked = false
-local blocked = {}
+local locked = true
+local units = {}
+local groups = {}
 
-function gadgetHandler:AllowCommand(unitID, _, _, cmdID, _, _, _, _, fromSynced)
-  return fromSynced or unlocked or not (blocked[unitID] and blocked[unitID][cmdID])
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+  local isAllowed = true
+  local groupID = units[unitID]
+
+  if groupID and locked then
+    isAllowed = groups[groupID][cmdID]
+    if isAllowed and groups[groupID].filter then
+      isAllowed = groups[groupID].filter(unitID, unitDefID, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+    end
+  end
+
+  return isAllowed
 end
 
 function gadget:Initialize()
-  local UnitWidgetCMDBlocker = {
-    function Lock()
-      unlocked = false
+  GG.UnitCMDBlocker = {
+    Lock = function ()
+      locked = true
     end,
 
-    function Unlock()
-      unlocked = true
+    Unlock = function ()
+      locked = false
     end,
 
-    function AppendUnit(unitID)
-      blocked[unitID] = {}
-    end,
+    AppendUnit = function (unitID, groupID)
+      groupID = groupID or 0
+      units[unitID] = groupID
 
-    function RemoveUnit(unitID)
-      blocked[unitID] = nil
-    end,
-
-    function UnitAllowCmds(unitID, cmdID)
-      for _, cmdID in pairs(cmds) do
-        blocked[unitID][cmdID] = true
+      if not groups[groupID] then
+        groups[groupID] = {}
       end
     end,
-  }
 
-  GG.UnitWidgetCMDBlocker = UnitWidgetCMDBlocker
+    RemoveUnit = function (unitID)
+      units[unitID] = nil
+    end,
+
+    AllowCommand = function (groupID, cmdID)
+      if not groups[groupID] then
+        groups[groupID] = {}
+      end
+
+      groups[groupID][cmdID] = true
+    end,
+
+    AppendFilter = function (groupID, filter)
+      if not groups[groupID] then
+        groups[groupID] = {}
+      end
+
+      groups[groupID].filter = filter
+    end
+  }
 end

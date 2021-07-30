@@ -15,8 +15,8 @@ if not gadgetHandler:IsSyncedCode() then
     return false
 end
 
-include("LuaRules/Configs/customcmds.h.lua")
-local Map = VFS.Include("luarules/gadgets/util/map.lua")
+VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local Util = VFS.Include("luarules/gadgets/util/util.lua")
 local Layout = VFS.Include("luarules/configs/hero_layout.lua")
 local Hero = VFS.Include("luarules/gadgets/unit_heroes/hero.lua")
 local HeroTeams = VFS.Include("luarules/gadgets/unit_heroes/hero_team.lua")
@@ -37,7 +37,6 @@ local ALLOWED_ON_DEAD_CMD = {
 	CMD_HERO_CHEAT_Level
 }
 
-local map = Map.new()
 local heroes = {}
 local heroTeams = {}
 
@@ -76,17 +75,11 @@ local function onKill(unitID, unitDefID, attackerID)
 end
 
 function gadget:GamePreload()
-    local allyStarts = map:getAllyStarts()
+    local allyStarts = Util.GetAllyStarts()
     allyStarts.Left = tonumber(allyStarts.Left or 0)
     allyStarts.Right = tonumber(allyStarts.Right or 0)
     heroTeams[allyStarts.Left] = HeroTeams.new(allyStarts.Left, Layout.Left)
     heroTeams[allyStarts.Right] = HeroTeams.new(allyStarts.Right, Layout.Right)
-end
-
-function gadget:GameStart()
-    for _, heroTeam in pairs(heroTeams) do
-        heroTeam:GameStart()
-    end
 end
 
 function gadget:GameFrame(frame)

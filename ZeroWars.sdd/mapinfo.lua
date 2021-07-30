@@ -8,7 +8,7 @@ local mapinfo = {
 	shortname   = "zwars",
 	description = "made for zero-k",
 	author      = "petturtle",
-	version     = "v2.0.9",
+	version     = "v2.1.1",
 	modtype     = 3,
 	depend      = {"Map Helper v1"},
 	replace     = {},
@@ -77,10 +77,10 @@ local mapinfo = {
 		unitDiffuseColor    = {0.7, 0.7, 0.7},
 		unitSpecularColor   = {0.7, 0.7, 0.7},
 		unitShadowDensity   = 0.8,
-		
+
 		specularExponent    = 100.0,
 	},
-	
+
 	water = {
 		damage =  100000.0,
 
@@ -170,7 +170,7 @@ local function lowerkeys(ta)
 			lowerkeys(v)
 		end
 	end
-	
+
 	for i=1,#fix do
 		local idx = fix[i]
 		ta[idx:lower()] = ta[idx]

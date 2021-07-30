@@ -3,7 +3,7 @@ function gadget:GetInfo()
         name = "Zero-Wars Mod",
         desc = "zero-k autobattler",
         author = "petturtle",
-        date = "2020",
+        date = "2021",
         layer = 0,
         enabled = true
     }
@@ -13,128 +13,213 @@ if not gadgetHandler:IsSyncedCode() then
     return false
 end
 
-local Map = VFS.Include("luarules/gadgets/util/map.lua")
-local Side = VFS.Include("luarules/gadgets/zerowars/side.lua")
-local Deployer = VFS.Include("luarules/gadgets/zerowars/deployer.lua")
-local IdleClones = VFS.Include("luarules/gadgets/zerowars/idle_clones.lua")
-local CloneTimeout = VFS.Include("luarules/gadgets/zerowars/clone_timeout.lua")
-local platforms, deployRects, buildings, sideData = VFS.Include("luarules/configs/map_zerowars.lua")
-local config = VFS.Include("luarules/configs/zerowars.config.lua")
+VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local Util = VFS.Include("luarules/gadgets/util/util.lua")
+local config = VFS.Include("luarules/configs/zwconfig.lua")
 
 local SPAWNFRAME = 1000
-local UPDATEFRAME = 30
+local DEPLOYSPEED = 5
+local PLATFORMHEIGHT = 128
+local MAPCENTER = Game.mapSizeX / 2
+
+local bomberDefIDs = {
+  [UnitDefNames["bomberassault"].id] = true,
+  [UnitDefNames["bomberdisarm"].id] = true,
+  [UnitDefNames["bomberheavy"].id] = true,
+  [UnitDefNames["bomberprec"].id] = true,
+  [UnitDefNames["bomberriot"].id] = true,
+  [UnitDefNames["bomberstrike"].id] = true,
+}
 
 local sides = {}
-local deployData = {}
 
-local map = Map.new()
-local deployer = Deployer.new()
-local idleClones
-local cloneTimeout = CloneTimeout.new()
+local function InitSide(side, allyTeamID, enemyAllyTeamID)
+    sides[allyTeamID] = side
+    side.allyTeamID = allyTeamID
+    local teams = Spring.GetTeamList(allyTeamID)
 
-local moveCtrlBuffer = {}
+    -- set passive income
+    GG.Overdrive.AddInnateIncome(allyTeamID, -2, 1000)
 
-local function GenerateSides()
-    local allyStarts = map:getAllyStarts()
-    allyStarts.Left = tonumber(allyStarts.Left or 0)
-    allyStarts.Right = tonumber(allyStarts.Right or 0)
-    sides[allyStarts.Left] = Side.new(allyStarts.Left, allyStarts.Right, config.Left)
-    sides[allyStarts.Right] = Side.new(allyStarts.Right, allyStarts.Left, config.Right)
-    deployData[allyStarts.Left] = sideData.Left
-    deployData[allyStarts.Right] = sideData.Right
+    -- create nexus
+    local nPos = side.nexus
+    local nID = Spring.CreateUnit("nexus", nPos.x, 128, nPos.z, side.faceDir, teams[1])
+    GG.EventOnUnitDeath(nID, function ()
+        Spring.GameOver({enemyAllyTeamID})
+    end)
 
-    idleClones = IdleClones.new({
-        [allyStarts.Left] = sideData.Left.attackX,
-        [allyStarts.Right] = sideData.Right.attackX
-    })
+    -- create center turret
+    local tPos = side.nexusTurret
+    local tID = Spring.CreateUnit("nexusturret", tPos.x, 128, tPos.z, side.faceDir, teams[1])
+    GG.EventOnUnitDeath(tID, function ()
+        local teamList = Spring.GetTeamList(enemyAllyTeamID)
+        for i = 1, #teamList do
+            Spring.AddTeamResource(teamList[i], "metal", 800)
+        end
+    end)
+
+    -- create extra buildings
+    for _, building in pairs(side.extraBuildings) do
+        local unitID = Spring.CreateUnit(building.unitName, building.x, 128, building.z, side.faceDir, teams[1])
+        Spring.SetUnitNoSelect(unitID, true)
+        Spring.SetUnitNeutral(unitID, true)
+    end
 end
 
-local function NextWave()
-    for allyTeam, side in pairs(sides) do
-        if side:hasPlatforms() then
-            local platform = side:nextPlatform()
-            for _, builderID in pairs(platform.builders) do
-                local data = deployData[allyTeam]
-                local teamID = Spring.GetUnitTeam(builderID)
-                deployer:add(platform.deployZone, data.deployRect, teamID, data.faceDir, data.attackX)
+local function GetPlatformID(side, x, z)
+    for i = 1, #side.platforms do
+        local plat = side.platforms[i]
+        if Util.HasRectPoint(plat.x, plat.z, plat.width, plat.height, x, z) then
+            return i
+        end
+    end
+
+    return -1
+end
+
+local function AddUpgradeableMex(teamID, platID, side)
+    local plat = side.platforms[platID]
+    for i = 1, #side.mex do
+        local mex = side.mex[i]
+        Spring.CreateUnit("upgradeablemex", plat.x + mex.x, 128, plat.z + mex.z, 0, teamID)
+    end
+end
+
+local function DeployPlayer(builderID, side)
+    local teamID = Spring.GetUnitTeam(builderID)
+    local x, _, z = Spring.GetUnitPosition(builderID)
+    local platID = GetPlatformID(side, x, z)
+
+    if platID == -1 then
+        Spring.DestroyUnit(builderID)
+        return
+    end
+
+    local plat = side.platforms[platID]
+    if plat.teamID == nil then
+        plat.teamID = teamID
+        plat.builderID = builderID
+        AddUpgradeableMex(teamID, platID, side)
+        Spring.SetUnitRulesParam(builderID, "facplop", 1, {inlos = true})
+
+        -- spawn hero drone
+        local dRect = side.deployRect
+        local heroX = dRect.x + (dRect.width * math.random(10, 90) / 100)
+        local heroZ = dRect.z + (dRect.height * math.random(10, 90) / 100)
+        Spring.CreateUnit("chicken_drone_starter", heroX, 128, heroZ, side.faceDir, plat.teamID)
+    else
+        -- if platform already has builder merge them together
+        if plat.teamID ~= teamID then
+            Util.MergeTeams(teamID, plat.teamID)
+        end
+
+        Spring.DestroyUnit(builderID, false, true)
+    end
+
+end
+
+function gadget:GamePreload()
+    local allyStarts = Util.GetAllyStarts()
+    allyStarts.Left = tonumber(allyStarts.Left or 0)
+    allyStarts.Right = tonumber(allyStarts.Right or 0)
+    InitSide(config.Left, allyStarts.Left, allyStarts.Right)
+    InitSide(config.Right, allyStarts.Right, allyStarts.Left)
+end
+
+function gadget:GameStart()
+    -- replace commanders with builders and assign them to platforms
+    local builders = Util.ReplaceStartUnit("builder")
+    for _, builderID in pairs(builders) do
+        local allyTeamID = Spring.GetUnitAllyTeam(builderID)
+        DeployPlayer(builderID, sides[allyTeamID])
+    end
+
+    -- create deploy zones for each platform
+    for _, side in pairs(sides) do
+        local remainingPlatforms = {}
+
+        for _, plat in pairs(side.platforms) do
+            if plat.teamID ~= nil then
+                Util.SetBuildMask(plat.x, plat.z, plat.width, plat.height, 2)
+                remainingPlatforms[#remainingPlatforms+1] = plat
+                plat.DeployZoneID = GG.DeployZones.Create(plat.x, plat.z, side.deployRect.x, side.deployRect.z, plat.width, plat.height, plat.teamID, side.faceDir, DEPLOYSPEED)
+                GG.DeployZones.Blacklist(plat.DeployZoneID, plat.builderID)
+            end
+        end
+
+        side.platforms = remainingPlatforms
+        side.platIterator = -1
+    end
+
+    GG.UnitCMDBlocker.AllowCommand(1, 1)
+
+    GG.UnitCMDBlocker.AppendFilter(1, function(unitID, unitDefID, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+      -- allow bombers to rearm
+      if cmdID == 1 then
+        return bomberDefIDs[unitDefID] == true and synced == -1
+      end
+
+      return true
+    end)
+end
+
+function gadget:GameFrame(frame)
+    -- spawn next wave
+    if frame > 0 and frame % SPAWNFRAME == 0 then
+        for _, side in pairs(sides) do
+            if #side.platforms > 0 then
+                side.platIterator = (side.platIterator + 1) % #side.platforms
+                local plat = side.platforms[side.platIterator + 1]
+                local units = GG.DeployZones.Deploy(plat.DeployZoneID)
+
+                for i = 1, #units do
+                    local unitID = units[i]
+                    local x, _, z = Spring.GetUnitPosition(unitID)
+                    Spring.GiveOrderToUnit(
+                        unitID,
+                        CMD.INSERT,
+                        {-1, CMD.FIGHT, CMD.OPT_SHIFT, MAPCENTER, PLATFORMHEIGHT, z},
+                        {"alt"}
+                    )
+                    Spring.GiveOrderToUnit(
+                        unitID,
+                        CMD.INSERT,
+                        {-1, CMD.FIGHT, CMD.OPT_SHIFT, side.attackPosX, PLATFORMHEIGHT, z},
+                        {"alt"}
+                    )
+
+                    GG.UnitCMDBlocker.AppendUnit(unitID, 1)
+
+                    GG.EventOnUnitIdle(unitID, function ()
+                        local x,_, z = Spring.GetUnitPosition(unitID)
+                        if math.abs(x - side.attackPosX) > 200 then
+                            Spring.GiveOrderToUnit(unitID, CMD.FIGHT, {side.attackPosX, PLATFORMHEIGHT, z}, {"alt"})
+                        end
+                    end)
+                end
             end
         end
     end
 end
 
-function gadget:GamePreload()
-    GenerateSides()
-end
-
-function gadget:GameStart()
-    local builders = map:replaceStartUnit("builder")
-    map:setMetalStorage(600)
-
-    for _, builderID in pairs(builders) do
-        local allyTeamID = Spring.GetUnitAllyTeam(builderID)
-        sides[allyTeamID]:addBuilder(builderID)
-    end
-
-    for _, side in pairs(sides) do
-        side:removedUnusedPlatforms()
-    end
-end
-
-function gadget:GameFrame(frame)
-    if frame > 0 and frame % SPAWNFRAME == 0 then
-        NextWave()
-    end
-    if frame > 0 and frame % UPDATEFRAME == 0 then
-        cloneTimeout:clear(frame)
-        idleClones:command()
-    end
-
-    local clones = deployer:deploy()
-    if clones then
-        cloneTimeout:add(clones, frame)
-    end
-
-    if #moveCtrlBuffer > 0 then
-      for i = 1, #moveCtrlBuffer do
-        Spring.MoveCtrl.Enable(moveCtrlBuffer[i], false)
-      end
-      moveCtrlBuffer = {}
-    end
-end
-
--- disable unit movement built by builders ( not spawned )
--- so platform units build to be cloned can't be controlled
+-- disable unit movement built on deploy zones
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
     if builderID then
         local ud = UnitDefs[unitDefID]
         if not (ud.isBuilding or ud.isBuilder) then
             Spring.SetUnitNeutral(unitID, true)
-            moveCtrlBuffer[#moveCtrlBuffer + 1] = unitID
-
-            if ud.customParams and ud.customParams.deploy_income then
-				      local deploy_income = ud.customParams.deploy_income
-				      GG.Overdrive.AddUnitResourceGeneration(unitID, 0, deploy_income, false)
+            GG.BlockUnitMovement.Block(unitID)
+            local cmdDescTable = Spring.GetUnitCmdDescs(unitID)
+            if cmdDescTable then
+                for i = 1, #cmdDescTable do
+                    Spring.RemoveUnitCmdDesc(unitID, i)
+                end
             end
         end
     end
 end
 
--- transfer clone experience to original
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
-    if Spring.GetUnitRulesParam(unitID, "clone") then
-        local original = Spring.GetUnitRulesParam(unitID, "original")
-        if original and not Spring.GetUnitIsDead(original) then
-            Spring.SetUnitExperience(original, Spring.GetUnitExperience(unitID))
-            return
-        end
-	end
-end
-
-function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-    if Spring.GetUnitRulesParam(unitID, "clone") then idleClones:add(unitID) end
-end
-
--- disallow wreck creation
+-- block wreck creation
 function gadget:AllowFeatureCreation(featureDefID, teamID, x, y, z)
     return false
 end
