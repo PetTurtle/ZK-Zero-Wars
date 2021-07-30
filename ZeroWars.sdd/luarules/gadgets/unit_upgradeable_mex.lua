@@ -24,7 +24,6 @@ local CMD_MEX_UPGRADE = 55367
 local DEFAULT_INCOME = 1
 
 local mexUpgradeCmdDesc = {
-    id       = CMD_MEX_UPGRADE,
     type     = CMDTYPE.ICON,
     name     = 'Upgrade Mex',
     cursor   = 'Morph',
@@ -35,27 +34,27 @@ local mexUpgradeCmdDesc = {
 local upgrades = {
     {
         income = 2,
-        cost = 200,
+        cost = 250,
         scale = 1.2,
     },
     {
         income = 2,
-        cost = 400,
+        cost = 500,
         scale = 1.4,
     },
     {
         income = 3,
-        cost = 750,
+        cost = 1050,
         scale = 1.6,
     },
     {
         income = 4,
-        cost = 1500,
+        cost = 2000,
         scale = 1.8,
     },
     {
         income = 5,
-        cost = 3000,
+        cost = 4000,
         scale = 2.0,
     }
 }
@@ -73,12 +72,21 @@ local function getMexUpgradeCmdDesc(cmdID)
     }
 end
 
+local function getCmdDescTooltip(level)
+    local upgrade = upgrades[level]
+    return "Upgrade Mex (Level " .. level .. "):"
+          .. "\nIncome: +" .. upgrade.income .. "m/s:"
+          .. "\nCost: " .. upgrade.cost .. "m"
+          .. "\nPayback In: " .. (upgrade.cost /  upgrade.income) .. "s"
+
+end
+
 function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag)
-    if mex[unitID] and mex[unitID] == cmdID then
+    if mex[unitID] and mex[unitID].cmdID == cmdID then
         local cmdDescID = Spring.FindUnitCmdDesc(unitID, cmdID)
         if cmdDescID == nil then return end
 
-        local lvl = cmdID - CMD_MEX_UPGRADE + 1
+        local lvl = mex[unitID].level
         local teamID = Spring.GetUnitTeam(unitID)
 
         if Spring.UseTeamResource(teamID, "metal", upgrades[lvl].cost) then
@@ -86,8 +94,11 @@ function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
             GG.UnitScale(unitID, upgrades[lvl].scale)
 
             if upgrades[lvl + 1] then
-                mex[unitID] = cmdID + 1
-                Spring.EditUnitCmdDesc(unitID, cmdDescID, getMexUpgradeCmdDesc(mex[unitID]))
+                mex[unitID].level = lvl + 1
+                mex[unitID].cmdID = upgrades[lvl + 1].cmd
+                local tooltip = getCmdDescTooltip(lvl + 1)
+                local cmdDesc = {id = mex[unitID].cmdID, tooltip = tooltip}
+                Spring.EditUnitCmdDesc(unitID, cmdDescID, cmdDesc)
             else
                 Spring.RemoveUnitCmdDesc(unitID, cmdDescID)
                 table.remove(mex, unitID)
@@ -98,7 +109,10 @@ end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
     if unitDefID == mexDefID then
-        mex[unitID] = CMD_MEX_UPGRADE
+        mex[unitID] = {
+            cmdID = upgrades[1].cmd,
+            level = 1
+        }
         GG.Overdrive.AddUnitResourceGeneration(unitID, DEFAULT_INCOME, 0, true)
         Spring.InsertUnitCmdDesc(unitID, mexUpgradeCmdDesc)
     end
@@ -111,6 +125,11 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID)
 end
 
 function gadget:Initialize()
+    for i = 1, #upgrades do
+        upgrades[i].cmd = GG.CMDGenerator.Generate("MEX_UPGRADE_" .. i)
+    end
+
     local cmdDesc = getMexUpgradeCmdDesc(CMD_MEX_UPGRADE)
+    mexUpgradeCmdDesc.id = upgrades[1].cmd
     mexUpgradeCmdDesc.tooltip = cmdDesc.tooltip
 end
