@@ -184,7 +184,7 @@ function gadget:GameFrame(frame)
 
                     GG.UnitCMDBlocker.AppendUnit(unitID, 1)
 
-                    GG.AddOnIdleEvent(unitID, function ()
+                    GG.EventOnUnitIdle(unitID, function ()
                         local x,_, z = Spring.GetUnitPosition(unitID)
                         if math.abs(x - side.attackPosX) > 200 then
                             Spring.GiveOrderToUnit(unitID, CMD.FIGHT, {side.attackPosX, PLATFORMHEIGHT, z}, {"alt"})
