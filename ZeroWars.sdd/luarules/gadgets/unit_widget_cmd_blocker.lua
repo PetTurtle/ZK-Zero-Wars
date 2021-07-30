@@ -14,21 +14,19 @@ if not gadgetHandler:IsSyncedCode() then
   return false
 end
 
-local unlocked = false
+local locked = true
 local units = {}
 local groups = {}
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
-  local isAllowed = true 
+  local isAllowed = true
   local groupID = units[unitID]
 
-  if groupID then
+  if groupID and locked then
     isAllowed = groups[groupID][cmdID]
     if isAllowed and groups[groupID].filter then
       isAllowed = groups[groupID].filter(unitID, unitDefID, cmdID, cmdParams, cmdOptions, cmdTag, synced)
     end
-
-    Spring.Echo(cmdID .. ", " .. tostring(synced) .. " : " .. tostring(isAllowed))
   end
 
   return isAllowed
@@ -37,11 +35,11 @@ end
 function gadget:Initialize()
   GG.UnitCMDBlocker = {
     Lock = function ()
-      unlocked = false
+      locked = true
     end,
 
     Unlock = function ()
-      unlocked = true
+      locked = false
     end,
 
     AppendUnit = function (unitID, groupID)
@@ -69,7 +67,7 @@ function gadget:Initialize()
       if not groups[groupID] then
         groups[groupID] = {}
       end
-      
+
       groups[groupID].filter = filter
     end
   }
