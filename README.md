@@ -11,6 +11,8 @@ A custom zero-k map mod: Send waves of units across the map to destroy the enemy
 4. Under Settings -> Lobby, disable "Only featued maps" to display on maps in the zero-k map folder
 5. Run the map by making a singleplayer skirmish game and selecting the zerowars with your unique map version
 
+#### Notes
+
 * If you add or remove a file from the map you will have to restart zero-k
 * Otherwise you just need to restart the match
 
