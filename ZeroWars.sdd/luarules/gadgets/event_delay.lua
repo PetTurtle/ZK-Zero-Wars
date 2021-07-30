@@ -1,7 +1,7 @@
 function gadget:GetInfo()
     return {
         name = "Event Delay",
-        desc = "executes a event after a delay (frames)",
+        desc = "run event after delay (frames)",
         author = "PetTurtle",
         date = "2021",
         license = "GNU GPL, v2 or later",
