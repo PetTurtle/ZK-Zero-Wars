@@ -1,12 +1,15 @@
-local width = 368 - 16 -- 384 -- 16
-local height = 752 - 16 -- 768 -- 16
+local offset = 8
+local border = 25
 
-local leftX = 384 + 16
-local rightX = 7424 + 16
+local width = 368 - border
+local height = 752 - border
 
-local y1 = 128 + 16
-local y2 = 1152 + 16
-local y3 = 2176 + 16
+local leftX = 384 + offset + (border * 0.5)
+local rightX = 7424 + offset + (border * 0.5)
+
+local y1 = 128 + offset + (border * 0.5)
+local y2 = 1152 + offset + (border * 0.5)
+local y3 = 2176 + offset + (border * 0.5)
 
 return {
 	[0] = {
