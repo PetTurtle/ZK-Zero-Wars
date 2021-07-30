@@ -85,7 +85,7 @@ local function AddUpgradeableMex(teamID, platID, side)
     end
 end
 
-local function AddBuilder(builderID, side)
+local function DeployPlayer(builderID, side)
     local teamID = Spring.GetUnitTeam(builderID)
     local x, _, z = Spring.GetUnitPosition(builderID)
     local platID = GetPlatformID(side, x, z)
@@ -100,15 +100,22 @@ local function AddBuilder(builderID, side)
         plat.teamID = teamID
         plat.builderID = builderID
         AddUpgradeableMex(teamID, platID, side)
-        return
+        Spring.SetUnitRulesParam(builderID, "facplop", 1, {inlos = true})
+
+        -- spawn hero drone
+        local dRect = side.deployRect
+        local heroX = dRect.x + (dRect.width * math.random(10, 90) / 100)
+        local heroZ = dRect.z + (dRect.height * math.random(10, 90) / 100)
+        Spring.CreateUnit("chicken_drone_starter", heroX, 128, heroZ, side.faceDir, plat.teamID)
+    else
+        -- if platform already has builder merge them together
+        if plat.teamID ~= teamID then
+            Util.MergeTeams(teamID, plat.teamID)
+        end
+
+        Spring.DestroyUnit(builderID, false, true)
     end
 
-    -- if platform already has builder merge them together
-    if plat.teamID ~= teamID then
-        Util.MergeTeams(teamID, plat.teamID)
-    end
-
-    Spring.DestroyUnit(builderID, false, true)
 end
 
 function gadget:GamePreload()
@@ -123,9 +130,8 @@ function gadget:GameStart()
     -- replace commanders with builders and assign them to platforms
     local builders = Util.ReplaceStartUnit("builder")
     for _, builderID in pairs(builders) do
-        Spring.SetUnitRulesParam(builderID, "facplop", 1, {inlos = true})
         local allyTeamID = Spring.GetUnitAllyTeam(builderID)
-        AddBuilder(builderID, sides[allyTeamID])
+        DeployPlayer(builderID, sides[allyTeamID])
     end
 
     -- create deploy zones for each platform

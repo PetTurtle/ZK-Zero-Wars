@@ -82,12 +82,6 @@ function gadget:GamePreload()
     heroTeams[allyStarts.Right] = HeroTeams.new(allyStarts.Right, Layout.Right)
 end
 
-function gadget:GameStart()
-    for _, heroTeam in pairs(heroTeams) do
-        heroTeam:GameStart()
-    end
-end
-
 function gadget:GameFrame(frame)
     if frame % 30 == 0 then
         for _, team in pairs(heroTeams) do
