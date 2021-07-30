@@ -54,8 +54,8 @@ unitDef = {
     trackWidth          = 22,
     turnRate            = 1000,
     upright             = false,
-    metalStorage        = 1000000,
-    energyStorage       = 1000000,
+    metalStorage        = 5000,
+    energyStorage       = 5000,
     reclaimable         = false,
     workerTime          = 20,
 
