@@ -1,1 +1,1 @@
-7z a -ms=off ZeroWars.sd7 ./ZeroWars.sdd
+7z a -ms=off ZeroWars.v0.0.0.sd7 ./ZeroWars.sdd/*
