@@ -1,11 +1,11 @@
 function gadget:GetInfo()
   return {
-    name = "Unit Widget CMD Blocker",
-    desc = "Blocks widget commands given to specific units.",
+    name = "CMD Blocker",
+    desc = "blocks cmds given to units",
     author = "PetTurtle",
-    date = "2020",
+    date = "2021",
     license = "GNU GPL, v2 or later",
-    layer = 0,
+    layer = -999,
     enabled = true,
   }
 end
