@@ -42,7 +42,6 @@ externalFunctions.Set = function(unitID, text, size, offset)
 
     if base then
         scale = spGetUnitPieceMatrix(unitID, base)
-        Spring.Echo(scale)
     end
 
     labels[unitID] = {
@@ -74,11 +73,14 @@ local spGetTeamColor       = Spring.GetTeamColor
 local glColor             = gl.Color
 local glTranslate         = gl.Translate
 local glBillboard         = gl.Billboard
+local glPopAttrib         = gl.PopAttrib
+local glPushAttrib        = gl.PushAttrib
 local glDrawFuncAtUnit    = gl.DrawFuncAtUnit
 
-local glDepthTest      = gl.DepthTest
-local glAlphaTest      = gl.AlphaTest
-local GL_GREATER       = GL.GREATER
+local glDepthTest         = gl.DepthTest
+local glAlphaTest         = gl.AlphaTest
+local GL_GREATER          = GL.GREATER
+local GL_COLOR_BUFFER_BIT = GL.COLOR_BUFFER_BIT
 
 local font	= "LuaUI/Fonts/FreeSansBold_16"
 
@@ -104,14 +106,16 @@ local function SetTeamColor(teamID)
 end
 
 local function DrawLabel(unitID, label)
-    glTranslate(0, label.height, 0 )
-    glBillboard()
-
     if not teamColors[label.teamID] then
         SetTeamColor(label.teamID)
     end
+
     glColor(teamColors[label.teamID])
+    glTranslate(0, label.height, 0 )
+    glBillboard()
+	glPushAttrib(GL_COLOR_BUFFER_BIT)
     gl.Text(label.text, 0, 0, label.size, "oc")
+	glPopAttrib()
     glColor(1,1,1,1)
 end
 
