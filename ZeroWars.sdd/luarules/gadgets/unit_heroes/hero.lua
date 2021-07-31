@@ -41,6 +41,7 @@ function Hero.new(unitID, unitDefID)
     spSetUnitRulesParam(unitID, "path2", 0)
     spSetUnitRulesParam(unitID, "path3", 0)
     spSetUnitRulesParam(unitID, "path4", 0)
+    GG.UnitLabel.Set(unitID, "Level: 1", 12, 10)
 
     local onReady = instance._upgadeDefs.onReady
     if onReady then
@@ -87,9 +88,11 @@ function Hero:levelUp()
     if not self._maxLevel then
         local level = spGetUnitRulesParam(self._ID, "level") + 1
         spSetUnitRulesParam(self._ID, "level", level)
+        GG.UnitLabel.Set(self._ID, "Level: " .. level, 12, 10)
 
         local points = spGetUnitRulesParam(self._ID, "points")
         spSetUnitRulesParam(self._ID, "points", points + 1)
+
 
         local onLevelUp = self._upgadeDefs.onLevelUp
         if onLevelUp then

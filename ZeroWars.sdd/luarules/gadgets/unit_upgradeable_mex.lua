@@ -23,6 +23,8 @@ local mexDefID = UnitDefNames["upgradeablemex"].id
 local CMD_MEX_UPGRADE = 55367
 local DEFAULT_INCOME = 1
 
+local LABEL_SIZE = 10
+
 local mexUpgradeCmdDesc = {
     type     = CMDTYPE.ICON,
     name     = 'Upgrade Mex',
@@ -59,22 +61,9 @@ local upgrades = {
     }
 }
 
-local function getMexUpgradeCmdDesc(cmdID)
-    local lvl = cmdID - CMD_MEX_UPGRADE + 1
-    local tooltip = "Upgrade Mex (Level " .. lvl .. "):"
-                 .. "\nIncome: +" .. upgrades[lvl].income .. "m/s"
-                 .. "\nCost: " .. upgrades[lvl].cost .. "m"
-                 .. "\nPayback In: " .. (upgrades[lvl].cost / upgrades[lvl].income) .. "s"
-
-    return {
-        id       = CMD_MEX_UPGRADE + lvl - 1,
-        tooltip  = tooltip,
-    }
-end
-
 local function getCmdDescTooltip(level)
     local upgrade = upgrades[level]
-    return "Upgrade Mex (Level " .. level .. "):"
+    return "Upgrade Mex (Level " .. (level + 1) .. "):"
           .. "\nIncome: +" .. upgrade.income .. "m/s:"
           .. "\nCost: " .. upgrade.cost .. "m"
           .. "\nPayback In: " .. (upgrade.cost /  upgrade.income) .. "s"
@@ -99,7 +88,9 @@ function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
                 local tooltip = getCmdDescTooltip(lvl + 1)
                 local cmdDesc = {id = mex[unitID].cmdID, tooltip = tooltip}
                 Spring.EditUnitCmdDesc(unitID, cmdDescID, cmdDesc)
+                GG.UnitLabel.Set(unitID, "level: " .. (lvl + 1), LABEL_SIZE, 10)
             else
+                GG.UnitLabel.Set(unitID, "level: MAX", LABEL_SIZE, 10)
                 Spring.RemoveUnitCmdDesc(unitID, cmdDescID)
                 table.remove(mex, unitID)
             end
@@ -115,6 +106,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         }
         GG.Overdrive.AddUnitResourceGeneration(unitID, DEFAULT_INCOME, 0, true)
         Spring.InsertUnitCmdDesc(unitID, mexUpgradeCmdDesc)
+        GG.UnitLabel.Set(unitID, "level: 1", LABEL_SIZE, 10)
     end
 end
 
@@ -129,7 +121,6 @@ function gadget:Initialize()
         upgrades[i].cmd = GG.CMDGenerator.Generate("MEX_UPGRADE_" .. i)
     end
 
-    local cmdDesc = getMexUpgradeCmdDesc(CMD_MEX_UPGRADE)
     mexUpgradeCmdDesc.id = upgrades[1].cmd
-    mexUpgradeCmdDesc.tooltip = cmdDesc.tooltip
+    mexUpgradeCmdDesc.tooltip = getCmdDescTooltip(1)
 end
