@@ -124,6 +124,10 @@ function gadget:GamePreload()
     allyStarts.Right = tonumber(allyStarts.Right or 0)
     InitSide(config.Left, allyStarts.Left, allyStarts.Right)
     InitSide(config.Right, allyStarts.Right, allyStarts.Left)
+
+    local dRect = config.Left.deployRect
+    local width = 125
+    GG.ControlPoints.CreateRect(MAPCENTER + 5 - (width * 0.5), dRect.z, width, dRect.height, 4)
 end
 
 function gadget:GameStart()
