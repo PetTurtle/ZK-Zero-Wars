@@ -24,6 +24,7 @@ local CMD_MEX_UPGRADE = 55367
 local DEFAULT_INCOME = 1
 
 local LABEL_SIZE = 10
+local LABEL_HEIGHT = 10
 
 local mexUpgradeCmdDesc = {
     type     = CMDTYPE.ICON,
@@ -88,9 +89,9 @@ function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
                 local tooltip = getCmdDescTooltip(lvl + 1)
                 local cmdDesc = {id = mex[unitID].cmdID, tooltip = tooltip}
                 Spring.EditUnitCmdDesc(unitID, cmdDescID, cmdDesc)
-                GG.UnitLabel.Set(unitID, "level: " .. (lvl + 1), LABEL_SIZE, 10)
+                GG.UnitLabel.Set(unitID, "level: " .. (lvl + 1), LABEL_SIZE, LABEL_HEIGHT)
             else
-                GG.UnitLabel.Set(unitID, "level: MAX", LABEL_SIZE, 10)
+                GG.UnitLabel.Set(unitID, "level: MAX", LABEL_SIZE, LABEL_HEIGHT)
                 Spring.RemoveUnitCmdDesc(unitID, cmdDescID)
                 table.remove(mex, unitID)
             end
@@ -106,7 +107,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
         }
         GG.Overdrive.AddUnitResourceGeneration(unitID, DEFAULT_INCOME, 0, true)
         Spring.InsertUnitCmdDesc(unitID, mexUpgradeCmdDesc)
-        GG.UnitLabel.Set(unitID, "level: 1", LABEL_SIZE, 10)
+        GG.UnitLabel.Set(unitID, "level: 1", LABEL_SIZE, LABEL_HEIGHT)
     end
 end
 

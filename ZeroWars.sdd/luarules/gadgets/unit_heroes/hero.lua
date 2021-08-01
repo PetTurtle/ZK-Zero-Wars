@@ -12,6 +12,9 @@ local spGetUnitHealth = Spring.GetUnitHealth
 
 local HeroUnitDefs = VFS.Include("luarules/configs/hero_defs.lua")
 
+local LABEL_SIZE = 12
+local LABEL_HEIGHT = 30
+
 local function levelXP(level) return 100 * level * level + 500 end
 
 local function totalLevelXP(level)
@@ -41,7 +44,7 @@ function Hero.new(unitID, unitDefID)
     spSetUnitRulesParam(unitID, "path2", 0)
     spSetUnitRulesParam(unitID, "path3", 0)
     spSetUnitRulesParam(unitID, "path4", 0)
-    GG.UnitLabel.Set(unitID, "Level: 1", 12, 10)
+    GG.UnitLabel.Set(unitID, "Level: 1", LABEL_SIZE, LABEL_HEIGHT)
 
     local onReady = instance._upgadeDefs.onReady
     if onReady then
@@ -88,7 +91,7 @@ function Hero:levelUp()
     if not self._maxLevel then
         local level = spGetUnitRulesParam(self._ID, "level") + 1
         spSetUnitRulesParam(self._ID, "level", level)
-        GG.UnitLabel.Set(self._ID, "Level: " .. level, 12, 10)
+        GG.UnitLabel.Set(self._ID, "Level: " .. level, LABEL_SIZE, LABEL_HEIGHT)
 
         local points = spGetUnitRulesParam(self._ID, "points")
         spSetUnitRulesParam(self._ID, "points", points + 1)
