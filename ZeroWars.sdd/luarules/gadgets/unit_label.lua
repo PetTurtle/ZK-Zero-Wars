@@ -23,8 +23,6 @@ local NULL_PIECE = "[null]"
 
 local labels = {}
 
-local externalFunctions = {}
-
 local function FindBase(unitID)
     local pieces = spGetUnitPieceList(unitID)
     local pieceMap = spGetUnitPieceMap(unitID)
@@ -34,6 +32,8 @@ local function FindBase(unitID)
         end
     end
 end
+
+local externalFunctions = {}
 
 externalFunctions.Set = function(unitID, text, size, offset)
     local scale = 1
