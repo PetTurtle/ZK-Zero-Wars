@@ -37,7 +37,7 @@ local mexUpgradeCmdDesc = {
 local upgrades = {
     {
         income = 2,
-        cost = 250,
+        cost = 300,
         scale = 1.2,
     },
     {
