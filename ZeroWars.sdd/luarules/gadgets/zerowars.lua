@@ -192,14 +192,16 @@ function gadget:GameFrame(frame)
                         {"alt"}
                     )
 
-                    GG.UnitCMDBlocker.AppendUnit(unitID, 1)
-
-                    GG.EventOnUnitIdle(unitID, function ()
+                    local onIdle = function()
                         local x,_, z = Spring.GetUnitPosition(unitID)
                         if math.abs(x - side.attackPosX) > 200 then
+                            GG.UnitCMDBlocker.Unlock()
                             Spring.GiveOrderToUnit(unitID, CMD.FIGHT, {side.attackPosX, PLATFORMHEIGHT, z}, {"alt"})
+                            GG.UnitCMDBlocker.Lock()
                         end
-                    end)
+                    end
+                    GG.EventOnUnitIdle(unitID, onIdle)
+                    GG.UnitCMDBlocker.AppendUnit(unitID, 1)
                 end
             end
         end
@@ -221,6 +223,29 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
             end
         end
     end
+end
+
+function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
+    if not Spring.AreTeamsAllied(oldTeam, newTeam) then
+        local x, _, z = Spring.GetUnitPosition(unitID)
+        local allyTeam = select(6, Spring.GetTeamInfo(newTeam))
+        local side = sides[allyTeam]
+        local onIdle = function()
+            local x,_, z = Spring.GetUnitPosition(unitID)
+            if math.abs(x - side.attackPosX) > 200 then
+                GG.UnitCMDBlocker.Unlock()
+                Spring.GiveOrderToUnit(unitID, CMD.FIGHT, {side.attackPosX, PLATFORMHEIGHT, z}, {"alt"})
+                GG.UnitCMDBlocker.Lock()
+            end
+        end
+
+        GG.EventOnUnitIdle(unitID, onIdle)
+
+        GG.UnitCMDBlocker.Unlock()
+        Spring.GiveOrderToUnit(unitID, CMD.FIGHT, {side.attackPosX, PLATFORMHEIGHT, z}, {"alt"})
+        GG.UnitCMDBlocker.Lock()
+    end
+    return true
 end
 
 -- block wreck creation
