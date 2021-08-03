@@ -132,18 +132,15 @@ local glTranslate = gl.Translate
 local glRotate = gl.Rotate
 local glPopMatrix = gl.PopMatrix
 
-
 local SYNCED = SYNCED
-local teamColors = {}
 
 local function SetTeamColor(teamID, alpha)
 	local r, g, b = spGetTeamColor(teamID)
 	if (r and g and b) then
-		teamColors[teamID] = {r, g, b, alpha}
+        glColor({r, g, b, alpha})
     else
-        teamColors[teamID] = {1, 1, 1, alpha}
+        glColor({1, 1, 1, alpha})
     end
-    glColor(teamColors[teamID])
 end
 
 local function DrawText(point)

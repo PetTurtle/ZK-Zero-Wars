@@ -86,7 +86,6 @@ local font	= "LuaUI/Fonts/FreeSansBold_16"
 
 local SYNCED = SYNCED
 local CallAsTeam = CallAsTeam
-local teamColors = {}
 
 local function getLocalReadTeam()
     local _, specFullView = spGetSpectatingState()
@@ -96,27 +95,21 @@ local function getLocalReadTeam()
     return spGetLocalTeamID()
 end
 
-local function SetTeamColor(teamID)
+local function SetTeamColor(teamID, alpha)
 	local r, g, b = spGetTeamColor(teamID)
 	if (r and g and b) then
-		teamColors[teamID] = {r, g, b}
+        glColor({r, g, b, alpha})
     else
-        teamColors[teamID] = {1, 1, 1}
+        glColor({1, 1, 1, alpha})
     end
 end
 
 local function DrawLabel(unitID, label)
-    if not teamColors[label.teamID] then
-        SetTeamColor(label.teamID)
-    end
-
-    glColor(teamColors[label.teamID])
     glTranslate(0, label.height, 0 )
     glBillboard()
 	glPushAttrib(GL_COLOR_BUFFER_BIT)
     gl.Text(label.text, 0, 0, label.size, "oc")
 	glPopAttrib()
-    glColor(1,1,1,1)
 end
 
 local function DrawLabels()
@@ -129,7 +122,9 @@ local function DrawLabels()
 
     for unitID, label in pairs(SYNCED.labels) do
         if spIsUnitVisible(unitID) then
+            SetTeamColor(label.teamID)
             glDrawFuncAtUnit(unitID, false, DrawLabel, unitID, label)
+            glColor(1,1,1,1)
         end
     end
 
