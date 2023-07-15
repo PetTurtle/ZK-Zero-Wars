@@ -5,7 +5,7 @@ unitDef = {
   acceleration           = 0,
   activateWhenBuilt      = true,
   brakeRate              = 0,
-  buildCostMetal         = 90,
+  metalCost              = 90,
   builder                = false,
   buildingMask           = 0,
   buildPic               = [[staticmex.png]],
@@ -23,7 +23,7 @@ unitDef = {
     removestop         = 1,
   },
 
-  energyUse              = 0,
+  energyUpkeep           = 0,
   explodeAs              = [[SMALL_BUILDINGEX]],
   floater                = true,
   footprintX             = 5,

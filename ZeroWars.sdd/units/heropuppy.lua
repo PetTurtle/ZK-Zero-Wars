@@ -6,7 +6,7 @@ return {
         acceleration = 0.72,
         activateWhenBuilt = true,
         brakeRate = 4.32,
-        buildCostMetal = 1500,
+        metalCost = 1500,
         builder = false,
         buildPic = [[jumpscout.png]],
         canGuard = true,

@@ -42,7 +42,7 @@ local unit_tweaks = {
             pos_special = [[cloakbomb]],
             pos_utility = [[striderantiheavy]]
         },
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactorycloak.lua]],
         yardMap = ""
@@ -50,7 +50,7 @@ local unit_tweaks = {
     factoryshield = {
         buildoptions = {[[builder]]},
         customParams = {pos_constructor = [[builder]]},
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactoryshield.lua]],
         yardMap = ""
@@ -58,7 +58,7 @@ local unit_tweaks = {
     factoryveh = {
         buildoptions = {[[builder]]},
         customParams = {pos_constructor = [[builder]]},
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactoryveh.lua]],
         yardMap = ""
@@ -80,7 +80,7 @@ local unit_tweaks = {
             pos_heavy_something = [[tankheavyassault]],
             pos_utility = [[striderarty]]
         },
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactorytank.lua]],
         yardMap = ""
@@ -104,7 +104,7 @@ local unit_tweaks = {
             pos_special = [[hoverdepthcharge]],
             pos_utility = [[choverminer]]
         },
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactoryhover.lua]],
         yardMap = ""
@@ -126,7 +126,7 @@ local unit_tweaks = {
             pos_special = [[amphbomb]],
             pos_utility = [[amphsupport]],
         },
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactoryamph.lua]],
         yardMap = ""
@@ -149,7 +149,7 @@ local unit_tweaks = {
             pos_heavy_something = [[jumpsumo]],
             pos_special = [[jumpbomb]]
         },
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactoryjump.lua]],
         yardMap = ""
@@ -173,7 +173,7 @@ local unit_tweaks = {
             pos_special = [[spiderantiheavy]],
             pos_utility = [[striderscorpion]]
         },
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactoryspider.lua]],
         yardMap = ""
@@ -198,7 +198,7 @@ local unit_tweaks = {
             pos_utility = [[cnebula]]
 
         },
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactorygunship.lua]],
         yardMap = ""
@@ -221,47 +221,47 @@ local unit_tweaks = {
             pos_special = [[bomberdisarm]],
             pos_utility = [[planescout]]
         },
-        buildCostMetal = 800,
+        metalCost = 800,
         buildDistance = 800,
         script = [[cfactoryplane.lua]],
         yardMap = ""
     },
     chicken = {
-        buildcostmetal = 30,
-        buildcostenergy = 30,
+        metalCost = 30,
+        energyCost = 30,
         buildtime = 30,
         footprintX = 2,
         footprintZ = 2
     },
     chicken_leaper = {
-        buildcostmetal = 220,
-        buildcostenergy = 220,
+        metalCost = 220,
+        energyCost = 220,
         buildtime = 220,
         maxVelocity = 3.2,
         weaponDefs = {WEAPON = {range = 65, impulseBoost = 1250}}
     },
-    chickens = {buildcostmetal = 90, buildcostenergy = 90, buildtime = 90},
-    chickenwurm = {buildcostmetal = 400, buildcostenergy = 400, buildtime = 400},
+    chickens = {metalCost = 90, energyCost = 90, buildtime = 90},
+    chickenwurm = {metalCost = 400, energyCost = 400, buildtime = 400},
     chicken_dodo = {
-        buildcostmetal = 60,
-        buildcostenergy = 60,
+        metalCost = 60,
+        energyCost = 60,
         buildtime = 60,
         footprintX = 3,
         footprintZ = 3
     },
-    chickena = {buildcostmetal = 220, buildcostenergy = 220, buildtime = 220},
-    chickenc = {buildcostmetal = 400, buildcostenergy = 400, buildtime = 400},
-    chicken_roc = {buildcostmetal = 800, buildcostenergy = 800, buildtime = 800},
+    chickena = {metalCost = 220, energyCost = 220, buildtime = 220},
+    chickenc = {metalCost = 400, energyCost = 400, buildtime = 400},
+    chicken_roc = {metalCost = 800, energyCost = 800, buildtime = 800},
     chickenf = {
-        buildcostmetal = 150,
-        buildcostenergy = 150,
+        metalCost = 150,
+        energyCost = 150,
         buildtime = 150,
         footprintX = 3,
         footprintZ = 3
     },
     chicken_blimpy = {
-        buildcostmetal = 320,
-        buildcostenergy = 320,
+        metalCost = 320,
+        energyCost = 320,
         buildtime = 320,
         turnRate = 3000,
         turnRadius = 450,
@@ -270,24 +270,24 @@ local unit_tweaks = {
         footprintZ = 3
     },
     chicken_spidermonkey = {
-        buildcostmetal = 320,
-        buildcostenergy = 320,
+        metalCost = 320,
+        energyCost = 320,
         buildtime = 320
     },
     chicken_sporeshooter = {
-        buildcostmetal = 410,
-        buildcostenergy = 410,
+        metalCost = 410,
+        energyCost = 410,
         buildtime = 410
     },
     chickenr = {
-        buildcostmetal = 90,
-        buildcostenergy = 90,
+        metalCost = 90,
+        energyCost = 90,
         buildtime = 90,
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_shield = {
-        buildcostmetal = 300,
-        buildcostenergy = 300,
+        metalCost = 300,
+        energyCost = 300,
         buildtime = 300,
         weaponDefs = {
             SHIELD = {
@@ -299,8 +299,8 @@ local unit_tweaks = {
         }
     },
     chicken_tiamat = {
-        buildcostmetal = 900,
-        buildcostenergy = 900,
+        metalCost = 900,
+        energyCost = 900,
         buildtime = 900,
         weaponDefs = {
             SHIELD = {
@@ -312,23 +312,23 @@ local unit_tweaks = {
         }
     },
     chickenblobber = {
-        buildcostmetal = 1200,
-        buildcostenergy = 1200,
+        metalCost = 1200,
+        energyCost = 1200,
         buildtime = 1200,
         noChaseCategory = [[TERRAFORM FIXEDWING SUB]]
     },
     chicken_dragon = {
-        buildcostmetal = 7000,
-        buildcostenergy = 7000,
+        metalCost = 7000,
+        energyCost = 7000,
         buildtime = 7000
     },
     cloakbomb = {weaponDefs = {cloakbomb_DEATH = {areaOfEffect = 300}}},
     amphbomb = {weaponDefs = {AMPHBOMB_DEATH = {areaOfEffect = 300}}},
     jumpbomb = {weaponDefs = {jumpbomb_DEATH = {areaOfEffect = 300}}},
     shieldbomb = {weaponDefs = {shieldbomb_DEATH = {areaOfEffect = 300}}},
-    dronecarry = {buildCostMetal = 80, maxDamage = 80, reclaimable = true},
-    dronelight = {buildCostMetal = 60, maxDamage = 150, reclaimable = true},
-    droneheavyslow = {buildCostMetal = 120, maxDamage = 300, reclaimable = true},
+    dronecarry = {metalCost = 80, maxDamage = 80, reclaimable = true},
+    dronelight = {metalCost = 60, maxDamage = 150, reclaimable = true},
+    droneheavyslow = {metalCost = 120, maxDamage = 300, reclaimable = true},
     hoverassault = {maxDamage = 1000, maxVelocity = 2.8},
     striderdetriment = {
         selfDestructAs = [[ATOMIC_BLAST]],

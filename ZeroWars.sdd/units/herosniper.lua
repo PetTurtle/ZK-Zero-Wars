@@ -5,7 +5,7 @@ return {
         description = [[Hero Sniper Bot]],
         acceleration = 0.9,
         brakeRate = 1.2,
-        buildCostMetal = 1500,
+        metalCost = 1500,
         buildPic = [[cloaksnipe.png]],
         canGuard = true,
         canMove = true,

@@ -5,7 +5,7 @@ return {
         description = [[Hero Assault Bot]],
         acceleration = 0.6,
         brakeRate = 3.6,
-        buildCostMetal = 1500,
+        metalCost = 1500,
         buildPic = [[cloakassault.png]],
         canGuard = true,
         canMove = true,

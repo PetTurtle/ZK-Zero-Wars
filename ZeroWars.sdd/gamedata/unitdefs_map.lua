@@ -4,18 +4,18 @@ local OverwriteTableInplace = Spring.Utilities.OverwriteTableInplace
 -- replace shipFactory with chickenFactory
 UnitDefs["factoryship"] = UnitDefs["factorychicken"]
 
-for _, ud in pairs(UnitDefs) do
-    if (ud.unitname:sub(1, 7) == "chicken") then
+for unitname, ud in pairs(UnitDefs) do
+    if (unitname:sub(1, 7) == "chicken") then
         -- set chicken cost
-        ud.buildcostmetal = ud.buildtime
-        ud.buildcostenergy = ud.buildtime
+        ud.metalcost = ud.buildtime
+        ud.energycost = ud.buildtime
         -- make chickens reclaimable
         ud.reclaimable = true
     end
 
     if ud.weapondefs then
         -- remove friendly fire damage
-        if (ud.unitname ~= "chicken_dodo") then
+        if (unitname ~= "chicken_dodo") then
             for _, wd in pairs(ud.weapondefs) do
                 if wd.customparams then
                     wd.customparams.nofriendlyfire = 1

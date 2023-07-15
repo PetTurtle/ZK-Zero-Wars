@@ -5,7 +5,7 @@ return {
         description = [[Hero Assault/Riot Strider]],
         acceleration = 0.295,
         brakeRate = 1.435,
-        buildCostMetal = 1500,
+        metalCost = 1500,
         builder = false,
         buildPic = [[striderdante.png]],
         canGuard = true,
