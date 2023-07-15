@@ -7,8 +7,8 @@ UnitDefs["factoryship"] = UnitDefs["factorychicken"]
 for unitname, ud in pairs(UnitDefs) do
     if (unitname:sub(1, 7) == "chicken") then
         -- set chicken cost
-        ud.buildcostmetal = ud.buildtime
-        ud.buildcostenergy = ud.buildtime
+        ud.metalcost = ud.buildtime
+        ud.energycost = ud.buildtime
         -- make chickens reclaimable
         ud.reclaimable = true
     end
