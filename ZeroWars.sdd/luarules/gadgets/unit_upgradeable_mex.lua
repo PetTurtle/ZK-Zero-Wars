@@ -31,7 +31,7 @@ local mexUpgradeCmdDesc = {
     name     = 'Upgrade Mex',
     cursor   = 'Morph',
     action   = 'mexupgrade',
-    texture  = 'LuaUI/Images/noammo.png'
+    texture  = 'LuaUI/Images/metalplus.png'
 }
 
 local upgrades = {
