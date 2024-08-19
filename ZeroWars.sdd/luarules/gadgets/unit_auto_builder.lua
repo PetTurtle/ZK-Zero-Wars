@@ -90,8 +90,9 @@ function gadget:GameFrame(frame)
                         removeUnitAt(i)
 
                     elseif buildProgress == 1 then
-                        local teamID = Spring.GetUnitTeam(building.unitID)
-                        giveMetal(building.metalLeft, teamID)
+                        --BUG: Was giving players extra metal
+                        --local teamID = Spring.GetUnitTeam(building.unitID)
+                        --giveMetal(building.metalLeft, teamID)
                         removeUnitAt(i)
 
                     end

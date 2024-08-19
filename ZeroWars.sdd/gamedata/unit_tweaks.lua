@@ -89,7 +89,7 @@ local unit_tweaks = {
         buildoptions = {
             [[builder]], [[hoverraid]], [[hoverheavyraid]],
             [[hoverdepthcharge]], [[hoverriot]], [[hoverskirm]], [[hoverarty]],
-            [[hoveraa]], [[hoverassault]], [[choverminer]], [[chovershotgun]]
+            [[hoveraa]], [[hoverassault]], [[hoverminer]], [[hovershotgun]]
         },
         customParams = {
             pos_constructor = [[builder]],
@@ -100,9 +100,9 @@ local unit_tweaks = {
             pos_anti_air = [[hoveraa]],
             pos_assault = [[hoverassault]],
             pos_artillery = [[hoverarty]],
-            pos_heavy_something = [[chovershotgun]],
+            pos_heavy_something = [[hovershotgun]],
             pos_special = [[hoverdepthcharge]],
-            pos_utility = [[choverminer]]
+            pos_utility = [[hoverminer]]
         },
         metalCost = 800,
         buildDistance = 800,
@@ -207,13 +207,13 @@ local unit_tweaks = {
         buildoptions = {
             [[builder]], [[planefighter]], [[planeheavyfighter]],
             [[bomberprec]], [[bomberriot]], [[bomberdisarm]], [[bomberheavy]],
-            [[planescout]], [[planelightscout]], [[cbomberstrike]]
+            [[planescout]], [[planelightscout]], [[bomberstrike]]
         },
         customParams = {
             pos_constructor = [[builder]],
             pos_raider = [[planefighter]],
             pos_weird_raider = [[planeheavyfighter]],
-            pos_skirmisher = [[cbomberstrike]],
+            pos_skirmisher = [[bomberstrike]],
             pos_riot = [[bomberriot]],
             pos_assault = [[bomberprec]],
             pos_artillery = [[planelightscout]],
