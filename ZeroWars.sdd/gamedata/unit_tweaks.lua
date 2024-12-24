@@ -134,7 +134,7 @@ local unit_tweaks = {
     factoryjump = {
         buildoptions = {
             [[builder]], [[jumpscout]], [[jumpraid]], [[jumpskirm]],
-            [[jumpbackhole]], [[jumpaa]], [[jumpassault]], [[jumpbomb]],
+            [[jumpblackhole]], [[jumpaa]], [[jumpassault]], [[jumpbomb]],
             [[jumpsumo]], [[striderdante]]
         },
         customParams = {
@@ -142,7 +142,7 @@ local unit_tweaks = {
             pos_raider = [[jumpraid]],
             pos_weird_raider = [[jumpscout]],
             pos_skirmisher = [[jumpskirm]],
-            pos_riot = [[jumpbackhole]],
+            pos_riot = [[jumpblackhole]],
             pos_anti_air = [[jumpaa]],
             pos_assault = [[jumpassault]],
             pos_artillery = [[striderdante]],
