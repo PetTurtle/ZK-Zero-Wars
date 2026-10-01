@@ -17,6 +17,9 @@ end
 local units = {}
 local addEffect
 
+--- Key of Attributes is the identity of buffs, preventing overloading and repeating  
+local attr_key="zerowars_unit_editor"
+
 local function SetWeaponDamage(unitID, weaponID, damage)
     Spring.SetUnitWeaponDamages(unitID, weaponID, {damage, damage, damage, damage, damage, damage})
 end
@@ -72,7 +75,7 @@ end
 
 function UnitEditor.Scale(unit, increase)
     unit.scale = (unit.scale or 1) + increase
-    GG.UnitScale(unit.unitID, unit.scale)
+    GG.UnitModelRescale(unit.unitID, unit.scale)
 end
 
 function UnitEditor.IdleRegen(unit, regenTimeMulti, regenAmountMulti)
@@ -84,64 +87,66 @@ function UnitEditor.IdleRegen(unit, regenTimeMulti, regenAmountMulti)
     GG.SetUnitIdleRegen(unit.unitID, new_regen_time, new_regen_amount)
 end
 
+local function UpdateUnitEffects(unit)
+	addEffect(unit.unitID, attr_key, {
+        move = unit.moveSpeed,
+        turn = unit.turnSpeed or unit.accel,
+        econ = unit.econ,
+        build = unit.buildPower,
+        sense = unit.los
+    })
+end
+
+local function UpdateWeaponEffects(unit, weaponID, weapon)
+    weapon = weapon or unit.weapons[weaponID]
+    addEffect(unit.unitID, attr_key .. "_wpn_" .. weaponID, {
+        weaponNum = weaponID,
+        reload = weapon.reload,
+        range = weapon.range,
+		damage = GG.ATT_ENABLE_DAMAGE and weapon.damage or nil
+    })
+end
+
 function UnitEditor.MoveSpeed(unit, multiplier)
     unit.moveSpeed = (unit.moveSpeed or 1) + multiplier
-    addEffect(unit.unitID, "move_speed", {
-        move = unit.moveSpeed
-    })
+    UpdateUnitEffects(unit)
 end
 
 function UnitEditor.TurnSpeed(unit, multiplier)
     unit.turnSpeed = (unit.turnSpeed or 1) + multiplier
-    addEffect(unit.unitID, "turn_speed", {
-        turn = unit.turnSpeed
-    })
+    UpdateUnitEffects(unit)
 end
 
 function UnitEditor.AccelSpeed(unit, multiplier)
     unit.accel = (unit.accel or 1) + multiplier
-    addEffect(unit.unitID, "accel_speed", {
-        turn = unit.accel
-    })
+    UpdateUnitEffects(unit)
 end
 
 function UnitEditor.Econ(unit, multiplier)
     unit.econ = (unit.econ or 1) + multiplier
-    addEffect(unit.unitID, "econ", {
-        econ = unit.econ
-    })
+    UpdateUnitEffects(unit)
 end
 
 function UnitEditor.BuildPower(unit, multiplier)
     unit.buildPower = (unit.buildPower or 1) + multiplier
-    addEffect(unit.unitID, "build_power", {
-        build = unit.buildPower
-    })
+    UpdateUnitEffects(unit)
 end
 
 function UnitEditor.LOSRange(unit, multiplier)
     unit.los = (unit.los or 1) + multiplier
-    addEffect(unit.unitID, "los_range", {
-        sense = unit.los
-    })
+    UpdateUnitEffects(unit)
 end
 
 function UnitEditor.WeaponReload(unit, weaponID, multiplier)
     local weapon = unit.weapons[weaponID]
     weapon.reload = (weapon.reload or 1) + multiplier
-    addEffect(unit.unitID, "weapon_reload_" .. weaponID, {
-        reload = weapon.reload,
-        weaponNum = weaponID
-    })
+	UpdateWeaponEffects(unit,weaponID,weapon)
 end
 
 function UnitEditor.WeaponRange(unit, weaponID, multiplier)
     local weapon = unit.weapons[weaponID]
     weapon.range = (weapon.range or 1) + multiplier
-    addEffect(unit.unitID, "weapon_range_" .. weaponID, {
-        range = weapon.range,
-        weaponNum = weaponID
-    })
+	UpdateWeaponEffects(unit,weaponID,weapon)
 end
 
 function UnitEditor.WeaponBurst(unit, weaponID, increase)
@@ -161,10 +166,16 @@ function UnitEditor.WeaponAOE(unit, weaponID, multiplier)
 end
 
 function UnitEditor.WeaponDamage(unit, weaponID, multiplier)
-    local weapon = unit.weapons[weaponID]
-    local originalDamage = WeaponDefs[weapon.ID].damages[1]
-	weapon.damage = (weapon.damage or 1) + multiplier
-    SetWeaponDamage(unit.unitID, weaponID, originalDamage * weapon.damage)
+	if GG.ATT_ENABLE_DAMAGE then
+		local weapon = unit.weapons[weaponID]
+		weapon.damage = (weapon.damage or 1) + multiplier
+		UpdateWeaponEffects(unit,weaponID,weapon)
+	else
+		local weapon = unit.weapons[weaponID]
+		local originalDamage = WeaponDefs[weapon.ID].damages[1]
+		weapon.damage = (weapon.damage or 1) + multiplier
+		SetWeaponDamage(unit.unitID, weaponID, originalDamage * weapon.damage)
+	end
 end
 
 function UnitEditor.WeaponParalyzeTime(unit, weaponID, multiplier)

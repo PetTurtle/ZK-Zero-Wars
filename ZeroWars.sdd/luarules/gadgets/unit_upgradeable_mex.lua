@@ -81,7 +81,7 @@ function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 
         if Spring.UseTeamResource(teamID, "metal", upgrades[lvl].cost) then
             GG.Overdrive.AddUnitResourceGeneration(unitID, upgrades[lvl].income, 0, true)
-            GG.UnitScale(unitID, upgrades[lvl].scale)
+            GG.UnitModelRescale(unitID, upgrades[lvl].scale)
 
             if upgrades[lvl + 1] then
                 mex[unitID].level = lvl + 1
